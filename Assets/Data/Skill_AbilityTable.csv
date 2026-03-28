@@ -1,0 +1,7 @@
+ID,Effect,"ig,desc(설명용)"
+int,Enum,ignore
+100,Attack,상대방을 공격한다
+101,Defence,상대방의 공역을 방어한다
+102,Heal,자신의 체력을 회복한다
+103,Attack_Assist,자신의 공격을 강화한다
+104,Death_Evasion,"사망시, 게임이 종료되지 않고 한번만 체력이 된다"

@@ -1,0 +1,3 @@
+ID,ig.Name(기획용),skill,Hp,Action
+int,ignore,SkillDataTable[ID],float,int
+1,"""콩쥐""","1,2,3,4,5",100,3

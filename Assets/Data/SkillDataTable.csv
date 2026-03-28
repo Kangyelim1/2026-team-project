@@ -1,0 +1,8 @@
+ID,ig.Name(기획용),Skill_Type,Skill_Ability,Skill_Effcet,"Action,Cost",Skill_Enhance,activate,Using_Again,Type of damage
+int,ignore,enum,Skill_AbilityTable[ID],float,int,bool,bool,bool,enum
+1,"""기본공격(콩쥐)""",active ,100,3,0,1,1,0,direct
+2,"""새 때""",active ,100,6,1,1,1,0,summoner
+3,"""황소""",active ,100,10,2,1,1,0,summoner
+4,"""두꺼비""",active ,101,5,1,1,1,1,summoner
+5,"""죽음과_환생""",passive,"104,102",50,0,0,0,0,indirect
+6,"""기본공격(햇님달님)""",active ,100,3,0,1,1,0,direct
