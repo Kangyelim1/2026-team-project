@@ -2,9 +2,13 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System;
+using UnityEngine.SceneManagement;
 
 public class DataManager : MonoBehaviour {
     public static DataManager Instance;
+
+    // 유저가 선택한 캐릭터 ID를 저장할 변수 (기본값 1)
+    public static int SelectedPlayerID = 1;
 
     [Header("CSV Files")]
     public TextAsset playerFile;

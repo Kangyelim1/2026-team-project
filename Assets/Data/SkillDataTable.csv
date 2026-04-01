@@ -8,4 +8,4 @@ int,string,enum,Skill_AbilityTable[ID],float,int,bool,bool,bool,enum,float
 6,"""기본공격(햇님달님)""",active ,100,4,0,1,1,0,direct,10
 7,"""이중_타격""",passive,107,50,0,0,0,0,direct,0
 8,"""떡 먹기""",active ,102,5,1,1,1,0,indirect,10
-9,"""도끼질""",,100,10,1,1,1,1,direct,30
+9,"""도끼질""",active ,100,10,1,1,1,1,direct,30

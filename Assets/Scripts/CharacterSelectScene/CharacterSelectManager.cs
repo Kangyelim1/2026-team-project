@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class CharacterSelectManager : MonoBehaviour
 {
@@ -11,6 +12,14 @@ public class CharacterSelectManager : MonoBehaviour
     public Image detailIllustration;
     public TMP_Text detailNameText;
     public TMP_Text detailDescText;
+
+    [HideInInspector] public CharacterCard selectedCharacterCard;
+
+    public void SelectCharacter(CharacterCard card)
+    {
+        selectedCharacterCard = card;
+        OpenDetail(card.myData);
+    }
 
     // 카드를 클릭했을 때 호출될 함수
     public void OpenDetail(CharacterData data)
@@ -28,5 +37,18 @@ public class CharacterSelectManager : MonoBehaviour
     public void CloseDetail()
     {
         detailPanel.SetActive(false);
+    }
+
+    public void OnClickStartBattle() 
+    {
+        // 1. 선택된 캐릭터가 있는지 확인
+        if (selectedCharacterCard == null) 
+        {
+            Debug.LogWarning("캐릭터를 먼저 선택해주세요!");
+            return;
+        }
+
+        // 2. 전투 씬으로 이동
+        SceneManager.LoadScene("BattleScene");
     }
 }

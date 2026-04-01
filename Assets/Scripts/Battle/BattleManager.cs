@@ -32,6 +32,7 @@ public class BattleManager : MonoBehaviour
     void StartPlayerTurn() {
         if (CheckGameOver()) return;
         currentState = BattleState.PlayerTurn;
+        player.currentAP = 3;  // 플레이어 AP (일단 임의로 3으로 지정)
         Debug.Log("플레이어의 턴입니다.");
     }
 
@@ -44,6 +45,12 @@ public class BattleManager : MonoBehaviour
         int randomSkillID = enemy.skillList[Random.Range(0, enemy.skillList.Count)];
         enemy.UseSkill(randomSkillID, player);
         
+        // 적의 공격으로 플레이어가 죽었는지 즉시 확인
+        if (CheckGameOver()) {
+                CancelInvoke("StartPlayerTurn"); // 턴 전환 취소
+                return;
+            }
+
         // 공격 후 다시 플레이어 턴으로
         Invoke("StartPlayerTurn", 1.0f);
     }

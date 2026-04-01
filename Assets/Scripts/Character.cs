@@ -22,6 +22,9 @@ public class Character : MonoBehaviour
         currentHP = maxHP;
         currentAP = data.action;
         skillList = new List<int>(data.skills);
+
+        // [추가] 스킬이 몇 개나 들어왔는지 콘솔에 찍어봅니다.
+        Debug.Log($"{charName}의 스킬 개수: {skillList.Count}개 로드됨");
     }
 
     // 데이터 기반 초기화 (적용)
