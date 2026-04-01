@@ -243,9 +243,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aa91967d71075f4cadf6893bb966c3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerFile: {fileID: 4900000, guid: 411cb5520eafa2b4d8bed404195399eb, type: 3}
   skillFile: {fileID: 4900000, guid: 4f8b416b2e3f4ea4abb71d17b975117f, type: 3}
+  enemyFile: {fileID: 4900000, guid: 178d7d3e10faeab48917a29d311747ee, type: 3}
+  enemyAttackFile: {fileID: 4900000, guid: aeed2ba1f1d996d4a82c0bfa1967f591, type: 3}
   abilityFile: {fileID: 4900000, guid: 26382fec5bbe17e4ea385e8042f10ab8, type: 3}
+  playerTable: []
   skillTable: []
+  enemyTable: []
+  enemyAttackTable: []
   abilityTable: []
 --- !u!4 &657606883
 Transform:

@@ -1,44 +1,76 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Character : MonoBehaviour 
 {
-    public int currentHP = 100;
-    public int currentMP = 10;
+    [Header("Character Info")]
+    public int id;
+    public string charName;
+    public float currentHP;
+    public float maxHP;
+    public int currentAP; // 플로우 차트의 '행동력'
+    public List<int> skillList = new List<int>();
 
-    public void UseSkill(int skillID, Character target = null) 
+    // 데이터 기반 초기화 (플레이어용)
+    public void InitPlayer(int playerID) 
+    {
+        if (!DataManager.Instance.playerDict.ContainsKey(playerID)) return;
+        var data = DataManager.Instance.playerDict[playerID];
+        
+        charName = data.name;
+        maxHP = data.hp;
+        currentHP = maxHP;
+        currentAP = data.action;
+        skillList = new List<int>(data.skills);
+    }
+
+    // 데이터 기반 초기화 (적용)
+    public void InitEnemy(int enemyID) 
+    {
+        if (!DataManager.Instance.enemyDict.ContainsKey(enemyID)) return;
+        var data = DataManager.Instance.enemyDict[enemyID];
+        
+        charName = data.name;
+        maxHP = data.hp;
+        currentHP = maxHP;
+        skillList = new List<int>(data.attacks);
+    }
+
+    public void UseSkill(int skillID, Character target) 
     {
         if (!DataManager.Instance.skillDict.ContainsKey(skillID)) return;
-        SkillData skill = DataManager.Instance.skillDict[skillID];
+        var skill = DataManager.Instance.skillDict[skillID];
 
-        if (currentMP < skill.cost) {
-            Debug.Log("코스트 부족!");
+        // 1. 행동력(AP) 체크 및 소모
+        if (currentAP < skill.cost) {
+            Debug.Log("행동력 부족!");
             return;
         }
-        currentMP -= skill.cost;
+        currentAP -= skill.cost;
 
+        // 2. 스킬 효과 실행 (ExecuteAbility 로직은 기존과 동일)
         foreach (int abilityID in skill.skillAbilities) {
             ExecuteAbility(abilityID, skill.effect, target);
         }
     }
 
-    void ExecuteAbility(int id, float power, Character target) 
-    {
+    void ExecuteAbility(int id, float power, Character target) {
         if (!DataManager.Instance.abilityDict.ContainsKey(id)) return;
-        AbilityData ability = DataManager.Instance.abilityDict[id];
+        var ability = DataManager.Instance.abilityDict[id];
 
         switch (ability.effect) {
             case EffectType.Attack:
-                if (target != null) {
-                    target.currentHP -= (int)power;
-                    Debug.Log($"{target.name}에게 {power}만큼 공격!"); 
-                }
+                if (target != null) target.TakeDamage(power);
                 break;
             case EffectType.Heal:
-                currentHP += (int)power;
-                Debug.Log($"{power}만큼 회복!");
+                currentHP = Mathf.Min(maxHP, currentHP + power);
                 break;
         }
+    }
+
+    public void TakeDamage(float amount) {
+        currentHP -= amount;
+        if (currentHP <= 0) currentHP = 0;
+        Debug.Log($"{charName}이(가) {amount} 대미지를 입음. 남은 HP: {currentHP}");
     }
 }
