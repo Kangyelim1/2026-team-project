@@ -1,0 +1,26 @@
+[
+   {
+      "ID":"int",
+      "Name":"string",
+      "Hp":"float",
+      "Action":"int",
+      "Trait":"enum",
+      "encounteredEnemy":"EnemyDataTable[ID]"
+   },
+   {
+      "ID":"1",
+      "Name":"콩쥐",
+      "Hp":"100",
+      "Action":"3",
+      "Trait":"Summoner",
+      "encounteredEnemy":"1,2,3,4,5,6"
+   },
+   {
+      "ID":"2",
+      "Name":"햇님달님",
+      "Hp":"80",
+      "Action":"2",
+      "Trait":"Hunter",
+      "encounteredEnemy":"7,8,9,10"
+   }
+]
