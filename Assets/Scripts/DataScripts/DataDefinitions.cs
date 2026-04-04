@@ -5,8 +5,8 @@ using System.Collections.Generic;
 
 public enum SkillType 
 { 
-    active, 
-    passive 
+    Active, 
+    Passive 
 }
 
 public enum DamageType 
@@ -16,76 +16,98 @@ public enum DamageType
     indirect 
 }
 
-public enum EffectType // 행동 방식 종류
-{ 
-    Attack,           // 100: 상대방을 공격한다
-    Defence,          // 101: 상대방의 공격을 방어한다
-    Heal,             // 102: 자신의 체력을 회복한다
-    Attack_Assist,    // 103: 자신의 공격을 강화한다
-    Death_Evasion,    // 104: 사망 시 한번만 1체력이 된다
-    Counter,          // 105: 상대방이 direct 공격을 할 때 피해를 준다
-    Damage_Limit,     // 106: 한턴에 일정 이상 피해를 입지 않는다
-    Double_Atteck     // 107: 데미지를 입히면 발동. (엑셀 스펠링에 맞춤)
+public enum PlayerTrait
+{
+    Summoner,
+    Hunter
 }
 
-// --- 테이블 데이터 클래스 모음 ---
+public enum EnemyTrait
+{
+    Mob,
+    Elite,
+    Boss
+}
 
-// 1. PlayerDataTable : 플레이어의 기본 정보
+public enum AbilityCategory
+{
+    Aggressive,
+    Defensive,
+    Positive,
+    Negative
+}
+
+public enum EffectType // Skill_AbilityTable의 Effect 컬럼과 일치시킴
+{ 
+    Normal_Attack,      // 100
+    Attack_Assist,      // 101
+    Counter,            // 102
+    Double_Atteck,      // 103
+    Armor_Penetration,  // 104
+    Defence,            // 105
+    Heal,               // 106
+    Damage_Limit,       // 107
+    Death_Evasion,      // 108
+    Skill_Enforce       // 109
+}
+
+// --- 테이블 데이터 클래스 ---
+
 [Serializable]
 public class PlayerData 
 {
     public int id;
-    public string name;                  // ig.Name(기획용)
-    public List<int> skills = new List<int>(); // 보유 스킬 (SkillDataTable[ID])
+    public string name;
+    public List<int> skills = new List<int>(); // SkillDataTable 로드 시 User ID를 기반으로 자동 채워짐
     public float hp;
-    public int action;                   // Action
-    public List<int> encounteredEnemies = new List<int>(); // 마주친 적 목록
+    public int action;
+    public PlayerTrait trait;
+    public List<int> encounteredEnemies = new List<int>();
 }
 
-// 2. SkillDataTable : 스킬 상세 정보
 [Serializable]
 public class SkillData 
 {
     public int id;
     public string name;
-    public string owner;                 // 쓰는 사용자 (기존 코드 호환용 추가)
-    public SkillType skillType;          // 스킬 형태 (active, passive)
-    public List<int> skillAbilities = new List<int>(); // 연결된 능력 정보
-    public float effect;                 // Skill_Effcet (스킬 수치)
-    public int cost;                     // Action_Cost (행동 비용)
-    public bool isEnhance;               // Skill_Enhance (0 또는 1)
-    public bool isActive;                // activate (0 또는 1)
-    public bool useAgain;                // Using_Again (0 또는 1)
-    public DamageType damageType;        // Type of damage
-    public float enhanceFigure;          // Enhance_Figure (강화 수치)
+    public string owner; // "기본공격(콩쥐)" 에서 "콩쥐" 추출
+    public SkillType skillType;
+    public List<int> skillAbilities = new List<int>();
+    public List<float> effects = new List<float>();
+    public int cost;
+    public bool isEnhance;
+    public bool isActive;
+    public bool useAgain;
+    public DamageType damageType;
+    public float enhanceFigure;
 }
 
-// 3. EnemyDataTable : 적 기본 상태 정보
 [Serializable]
 public class EnemyData 
 {
     public int id;
     public string name;
-    public List<int> attacks = new List<int>(); // Atteck (Enemy_Atteck[ID] 리스트)
-    public float hp;                            // 체력
+    public List<int> attacks = new List<int>(); // Enemy_Atteck[ID] 리스트
+    public float hp;
+    public EnemyTrait trait;
 }
 
-// 4. Enemy_Atteck : 적의 공격/행동 패턴
 [Serializable]
 public class EnemyAttackData 
 {
     public int id;
     public string name;
-    public SkillType attackType;         // Atteck_Type (active/passive - SkillType과 동일 규격)
-    public List<int> skillAbilities = new List<int>(); // 필요시 연결할 스킬 능력
-    public List<int> attackEffects = new List<int>();  // Atteck_Effect (랜덤 리스트)
+    public SkillType attackType;
+    public List<int> skillAbilities = new List<int>();
+    public List<int> attackEffects = new List<int>(); // Atteck_Effect 랜덤 리스트
+    public DamageType damageType; // 추가됨
 }
 
-// 5. Skill_AbilityTable : 효과 정보 테이블
 [Serializable]
 public class AbilityData 
 {
     public int id;
-    public EffectType effect;            // Effect
-    public string description;           // ig.desc(설명용)
+    public EffectType effect;
+    public AbilityCategory category;
+    public string description;
 }

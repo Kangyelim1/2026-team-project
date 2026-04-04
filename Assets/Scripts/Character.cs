@@ -41,39 +41,64 @@ public class Character : MonoBehaviour
 
     public void UseSkill(int skillID, Character target) 
     {
+        if (BattleUI.Instance != null) BattleUI.Instance.ClearLog();
+
         if (!DataManager.Instance.skillDict.ContainsKey(skillID)) return;
         var skill = DataManager.Instance.skillDict[skillID];
 
         // 1. 행동력(AP) 체크 및 소모
         if (currentAP < skill.cost) {
-            Debug.Log("행동력 부족!");
+            if (BattleUI.Instance != null) BattleUI.Instance.AddLog("행동력 부족!");
             return;
         }
         currentAP -= skill.cost;
+        if (BattleUI.Instance != null) BattleUI.Instance.AddLog($"[{charName}]이(가) <{skill.name}>을(를) 사용했습니다!");
 
-        // 2. 스킬 효과 실행 (ExecuteAbility 로직은 기존과 동일)
-        foreach (int abilityID in skill.skillAbilities) {
-            ExecuteAbility(abilityID, skill.effect, target);
+        // 2. 스킬 효과 실행 (모든 어빌리티에 대해 순차적으로 해당하는 이펙트 값을 전달)
+        for (int i = 0; i < skill.skillAbilities.Count; i++) {
+            int abilityID = skill.skillAbilities[i];
+            float currentEffect = (i < skill.effects.Count) ? skill.effects[i] : 0f;
+            ExecuteAbility(abilityID, currentEffect, target);
         }
     }
 
-    void ExecuteAbility(int id, float power, Character target) {
-        if (!DataManager.Instance.abilityDict.ContainsKey(id)) return;
-        var ability = DataManager.Instance.abilityDict[id];
+    public void UseEnemySkill(int attackID, Character target) 
+    {
+        if (BattleUI.Instance != null) BattleUI.Instance.ClearLog();
+
+        if (!DataManager.Instance.enemyAttackDict.ContainsKey(attackID)) return;
+        var attack = DataManager.Instance.enemyAttackDict[attackID];
+
+        if (BattleUI.Instance != null) BattleUI.Instance.AddLog($"[{charName}]이(가) <{attack.name}>을(를) 사용했습니다!");
+
+        // 적군의 경우 별도의 코스트나 AP 소모 로직은 생략
+        for (int i = 0; i < attack.skillAbilities.Count; i++) {
+            int abilityID = attack.skillAbilities[i];
+            float currentEffect = (i < attack.attackEffects.Count) ? (float)attack.attackEffects[i] : 0f;
+            ExecuteAbility(abilityID, currentEffect, target);
+        }
+    }
+
+    void ExecuteAbility(int abilityID, float skillEffect, Character target) {
+        if (!DataManager.Instance.abilityDict.ContainsKey(abilityID)) return;
+        var ability = DataManager.Instance.abilityDict[abilityID];
 
         switch (ability.effect) {
-            case EffectType.Attack:
-                if (target != null) target.TakeDamage(power);
-                break;
-            case EffectType.Heal:
-                currentHP = Mathf.Min(maxHP, currentHP + power);
-                break;
+        case EffectType.Normal_Attack: //
+            target.TakeDamage(skillEffect);
+            break;
+
+        case EffectType.Heal:
+            currentHP += skillEffect;
+            if (currentHP > maxHP) currentHP = maxHP;
+            if (BattleUI.Instance != null) BattleUI.Instance.AddLog($"[{charName}]이(가) 체력을 {skillEffect} 회복하여 {currentHP}이 되었습니다.");
+            break;
         }
     }
 
     public void TakeDamage(float amount) {
         currentHP -= amount;
         if (currentHP <= 0) currentHP = 0;
-        Debug.Log($"{charName}이(가) {amount} 대미지를 입음. 남은 HP: {currentHP}");
+        if (BattleUI.Instance != null) BattleUI.Instance.AddLog($"[{charName}]이(가) {amount} 대미지를 입음! (남은 체력: {currentHP})");
     }
 }

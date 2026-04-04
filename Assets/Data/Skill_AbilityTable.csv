@@ -1,0 +1,13 @@
+ID,Effect,Category,"ig,desc(설명용)"
+int,enum,enum,ignore
+100,Normal_Attack,Aggressive,상대방을_공격한다
+101,Attack_Assist,Aggressive,자신의_공격을_강화한다
+102,Counter,Aggressive,상대방이_direct공격을_할_떄_피해를_준다
+103,Double_Atteck,Aggressive,상대방에게_데미지를_입히면_발동한다_입힌_피해에_비례하여_추가피해를_입힌다
+104,Armor_Penetration,Aggressive,상대방의_방어도를_무시한다
+200,Defence,Defensive,상대방의_공격을_방어한다
+201,Heal,Defensive,자신의_체력을_회복한다
+202,Damage_Limit,Defensive,한턴에_일정_이상_피해를_입지_않는다
+203,Death_Evasion,Defensive,사망시_게임이_종료되지_않고_한번만_1체력이_된다
+300,Skill_Enforce,Positive,같은_종류의_소유한_스킬을_강화한다
+400,,Negative,

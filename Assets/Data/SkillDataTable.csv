@@ -1,0 +1,11 @@
+ID,ig.Name(기획용),User,Skill_Type,Skill_Ability,Skill_Effcet,"Action,Cost",activate,Using_Again,Damage_Type,Skill_Enhance,Enhance_Figure
+int,string,PlayerDataTable[ID],enum,Skill_AbilityTable[ID],float,int,bool,bool,enum,bool,float
+1,"""기본공격(콩쥐)""",1,active ,100,3,0,1,0,direct,1,10
+2,"""새 때""",1,active ,100,6,1,1,0,summon,1,20
+3,"""황소""",1,active ,100,10,2,1,0,summon,1,40
+4,"""두꺼비""",1,active ,200,5,1,1,1,summon,1,10
+5,"""죽음과_환생""",1,passive,"201,203","             1,50",0,0,0,indirect,0,
+6,"""기본공격(햇님달님)""",2,active ,100,4,0,1,0,direct,1,10
+7,"""이중_타격""",2,passive,103,50,0,0,0,direct,0,
+8,"""떡 먹기""",2,active ,201,5,1,1,0,indirect,1,10
+9,"""도끼질""",2,active ,100,10,1,1,1,direct,1,30

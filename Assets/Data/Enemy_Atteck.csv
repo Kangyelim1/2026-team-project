@@ -1,0 +1,12 @@
+ID,ig.Name(기획용),Atteck_Type,Skill_Ability,Atteck_Effect,Damage_Type
+int,string,enum,Skill_AbilityTable[ID],random,enum
+10,기본 공격1,active,100,"4,5,6,7",direct
+11,기본 공격2,active,100,"6,7,8,9,10",direct
+12,기본 공격3,active,100,"10,11,12,13,14",direct
+13,기본 공격4,active,100,"15,16,17,18",direct
+20,보스몹 기본 공격,active,100,"6,9,11,13",direct
+21,보스몹 강공격,active,100,"12,14,16,18",direct
+30,방어1,active,200,"3,4,5",direct
+31,방어2,active,200,"8,9,10",direct
+50,타격 제한1,passive,202,9,direct
+53,반격,passive,102,2,direct

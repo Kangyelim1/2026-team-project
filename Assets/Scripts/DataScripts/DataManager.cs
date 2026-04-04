@@ -2,27 +2,18 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System;
-using UnityEngine.SceneManagement;
 
 public class DataManager : MonoBehaviour {
     public static DataManager Instance;
-
-    // 유저가 선택한 캐릭터 ID를 저장할 변수 (기본값 1)
     public static int SelectedPlayerID = 1;
 
     [Header("CSV Files")]
     public TextAsset playerFile;
     public TextAsset skillFile;
+    public TextAsset warpSkillFile;
     public TextAsset enemyFile;
     public TextAsset enemyAttackFile;
     public TextAsset abilityFile;
-
-    [Header("Data Tables")]
-    public List<PlayerData> playerTable = new List<PlayerData>();
-    public List<SkillData> skillTable = new List<SkillData>();
-    public List<EnemyData> enemyTable = new List<EnemyData>();
-    public List<EnemyAttackData> enemyAttackTable = new List<EnemyAttackData>();
-    public List<AbilityData> abilityTable = new List<AbilityData>();
 
     public Dictionary<int, PlayerData> playerDict = new Dictionary<int, PlayerData>();
     public Dictionary<int, SkillData> skillDict = new Dictionary<int, SkillData>();
@@ -31,13 +22,18 @@ public class DataManager : MonoBehaviour {
     public Dictionary<int, AbilityData> abilityDict = new Dictionary<int, AbilityData>();
 
     void Awake() {
-        if (Instance == null) Instance = this;
-        LoadAllData();
+        if (Instance == null) {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+            LoadAllData();
+        }
     }
 
     void LoadAllData() {
+        // 순서 중요: 플레이어를 먼저 만들고 스킬을 로드하며 플레이어에게 할당
         ParseTable(playerFile, LoadPlayerRow);
         ParseTable(skillFile, LoadSkillRow);
+        ParseTable(warpSkillFile, LoadWarpSkillRow);
         ParseTable(enemyFile, LoadEnemyRow);
         ParseTable(enemyAttackFile, LoadEnemyAttackRow);
         ParseTable(abilityFile, LoadAbilityRow);
@@ -47,6 +43,7 @@ public class DataManager : MonoBehaviour {
     void ParseTable(TextAsset file, Action<string[]> rowParser) {
         if (file == null) return;
         string[] lines = file.text.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+        // i = 2부터 시작하여 헤더(i=0)와 타입설명(i=1) 행을 건너뜀
         for (int i = 2; i < lines.Length; i++) {
             string[] cols = Regex.Split(lines[i], ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
             for (int j = 0; j < cols.Length; j++) cols[j] = cols[j].TrimStart('\"').TrimEnd('\"');
@@ -54,70 +51,90 @@ public class DataManager : MonoBehaviour {
         }
     }
 
-    // 1. PlayerDataTable 파싱
     void LoadPlayerRow(string[] cols) {
-        if (cols.Length < 5) return;
+        if (cols.Length < 4) return;
         PlayerData data = new PlayerData();
         data.id = int.Parse(cols[0]);
         data.name = cols[1];
-        data.skills = ParseIntList(cols[2]);
-        data.hp = float.Parse(cols[3]);
-        data.action = int.Parse(cols[4]);
+        data.hp = float.Parse(cols[2]);
+        data.action = int.Parse(cols[3]);
+        if (cols.Length > 4 && Enum.TryParse(cols[4], true, out PlayerTrait pTrait)) data.trait = pTrait;
         if (cols.Length > 5) data.encounteredEnemies = ParseIntList(cols[5]);
-
-        playerTable.Add(data);
         playerDict.Add(data.id, data);
     }
 
-    // 2. SkillDataTable 파싱 (기존 로직 확장)
     void LoadSkillRow(string[] cols) {
-    // 1. 열 개수가 부족하면 무시 (빈 줄 방지)
-    if (cols.Length < 10 || string.IsNullOrEmpty(cols[0])) return;
+        if (cols.Length < 10 || string.IsNullOrEmpty(cols[0])) return;
+        SkillData data = new SkillData();
+        if (!int.TryParse(cols[0], out data.id)) return;
+        string fullName = cols[1];
+        if (fullName.Contains("(") && fullName.Contains(")")) {
+            int openBracket = fullName.IndexOf('(');
+            data.name = fullName.Substring(0, openBracket);
+            data.owner = fullName.Substring(openBracket + 1).Replace(")", "");
+        } else {
+            data.name = fullName;
+            data.owner = "Common";
+        }
 
-    SkillData data = new SkillData();
-    data.id = int.Parse(cols[0]);
+        // 구버전 SkillDataTable 매핑 형식 (ID 기반 할당)
+        if (int.TryParse(cols[2], out int ownerID)) {
+            if (playerDict.ContainsKey(ownerID)) playerDict[ownerID].skills.Add(data.id);
+        }
+        if (Enum.TryParse(cols[3], true, out SkillType sType)) data.skillType = sType;
 
-    // 이름/주인 분리 로직
-    string fullName = cols[1];
-    if (fullName.Contains("(") && fullName.Contains(")")) {
-        int openBracket = fullName.IndexOf('(');
-        data.name = fullName.Substring(0, openBracket);
-        data.owner = fullName.Substring(openBracket + 1).Replace(")", "");
-    } else {
-        data.name = fullName;
-        data.owner = "Common";
+        data.skillAbilities = ParseIntList(cols[4]);
+        data.effects = ParseFloatList(cols[5]);
+        if (!int.TryParse(cols[6], out data.cost)) data.cost = 0;
+        data.isActive = cols[7] == "1";
+        data.useAgain = cols[8] == "1";
+
+        if (Enum.TryParse(cols[9], true, out DamageType dType)) data.damageType = dType;
+        data.isEnhance = cols[10] == "1";
+        if (cols.Length > 11 && !float.TryParse(cols[11], out data.enhanceFigure)) data.enhanceFigure = 0;
+
+        if (!skillDict.ContainsKey(data.id)) skillDict.Add(data.id, data);
     }
 
-    // 2. Enum.TryParse를 사용하여 안전하게 파싱 (에러 방지 핵심)
-    if (Enum.TryParse(cols[2], true, out SkillType sType)) {
-        data.skillType = sType;
-    } else {
-        Debug.LogWarning($"[ID {data.id}] SkillType이 비어있거나 잘못되었습니다: {cols[2]}");
-        data.skillType = SkillType.active; // 기본값 설정
+    void LoadWarpSkillRow(string[] cols) {
+        if (cols.Length < 10 || string.IsNullOrEmpty(cols[0])) return;
+        SkillData data = new SkillData();
+        if (!int.TryParse(cols[0], out data.id)) return;
+        string fullName = cols[1];
+        if (fullName.Contains("(") && fullName.Contains(")")) {
+            int openBracket = fullName.IndexOf('(');
+            data.name = fullName.Substring(0, openBracket);
+            data.owner = fullName.Substring(openBracket + 1).Replace(")", "");
+        } else {
+            data.name = fullName;
+            data.owner = "Common";
+        }
+
+        // 신버전 WarpSkillDataTable 매핑 형식 (Trait 기반 할당 및 컬럼 순서 변경)
+        if (Enum.TryParse(cols[2], true, out SkillType sType)) data.skillType = sType;
+
+        string userStr = cols[3];
+        if (userStr.Equals("Common", StringComparison.OrdinalIgnoreCase)) {
+            foreach (var p in playerDict.Values) p.skills.Add(data.id);
+        } else if (Enum.TryParse(userStr, true, out PlayerTrait ownerTrait)) {
+            foreach (var p in playerDict.Values) {
+                if (p.trait == ownerTrait) p.skills.Add(data.id);
+            }
+        }
+
+        data.skillAbilities = ParseIntList(cols[4]);
+        data.effects = ParseFloatList(cols[5]);
+        if (!int.TryParse(cols[6], out data.cost)) data.cost = 0;
+        data.isActive = cols[7] == "1";
+        data.useAgain = cols[8] == "1";
+
+        data.isEnhance = cols[9] == "1";
+        if (cols.Length > 10 && !float.TryParse(cols[10], out data.enhanceFigure)) data.enhanceFigure = 0;
+        if (cols.Length > 11 && Enum.TryParse(cols[11], true, out DamageType dType)) data.damageType = dType;
+
+        if (!skillDict.ContainsKey(data.id)) skillDict.Add(data.id, data);
     }
 
-    data.skillAbilities = ParseIntList(cols[3]);
-    data.effect = float.Parse(cols[4]);
-    data.cost = int.Parse(cols[5]);
-    data.isEnhance = cols[6] == "1";
-    data.isActive = cols[7] == "1";
-    data.useAgain = cols[8] == "1";
-
-    if (Enum.TryParse(cols[9], true, out DamageType dType)) {
-        data.damageType = dType;
-    } else {
-        Debug.LogWarning($"[ID {data.id}] DamageType이 비어있거나 잘못되었습니다: {cols[9]}");
-        data.damageType = DamageType.direct; // 기본값 설정
-    }
-
-    if (cols.Length > 10 && !string.IsNullOrEmpty(cols[10])) 
-        data.enhanceFigure = float.Parse(cols[10]);
-
-    skillTable.Add(data);
-    skillDict.Add(data.id, data);
-}
-
-    // 3. EnemyDataTable 파싱
     void LoadEnemyRow(string[] cols) {
         if (cols.Length < 4) return;
         EnemyData data = new EnemyData();
@@ -125,44 +142,48 @@ public class DataManager : MonoBehaviour {
         data.name = cols[1];
         data.attacks = ParseIntList(cols[2]);
         data.hp = float.Parse(cols[3]);
-
-        enemyTable.Add(data);
+        if (cols.Length > 4 && Enum.TryParse(cols[4], true, out EnemyTrait eTrait)) data.trait = eTrait;
         enemyDict.Add(data.id, data);
     }
 
-    // 4. Enemy_Atteck 파싱
     void LoadEnemyAttackRow(string[] cols) {
         if (cols.Length < 5) return;
         EnemyAttackData data = new EnemyAttackData();
         data.id = int.Parse(cols[0]);
         data.name = cols[1];
-        data.attackType = (SkillType)Enum.Parse(typeof(SkillType), cols[2].ToLower());
+        if (Enum.TryParse(cols[2], true, out SkillType sType)) data.attackType = sType;
         data.skillAbilities = ParseIntList(cols[3]);
         data.attackEffects = ParseIntList(cols[4]);
-
-        enemyAttackTable.Add(data);
+        if (cols.Length > 5 && Enum.TryParse(cols[5], true, out DamageType dType)) data.damageType = dType;
         enemyAttackDict.Add(data.id, data);
     }
 
-    // 5. Skill_AbilityTable 파싱
     void LoadAbilityRow(string[] cols) {
-        if (cols.Length < 2) return;
+        if (cols.Length < 3) return;
         AbilityData data = new AbilityData();
         data.id = int.Parse(cols[0]);
-        data.effect = (EffectType)Enum.Parse(typeof(EffectType), cols[1]);
-        if (cols.Length > 2) data.description = cols[2];
-
-        abilityTable.Add(data);
+        if (Enum.TryParse(cols[1], true, out EffectType eType)) data.effect = eType;
+        if (Enum.TryParse(cols[2], true, out AbilityCategory cat)) data.category = cat;
+        if (cols.Length > 3) data.description = cols[3];
         abilityDict.Add(data.id, data);
     }
 
-    // 셀 내부의 "1,2,3" 같은 문자열을 List<int>로 변환하는 도구
     List<int> ParseIntList(string str) {
         List<int> list = new List<int>();
         if (string.IsNullOrEmpty(str)) return list;
         string[] items = str.Split(',');
         foreach (var item in items) {
             if (int.TryParse(item.Trim(), out int result)) list.Add(result);
+        }
+        return list;
+    }
+
+    List<float> ParseFloatList(string str) {
+        List<float> list = new List<float>();
+        if (string.IsNullOrEmpty(str)) return list;
+        string[] items = str.Split(',');
+        foreach (var item in items) {
+            if (float.TryParse(item.Trim(), out float result)) list.Add(result);
         }
         return list;
     }

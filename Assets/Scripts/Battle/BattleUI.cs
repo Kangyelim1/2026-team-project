@@ -18,6 +18,15 @@ public class BattleUI : MonoBehaviour
     public GameObject skillButtonPrefab;
     public Button endTurnButton;       // 우측 턴 넘기기 버튼
 
+    [Header("Battle Log")]
+    public TextMeshProUGUI battleLogText; // 전투 로그 출력용
+
+    public static BattleUI Instance;
+
+    void Awake() {
+        Instance = this;
+    }
+
     void Start() {
         // 턴 넘기기 버튼에 기능 연결
         endTurnButton.onClick.AddListener(() => BattleManager.Instance.StartEnemyTurn()); 
@@ -33,6 +42,8 @@ public class BattleUI : MonoBehaviour
 
     // 1. 실시간 수치 업데이트 (HP, AP)
     void UpdateBattleUI() {
+        if (BattleManager.Instance == null || BattleManager.Instance.player == null || BattleManager.Instance.enemy == null) return;
+
         var p = BattleManager.Instance.player;
         var e = BattleManager.Instance.enemy;
 
@@ -61,6 +72,9 @@ public class BattleUI : MonoBehaviour
             if (!DataManager.Instance.skillDict.ContainsKey(skillID)) continue;
             var skillData = DataManager.Instance.skillDict[skillID];
 
+            // 패시브 스킬은 버튼을 생성하지 않음
+            if (skillData.skillType == SkillType.Passive) continue;
+
             GameObject btnObj = Instantiate(skillButtonPrefab, skillButtonParent);
             btnObj.GetComponentInChildren<TextMeshProUGUI>().text = $"{skillData.name}\n(Cost: {skillData.cost})";
             
@@ -73,12 +87,30 @@ public class BattleUI : MonoBehaviour
         }
     }
     void DelayedCreateButtons() {
-    if (BattleManager.Instance != null && BattleManager.Instance.player != null) {
-        // 기존 리스너 등록
-        endTurnButton.onClick.AddListener(() => BattleManager.Instance.StartEnemyTurn());
-        
-        // 버튼 생성 실행
-        CreateSkillButtons();
+        if (BattleManager.Instance != null && BattleManager.Instance.player != null) {
+            // 기존 리스너 등록
+            endTurnButton.onClick.AddListener(() => BattleManager.Instance.StartEnemyTurn());
+            
+            // 버튼 생성 실행
+            CreateSkillButtons();
+        }
     }
-}
+
+    public void ClearLog() {
+        if (battleLogText != null) {
+            battleLogText.text = "";
+        }
+    }
+
+    public void AddLog(string message) {
+        if (battleLogText != null) {
+            // 빈 창이면 바로 넣고, 내용이 있으면 줄바꿈하고 이어붙임 (한 행동 안에서 일어난 여러 효과를 보여주기 위해)
+            if (string.IsNullOrEmpty(battleLogText.text)) {
+                battleLogText.text = message;
+            } else {
+                battleLogText.text += "\n" + message;
+            }
+        }
+        Debug.Log(message);
+    }
 }

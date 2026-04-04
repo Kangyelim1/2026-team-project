@@ -43,7 +43,7 @@ public class BattleManager : MonoBehaviour
         
         // 간단한 적 AI: 랜덤 스킬 사용
         int randomSkillID = enemy.skillList[Random.Range(0, enemy.skillList.Count)];
-        enemy.UseSkill(randomSkillID, player);
+        enemy.UseEnemySkill(randomSkillID, player);
         
         // 적의 공격으로 플레이어가 죽었는지 즉시 확인
         if (CheckGameOver()) {
