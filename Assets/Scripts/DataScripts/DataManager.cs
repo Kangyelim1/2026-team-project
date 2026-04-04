@@ -52,12 +52,12 @@ public class DataManager : MonoBehaviour {
     }
 
     void LoadPlayerRow(string[] cols) {
-        if (cols.Length < 4) return;
+        if (cols.Length < 4 || string.IsNullOrEmpty(cols[0])) return;
         PlayerData data = new PlayerData();
-        data.id = int.Parse(cols[0]);
+        if (!int.TryParse(cols[0], out data.id)) return;
         data.name = cols[1];
-        data.hp = float.Parse(cols[2]);
-        data.action = int.Parse(cols[3]);
+        if (float.TryParse(cols[2], out float hp)) data.hp = hp;
+        if (int.TryParse(cols[3], out int ap)) data.action = ap;
         if (cols.Length > 4 && Enum.TryParse(cols[4], true, out PlayerTrait pTrait)) data.trait = pTrait;
         if (cols.Length > 5) data.encounteredEnemies = ParseIntList(cols[5]);
         playerDict.Add(data.id, data);
@@ -136,20 +136,20 @@ public class DataManager : MonoBehaviour {
     }
 
     void LoadEnemyRow(string[] cols) {
-        if (cols.Length < 4) return;
+        if (cols.Length < 4 || string.IsNullOrEmpty(cols[0])) return;
         EnemyData data = new EnemyData();
-        data.id = int.Parse(cols[0]);
+        if (!int.TryParse(cols[0], out data.id)) return;
         data.name = cols[1];
         data.attacks = ParseIntList(cols[2]);
-        data.hp = float.Parse(cols[3]);
+        if (float.TryParse(cols[3], out float hp)) data.hp = hp;
         if (cols.Length > 4 && Enum.TryParse(cols[4], true, out EnemyTrait eTrait)) data.trait = eTrait;
         enemyDict.Add(data.id, data);
     }
 
     void LoadEnemyAttackRow(string[] cols) {
-        if (cols.Length < 5) return;
+        if (cols.Length < 5 || string.IsNullOrEmpty(cols[0])) return;
         EnemyAttackData data = new EnemyAttackData();
-        data.id = int.Parse(cols[0]);
+        if (!int.TryParse(cols[0], out data.id)) return;
         data.name = cols[1];
         if (Enum.TryParse(cols[2], true, out SkillType sType)) data.attackType = sType;
         data.skillAbilities = ParseIntList(cols[3]);
@@ -159,9 +159,9 @@ public class DataManager : MonoBehaviour {
     }
 
     void LoadAbilityRow(string[] cols) {
-        if (cols.Length < 3) return;
+        if (cols.Length < 3 || string.IsNullOrEmpty(cols[0])) return;
         AbilityData data = new AbilityData();
-        data.id = int.Parse(cols[0]);
+        if (!int.TryParse(cols[0], out data.id)) return;
         if (Enum.TryParse(cols[1], true, out EffectType eType)) data.effect = eType;
         if (Enum.TryParse(cols[2], true, out AbilityCategory cat)) data.category = cat;
         if (cols.Length > 3) data.description = cols[3];
