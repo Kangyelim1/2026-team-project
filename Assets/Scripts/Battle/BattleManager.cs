@@ -15,7 +15,8 @@ public class BattleManager : MonoBehaviour
     void Awake() { Instance = this; }
 
     void Start() {
-        SetupBattle(1, 1); // 1번 플레이어와 1번 적 조우 테스트
+        int playerID = DataManager.SelectedPlayerID != 0 ? DataManager.SelectedPlayerID : 1;
+        SetupBattle(playerID, 1); // 선택된 캐릭터와 1번 적 조우 테스트
     }
 
     // 1. 스테이지 입장 및 조우

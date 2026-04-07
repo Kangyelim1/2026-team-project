@@ -24,6 +24,16 @@ public class CharacterSelectManager : MonoBehaviour
     // 카드를 클릭했을 때 호출될 함수
     public void OpenDetail(CharacterData data)
     {
+        // --- [핵심 원인 해결] 인스펙터 버튼에 OpenDetail을 직접 연결해서 ID 저장이 누락되는 문제 방지 ---
+        if (data.name.Contains("SunMoon") || data.name.Contains("햇님달님")) {
+            DataManager.SelectedPlayerID = 2;
+        } else if (data.name.Contains("KongJwi") || data.name.Contains("콩쥐")) {
+            DataManager.SelectedPlayerID = 1;
+        } else {
+            DataManager.SelectedPlayerID = data.id; 
+        }
+        Debug.Log($"[캐릭터 선택됨] {data.name} 패널 열림! DataManager.SelectedPlayerID에 {DataManager.SelectedPlayerID} 자동 저장");
+
         // 1. 패널에 캐릭터 정보 데이터 채우기
         detailNameText.text = data.charName;
         detailDescText.text = data.desc;

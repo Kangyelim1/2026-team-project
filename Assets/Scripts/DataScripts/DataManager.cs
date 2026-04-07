@@ -77,11 +77,23 @@ public class DataManager : MonoBehaviour {
             data.owner = "Common";
         }
 
-        // 구버전 SkillDataTable 매핑 형식 (ID 기반 할당)
-        if (int.TryParse(cols[2], out int ownerID)) {
+        // 스킬 소유자 매핑: ID 기반 및 신버전 Trait 기반 혼용 지원
+        string ownerStr = cols[2];
+        if (int.TryParse(ownerStr, out int ownerID)) {
             if (playerDict.ContainsKey(ownerID)) playerDict[ownerID].skills.Add(data.id);
+        } else if (ownerStr.Equals("Common", StringComparison.OrdinalIgnoreCase)) {
+            foreach (var p in playerDict.Values) p.skills.Add(data.id);
+        } else if (Enum.TryParse(ownerStr, true, out PlayerTrait ownerTrait)) {
+            foreach (var p in playerDict.Values) {
+                if (p.trait == ownerTrait) p.skills.Add(data.id);
+            }
         }
-        if (Enum.TryParse(cols[3], true, out SkillType sType)) data.skillType = sType;
+        // --- [안전 장치 추가] CSV 파일의 공백/특수문자로 Enum.TryParse가 실패하여 패시브가 액티브로 둔갑하는 현상 방지 ---
+        if (cols[3] != null && cols[3].ToLower().Contains("passive")) {
+            data.skillType = SkillType.Passive;
+        } else {
+            data.skillType = SkillType.Active;
+        }
 
         data.skillAbilities = ParseIntList(cols[4]);
         data.effects = ParseFloatList(cols[5]);
@@ -111,7 +123,11 @@ public class DataManager : MonoBehaviour {
         }
 
         // 신버전 WarpSkillDataTable 매핑 형식 (Trait 기반 할당 및 컬럼 순서 변경)
-        if (Enum.TryParse(cols[2], true, out SkillType sType)) data.skillType = sType;
+        if (cols[2] != null && cols[2].ToLower().Contains("passive")) {
+            data.skillType = SkillType.Passive;
+        } else {
+            data.skillType = SkillType.Active;
+        }
 
         string userStr = cols[3];
         if (userStr.Equals("Common", StringComparison.OrdinalIgnoreCase)) {

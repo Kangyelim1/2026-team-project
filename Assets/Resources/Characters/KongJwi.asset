@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 351582575dbe39c42ada4e0bf608c49a, type: 3}
+  m_Name: KongJwi
+  m_EditorClassIdentifier: 
+  id: 1
+  charName: "\uCF69\uC950"
+  desc: "\uACC4\uBAA8\uB294 \uCF69\uC950\uC5D0\uAC8C \uBD88\uAC00\uB2A5\uD55C \uACFC\uC81C\uB97C
+    \uC2DC\uD0A8\uB2E4. \uD558\uB8E8\uD558\uB8E8 \uBE44\uCC38\uD558\uAC8C \uC0B4\uC544\uAC00\uB358
+    \uCF69\uC950\uB294 \uC790\uC2E0\uC774 \uBE44\uCC38\uD55C \uC8FD\uC74C\uC744 \uB9DE\uB294\uB2E4\uB294
+    \uAC83\uC744 \uC77C\uADF8\uB7EC\uC9C4 \uC138\uACC4\uB97C \uD1B5\uD574 \uC54C\uAC8C
+    \uB418\uACE0 \uC790\uC2E0\uC744 \uC8FD\uC774\uB824 \uD55C \uC774\uB4E4\uC5D0\uAC8C
+    \uBCF5\uC218\uB97C \uB2E4\uC9D0\uD55C\uB2E4.\n\uCF69\uC950\uB294 \uC790\uC5F0\uC758
+    \uC0AC\uB791\uC744 \uBC1B\uB294 \uC874\uC7AC\uB85C \uB3D9\uBB3C\uB4E4\uC758 \uD798\uC744
+    \uBE4C\uB824 \uC801\uC744 \uC18C\uD0D5\uD55C\uB2E4.\r\n\uBD88\uAC00\uB2A5\uD55C
+    \uACFC\uC81C\uB97C \uD558\uB358 \uCF69\uC950\uB294 \uC8FD\uC74C\uACFC\uB3C4 \uAC00\uAE4C\uC6CC
+    \uC9C0\uBA70 \uAC00\uB054 \uC8FD\uC74C\uC758 \uBA74\uC5ED\uC774 \uB41C\uB2E4.\r\n"
+  illustration: {fileID: 0}
+  trait: 0

@@ -10,5 +10,18 @@ public class CharacterData : ScriptableObject
     public string charName;         //캐릭터 이름
     [TextArea] public string desc;  //캐릭터 설명
     public Sprite illustration;     //캐릭터 일러스트
-    // 필요한 경우 스탯이나 다른 정보를 여기에 추가
+    
+    public PlayerTrait trait;       // 캐릭터 특성 (Summoner or Hunter)
+
+    // summoner인지 확인
+    public bool IsSummoner()
+    {
+        return trait == PlayerTrait.Summoner;
+    }
+
+    // hunter인지 확인
+    public bool IsHunter()
+    {
+        return trait == PlayerTrait.Hunter;
+    }
 }
