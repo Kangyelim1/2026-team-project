@@ -1,1 +1,74 @@
-[{"ID":"int","ig.Name(기획용)":"string"," Atteck":"Enemy_Atteck[ID]","Hp":"float","Trait":"enum"},{"ID":1,"ig.Name(기획용)":"무한의 벼"," Atteck":"1","Hp":70,"Trait":"Mob"},{"ID":2,"ig.Name(기획용)":"반격의 베"," Atteck":"1,2,7,9","Hp":50,"Trait":"Mob"},{"ID":3,"ig.Name(기획용)":"팥쥐"," Atteck":"1,5,9","Hp":80,"Trait":"Elite"},{"ID":4,"ig.Name(기획용)":"밑 빠진 독"," Atteck":"2.8","Hp":60,"Trait":"Mob"},{"ID":5,"ig.Name(기획용)":"계모"," Atteck":"2,5,9","Hp":85,"Trait":"Elite"},{"ID":6,"ig.Name(기획용)":"화난 계모"," Atteck":"5,6,10","Hp":90,"Trait":"Boss"},{"ID":7,"ig.Name(기획용)":"아기_호랑이"," Atteck":"1","Hp":40,"Trait":"Mob"},{"ID":8,"ig.Name(기획용)":"부모_호랑이"," Atteck":"1,2,3,9","Hp":80,"Trait":"Mob"},{"ID":9,"ig.Name(기획용)":"유령_호랑이"," Atteck":"2,8,9","Hp":70,"Trait":"Elite"},{"ID":10,"ig.Name(기획용)":"산의_주인"," Atteck":"3,9,10","Hp":120,"Trait":"Boss"}]
+{
+  "rows": [
+    {
+      "id": 1,
+      "name": "무환의 벼",
+      "attackIds": [10],
+      "hp": 70,
+      "trait": "Mob"
+    },
+    {
+      "id": 2,
+      "name": "반격의 베",
+      "attackIds": [10, 11, 30, 53],
+      "hp": 50,
+      "trait": "Mob"
+    },
+    {
+      "id": 3,
+      "name": "팥쥐",
+      "attackIds": [10, 20, 30],
+      "hp": 80,
+      "trait": "Elite"
+    },
+    {
+      "id": 4,
+      "name": "밑 빠진 독",
+      "attackIds": [11, 50],
+      "hp": 60,
+      "trait": "Mob"
+    },
+    {
+      "id": 5,
+      "name": "계모",
+      "attackIds": [11, 20, 30],
+      "hp": 85,
+      "trait": "Elite"
+    },
+    {
+      "id": 6,
+      "name": "화난 계모",
+      "attackIds": [20, 21, 31],
+      "hp": 90,
+      "trait": "Boss"
+    },
+    {
+      "id": 7,
+      "name": "아기 호랑이",
+      "attackIds": [10],
+      "hp": 40,
+      "trait": "Mob"
+    },
+    {
+      "id": 8,
+      "name": "부모 호랑이",
+      "attackIds": [10, 11, 12, 30],
+      "hp": 80,
+      "trait": "Mob"
+    },
+    {
+      "id": 9,
+      "name": "유령 호랑이",
+      "attackIds": [11, 30, 50],
+      "hp": 70,
+      "trait": "Elite"
+    },
+    {
+      "id": 10,
+      "name": "산의 주인",
+      "attackIds": [12, 21, 31],
+      "hp": 120,
+      "trait": "Boss"
+    }
+  ]
+}

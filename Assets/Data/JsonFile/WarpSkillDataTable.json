@@ -1,1 +1,102 @@
-[{"ID":"int","ig.Name(기획용)":"string","Skill_Type":"enum","User":"PlayerDataTable[Trait]","Skill_Ability":"Skill_AbilityTable[ID]","Skill_Effcet":"float","Action,Cost":"int","activate":"booi","Using_Again":"bool","Skill_Enhance":"bool","Enhance_Figure":"float","Damage_Type":"enum"},{"ID":"10","ig.Name(기획용)":"업보의_돌","Skill_Type":"passive","User":"Common","Skill_Ability":"105","Skill_Effcet":"2","Action,Cost":"0","activate":"0","Using_Again":"0","Skill_Enhance":"0","Enhance_Figure":"","Damage_Type":"indirect"},{"ID":"20","ig.Name(기획용)":"강철의_군기","Skill_Type":"passive","User":"Summoner","Skill_Ability":"300","Skill_Effcet":"20","Action,Cost":"0","activate":"0","Using_Again":"0","Skill_Enhance":"0","Enhance_Figure":"","Damage_Type":"summon"},{"ID":"30","ig.Name(기획용)":"투명한_자창","Skill_Type":"active ","User":"Common","Skill_Ability":"100.104","Skill_Effcet":"4.100","Action,Cost":"1","activate":"0","Using_Again":"0","Skill_Enhance":"1","Enhance_Figure":"10","Damage_Type":"indirect"},{"ID":"31","ig.Name(기획용)":"투명한_자창","Skill_Type":"active ","User":"Summoner","Skill_Ability":"100.104","Skill_Effcet":"4.100","Action,Cost":"1","activate":"0","Using_Again":"0","Skill_Enhance":"1","Enhance_Figure":"10","Damage_Type":"summon"},{"ID":"40","ig.Name(기획용)":"흡혈","Skill_Type":"active ","User":"Common","Skill_Ability":"100.201","Skill_Effcet":"              8.3","Action,Cost":"1","activate":"0","Using_Again":"0","Skill_Enhance":"1","Enhance_Figure":"30","Damage_Type":"direct"},{"ID":"41","ig.Name(기획용)":"흡혈","Skill_Type":"active ","User":"hunter","Skill_Ability":"100.201","Skill_Effcet":"           10.5 ","Action,Cost":"1","activate":"0","Using_Again":"0","Skill_Enhance":"1","Enhance_Figure":"30","Damage_Type":"direct"},{"ID":"50","ig.Name(기획용)":"침묵의_거품","Skill_Type":"active ","User":"Common","Skill_Ability":"100","Skill_Effcet":"5","Action,Cost":"1","activate":"0","Using_Again":"0","Skill_Enhance":"1","Enhance_Figure":"20","Damage_Type":"indirect"}]
+{
+  "rows": [
+    {
+      "id": 10,
+      "name": "업보의 돌",
+      "skillType": "passive",
+      "userTrait": "Common",
+      "skillAbilityIds": [105],
+      "skillEffectValues": [2],
+      "actionCost": 0,
+      "activate": false,
+      "usingAgain": false,
+      "skillEnhance": false,
+      "enhanceFigure": 0,
+      "damageType": "indirect"
+    },
+    {
+      "id": 20,
+      "name": "강철의 군기",
+      "skillType": "passive",
+      "userTrait": "Summoner",
+      "skillAbilityIds": [300],
+      "skillEffectValues": [20],
+      "actionCost": 0,
+      "activate": false,
+      "usingAgain": false,
+      "skillEnhance": false,
+      "enhanceFigure": 0,
+      "damageType": "summon"
+    },
+    {
+      "id": 30,
+      "name": "투명한 자창",
+      "skillType": "active",
+      "userTrait": "Common",
+      "skillAbilityIds": [100, 104],
+      "skillEffectValues": [4, 100],
+      "actionCost": 1,
+      "activate": false,
+      "usingAgain": false,
+      "skillEnhance": true,
+      "enhanceFigure": 10,
+      "damageType": "indirect"
+    },
+    {
+      "id": 31,
+      "name": "투명한 자창",
+      "skillType": "active",
+      "userTrait": "Summoner",
+      "skillAbilityIds": [100, 104],
+      "skillEffectValues": [4, 100],
+      "actionCost": 1,
+      "activate": false,
+      "usingAgain": false,
+      "skillEnhance": true,
+      "enhanceFigure": 10,
+      "damageType": "summon"
+    },
+    {
+      "id": 40,
+      "name": "흡혈",
+      "skillType": "active",
+      "userTrait": "Common",
+      "skillAbilityIds": [100, 201],
+      "skillEffectValues": [8, 3],
+      "actionCost": 1,
+      "activate": false,
+      "usingAgain": false,
+      "skillEnhance": true,
+      "enhanceFigure": 30,
+      "damageType": "direct"
+    },
+    {
+      "id": 41,
+      "name": "흡혈",
+      "userTrait": "Hunter",
+      "skillType": "active",
+      "skillAbilityIds": [100, 201],
+      "skillEffectValues": [10, 5],
+      "actionCost": 1,
+      "activate": false,
+      "usingAgain": false,
+      "skillEnhance": true,
+      "enhanceFigure": 30,
+      "damageType": "direct"
+    },
+    {
+      "id": 50,
+      "name": "침묵의 거품",
+      "skillType": "active",
+      "userTrait": "Common",
+      "skillAbilityIds": [100],
+      "skillEffectValues": [5],
+      "actionCost": 1,
+      "activate": false,
+      "usingAgain": false,
+      "skillEnhance": true,
+      "enhanceFigure": 20,
+      "damageType": "indirect"
+    }
+  ]
+}

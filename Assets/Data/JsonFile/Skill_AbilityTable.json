@@ -1,1 +1,70 @@
-[{"ID":"int","Effect":"enum","ig,desc(설명용)":"ignore"},{"ID":100,"Effect":"Attack","ig,desc(설명용)":"상대방을_공격한다"},{"ID":101,"Effect":"Attack_Assist","ig,desc(설명용)":"자신의_공격을_강화한다"},{"ID":102,"Effect":"Counter","ig,desc(설명용)":"상대방이_direct공격을_할_떄_피해를_준다"},{"ID":103,"Effect":"Double_Atteck","ig,desc(설명용)":"상대방에게_데미지를_입히면_발동한다_입힌_피해에_비례하여_추가피해를_입힌다"},{"ID":104,"Effect":"Armor_Penetration","ig,desc(설명용)":"상대방의_방어도를_무시한다"},{"ID":200,"Effect":"Defence","ig,desc(설명용)":"상대방의_공격을_방어한다"},{"ID":201,"Effect":"Heal","ig,desc(설명용)":"자신의_체력을_회복한다"},{"ID":202,"Effect":"Damage_Limit","ig,desc(설명용)":"한턴에_일정_이상_피해를_입지_않는다"},{"ID":203,"Effect":"Death_Evasion","ig,desc(설명용)":"사망시_게임이_종료되지_않고_한번만_1체력이_된다"},{"ID":300,"Effect":"Skill_Enforce","ig,desc(설명용)":"같은_종류의_소유한_스킬을_강화한다"}]
+{
+  "rows": [
+    {
+      "id": 100,
+      "effect": "NormalAttack",
+      "category": "Aggressive",
+      "description": "상대방을 공격한다"
+    },
+    {
+      "id": 101,
+      "effect": "AttackAssist",
+      "category": "Aggressive",
+      "description": "자신의 공격을 강화한다"
+    },
+    {
+      "id": 102,
+      "effect": "Counter",
+      "category": "Aggressive",
+      "description": "상대방이 direct공격을 할 때 피해를 준다"
+    },
+    {
+      "id": 103,
+      "effect": "DoubleAttack",
+      "category": "Aggressive",
+      "description": "상대방에게 데미지를 입힌 후, 입힌 피해에 비례하여 추가피해를 입힌다"
+    },
+    {
+      "id": 104,
+      "effect": "ArmorPenetration",
+      "category": "Aggressive",
+      "description": "상대방의 방어도를 무시한다"
+    },
+    {
+      "id": 105,
+      "effect": "Defence",
+      "category": "Defensive",
+      "description": "상대방의 공격을 방어한다"
+    },
+    {
+      "id": 106,
+      "effect": "Heal",
+      "category": "Defensive",
+      "description": "자신의 체력을 회복한다"
+    },
+    {
+      "id": 107,
+      "effect": "DamageLimit",
+      "category": "Defensive",
+      "description": "한 턴에 일정 이상 피해를 입지 않는다"
+    },
+    {
+      "id": 108,
+      "effect": "DeathEvasion",
+      "category": "Defensive",
+      "description": "사망 시 게임이 종료되지 않고 한 번만 체력이 1이 된다"
+    },
+    {
+      "id": 109,
+      "effect": "SkillEnforce",
+      "category": "Positive",
+      "description": "같은 종류의 소환형 스킬을 강화한다"
+    },
+    {
+      "id": 110,
+      "effect": "Negative",
+      "category": "Negative",
+      "description": ""
+    }
+  ]
+}

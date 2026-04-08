@@ -6,38 +6,49 @@ public class EventManager : MonoBehaviour
 {
     public static EventManager Instance;
 
-    //  이벤트 패널
+    [Header("이벤트 패널")]
     public GameObject eventPanel;
-
-    void Start()
-    {
-        eventPanel.SetActive(false); // 시작할 때 패널 끄기
-    }
 
     void Awake()
     {
         Instance = this;
     }
 
-    // 신녀 이벤트
-    public void ShowPriestEvent()
+    void Start()
     {
-        eventPanel.SetActive(true); //  패널 켜기
+        if (eventPanel != null)
+            eventPanel.SetActive(false);
     }
 
-    // 체력 회복
+    public void ShowPriestEvent()
+    {
+        if (eventPanel != null)
+            eventPanel.SetActive(true);
+
+        Debug.Log("신녀 이벤트 시작");
+    }
+
     public void HealPlayer()
     {
         int healAmount = 30;
 
-        BattleManager.Instance.player.currentHP += healAmount;
+        if (BattleManager.Instance != null && BattleManager.Instance.player != null)
+        {
+            BattleManager.Instance.player.currentHP += healAmount;
 
-        Debug.Log("체력 회복!");
+            if (BattleManager.Instance.player.currentHP > BattleManager.Instance.player.maxHP)
+                BattleManager.Instance.player.currentHP = BattleManager.Instance.player.maxHP;
+
+            Debug.Log($"체력 회복! +{healAmount}");
+        }
+        else
+        {
+            Debug.LogWarning("플레이어가 없어 회복할 수 없습니다.");
+        }
 
         EndEvent();
     }
 
-    // 스킬 강화
     public void UpgradeSkill()
     {
         Debug.Log("스킬 강화!");
@@ -47,7 +58,10 @@ public class EventManager : MonoBehaviour
 
     void EndEvent()
     {
-        eventPanel.SetActive(false); //  패널 끄기
-        BattleManager.Instance.EndEvent();
+        if (eventPanel != null)
+            eventPanel.SetActive(false);
+
+        if (BattleManager.Instance != null)
+            BattleManager.Instance.EndEvent();
     }
 }

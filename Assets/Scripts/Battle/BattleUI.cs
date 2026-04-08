@@ -1,116 +1,172 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro; // TextMeshPro 사용 시
+using TMPro;
 
-public class BattleUI : MonoBehaviour 
+public class BattleUI : MonoBehaviour
 {
-    [Header("Character Display")]  // 일러스트
-    public Image playerIllustration; // 좌측 플레이어 일러스트
-    public Image enemyIllustration;  // 우측 적 일러스트
-    
-    [Header("Stats")]  // 체력 and 행동력
-    public TextMeshProUGUI playerHPText; // 플레이어 체력 (예: 100 / 100)
-    public TextMeshProUGUI enemyHPText;  // 적 체력
-    public TextMeshProUGUI apText;   // 왼쪽 하단 행동력 표시
+    [Header("Character Display")]
+    public Image playerIllustration;
+    public Image enemyIllustration;
 
-    [Header("Skills & Buttons")]  // 스킬 버튼 같은거
-    public Transform skillButtonParent; // 하단 스킬 버튼들이 생성될 곳
+    [Header("Stats")]
+    public TextMeshProUGUI playerHPText;
+    public TextMeshProUGUI enemyHPText;
+    public TextMeshProUGUI apText;
+
+    [Header("Skills & Buttons")]
+    public Transform skillButtonParent;
     public GameObject skillButtonPrefab;
-    public Button endTurnButton;       // 우측 턴 넘기기 버튼
+    public Button endTurnButton;
 
     [Header("Battle Log")]
-    public TextMeshProUGUI battleLogText; // 전투 로그 출력용
+    public TextMeshProUGUI battleLogText;
 
     public static BattleUI Instance;
 
-    void Awake() {
+    void Awake()
+    {
         Instance = this;
     }
 
-    void Start() {
-        // 턴 넘기기 버튼에 기능 연결
-        endTurnButton.onClick.AddListener(() => BattleManager.Instance.StartEnemyTurn()); 
-        CreateSkillButtons();
+    void Start()
+    {
+        if (endTurnButton != null)
+        {
+            endTurnButton.onClick.RemoveAllListeners();
+            endTurnButton.onClick.AddListener(() => BattleManager.Instance.StartEnemyTurn());
+        }
 
-        // BattleManager가 캐릭터 초기화를 마칠 수 있도록 0.1초 뒤에 버튼 생성
-        Invoke("DelayedCreateButtons", 0.1f);
+        Invoke(nameof(DelayedCreateButtons), 0.1f);
     }
 
-    void Update() {
+    void Update()
+    {
         UpdateBattleUI();
     }
 
-    // 1. 실시간 수치 업데이트 (HP, AP)
-    void UpdateBattleUI() {
-        if (BattleManager.Instance == null || BattleManager.Instance.player == null || BattleManager.Instance.enemy == null) return;
+    void UpdateBattleUI()
+    {
+        if (BattleManager.Instance == null || BattleManager.Instance.player == null || BattleManager.Instance.enemy == null)
+            return;
 
         var p = BattleManager.Instance.player;
         var e = BattleManager.Instance.enemy;
 
-        playerHPText.text = $"HP: {p.currentHP} / {p.maxHP}";
-        enemyHPText.text = $"HP: {e.currentHP} / {e.maxHP}";
-        apText.text = $"AP: {p.currentAP}"; // 행동력 표시
-        
-        // 플레이어 턴일 때만 버튼 활성화
-        endTurnButton.interactable = (BattleManager.Instance.currentState == BattleState.PlayerTurn);
+        if (playerHPText != null)
+            playerHPText.text = $"HP: {p.currentHP} / {p.maxHP}";
 
-        // 행동력이 0 이하이고 현재 플레이어 턴이라면 자동으로 적 턴 시작
-        // "행동력이 남아 있는가? -> 아닐 시 바로 상대방이 공격
-            if (p.currentAP <= 0 && BattleManager.Instance.currentState == BattleState.PlayerTurn) {
+        if (enemyHPText != null)
+            enemyHPText.text = $"HP: {e.currentHP} / {e.maxHP}";
+
+        if (apText != null)
+            apText.text = $"AP: {p.currentAP}";
+
+        if (endTurnButton != null)
+            endTurnButton.interactable = (BattleManager.Instance.currentState == BattleState.PlayerTurn);
+
+        if (p.currentAP <= 0 && BattleManager.Instance.currentState == BattleState.PlayerTurn)
+        {
             Debug.Log("행동력 소진! 자동으로 적 턴으로 전환합니다.");
-            BattleManager.Instance.StartEnemyTurn(); 
+            BattleManager.Instance.StartEnemyTurn();
         }
     }
 
-    // 2. 엑셀 데이터를 기반으로 스킬 버튼 생성
-    void CreateSkillButtons() {
-        // 기존 버튼 제거
-        foreach (Transform child in skillButtonParent) Destroy(child.gameObject);
+    void CreateSkillButtons()
+    {
+        if (skillButtonParent == null || skillButtonPrefab == null || BattleManager.Instance == null || BattleManager.Instance.player == null)
+        {
+            Debug.LogWarning("[UI] 버튼 생성 실패: 참조 누락");
+            return;
+        }
+
+        foreach (Transform child in skillButtonParent)
+            Destroy(child.gameObject);
 
         var player = BattleManager.Instance.player;
-        foreach (int skillID in player.skillList) {
-            if (!DataManager.Instance.skillDict.ContainsKey(skillID)) continue;
-            var skillData = DataManager.Instance.skillDict[skillID];
+        Debug.Log($"[UI] player.skillList count = {player.skillList.Count}");
 
-            // 패시브 스킬은 버튼을 생성하지 않음
-            if (skillData.skillType == SkillType.Passive) continue;
+        foreach (int skillID in player.skillList)
+        {
+            Debug.Log($"[UI] 검사 중 skillID = {skillID}");
+
+            if (!DataManager.Instance.skillDict.ContainsKey(skillID))
+            {
+                Debug.LogWarning($"[UI] skillDict에 없음: {skillID}");
+                continue;
+            }
+
+            var skillData = DataManager.Instance.skillDict[skillID];
+            Debug.Log($"[UI] skill found: {skillData.name}, type:{skillData.skillType}");
+
+            if (skillData.skillType == SkillType.passive)
+            {
+                Debug.Log($"[UI] 패시브라서 버튼 생성 안 함: {skillData.name}");
+                continue;
+            }
 
             GameObject btnObj = Instantiate(skillButtonPrefab, skillButtonParent);
-            btnObj.GetComponentInChildren<TextMeshProUGUI>().text = $"{skillData.name}\n(Cost: {skillData.cost})";
-            
-            // 버튼 클릭 시 스킬 발동
-            btnObj.GetComponent<Button>().onClick.AddListener(() => {
-                if (BattleManager.Instance.currentState == BattleState.PlayerTurn) {
-                    player.UseSkill(skillID, BattleManager.Instance.enemy);
-                }
-            });
+
+            TextMeshProUGUI btnText = btnObj.GetComponentInChildren<TextMeshProUGUI>();
+            if (btnText != null)
+                btnText.text = $"{skillData.name}\n(Cost: {skillData.actionCost})";
+
+            Button btn = btnObj.GetComponent<Button>();
+            if (btn != null)
+            {
+                int capturedSkillID = skillID;
+                btn.onClick.RemoveAllListeners();
+                btn.onClick.AddListener(() =>
+                {
+                    Debug.Log($"[버튼 클릭] skillID:{capturedSkillID}");
+
+                    if (BattleManager.Instance.currentState == BattleState.PlayerTurn)
+                    {
+                        player.UseSkill(capturedSkillID, BattleManager.Instance.enemy);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("[버튼 클릭] 지금은 플레이어 턴이 아님");
+                    }
+                });
+            }
+            else
+            {
+                Debug.LogWarning("[UI] 버튼 프리팹에 Button 컴포넌트 없음");
+            }
+
+            Debug.Log($"[UI] 버튼 생성 완료: {skillData.name}");
         }
     }
-    void DelayedCreateButtons() {
-        if (BattleManager.Instance != null && BattleManager.Instance.player != null) {
-            // 기존 리스너 등록
-            endTurnButton.onClick.AddListener(() => BattleManager.Instance.StartEnemyTurn());
-            
-            // 버튼 생성 실행
+
+    void DelayedCreateButtons()
+    {
+        if (BattleManager.Instance != null && BattleManager.Instance.player != null)
+        {
             CreateSkillButtons();
         }
     }
 
-    public void ClearLog() {
-        if (battleLogText != null) {
-            battleLogText.text = "";
-        }
+    public void RefreshSkillButtons()
+    {
+        CreateSkillButtons();
     }
 
-    public void AddLog(string message) {
-        if (battleLogText != null) {
-            // 빈 창이면 바로 넣고, 내용이 있으면 줄바꿈하고 이어붙임 (한 행동 안에서 일어난 여러 효과를 보여주기 위해)
-            if (string.IsNullOrEmpty(battleLogText.text)) {
+    public void ClearLog()
+    {
+        if (battleLogText != null)
+            battleLogText.text = "";
+    }
+
+    public void AddLog(string message)
+    {
+        if (battleLogText != null)
+        {
+            if (string.IsNullOrEmpty(battleLogText.text))
                 battleLogText.text = message;
-            } else {
+            else
                 battleLogText.text += "\n" + message;
-            }
         }
+
         Debug.Log(message);
     }
 }
