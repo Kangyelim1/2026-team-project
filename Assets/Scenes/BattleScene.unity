@@ -1716,6 +1716,7 @@ MonoBehaviour:
   currentState: 0
   player: {fileID: 120840868}
   enemy: {fileID: 345548041}
+  priestEventChance: 40
 --- !u!1 &768925779
 GameObject:
   m_ObjectHideFlags: 0

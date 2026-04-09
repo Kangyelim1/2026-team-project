@@ -5,9 +5,12 @@ public enum BattleState
     Start,
     PlayerTurn,
     EnemyTurn,
+    Event,
     Win,
     Lose
 }
+
+
 
 public class BattleManager : MonoBehaviour
 {
@@ -16,6 +19,12 @@ public class BattleManager : MonoBehaviour
 
     public Character player;
     public Character enemy;
+
+    // 신녀 이벤트 등장 확률
+    [Range(0, 100)]
+    public int priestEventChance = 40; // 기본 40% 확률
+    // 이벤트 중복 방지용
+    private bool eventTriggered = false;
 
     void Awake()
     {
@@ -101,26 +110,25 @@ public class BattleManager : MonoBehaviour
 
     public void EndEvent()
     {
-        Debug.Log("이벤트 종료, 전투 진행 재개");
-        currentState = BattleState.PlayerTurn;
+        Debug.Log("이벤트 종료");
 
-        if (BattleUI.Instance != null)
-        {
-            BattleUI.Instance.AddLog("이벤트가 종료되었습니다.");
-            BattleUI.Instance.RefreshSkillButtons();
-        }
+        // 이벤트 상태 종료
+        currentState = BattleState.Start;
+
+        // 이벤트 중복 방지 초기화
+        eventTriggered = false;
     }
 
     bool CheckGameOver()
     {
-        if (enemy.currentHP <= 0)
+        // 이벤트 중이면 체크 안함
+        if (currentState == BattleState.Event)
+            return true;
+
+        if (enemy.currentHP <= 0 && currentState != BattleState.Win)
         {
             currentState = BattleState.Win;
-            Debug.Log("승리! 보상을 획득합니다.");
-
-            if (BattleUI.Instance != null)
-                BattleUI.Instance.AddLog("승리! 보상을 획득합니다.");
-
+            OnBattleWin();
             return true;
         }
 
@@ -137,4 +145,44 @@ public class BattleManager : MonoBehaviour
 
         return false;
     }
+
+    //전투 승리 함수
+    void OnBattleWin()
+    {
+        // 이미 이벤트 실행되었으면 실행하지 않음
+        if (eventTriggered) return;
+
+        eventTriggered = true;
+
+        Debug.Log("승리! 보상을 획득합니다.");
+
+        // BattleUI 로그 제거 (데미지 로그 섞임 방지)
+        // BattleUI.Instance.AddLog("승리! 보상을 획득합니다.");
+
+        int random = Random.Range(0, 100);
+        Debug.Log($"신녀 이벤트 확률 체크: {random}");
+
+        if (random < priestEventChance)
+        {
+            Debug.Log("신녀 이벤트 등장!");
+            StartEvent();
+        }
+        else
+        {
+            Debug.Log("이벤트 없음");
+            EndEvent();
+        }
+    }
+
+    void StartEvent()
+    {
+        currentState = BattleState.Event;
+
+        Debug.Log("신녀 이벤트 시작");
+
+        if (EventManager.Instance != null)
+            EventManager.Instance.ShowPriestEvent();
+    }
+
+
 }
