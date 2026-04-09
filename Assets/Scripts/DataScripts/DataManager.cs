@@ -6,13 +6,13 @@ public class DataManager : MonoBehaviour
     public static DataManager Instance;
     public static int SelectedPlayerID = 1;
 
-    [Header("JSON Files")]
-    public TextAsset playerFile;
-    public TextAsset skillFile;
-    public TextAsset warpSkillFile;
-    public TextAsset enemyFile;
-    public TextAsset enemyAttackFile;
-    public TextAsset abilityFile;
+    // [Header("JSON Files")]
+    // public TextAsset playerFile;
+    // public TextAsset skillFile;
+    // public TextAsset warpSkillFile;
+    // public TextAsset enemyFile;
+    // public TextAsset enemyAttackFile;
+    // public TextAsset abilityFile;
 
     public Dictionary<int, PlayerData> playerDict = new Dictionary<int, PlayerData>();
     public Dictionary<int, SkillData> skillDict = new Dictionary<int, SkillData>();
@@ -65,9 +65,10 @@ public class DataManager : MonoBehaviour
 
     void LoadAbilityJson()
     {
+        var abilityFile = Resources.Load<TextAsset>("JsonFile/Skill_AbilityTable");
         if (abilityFile == null)
         {
-            Debug.LogError("abilityFile이 비어 있습니다.");
+            Debug.LogError("Resources/JsonFile/Skill_AbilityTable 파일을 찾을 수 없습니다.");
             return;
         }
 
@@ -88,9 +89,10 @@ public class DataManager : MonoBehaviour
 
     void LoadPlayerJson()
     {
+        var playerFile = Resources.Load<TextAsset>("JsonFile/PlayerDataTable");
         if (playerFile == null)
         {
-            Debug.LogError("playerFile이 비어 있습니다.");
+            Debug.LogError("Resources/JsonFile/PlayerDataTable 파일을 찾을 수 없습니다.");
             return;
         }
 
@@ -111,9 +113,10 @@ public class DataManager : MonoBehaviour
 
     void LoadEnemyAttackJson()
     {
+        var enemyAttackFile = Resources.Load<TextAsset>("JsonFile/Enemy_Atteck");
         if (enemyAttackFile == null)
         {
-            Debug.LogError("enemyAttackFile이 비어 있습니다.");
+            Debug.LogError("Resources/JsonFile/Enemy_Atteck 파일을 찾을 수 없습니다.");
             return;
         }
 
@@ -134,9 +137,10 @@ public class DataManager : MonoBehaviour
 
     void LoadEnemyJson()
     {
+        var enemyFile = Resources.Load<TextAsset>("JsonFile/EnemyDataTable");
         if (enemyFile == null)
         {
-            Debug.LogError("enemyFile이 비어 있습니다.");
+            Debug.LogError("Resources/JsonFile/EnemyDataTable 파일을 찾을 수 없습니다.");
             return;
         }
 
@@ -157,9 +161,10 @@ public class DataManager : MonoBehaviour
 
     void LoadSkillJson()
     {
+        var skillFile = Resources.Load<TextAsset>("JsonFile/SkillDataTable");
         if (skillFile == null)
         {
-            Debug.LogError("skillFile이 비어 있습니다.");
+            Debug.LogError("Resources/JsonFile/SkillDataTable 파일을 찾을 수 없습니다.");
             return;
         }
 
@@ -195,9 +200,10 @@ public class DataManager : MonoBehaviour
 
     void LoadWarpSkillJson()
     {
+        var warpSkillFile = Resources.Load<TextAsset>("JsonFile/WarpSkillDataTable");
         if (warpSkillFile == null)
         {
-            Debug.LogWarning("warpSkillFile이 비어 있습니다.");
+            Debug.LogWarning("Resources/JsonFile/WarpSkillDataTable 파일을 찾을 수 없습니다.");
             return;
         }
 
