@@ -10,6 +10,12 @@ public class Character : MonoBehaviour
     public float maxHP;
     public int currentAP;
     public List<int> skillList = new List<int>();
+    public HashSet<int> usedSkillsThisTurn = new HashSet<int>();
+
+    public void OnTurnStart()
+    {
+        usedSkillsThisTurn.Clear();
+    }
 
     public void InitPlayer(int playerID)
     {
@@ -76,6 +82,14 @@ public class Character : MonoBehaviour
             return;
         }
 
+        if (!skill.usingAgain && usedSkillsThisTurn.Contains(skillID))
+        {
+            Debug.LogWarning("[UseSkill] 이번 턴에 이미 사용한 스킬");
+            if (BattleUI.Instance != null) BattleUI.Instance.AddLog("이 스킬은 한 턴에 한 번만 사용할 수 있습니다!");
+            return;
+        }
+
+        usedSkillsThisTurn.Add(skillID);
         currentAP -= skill.actionCost;
 
         Debug.Log($"[UseSkill 성공] {skill.name}, 남은 AP:{currentAP}");
@@ -128,9 +142,16 @@ public class Character : MonoBehaviour
         }
 
         var ability = DataManager.Instance.abilityDict[abilityID];
-        Debug.Log($"[ExecuteAbility] effectType:{ability.effect}");
+        
+        EffectType parsedEffect = EffectType.NormalAttack;
+        if (!string.IsNullOrEmpty(ability.effect))
+        {
+            System.Enum.TryParse(ability.effect, true, out parsedEffect);
+        }
+        
+        Debug.Log($"[ExecuteAbility] effectType:{parsedEffect}");
 
-        switch (ability.effect)
+        switch (parsedEffect)
         {
             case EffectType.NormalAttack:
                 target.TakeDamage(skillEffect);

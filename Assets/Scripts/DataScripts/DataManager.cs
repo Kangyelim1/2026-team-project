@@ -236,7 +236,8 @@ public class DataManager : MonoBehaviour
 
             foreach (var player in playerDict.Values)
             {
-                if (data.userTrait == PlayerTrait.Common || player.trait == data.userTrait)
+                bool isCommon = !string.IsNullOrEmpty(data.userTrait) && data.userTrait.ToLower() == "common";
+                if (isCommon || player.trait == data.userTrait)
                 {
                     if (!player.skills.Contains(converted.id))
                     {

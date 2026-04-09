@@ -1,12 +1,17 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections.Generic;
 
 public class BattleUI : MonoBehaviour
 {
     [Header("Character Display")]
     public Image playerIllustration;
     public Image enemyIllustration;
+
+    [Header("Names")]
+    public TextMeshProUGUI playerNameText;
+    public TextMeshProUGUI enemyNameText;
 
     [Header("Stats")]
     public TextMeshProUGUI playerHPText;
@@ -20,6 +25,8 @@ public class BattleUI : MonoBehaviour
 
     [Header("Battle Log")]
     public TextMeshProUGUI battleLogText;
+    
+    private Dictionary<int, Button> skillButtons = new Dictionary<int, Button>();
 
     public static BattleUI Instance;
 
@@ -52,6 +59,12 @@ public class BattleUI : MonoBehaviour
         var p = BattleManager.Instance.player;
         var e = BattleManager.Instance.enemy;
 
+        if (playerNameText != null)
+            playerNameText.text = p.charName;
+
+        if (enemyNameText != null)
+            enemyNameText.text = e.charName;
+
         if (playerHPText != null)
             playerHPText.text = $"HP: {p.currentHP} / {p.maxHP}";
 
@@ -63,6 +76,26 @@ public class BattleUI : MonoBehaviour
 
         if (endTurnButton != null)
             endTurnButton.interactable = (BattleManager.Instance.currentState == BattleState.PlayerTurn);
+
+        // 스킬 버튼들 사용 가능 여부 실시간 업데이트
+        foreach (var kvp in skillButtons)
+        {
+            int sID = kvp.Key;
+            Button b = kvp.Value;
+            if (b != null && DataManager.Instance.skillDict.ContainsKey(sID))
+            {
+                var sData = DataManager.Instance.skillDict[sID];
+                bool isPlayable = (BattleManager.Instance.currentState == BattleState.PlayerTurn);
+                
+                // AP 부족시 비활성화
+                if (p.currentAP < sData.actionCost) isPlayable = false;
+                
+                // UsingAgain이 false이고 이번 턴에 이미 썼다면 비활성화
+                if (!sData.usingAgain && p.usedSkillsThisTurn.Contains(sID)) isPlayable = false;
+
+                b.interactable = isPlayable;
+            }
+        }
 
         if (p.currentAP <= 0 && BattleManager.Instance.currentState == BattleState.PlayerTurn)
         {
@@ -82,6 +115,8 @@ public class BattleUI : MonoBehaviour
         foreach (Transform child in skillButtonParent)
             Destroy(child.gameObject);
 
+        skillButtons.Clear();
+
         var player = BattleManager.Instance.player;
         Debug.Log($"[UI] player.skillList count = {player.skillList.Count}");
 
@@ -98,7 +133,7 @@ public class BattleUI : MonoBehaviour
             var skillData = DataManager.Instance.skillDict[skillID];
             Debug.Log($"[UI] skill found: {skillData.name}, type:{skillData.skillType}");
 
-            if (skillData.skillType == SkillType.passive)
+            if (!string.IsNullOrEmpty(skillData.skillType) && skillData.skillType.ToLower() == "passive")
             {
                 Debug.Log($"[UI] 패시브라서 버튼 생성 안 함: {skillData.name}");
                 continue;
@@ -106,13 +141,22 @@ public class BattleUI : MonoBehaviour
 
             GameObject btnObj = Instantiate(skillButtonPrefab, skillButtonParent);
 
-            TextMeshProUGUI btnText = btnObj.GetComponentInChildren<TextMeshProUGUI>();
-            if (btnText != null)
-                btnText.text = $"{skillData.name}\n(Cost: {skillData.actionCost})";
+            TextMeshProUGUI[] texts = btnObj.GetComponentsInChildren<TextMeshProUGUI>();
+            if (texts.Length >= 2)
+            {
+                texts[0].text = skillData.name;
+                texts[1].text = skillData.actionCost.ToString(); // 두 번째 텍스트에 비용만 표시
+            }
+            else if (texts.Length == 1)
+            {
+                // 아직 프리팹에 두 번째 텍스트를 안 넣었을 경우를 대비한 옛날 방식 호환 코드
+                texts[0].text = $"{skillData.name}\n(Cost: {skillData.actionCost})";
+            }
 
             Button btn = btnObj.GetComponent<Button>();
             if (btn != null)
             {
+                skillButtons[skillID] = btn;
                 int capturedSkillID = skillID;
                 btn.onClick.RemoveAllListeners();
                 btn.onClick.AddListener(() =>

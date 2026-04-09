@@ -58,7 +58,7 @@ public class PlayerData
     public string name;
     public float hp;
     public int actionPoint;
-    public PlayerTrait trait;
+    public string trait;
     public List<int> encounteredEnemyIds = new List<int>();
     public List<int> skills = new List<int>();
 }
@@ -69,13 +69,13 @@ public class SkillData
     public int id;
     public string name;
     public int userId;
-    public SkillType skillType;
+    public string skillType;
     public List<int> skillAbilityIds = new List<int>();
     public List<float> skillEffectValues = new List<float>();
     public int actionCost;
     public bool activate;
     public bool usingAgain;
-    public DamageType damageType;
+    public string damageType;
     public bool skillEnhance;
     public float enhanceFigure;
 }
@@ -85,8 +85,8 @@ public class WarpSkillData
 {
     public int id;
     public string name;
-    public SkillType skillType;
-    public PlayerTrait userTrait;
+    public string skillType;
+    public string userTrait;
     public List<int> skillAbilityIds = new List<int>();
     public List<float> skillEffectValues = new List<float>();
     public int actionCost;
@@ -94,7 +94,7 @@ public class WarpSkillData
     public bool usingAgain;
     public bool skillEnhance;
     public float enhanceFigure;
-    public DamageType damageType;
+    public string damageType;
 }
 
 [Serializable]
@@ -104,7 +104,7 @@ public class EnemyData
     public string name;
     public List<int> attackIds = new List<int>();
     public float hp;
-    public EnemyTrait trait;
+    public string trait;
 }
 
 [Serializable]
@@ -112,18 +112,18 @@ public class EnemyAttackData
 {
     public int id;
     public string name;
-    public SkillType attackType;
+    public string attackType;
     public int skillAbilityId;
     public List<int> attackEffectValues = new List<int>();
-    public DamageType damageType;
+    public string damageType;
 }
 
 [Serializable]
 public class AbilityData
 {
     public int id;
-    public EffectType effect;
-    public AbilityCategory category;
+    public string effect;
+    public string category;
     public string description;
 }
 

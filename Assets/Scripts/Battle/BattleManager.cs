@@ -54,6 +54,8 @@ public class BattleManager : MonoBehaviour
 
         currentState = BattleState.PlayerTurn;
 
+        player.OnTurnStart(); // 턴 시작시 스킬 사용기록 초기화
+
         if (DataManager.Instance.playerDict.ContainsKey(player.id))
             player.currentAP = DataManager.Instance.playerDict[player.id].actionPoint;
 
