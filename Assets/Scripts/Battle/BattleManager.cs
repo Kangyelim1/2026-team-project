@@ -140,6 +140,10 @@ public class BattleManager : MonoBehaviour
             if (BattleUI.Instance != null)
                 BattleUI.Instance.AddLog("패배... 게임 오버.");
 
+            //GameOver 패널 열림
+            if (GameOverUI.Instance != null)
+                GameOverUI.Instance.ShowGameOver();
+
             return true;
         }
 
@@ -156,8 +160,7 @@ public class BattleManager : MonoBehaviour
 
         Debug.Log("승리! 보상을 획득합니다.");
 
-        // BattleUI 로그 제거 (데미지 로그 섞임 방지)
-        // BattleUI.Instance.AddLog("승리! 보상을 획득합니다.");
+        
 
         int random = Random.Range(0, 100);
         Debug.Log($"신녀 이벤트 확률 체크: {random}");
