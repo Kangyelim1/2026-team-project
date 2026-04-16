@@ -25,6 +25,8 @@ public class BattleManager : MonoBehaviour
     public int priestEventChance = 40; // 기본 40% 확률
     // 이벤트 중복 방지용
     private bool eventTriggered = false;
+    //전투 횟수 카운트
+    private int battleCount = 0;
 
     void Awake()
     {
@@ -97,6 +99,12 @@ public class BattleManager : MonoBehaviour
         int randomSkillID = enemy.skillList[Random.Range(0, enemy.skillList.Count)];
         Debug.Log($"[Enemy Turn] randomSkillID: {randomSkillID}");
 
+        //랜덤 데미지 
+        int randomDamage = Random.Range(3, 8);
+        player.TakeDamage(randomDamage);
+        if (BattleUI.Instance != null)
+            BattleUI.Instance.AddLog($"{enemy.charName}가 {randomDamage} 데미지를 입힘");
+
         enemy.UseEnemySkill(randomSkillID, player);
 
         if (CheckGameOver())
@@ -112,11 +120,9 @@ public class BattleManager : MonoBehaviour
     {
         Debug.Log("이벤트 종료");
 
-        // 이벤트 상태 종료
         currentState = BattleState.Start;
 
-        // 이벤트 중복 방지 초기화
-        eventTriggered = false;
+        SetupBattle(DataManager.SelectedPlayerID, battleCount + 1);
     }
 
     bool CheckGameOver()
@@ -153,19 +159,31 @@ public class BattleManager : MonoBehaviour
     //전투 승리 함수
     void OnBattleWin()
     {
-        // 이미 이벤트 실행되었으면 실행하지 않음
-        if (eventTriggered) return;
+        battleCount++;
+        Debug.Log($"현재 전투 횟수: {battleCount}");
 
-        eventTriggered = true;
+        if(battleCount >= 6)
+        {
+            Debug.Log("게임 클리어");
+            if(GameClearUI.Instance != null)
+                GameClearUI.Instance.ShowGameClear();
+
+            return;
+        }
+
+        
+        //if (eventTriggered) return;
+
+        //eventTriggered = true;
 
         Debug.Log("승리! 보상을 획득합니다.");
 
         
+        //신녀 이벤트 확률인데 일단 가려봄
+        //int random = Random.Range(0, 100);
+        //Debug.Log($"신녀 이벤트 확률 체크: {random}");
 
-        int random = Random.Range(0, 100);
-        Debug.Log($"신녀 이벤트 확률 체크: {random}");
-
-        if (random < priestEventChance)
+        if (battleCount == 2 || battleCount == 4)
         {
             Debug.Log("신녀 이벤트 등장!");
             StartEvent();
@@ -174,6 +192,12 @@ public class BattleManager : MonoBehaviour
         {
             Debug.Log("이벤트 없음");
             EndEvent();
+        }
+
+        if(battleCount >= 6)
+        {
+            Debug.Log("게임 엔딩");
+            return;
         }
     }
 
