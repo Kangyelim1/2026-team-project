@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement; // 스토리 씬으로 넘어가기 위해 필요함
 
 public enum BattleState
 {
@@ -10,8 +11,6 @@ public enum BattleState
     Lose
 }
 
-
-
 public class BattleManager : MonoBehaviour
 {
     public static BattleManager Instance;
@@ -20,13 +19,16 @@ public class BattleManager : MonoBehaviour
     public Character player;
     public Character enemy;
 
-    // 신녀 이벤트 등장 확률
+    // 신녀 이벤트 등장 확률 (현재는 지정된 횟수에만 확정 등장하도록 사용 중)
     [Range(0, 100)]
-    public int priestEventChance = 40; // 기본 40% 확률
-    // 이벤트 중복 방지용
+    public int priestEventChance = 40;
     private bool eventTriggered = false;
-    //전투 횟수 카운트
-    private int battleCount = 0;
+
+    // [수정됨] 전투 횟수 카운트를 "현재 스토리 스테이지"와 동기화시킵니다!
+    private int currentStage = 1;
+
+    // UI 에러 방지용 (적 다음 공격 미리보기)
+    public int plannedEnemyAttackID = -1;
 
     void Awake()
     {
@@ -35,9 +37,17 @@ public class BattleManager : MonoBehaviour
 
     void Start()
     {
-        int playerID = DataManager.SelectedPlayerID != 0 ? DataManager.SelectedPlayerID : 1;
-        Debug.Log($"[Battle Start] SelectedPlayerID: {playerID}");
-        SetupBattle(playerID, 1);
+        // 씬 전환 시에도 캐릭터가 안 지워지도록 백업 호출
+        int playerID = DataManager.SelectedPlayerID;
+        if (playerID == 0) playerID = PlayerPrefs.GetInt("SavedPlayerID", 1);
+        else { PlayerPrefs.SetInt("SavedPlayerID", playerID); PlayerPrefs.Save(); }
+
+        // 현재 스테이지(전투 횟수)를 불러옵니다.
+        currentStage = PlayerPrefs.GetInt("CurrentStage", 1);
+        Debug.Log($"[Battle Start] SelectedPlayerID: {playerID} / CurrentStage: {currentStage}");
+
+        // 스테이지 번호를 적 ID로 주면, 판이 넘어갈 때마다 다른 적이 나옵니다.
+        SetupBattle(playerID, currentStage);
     }
 
     public void SetupBattle(int playerID, int enemyID)
@@ -56,7 +66,15 @@ public class BattleManager : MonoBehaviour
             BattleUI.Instance.RefreshSkillButtons();
         }
 
+        PlanNextEnemyAttack(); // 적 공격 텍스트 갱신
         StartPlayerTurn();
+    }
+
+    public void PlanNextEnemyAttack()
+    {
+        if (enemy.skillList == null || enemy.skillList.Count == 0) return;
+        plannedEnemyAttackID = enemy.skillList[Random.Range(0, enemy.skillList.Count)];
+        if (BattleUI.Instance != null) BattleUI.Instance.UpdateEnemyIntention(plannedEnemyAttackID);
     }
 
     void StartPlayerTurn()
@@ -64,8 +82,7 @@ public class BattleManager : MonoBehaviour
         if (CheckGameOver()) return;
 
         currentState = BattleState.PlayerTurn;
-
-        player.OnTurnStart(); // 턴 시작시 스킬 사용기록 초기화
+        player.OnTurnStart();
 
         if (DataManager.Instance.playerDict.ContainsKey(player.id))
             player.currentAP = DataManager.Instance.playerDict[player.id].actionPoint;
@@ -76,6 +93,7 @@ public class BattleManager : MonoBehaviour
         {
             BattleUI.Instance.AddLog("플레이어의 턴입니다.");
             BattleUI.Instance.RefreshSkillButtons();
+            if (plannedEnemyAttackID != -1) BattleUI.Instance.UpdateEnemyIntention(plannedEnemyAttackID);
         }
     }
 
@@ -87,7 +105,10 @@ public class BattleManager : MonoBehaviour
         currentState = BattleState.EnemyTurn;
 
         if (BattleUI.Instance != null)
+        {
             BattleUI.Instance.AddLog("적의 턴입니다.");
+            BattleUI.Instance.HideEnemyIntention();
+        }
 
         if (enemy.skillList == null || enemy.skillList.Count == 0)
         {
@@ -96,16 +117,17 @@ public class BattleManager : MonoBehaviour
             return;
         }
 
-        int randomSkillID = enemy.skillList[Random.Range(0, enemy.skillList.Count)];
-        Debug.Log($"[Enemy Turn] randomSkillID: {randomSkillID}");
+        if (plannedEnemyAttackID == -1) PlanNextEnemyAttack();
 
-        //랜덤 데미지 
+        Debug.Log($"[Enemy Turn] plannedEnemyAttackID: {plannedEnemyAttackID}");
+
+        // [작성하신 로직 완벽 유지] 랜덤 데미지 추가
         int randomDamage = Random.Range(3, 8);
         player.TakeDamage(randomDamage);
         if (BattleUI.Instance != null)
             BattleUI.Instance.AddLog($"{enemy.charName}가 {randomDamage} 데미지를 입힘");
 
-        enemy.UseEnemySkill(randomSkillID, player);
+        enemy.UseEnemySkill(plannedEnemyAttackID, player);
 
         if (CheckGameOver())
         {
@@ -113,21 +135,12 @@ public class BattleManager : MonoBehaviour
             return;
         }
 
+        PlanNextEnemyAttack();
         Invoke(nameof(StartPlayerTurn), 1.0f);
-    }
-
-    public void EndEvent()
-    {
-        Debug.Log("이벤트 종료");
-
-        currentState = BattleState.Start;
-
-        SetupBattle(DataManager.SelectedPlayerID, battleCount + 1);
     }
 
     bool CheckGameOver()
     {
-        // 이벤트 중이면 체크 안함
         if (currentState == BattleState.Event)
             return true;
 
@@ -146,7 +159,6 @@ public class BattleManager : MonoBehaviour
             if (BattleUI.Instance != null)
                 BattleUI.Instance.AddLog("패배... 게임 오버.");
 
-            //GameOver 패널 열림
             if (GameOverUI.Instance != null)
                 GameOverUI.Instance.ShowGameOver();
 
@@ -156,34 +168,33 @@ public class BattleManager : MonoBehaviour
         return false;
     }
 
-    //전투 승리 함수
+    // 전투 승리 함수
     void OnBattleWin()
     {
-        battleCount++;
-        Debug.Log($"현재 전투 횟수: {battleCount}");
+        if (eventTriggered) return;
+        eventTriggered = true;
 
-        if(battleCount >= 6)
+        // [핵심 변경 1] 전투 승리 시, 다음 스테이지로 숫자를 1 올립니다.
+        currentStage++;
+        PlayerPrefs.SetInt("CurrentStage", currentStage);
+        PlayerPrefs.Save();
+
+        // (currentStage - 1) 이 곧 이전에 작성하신 battleCount 와 동일한 의미입니다.
+        int winCount = currentStage - 1;
+        Debug.Log($"현재 전투 승리 횟수: {winCount}");
+
+        // [작성하신 로직 유지] 6번 이상 이기면 게임 클리어!
+        if (winCount >= 6)
         {
             Debug.Log("게임 클리어");
-            if(GameClearUI.Instance != null)
-                GameClearUI.Instance.ShowGameClear();
-
+            if (GameClearUI.Instance != null) GameClearUI.Instance.ShowGameClear();
             return;
         }
 
-        
-        //if (eventTriggered) return;
-
-        //eventTriggered = true;
-
         Debug.Log("승리! 보상을 획득합니다.");
 
-        
-        //신녀 이벤트 확률인데 일단 가려봄
-        //int random = Random.Range(0, 100);
-        //Debug.Log($"신녀 이벤트 확률 체크: {random}");
-
-        if (battleCount == 2 || battleCount == 4)
+        // [작성하신 로직 유지] 2번째, 4번째 전투 승리 시 신녀 이벤트 확정 등장
+        if (winCount == 2 || winCount == 4)
         {
             Debug.Log("신녀 이벤트 등장!");
             StartEvent();
@@ -193,23 +204,30 @@ public class BattleManager : MonoBehaviour
             Debug.Log("이벤트 없음");
             EndEvent();
         }
-
-        if(battleCount >= 6)
-        {
-            Debug.Log("게임 엔딩");
-            return;
-        }
     }
 
     void StartEvent()
     {
         currentState = BattleState.Event;
-
         Debug.Log("신녀 이벤트 시작");
 
         if (EventManager.Instance != null)
             EventManager.Instance.ShowPriestEvent();
     }
 
+    public void EndEvent()
+    {
+        Debug.Log("이벤트 종료");
+        currentState = BattleState.Start;
+        eventTriggered = false;
 
+        // [핵심 변경 2] 이벤트가 끝나면 다음 배틀을 바로 부르지 않고, 다음 스토리로 넘깁니다!
+        GoToNextStory();
+    }
+
+    private void GoToNextStory()
+    {
+        Debug.Log($"스테이지 {currentStage} 스토리 씬을 불러옵니다.");
+        SceneManager.LoadScene("StoryScene");
+    }
 }

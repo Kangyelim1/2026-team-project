@@ -25,7 +25,11 @@ public class BattleUI : MonoBehaviour
 
     [Header("Battle Log")]
     public TextMeshProUGUI battleLogText;
-    
+
+    // ★ [여기가 핵심!] 적의 다음 행동을 화면에 띄워줄 텍스트 변수
+    [Header("Enemy Intention UI")]
+    public TextMeshProUGUI enemyIntentionText;
+
     private Dictionary<int, Button> skillButtons = new Dictionary<int, Button>();
 
     public static BattleUI Instance;
@@ -86,10 +90,10 @@ public class BattleUI : MonoBehaviour
             {
                 var sData = DataManager.Instance.skillDict[sID];
                 bool isPlayable = (BattleManager.Instance.currentState == BattleState.PlayerTurn);
-                
+
                 // AP 부족시 비활성화
                 if (p.currentAP < sData.actionCost) isPlayable = false;
-                
+
                 // UsingAgain이 false이고 이번 턴에 이미 썼다면 비활성화
                 if (!sData.usingAgain && p.usedSkillsThisTurn.Contains(sID)) isPlayable = false;
 
@@ -118,38 +122,24 @@ public class BattleUI : MonoBehaviour
         skillButtons.Clear();
 
         var player = BattleManager.Instance.player;
-        Debug.Log($"[UI] player.skillList count = {player.skillList.Count}");
 
         foreach (int skillID in player.skillList)
         {
-            Debug.Log($"[UI] 검사 중 skillID = {skillID}");
-
-            if (!DataManager.Instance.skillDict.ContainsKey(skillID))
-            {
-                Debug.LogWarning($"[UI] skillDict에 없음: {skillID}");
-                continue;
-            }
+            if (!DataManager.Instance.skillDict.ContainsKey(skillID)) continue;
 
             var skillData = DataManager.Instance.skillDict[skillID];
-            Debug.Log($"[UI] skill found: {skillData.name}, type:{skillData.skillType}");
 
-            if (!string.IsNullOrEmpty(skillData.skillType) && skillData.skillType.ToLower() == "passive")
-            {
-                Debug.Log($"[UI] 패시브라서 버튼 생성 안 함: {skillData.name}");
-                continue;
-            }
+            if (!string.IsNullOrEmpty(skillData.skillType) && skillData.skillType.ToLower() == "passive") continue;
 
             GameObject btnObj = Instantiate(skillButtonPrefab, skillButtonParent);
-
             TextMeshProUGUI[] texts = btnObj.GetComponentsInChildren<TextMeshProUGUI>();
             if (texts.Length >= 2)
             {
                 texts[0].text = skillData.name;
-                texts[1].text = skillData.actionCost.ToString(); // 두 번째 텍스트에 비용만 표시
+                texts[1].text = skillData.actionCost.ToString();
             }
             else if (texts.Length == 1)
             {
-                // 아직 프리팹에 두 번째 텍스트를 안 넣었을 경우를 대비한 옛날 방식 호환 코드
                 texts[0].text = $"{skillData.name}\n(Cost: {skillData.actionCost})";
             }
 
@@ -161,24 +151,10 @@ public class BattleUI : MonoBehaviour
                 btn.onClick.RemoveAllListeners();
                 btn.onClick.AddListener(() =>
                 {
-                    Debug.Log($"[버튼 클릭] skillID:{capturedSkillID}");
-
                     if (BattleManager.Instance.currentState == BattleState.PlayerTurn)
-                    {
                         player.UseSkill(capturedSkillID, BattleManager.Instance.enemy);
-                    }
-                    else
-                    {
-                        Debug.LogWarning("[버튼 클릭] 지금은 플레이어 턴이 아님");
-                    }
                 });
             }
-            else
-            {
-                Debug.LogWarning("[UI] 버튼 프리팹에 Button 컴포넌트 없음");
-            }
-
-            Debug.Log($"[UI] 버튼 생성 완료: {skillData.name}");
         }
     }
 
@@ -197,20 +173,54 @@ public class BattleUI : MonoBehaviour
 
     public void ClearLog()
     {
-        if (battleLogText != null)
-            battleLogText.text = "";
+        if (battleLogText != null) battleLogText.text = "";
     }
 
     public void AddLog(string message)
     {
         if (battleLogText != null)
         {
-            if (string.IsNullOrEmpty(battleLogText.text))
-                battleLogText.text = message;
-            else
-                battleLogText.text += "\n" + message;
+            if (string.IsNullOrEmpty(battleLogText.text)) battleLogText.text = message;
+            else battleLogText.text += "\n" + message;
         }
-
         Debug.Log(message);
+    }
+
+    // ==========================================================
+    // ★ 에러의 원인! 이 두 함수가 추가되었습니다. ★
+    // ==========================================================
+
+    // 적이 다음 턴에 쓸 공격을 미리 화면(EnemyIntentionText)에 띄워줍니다.
+    public void UpdateEnemyIntention(int attackID)
+    {
+        if (enemyIntentionText == null) return;
+
+        if (DataManager.Instance != null && DataManager.Instance.enemyAttackDict.ContainsKey(attackID))
+        {
+            var attackData = DataManager.Instance.enemyAttackDict[attackID];
+
+            int expectedDamage = 0;
+            if (attackData.attackEffectValues != null && attackData.attackEffectValues.Count > 0)
+            {
+                expectedDamage = attackData.attackEffectValues[0];
+            }
+
+            enemyIntentionText.text = $"예정 공격: {attackData.name}\n(데미지: {expectedDamage})";
+            enemyIntentionText.gameObject.SetActive(true);
+        }
+        else
+        {
+            enemyIntentionText.text = "알 수 없는 공격";
+            enemyIntentionText.gameObject.SetActive(true);
+        }
+    }
+
+    // 적이 자기 턴에 공격을 실행할 때는 예고 텍스트를 잠시 숨깁니다.
+    public void HideEnemyIntention()
+    {
+        if (enemyIntentionText != null)
+        {
+            enemyIntentionText.gameObject.SetActive(false);
+        }
     }
 }
