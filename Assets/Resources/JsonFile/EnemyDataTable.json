@@ -2,7 +2,7 @@
   "rows": [
     {
       "id": 1,
-      "name": "무환의 벼",
+      "name": "무한의 벼",
       "attackIds": [10],
       "hp": 70,
       "trait": "Mob"

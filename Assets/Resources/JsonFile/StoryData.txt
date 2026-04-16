@@ -4,7 +4,7 @@
     { "id": 2, "characterName": "팥쥐", "text": "저거 봐, 또 느릿느릿. 일부러 그러는 거 아냐?", "portraitPath": "Patjwi_Smirk" },
     { "id": 3, "characterName": "콩쥐", "text": "…죄송합니다…", "portraitPath": "Kongjwi_Sad" },
     { "id": 4, "characterName": "계모", "text": "쓸모 없는 년", "portraitPath": "StepMother_Angry" },
-    { "id": 5, "characterName": "콩쥐 (내면)", "text": "왜… 내 인생을 이리도 기구 한...", "portraitPath": "Kongjwi_Sad" },
+    { "id": 5, "characterName": "콩쥐 (내면)", "text": "왜… 내 인생을 이리도 기구 한거지", "portraitPath": "Kongjwi_Sad" },
     { "id": 6, "characterName": "(시스템)", "text": "[그 날 밤]", "portraitPath": "" },
     { "id": 7, "characterName": "정체불명", "text": "너는… 곧 죽는다.", "portraitPath": "Unknown_Noise" },
     { "id": 8, "characterName": "콩쥐", "text": "…누구야?", "portraitPath": "Kongjwi_Surprised" },
