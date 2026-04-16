@@ -1,0 +1,19 @@
+{
+  "rows": [
+    { "id": 1, "characterName": "계모", "text": "아직도 이거 다 못했어?", "portraitPath": "StepMother_Normal" },
+    { "id": 2, "characterName": "팥쥐", "text": "저거 봐, 또 느릿느릿. 일부러 그러는 거 아냐?", "portraitPath": "Patjwi_Smirk" },
+    { "id": 3, "characterName": "콩쥐", "text": "…죄송합니다…", "portraitPath": "Kongjwi_Sad" },
+    { "id": 4, "characterName": "계모", "text": "쓸모 없는 년", "portraitPath": "StepMother_Angry" },
+    { "id": 5, "characterName": "콩쥐 (내면)", "text": "왜… 내 인생을 이리도 기구 한...", "portraitPath": "Kongjwi_Sad" },
+    { "id": 6, "characterName": "(시스템)", "text": "[그 날 밤]", "portraitPath": "" },
+    { "id": 7, "characterName": "정체불명", "text": "너는… 곧 죽는다.", "portraitPath": "Unknown_Noise" },
+    { "id": 8, "characterName": "콩쥐", "text": "…누구야?", "portraitPath": "Kongjwi_Surprised" },
+    { "id": 9, "characterName": "미래의 콩쥐", "text": "…도망치지 마…\n…바꿔…", "portraitPath": "Kongjwi_Bloody" },
+    { "id": 10, "characterName": "콩쥐", "text": "…내가 죽는다고?", "portraitPath": "Kongjwi_Shocked" },
+    { "id": 11, "characterName": "콩쥐", "text": "…그럼…\n(잠시 침묵)", "portraitPath": "Kongjwi_Thinking" },
+    { "id": 12, "characterName": "콩쥐", "text": "…먼저 죽이면 되겠네.", "portraitPath": "Kongjwi_CreepySmile" },
+    { "id": 13, "characterName": "(시스템)", "text": "[다음 날 아침]", "portraitPath": "" },
+    { "id": 14, "characterName": "계모", "text": "오늘은 밭 다 갈아놔.", "portraitPath": "StepMother_Normal" },
+    { "id": 15, "characterName": "콩쥐", "text": "…네.", "portraitPath": "Kongjwi_FaintSmile" }
+  ]
+}
