@@ -2495,6 +2495,7 @@ GameObject:
   - component: {fileID: 2061901594}
   - component: {fileID: 2061901593}
   - component: {fileID: 2061901592}
+  - component: {fileID: 2061901595}
   m_Layer: 5
   m_Name: CharButton01
   m_TagString: Untagged
@@ -2567,13 +2568,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 516120850}
-        m_TargetAssemblyTypeName: CharacterSelectManager, Assembly-CSharp
-        m_MethodName: OpenDetail
-        m_Mode: 2
+      - m_Target: {fileID: 2061901595}
+        m_TargetAssemblyTypeName: CharacterCard, Assembly-CSharp
+        m_MethodName: OnClickCard
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: eaacd2eb0218a02429337d5226ac1718, type: 2}
-          m_ObjectArgumentAssemblyTypeName: CharacterData, Assembly-CSharp
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2617,6 +2618,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2061901590}
   m_CullTransparentMesh: 1
+--- !u!114 &2061901595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061901590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88e656ae1337fbb4f98810ef8792f12d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myData: {fileID: 11400000, guid: eaacd2eb0218a02429337d5226ac1718, type: 2}
+  manager: {fileID: 516120850}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
