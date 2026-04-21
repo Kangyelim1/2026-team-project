@@ -35,36 +35,7 @@
       "effect": "Defence",
       "category": "Defensive",
       "description": "상대방의 공격을 방어한다"
-    },
-    {
-      "id": 106,
-      "effect": "Heal",
-      "category": "Defensive",
-      "description": "자신의 체력을 회복한다"
-    },
-    {
-      "id": 107,
-      "effect": "DamageLimit",
-      "category": "Defensive",
-      "description": "한 턴에 일정 이상 피해를 입지 않는다"
-    },
-    {
-      "id": 108,
-      "effect": "DeathEvasion",
-      "category": "Defensive",
-      "description": "사망 시 게임이 종료되지 않고 한 번만 체력이 1이 된다"
-    },
-    {
-      "id": 109,
-      "effect": "SkillEnforce",
-      "category": "Positive",
-      "description": "같은 종류의 소환형 스킬을 강화한다"
-    },
-    {
-      "id": 110,
-      "effect": "Negative",
-      "category": "Negative",
-      "description": ""
     }
+    
   ]
 }

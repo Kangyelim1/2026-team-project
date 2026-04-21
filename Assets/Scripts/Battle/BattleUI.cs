@@ -9,6 +9,9 @@ public class BattleUI : MonoBehaviour
     public Image playerIllustration;
     public Image enemyIllustration;
 
+    [Header("Background")] 
+    public Image battleBackground; // 전투 배경 이미지
+
     [Header("Names")]
     public TextMeshProUGUI playerNameText;
     public TextMeshProUGUI enemyNameText;
@@ -26,7 +29,7 @@ public class BattleUI : MonoBehaviour
     [Header("Battle Log")]
     public TextMeshProUGUI battleLogText;
 
-    // ★ [여기가 핵심!] 적의 다음 행동을 화면에 띄워줄 텍스트 변수
+    //  [여기가 핵심!] 적의 다음 행동을 화면에 띄워줄 텍스트 변수
     [Header("Enemy Intention UI")]
     public TextMeshProUGUI enemyIntentionText;
 
@@ -129,6 +132,8 @@ public class BattleUI : MonoBehaviour
 
             var skillData = DataManager.Instance.skillDict[skillID];
 
+            if (!skillData.activate) continue;
+
             if (!string.IsNullOrEmpty(skillData.skillType) && skillData.skillType.ToLower() == "passive") continue;
 
             GameObject btnObj = Instantiate(skillButtonPrefab, skillButtonParent);
@@ -187,7 +192,7 @@ public class BattleUI : MonoBehaviour
     }
 
     // ==========================================================
-    // ★ 에러의 원인! 이 두 함수가 추가되었습니다. ★
+    //  에러의 원인! 이 두 함수가 추가되었습니다. 
     // ==========================================================
 
     // 적이 다음 턴에 쓸 공격을 미리 화면(EnemyIntentionText)에 띄워줍니다.

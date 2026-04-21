@@ -230,4 +230,6 @@ public class BattleManager : MonoBehaviour
         Debug.Log($"스테이지 {currentStage} 스토리 씬을 불러옵니다.");
         SceneManager.LoadScene("StoryScene");
     }
+
+
 }

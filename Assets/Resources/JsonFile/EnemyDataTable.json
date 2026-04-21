@@ -5,7 +5,9 @@
       "name": "무한의 벼",
       "attackIds": [10],
       "hp": 70,
-      "trait": "Mob"
+      "trait": "Mob",
+      "enemySprite": "Assets/Images/monster_field_ghost",
+      "background": "Assets/Images/BG_A_Thatched_Cottage_Daytime_260412_v01"
     },
     {
       "id": 2,
