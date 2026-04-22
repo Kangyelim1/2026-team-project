@@ -25,8 +25,6 @@ public class CharacterSelectManager : MonoBehaviour
     public void OpenDetail(CharacterData data)
     {
         DataManager.SelectedPlayerID = data.id;
-
-        // ★ [안전장치] 선택한 캐릭터를 백업해둡니다.
         PlayerPrefs.SetInt("SavedPlayerID", data.id);
         PlayerPrefs.Save();
 
@@ -34,20 +32,27 @@ public class CharacterSelectManager : MonoBehaviour
         detailDescText.text = data.desc;
         detailIllustration.sprite = data.illustration;
 
+        // [수정된 부분] 텍스트가 깔끔하게 "HP 100 / 행동력 3" 형태로 나오도록 수정
         if (detailStatText != null)
         {
             if (DataManager.Instance != null && DataManager.Instance.playerDict.ContainsKey(DataManager.SelectedPlayerID))
             {
                 PlayerData pData = DataManager.Instance.playerDict[DataManager.SelectedPlayerID];
-                detailStatText.text = $"HP {pData.hp} / 행동력 {pData.actionPoint}";
+                // JSON에서 가져온 데이터를 줄바꿈(\n) 해서 표시합니다.
+                detailStatText.text = $"HP {pData.hp}\n 행동력 {pData.actionPoint}";
             }
             else
             {
-                if (data.id == 1) detailStatText.text = "HP 100 / 행동력 3";
-                else if (data.id == 2) detailStatText.text = "HP 80 / 행동력 2";
-                else detailStatText.text = "스탯 정보 없음";
+                // 데이터 매니저가 없을 때 (테스트용 하드코딩)
+                if (data.id == 1)
+                    detailStatText.text = "HP 100\n 행동력 3";
+                else if (data.id == 2)
+                    detailStatText.text = "HP 80\n 행동력 2";
+                else
+                    detailStatText.text = "";
             }
         }
+
         detailPanel.SetActive(true);
     }
 

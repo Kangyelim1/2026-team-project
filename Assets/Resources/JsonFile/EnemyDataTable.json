@@ -10,7 +10,7 @@
     {
       "id": 2,
       "name": "팥쥐",
-      "attackIds": [  201, 202 ],
+      "attackIds": [ 11, 12, 30, 201, 202 ],
       "hp": 100,
       "trait": "Elite"
     },
