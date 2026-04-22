@@ -5,7 +5,7 @@
       "name": "기본 공격1",
       "attackType": "active",
       "skillAbilityId": 100,
-      "attackEffectValues": [4, 5, 6, 7],
+      "attackEffectValues": [ 4, 5, 6, 7 ],
       "damageType": "direct"
     },
     {
@@ -13,7 +13,7 @@
       "name": "기본 공격2",
       "attackType": "active",
       "skillAbilityId": 100,
-      "attackEffectValues": [6, 7, 8, 9, 10],
+      "attackEffectValues": [ 6, 7, 8, 9, 10 ],
       "damageType": "direct"
     },
     {
@@ -21,7 +21,7 @@
       "name": "기본 공격3",
       "attackType": "active",
       "skillAbilityId": 100,
-      "attackEffectValues": [10, 11, 12, 13, 14],
+      "attackEffectValues": [ 10, 11, 12, 13, 14 ],
       "damageType": "direct"
     },
     {
@@ -29,7 +29,7 @@
       "name": "기본 공격4",
       "attackType": "active",
       "skillAbilityId": 100,
-      "attackEffectValues": [15, 16, 17, 18],
+      "attackEffectValues": [ 15, 16, 17, 18 ],
       "damageType": "direct"
     },
     {
@@ -37,7 +37,7 @@
       "name": "보스몹 기본 공격",
       "attackType": "active",
       "skillAbilityId": 100,
-      "attackEffectValues": [6, 9, 11, 13],
+      "attackEffectValues": [ 6, 9, 11, 13 ],
       "damageType": "direct"
     },
     {
@@ -45,7 +45,7 @@
       "name": "보스몹 공격",
       "attackType": "active",
       "skillAbilityId": 100,
-      "attackEffectValues": [12, 14, 16, 18],
+      "attackEffectValues": [ 12, 14, 16, 18 ],
       "damageType": "direct"
     },
     {
@@ -53,7 +53,7 @@
       "name": "방어1",
       "attackType": "active",
       "skillAbilityId": 200,
-      "attackEffectValues": [3, 4, 5],
+      "attackEffectValues": [ 3, 4, 5 ],
       "damageType": "direct"
     },
     {
@@ -61,7 +61,7 @@
       "name": "방어2",
       "attackType": "active",
       "skillAbilityId": 200,
-      "attackEffectValues": [8, 9, 10],
+      "attackEffectValues": [ 8, 9, 10 ],
       "damageType": "direct"
     },
     {
@@ -69,7 +69,7 @@
       "name": "타격 제한1",
       "attackType": "passive",
       "skillAbilityId": 202,
-      "attackEffectValues": [9],
+      "attackEffectValues": [ 9 ],
       "damageType": "direct"
     },
     {
@@ -77,7 +77,63 @@
       "name": "반격",
       "attackType": "passive",
       "skillAbilityId": 102,
-      "attackEffectValues": [2],
+      "attackEffectValues": [ 2 ],
+      "damageType": "direct"
+    },
+    {
+      "id": 101,
+      "name": "벼 이삭 찌르기",
+      "attackType": "Normal",
+      "skillAbilityId": 100,
+      "attackEffectValues": [ 5 ],
+      "damageType": "direct"
+    },
+    {
+      "id": 201,
+      "name": "독설 내뱉기",
+      "attackType": "Normal",
+      "skillAbilityId": 100,
+      "attackEffectValues": [ 10 ],
+      "damageType": "direct"
+    },
+    {
+      "id": 202,
+      "name": "꼬집기",
+      "attackType": "Normal",
+      "skillAbilityId": 100,
+      "attackEffectValues": [ 15 ],
+      "damageType": "direct"
+    },
+    {
+      "id": 301,
+      "name": "무자비한 매질",
+      "attackType": "Normal",
+      "skillAbilityId": 100,
+      "attackEffectValues": [ 20 ],
+      "damageType": "direct"
+    },
+    {
+      "id": 302,
+      "name": "호통 치기",
+      "attackType": "Normal",
+      "skillAbilityId": 100,
+      "attackEffectValues": [ 25 ],
+      "damageType": "direct"
+    },
+    {
+      "id": 401,
+      "name": "관아의 심판",
+      "attackType": "Normal",
+      "skillAbilityId": 100,
+      "attackEffectValues": [ 30 ],
+      "damageType": "direct"
+    },
+    {
+      "id": 402,
+      "name": "곤장 치기",
+      "attackType": "Normal",
+      "skillAbilityId": 100,
+      "attackEffectValues": [ 40 ],
       "damageType": "direct"
     }
   ]

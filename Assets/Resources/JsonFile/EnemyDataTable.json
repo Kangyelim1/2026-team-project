@@ -3,73 +3,29 @@
     {
       "id": 1,
       "name": "무한의 벼",
-      "attackIds": [10],
-      "hp": 70,
-      "trait": "Mob",
-      "enemySprite": "Assets/Images/monster_field_ghost",
-      "background": "Assets/Images/BG_A_Thatched_Cottage_Daytime_260412_v01"
-    },
-    {
-      "id": 2,
-      "name": "반격의 베",
-      "attackIds": [10, 11, 30, 53],
+      "attackIds": [ 10, 30 ],
       "hp": 50,
       "trait": "Mob"
     },
     {
-      "id": 3,
+      "id": 2,
       "name": "팥쥐",
-      "attackIds": [10, 20, 30],
-      "hp": 80,
+      "attackIds": [  201, 202 ],
+      "hp": 100,
       "trait": "Elite"
     },
     {
-      "id": 4,
-      "name": "밑 빠진 독",
-      "attackIds": [11, 50],
-      "hp": 60,
-      "trait": "Mob"
-    },
-    {
-      "id": 5,
+      "id": 3,
       "name": "계모",
-      "attackIds": [11, 20, 30],
-      "hp": 85,
-      "trait": "Elite"
-    },
-    {
-      "id": 6,
-      "name": "화난 계모",
-      "attackIds": [20, 21, 31],
-      "hp": 90,
+      "attackIds": [ 20, 21, 31, 53, 301, 302 ],
+      "hp": 150,
       "trait": "Boss"
     },
     {
-      "id": 7,
-      "name": "아기 호랑이",
-      "attackIds": [10],
-      "hp": 40,
-      "trait": "Mob"
-    },
-    {
-      "id": 8,
-      "name": "부모 호랑이",
-      "attackIds": [10, 11, 12, 30],
-      "hp": 80,
-      "trait": "Mob"
-    },
-    {
-      "id": 9,
-      "name": "유령 호랑이",
-      "attackIds": [11, 30, 50],
-      "hp": 70,
-      "trait": "Elite"
-    },
-    {
-      "id": 10,
-      "name": "산의 주인",
-      "attackIds": [12, 21, 31],
-      "hp": 120,
+      "id": 4,
+      "name": "원님",
+      "attackIds": [ 13, 21, 31, 50, 401, 402 ],
+      "hp": 150,
       "trait": "Boss"
     }
   ]
