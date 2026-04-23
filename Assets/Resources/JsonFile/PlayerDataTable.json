@@ -3,7 +3,7 @@
     {
       "id": 1,
       "name": "콩쥐",
-      "hp": 100,
+      "hp": 1000,
       "actionPoint": 3,
       "trait": "Summoner",
       "encounteredEnemyIds": [1, 2, 3, 4, 5, 6]

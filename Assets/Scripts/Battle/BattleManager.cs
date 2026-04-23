@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public enum BattleState { Start, PlayerTurn, EnemyTurn, Event, Win, Lose }
 
@@ -42,13 +43,14 @@ public class BattleManager : MonoBehaviour
         Debug.Log($"Battle Start! PlayerID: {playerID}, Stage: {currentStage}");
 
         // ====================================================
-        // [스테이지별 첫 번째 등장 적 ID]
-        // 스테이지 1 → 무한의 벼(ID:1) 등장
-        // 스테이지 2 → 팥쥐(ID:2) 등장
-        // 스테이지 3 → 계모(ID:3) 등장
-        // 스테이지 4 → 원님(ID:4) 등장
+        // [스테이지별 첫 번째 등장 적 세팅 (새로운 ID 기준)]
         // ====================================================
-        int firstEnemyID = currentStage; // ID가 스테이지 번호와 일치
+        int firstEnemyID = 1;
+        if (currentStage == 1) firstEnemyID = 1;      // 스테이지 1: 무한의 벼 (ID: 1)
+        else if (currentStage == 2) firstEnemyID = 3; // 스테이지 2: 팥쥐 (ID: 3)
+        else if (currentStage == 3) firstEnemyID = 5; // 스테이지 3: 계모 (ID: 5)
+        else if (currentStage == 4) firstEnemyID = 6; // 스테이지 4: 원님 (ID: 6)
+
         SetupBattle(playerID, firstEnemyID);
     }
 
@@ -60,7 +62,33 @@ public class BattleManager : MonoBehaviour
         player.InitPlayer(playerID);
         enemy.InitEnemy(enemyID);
 
-        Debug.Log($"{enemy.charName} 등장!");
+        Debug.Log($"{enemy.charName} 등장! (ID: {enemyID})");
+
+        // ====================================================
+        // [전투 배경 이미지 동적 변경 로직 (요청하신 규칙)]
+        // ====================================================
+        if (BattleUI.Instance != null && BattleUI.Instance.battleBackground != null)
+        {
+            string bgName = "Bg_Yard"; // 기본 배경
+
+            if (enemyID == 1) bgName = "Bg_Yard";            // 1번(벼) -> 마당(Bg_Yard)
+            else if (enemyID == 2) bgName = "Bg_Morning";    // 2번(베) -> 아침(Bg_Morning)
+            else if (enemyID == 3) bgName = "Bg_Morning";    // 3번(팥쥐) -> 아침(Bg_Morning)
+            else if (enemyID == 4) bgName = "Bg_Night";      // 4번(독) -> 밤(Bg_Night)
+            else if (enemyID == 5) bgName = "Bg_Village";    // 5번(계모) -> 마을(Bg_Village)
+            else if (enemyID == 6) bgName = "Bg_Village";    // 6번(원님) -> 마을(Bg_Village)
+
+            Sprite bgSprite = Resources.Load<Sprite>($"Backgrounds/{bgName}");
+            if (bgSprite != null)
+            {
+                BattleUI.Instance.battleBackground.sprite = bgSprite;
+            }
+            else
+            {
+                Debug.LogWarning($"전투 배경을 찾을 수 없습니다! 경로: Resources/Backgrounds/{bgName}");
+            }
+        }
+        // ====================================================
 
         if (BattleUI.Instance != null)
         {
@@ -179,16 +207,9 @@ public class BattleManager : MonoBehaviour
 
         // ====================================================
         // [연속 전투 분기]
-        //
-        // 무한의 벼(1) 처치 → 공격하는 베(5) 등장 후 연전
-        // 팥쥐(2) 처치    → 밑빠진 독(6) 등장 후 연전
-        // 공격하는 베(5) 처치 → 스토리(스테이지2)로 이동
-        // 밑빠진 독(6) 처치   → 스토리(스테이지3)로 이동
-        // 계모(3) 처치    → 스토리(스테이지4)로 이동
-        // 원님(4) 처치    → 게임 클리어
         // ====================================================
 
-        if (defeatedEnemyID == 1) // 무한의 벼 처치 → 베 등장
+        if (defeatedEnemyID == 1) // 무한의 벼(ID:1) 처치 → 공격하는 베(ID:2) 등장
         {
             Debug.Log("무한의 벼 처치 완료! 공격하는 베 등장!");
             if (BattleUI.Instance != null)
@@ -197,7 +218,7 @@ public class BattleManager : MonoBehaviour
             return;
         }
 
-        if (defeatedEnemyID == 2) // 팥쥐 처치 → 밑빠진 독 등장
+        if (defeatedEnemyID == 3) // 팥쥐(ID:3) 처치 → 밑빠진 독(ID:4) 등장
         {
             Debug.Log("팥쥐 처치 완료! 밑빠진 독 등장!");
             if (BattleUI.Instance != null)
@@ -206,15 +227,17 @@ public class BattleManager : MonoBehaviour
             return;
         }
 
-        // 공격하는 베(5), 밑빠진 독(6), 계모(3), 원님(4) 처치 시
-        // → 스테이지 올리고 스토리 또는 게임 클리어로 이동
+        // ====================================================
+        // [스테이지 클리어 처리]
+        // 베(2), 독(4), 계모(5), 원님(6)을 처치했을 때 여기로 와서 스토리를 진행함
+        // ====================================================
         currentStage++;
         PlayerPrefs.SetInt("CurrentStage", currentStage);
         PlayerPrefs.Save();
 
         Debug.Log($"스테이지 클리어! 다음 스테이지: {currentStage}");
 
-        // 원님(4) 처치 후(스테이지가 5가 됨) → 게임 클리어
+        // 4스테이지(원님) 클리어 후 게임 클리어
         if (currentStage > 4)
         {
             Debug.Log("게임 클리어!");
@@ -223,41 +246,48 @@ public class BattleManager : MonoBehaviour
             return;
         }
 
-        // 스테이지 이동 전 이벤트 여부 체크 (필요 시 조건 수정 가능)
+        // 바로 다음 스토리로 넘어갑니다.
         GoToNextStory();
     }
 
-    // 공격하는 베(ID: 5) 전투 시작
+    // 공격하는 베(ID: 2) 연전 셋업
     private void StartBattle_Loom()
     {
         int playerID = DataManager.SelectedPlayerID;
-        SetupBattle(playerID, 5);
+        SetupBattle(playerID, 2);
     }
 
-    // 밑빠진 독(ID: 6) 전투 시작
+    // 밑빠진 독(ID: 4) 연전 셋업
     private void StartBattle_Pot()
     {
         int playerID = DataManager.SelectedPlayerID;
-        SetupBattle(playerID, 6);
-    }
-
-    void StartEvent()
-    {
-        currentState = BattleState.Event;
-        if (EventManager.Instance != null)
-            EventManager.Instance.ShowPriestEvent();
-    }
-
-    public void EndEvent()
-    {
-        currentState = BattleState.Start;
-        eventTriggered = false;
-        GoToNextStory();
+        SetupBattle(playerID, 4);
     }
 
     private void GoToNextStory()
     {
         Debug.Log($"스토리 씬으로 이동. 현재 Stage: {currentStage}");
         SceneManager.LoadScene("StoryScene");
+    }
+
+    // ====================================================
+    // 이벤트 씬(회복/스킬 강화) 진행 관련 함수 (추가)
+    // ====================================================
+    void StartEvent()
+    {
+        currentState = BattleState.Event;
+        Debug.Log("이벤트 씬 진입");
+        if (EventManager.Instance != null)
+        {
+            EventManager.Instance.ShowPriestEvent();
+        }
+    }
+
+    public void EndEvent()
+    {
+        Debug.Log("이벤트 종료 후 스토리 이동 준비");
+        currentState = BattleState.Start;
+        eventTriggered = false;
+        GoToNextStory();
     }
 }

@@ -4,43 +4,43 @@
       "id": 1,
       "name": "무한의 벼",
       "attackIds": [ 10, 30 ],
-      "hp": 50,
+      "hp": 1,
       "trait": "Mob"
     },
     {
       "id": 2,
-      "name": "팥쥐",
-      "attackIds": [ 11, 12, 30, 201, 202 ],
-      "hp": 100,
-      "trait": "Elite"
-    },
-    {
-      "id": 3,
-      "name": "계모",
-      "attackIds": [ 20, 21, 31, 53, 301, 302 ],
-      "hp": 150,
-      "trait": "Boss"
-    },
-    {
-      "id": 4,
-      "name": "원님",
-      "attackIds": [ 13, 21, 31, 50, 401, 402 ],
-      "hp": 150,
-      "trait": "Boss"
-    },
-    {
-      "id": 5,
       "name": "공격하는 베",
       "attackIds": [ 10, 30 ],
-      "hp": 60,
+      "hp": 1,
       "trait": "Mob"
     },
     {
-      "id": 6,
+      "id": 3,
+      "name": "팥쥐",
+      "attackIds": [ 11, 12, 30, 201, 202 ],
+      "hp": 1,
+      "trait": "Elite"
+    },
+    {
+      "id": 4,
       "name": "밑빠진 독",
       "attackIds": [ 11, 30 ],
-      "hp": 80,
+      "hp": 1,
       "trait": "Elite"
+    },
+    {
+      "id": 5,
+      "name": "계모",
+      "attackIds": [ 20, 21, 31, 53, 301, 302 ],
+      "hp": 1,
+      "trait": "Boss"
+    },
+    {
+      "id": 6,
+      "name": "원님",
+      "attackIds": [ 13, 21, 31, 50, 401, 402 ],
+      "hp": 1,
+      "trait": "Boss"
     }
   ]
 }
