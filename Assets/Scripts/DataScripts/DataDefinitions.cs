@@ -78,6 +78,7 @@ public class SkillData
     public string damageType;
     public bool skillEnhance;
     public float enhanceFigure;
+    public string iconPath;
 }
 
 [Serializable]

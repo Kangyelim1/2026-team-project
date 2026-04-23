@@ -131,6 +131,22 @@ public class BattleUI : MonoBehaviour
             if (!string.IsNullOrEmpty(skillData.skillType) && skillData.skillType.ToLower() == "passive") continue;
 
             GameObject btnObj = Instantiate(skillButtonPrefab, skillButtonParent);
+
+            Image iconImage = btnObj.transform.Find("Icon").GetComponent<Image>();
+            if (iconImage != null && !string.IsNullOrEmpty(skillData.iconPath))
+            {
+                Sprite icon = Resources.Load<Sprite>(skillData.iconPath);
+
+                if (icon != null)
+                {
+                    iconImage.sprite = icon;
+                }
+                else
+                {
+                    Debug.LogWarning($"아이콘 로드 실패: {skillData.iconPath}");
+                }
+            }
+
             TextMeshProUGUI[] texts = btnObj.GetComponentsInChildren<TextMeshProUGUI>();
 
             if (texts.Length >= 2)

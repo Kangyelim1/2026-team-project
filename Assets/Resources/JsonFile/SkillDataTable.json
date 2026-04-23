@@ -12,7 +12,9 @@
       "usingAgain": false,
       "damageType": "direct",
       "skillEnhance": true,
-      "enhanceFigure": 10
+      "enhanceFigure": 10,
+      "iconPath": "SkillIcons/icon_attack"
+      
     },
     {
       "id": 2,
@@ -26,7 +28,8 @@
       "usingAgain": false,
       "damageType": "summon",
       "skillEnhance": true,
-      "enhanceFigure": 20
+      "enhanceFigure": 20,
+      "iconPath": "SkillIcons/icon_bird"
     },
     {
       "id": 3,
@@ -40,7 +43,8 @@
       "usingAgain": false,
       "damageType": "summon",
       "skillEnhance": true,
-      "enhanceFigure": 40
+      "enhanceFigure": 40,
+      "iconPath": "SkillIcons/icon_bull"
     },
     {
       "id": 4,
@@ -54,7 +58,8 @@
       "usingAgain": true,
       "damageType": "summon",
       "skillEnhance": true,
-      "enhanceFigure": 10
+      "enhanceFigure": 10,
+      "iconPath": "SkillIcons/icon_skill_toad"
     }
   ]
 }
