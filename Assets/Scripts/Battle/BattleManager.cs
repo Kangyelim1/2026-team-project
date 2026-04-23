@@ -65,27 +65,59 @@ public class BattleManager : MonoBehaviour
         Debug.Log($"{enemy.charName} 등장! (ID: {enemyID})");
 
         // ====================================================
-        // [전투 배경 이미지 동적 변경 로직 (요청하신 규칙)]
+        // [유저님 + 동료 통합본: 전투 배경 및 캐릭터/적 일러스트 동적 변경]
         // ====================================================
-        if (BattleUI.Instance != null && BattleUI.Instance.battleBackground != null)
+        if (BattleUI.Instance != null)
         {
-            string bgName = "Bg_Yard"; // 기본 배경
-
-            if (enemyID == 1) bgName = "Bg_Yard";            // 1번(벼) -> 마당(Bg_Yard)
-            else if (enemyID == 2) bgName = "Bg_Morning";    // 2번(베) -> 아침(Bg_Morning)
-            else if (enemyID == 3) bgName = "Bg_Morning";    // 3번(팥쥐) -> 아침(Bg_Morning)
-            else if (enemyID == 4) bgName = "Bg_Night";      // 4번(독) -> 밤(Bg_Night)
-            else if (enemyID == 5) bgName = "Bg_Village";    // 5번(계모) -> 마을(Bg_Village)
-            else if (enemyID == 6) bgName = "Bg_Village";    // 6번(원님) -> 마을(Bg_Village)
-
-            Sprite bgSprite = Resources.Load<Sprite>($"Backgrounds/{bgName}");
-            if (bgSprite != null)
+            // 1. 배경 이미지 변경
+            if (BattleUI.Instance.battleBackground != null)
             {
-                BattleUI.Instance.battleBackground.sprite = bgSprite;
+                string bgName = "Bg_Yard";
+
+                if (enemyID == 1) bgName = "Bg_Yard";
+                else if (enemyID == 2) bgName = "Bg_Morning";
+                else if (enemyID == 3) bgName = "Bg_Morning";
+                else if (enemyID == 4) bgName = "Bg_Night";
+                else if (enemyID == 5) bgName = "Bg_Village";
+                else if (enemyID == 6) bgName = "Bg_Village";
+
+                Sprite bgSprite = Resources.Load<Sprite>($"Backgrounds/{bgName}");
+                if (bgSprite != null) BattleUI.Instance.battleBackground.sprite = bgSprite;
             }
-            else
+
+            // 2. 플레이어(콩쥐) 이미지 띄우기 (고정: 칼 든 콩쥐)
+            if (BattleUI.Instance.playerIllustration != null)
             {
-                Debug.LogWarning($"전투 배경을 찾을 수 없습니다! 경로: Resources/Backgrounds/{bgName}");
+                Sprite playerSprite = Resources.Load<Sprite>("Portraits/Kongjwi_Sword");
+                if (playerSprite != null)
+                {
+                    BattleUI.Instance.playerIllustration.sprite = playerSprite;
+                    BattleUI.Instance.playerIllustration.gameObject.SetActive(true);
+                }
+            }
+
+            // 3. 적 이미지 띄우기 (적 ID에 따라 변경)
+            if (BattleUI.Instance.enemyIllustration != null)
+            {
+                string enemyImgName = "";
+
+                if (enemyID == 1) enemyImgName = "Monster_Rice";    // 무한의 벼
+                else if (enemyID == 2) enemyImgName = "Monster_Loom"; // 공격하는 베
+                else if (enemyID == 3) enemyImgName = "Patjwi_Normal"; // 팥쥐
+                else if (enemyID == 4) enemyImgName = "Monster_Pot";  // 밑빠진 독
+                else if (enemyID == 5) enemyImgName = "StepMother_Angry"; // 계모
+                else if (enemyID == 6) enemyImgName = "Magistrate_Normal"; // 원님
+
+                Sprite enemySprite = Resources.Load<Sprite>($"Portraits/{enemyImgName}");
+                if (enemySprite != null)
+                {
+                    BattleUI.Instance.enemyIllustration.sprite = enemySprite;
+                    BattleUI.Instance.enemyIllustration.gameObject.SetActive(true);
+                }
+                else
+                {
+                    Debug.LogWarning($"적 이미지를 찾을 수 없습니다: Portraits/{enemyImgName}");
+                }
             }
         }
         // ====================================================
@@ -155,6 +187,7 @@ public class BattleManager : MonoBehaviour
         int randomDamage = Random.Range(3, 8);
         player.TakeDamage(randomDamage);
 
+        // 동료분이 추가하신 ShowDamage 연출 (유지)
         BattleUI.Instance.ShowDamage(true, randomDamage);
 
         if (BattleUI.Instance != null)
@@ -273,7 +306,7 @@ public class BattleManager : MonoBehaviour
     }
 
     // ====================================================
-    // 이벤트 씬(회복/스킬 강화) 진행 관련 함수 (추가)
+    // 동료분이 추가하신 이벤트 씬(회복/스킬 강화) 진행 함수 (유지)
     // ====================================================
     void StartEvent()
     {

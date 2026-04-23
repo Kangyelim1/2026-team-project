@@ -14,7 +14,12 @@ public class CharacterSelectManager : MonoBehaviour
     public TMP_Text detailDescText;
     public TMP_Text detailStatText;
 
-    [HideInInspector] public CharacterCard selectedCharacterCard;
+    // 👇 배경 이미지를 띄울 Image 변수를 새로 추가합니다!
+    [Header("Detail Background UI")]
+    public Image detailBackground;
+
+    [HideInInspector]
+    public CharacterCard selectedCharacterCard;
 
     public void SelectCharacter(CharacterCard card)
     {
@@ -30,26 +35,62 @@ public class CharacterSelectManager : MonoBehaviour
 
         detailNameText.text = data.charName;
         detailDescText.text = data.desc;
-        detailIllustration.sprite = data.illustration;
 
-        // [수정된 부분] 텍스트가 깔끔하게 "HP 100 / 행동력 3" 형태로 나오도록 수정
+        // ====================================================
+        // [캐릭터별 맞춤 이미지 & 배경 띄우기 로직]
+        // ====================================================
+        if (data.id == 1 || data.charName.Contains("콩쥐"))
+        {
+            // 1. 콩쥐 일러스트 띄우기 (Kongjwi_Sword)
+            Sprite kongjwiSprite = Resources.Load<Sprite>("Portraits/Kongjwi_Sword");
+            if (kongjwiSprite != null)
+            {
+                detailIllustration.sprite = kongjwiSprite;
+                detailIllustration.gameObject.SetActive(true);
+            }
+            else
+            {
+                detailIllustration.sprite = data.illustration;
+            }
+
+            // 2. 아침 배경 띄우기 (Bg_Morning)
+            if (detailBackground != null)
+            {
+                Sprite bgSprite = Resources.Load<Sprite>("Backgrounds/Bg_Morning");
+                if (bgSprite != null)
+                {
+                    detailBackground.sprite = bgSprite;
+                    detailBackground.color = new Color(1, 1, 1, 1);
+                    detailBackground.gameObject.SetActive(true);
+                }
+            }
+        }
+        else
+        {
+            // 해님달님 등 다른 캐릭터일 때
+            detailIllustration.sprite = data.illustration;
+
+            if (detailBackground != null)
+            {
+                detailBackground.sprite = null;
+                detailBackground.color = new Color(0.95f, 0.9f, 0.85f, 1f); // 기본 연한 베이지색
+            }
+        }
+        // ====================================================
+
+        // 스탯 텍스트 표시
         if (detailStatText != null)
         {
             if (DataManager.Instance != null && DataManager.Instance.playerDict.ContainsKey(DataManager.SelectedPlayerID))
             {
                 PlayerData pData = DataManager.Instance.playerDict[DataManager.SelectedPlayerID];
-                // JSON에서 가져온 데이터를 줄바꿈(\n) 해서 표시합니다.
-                detailStatText.text = $"HP {pData.hp}\n 행동력 {pData.actionPoint}";
+                detailStatText.text = $"HP: {pData.hp}\nACTION: {pData.actionPoint}";
             }
             else
             {
-                // 데이터 매니저가 없을 때 (테스트용 하드코딩)
-                if (data.id == 1)
-                    detailStatText.text = "HP 100\n 행동력 3";
-                else if (data.id == 2)
-                    detailStatText.text = "HP 80\n 행동력 2";
-                else
-                    detailStatText.text = "";
+                if (data.id == 1) detailStatText.text = "HP: 100\nACTION: 3";
+                else if (data.id == 2) detailStatText.text = "HP: 80\nACTION: 2";
+                else detailStatText.text = "";
             }
         }
 
@@ -65,14 +106,12 @@ public class CharacterSelectManager : MonoBehaviour
     {
         if (selectedCharacterCard == null)
         {
-            Debug.LogWarning("캐릭터를 먼저 선택해주세요!");
+            Debug.LogWarning("캐릭터가 선택되지 않았습니다!");
             return;
         }
 
-        // ★ [핵심] 게임 시작 시 스테이지를 무조건 1로 만들고, 스토리를 가장 먼저 틉니다!
         PlayerPrefs.SetInt("CurrentStage", 1);
         PlayerPrefs.Save();
-
-        SceneManager.LoadScene("StoryScene"); // 배틀씬이 아니라 스토리씬으로 갑니다.
+        SceneManager.LoadScene("StoryScene");
     }
 }
