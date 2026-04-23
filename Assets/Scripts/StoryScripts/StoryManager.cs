@@ -1,10 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
+// JSON 데이터 구조에 맞게 틀을 짜줍니다.
 [System.Serializable]
 public class StoryLine
 {
@@ -12,7 +12,9 @@ public class StoryLine
     public int stage;
     public string characterName;
     public string text;
-    public string portraitPath;
+    public string leftPortraitPath;  // 왼쪽(콩쥐) 초상화 이름
+    public string rightPortraitPath; // 오른쪽(상대방) 초상화 이름
+    public string backgroundPath;    // 배경 이름
 }
 
 [System.Serializable]
@@ -23,15 +25,16 @@ public class StoryDataWrapper
 
 public class StoryManager : MonoBehaviour
 {
-    [Header("UI")]
+    [Header("UI 연결 - 텍스트")]
     public TextMeshProUGUI speakerText;
     public TextMeshProUGUI dialogueText;
 
-    [Header("Portrait UI")]
-    public Image leftPortraitImage;
-    public Image rightPortraitImage;
+    [Header("UI 연결 - 이미지")]
+    public Image backgroundImage;     // 배경 이미지
+    public Image leftPortraitImage;   // 왼쪽 초상화
+    public Image rightPortraitImage;  // 오른쪽 초상화
 
-    [Header("Settings")]
+    [Header("다음 씬 이름")]
     public string nextSceneName = "BattleScene";
 
     private List<StoryLine> currentStageLines = new List<StoryLine>();
@@ -41,42 +44,27 @@ public class StoryManager : MonoBehaviour
     void Start()
     {
         currentStageNumber = PlayerPrefs.GetInt("CurrentStage", 1);
-        Debug.Log($"StoryManager Start: Stage {currentStageNumber}");
-
         LoadStoryJson();
-
-        if (leftPortraitImage != null) leftPortraitImage.color = new Color(1, 1, 1, 0);
-        if (rightPortraitImage != null) rightPortraitImage.color = new Color(1, 1, 1, 0);
-
         ShowCurrentLine();
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            NextLine();
-        }
+        // 클릭하면 다음 대사로 넘어갑니다.
+        if (Input.GetMouseButtonDown(0)) NextLine();
     }
 
     void LoadStoryJson()
     {
         TextAsset storyFile = Resources.Load<TextAsset>("JsonFile/StoryData");
-        if (storyFile == null)
-        {
-            Debug.LogError("Resources/JsonFile/StoryData.json 파일을 찾을 수 없습니다!");
-            return;
-        }
+        if (storyFile == null) return;
 
         StoryDataWrapper wrapper = JsonUtility.FromJson<StoryDataWrapper>(storyFile.text);
-        if (wrapper != null)
+        if (wrapper != null && wrapper.rows != null)
         {
             foreach (var line in wrapper.rows)
             {
-                if (line.stage == currentStageNumber)
-                {
-                    currentStageLines.Add(line);
-                }
+                if (line.stage == currentStageNumber) currentStageLines.Add(line);
             }
         }
     }
@@ -90,68 +78,66 @@ public class StoryManager : MonoBehaviour
             if (speakerText != null) speakerText.text = currentLine.characterName;
             if (dialogueText != null) dialogueText.text = currentLine.text;
 
-            UpdatePortraits(currentLine);
+            // 여기서 배경과 초상화를 갱신합니다!
+            UpdateVisuals(currentLine);
         }
     }
 
-    void UpdatePortraits(StoryLine currentLine)
+    void UpdateVisuals(StoryLine currentLine)
     {
-        if (string.IsNullOrEmpty(currentLine.portraitPath))
+        // 1. 배경 이미지 로드 (Resources/Backgrounds 폴더에서)
+        if (!string.IsNullOrEmpty(currentLine.backgroundPath) && backgroundImage != null)
         {
-            if (leftPortraitImage != null && leftPortraitImage.sprite != null) leftPortraitImage.color = new Color(0.5f, 0.5f, 0.5f, 1);
-            if (rightPortraitImage != null && rightPortraitImage.sprite != null) rightPortraitImage.color = new Color(0.5f, 0.5f, 0.5f, 1);
-            return;
+            Sprite bgSprite = Resources.Load<Sprite>($"Backgrounds/{currentLine.backgroundPath}");
+            if (bgSprite != null) backgroundImage.sprite = bgSprite;
         }
 
-        Sprite loadedSprite = Resources.Load<Sprite>("Portraits/" + currentLine.portraitPath);
-        if (loadedSprite == null)
+        // 2. 왼쪽 초상화(콩쥐) 로드 (Resources/Portraits 폴더에서)
+        if (!string.IsNullOrEmpty(currentLine.leftPortraitPath) && leftPortraitImage != null)
         {
-            Debug.LogWarning($"Portrait 이미지 없음: {currentLine.portraitPath}");
-            return;
+            leftPortraitImage.gameObject.SetActive(true);
+            Sprite leftSprite = Resources.Load<Sprite>($"Portraits/{currentLine.leftPortraitPath}");
+            if (leftSprite != null) leftPortraitImage.sprite = leftSprite;
         }
+        else if (leftPortraitImage != null) leftPortraitImage.gameObject.SetActive(false);
 
-        if (currentLine.characterName.Contains("콩쥐") || currentLine.characterName.Contains("플레이어"))
+        // 3. 오른쪽 초상화(상대방) 로드
+        if (!string.IsNullOrEmpty(currentLine.rightPortraitPath) && rightPortraitImage != null)
         {
-            if (leftPortraitImage != null)
-            {
-                leftPortraitImage.sprite = loadedSprite;
-                leftPortraitImage.color = new Color(1, 1, 1, 1);
-            }
-            if (rightPortraitImage != null && rightPortraitImage.sprite != null)
-            {
-                rightPortraitImage.color = new Color(0.5f, 0.5f, 0.5f, 1);
-            }
+            rightPortraitImage.gameObject.SetActive(true);
+            Sprite rightSprite = Resources.Load<Sprite>($"Portraits/{currentLine.rightPortraitPath}");
+            if (rightSprite != null) rightPortraitImage.sprite = rightSprite;
+        }
+        else if (rightPortraitImage != null) rightPortraitImage.gameObject.SetActive(false);
+
+        // 4. 말하는 사람에 따라 명암(색상) 조절!
+        Color activeColor = new Color(1f, 1f, 1f, 1f);     // 밝은 원래 색상
+        Color dimColor = new Color(0.4f, 0.4f, 0.4f, 1f);  // 어두운 회색상
+
+        if (currentLine.characterName.Contains("콩쥐"))
+        {
+            // 콩쥐가 말하면: 왼쪽 밝게, 오른쪽 어둡게
+            if (leftPortraitImage != null) leftPortraitImage.color = activeColor;
+            if (rightPortraitImage != null) rightPortraitImage.color = dimColor;
+        }
+        else if (currentLine.characterName.Contains("시스템"))
+        {
+            // 시스템/해설이면: 둘 다 어둡게
+            if (leftPortraitImage != null) leftPortraitImage.color = dimColor;
+            if (rightPortraitImage != null) rightPortraitImage.color = dimColor;
         }
         else
         {
-            if (rightPortraitImage != null)
-            {
-                rightPortraitImage.sprite = loadedSprite;
-                rightPortraitImage.color = new Color(1, 1, 1, 1);
-            }
-            if (leftPortraitImage != null && leftPortraitImage.sprite != null)
-            {
-                leftPortraitImage.color = new Color(0.5f, 0.5f, 0.5f, 1);
-            }
+            // 다른 캐릭터가 말하면: 오른쪽 밝게, 왼쪽 어둡게
+            if (leftPortraitImage != null) leftPortraitImage.color = dimColor;
+            if (rightPortraitImage != null) rightPortraitImage.color = activeColor;
         }
     }
 
     public void NextLine()
     {
         currentIndex++;
-        if (currentIndex >= currentStageLines.Count)
-        {
-            Debug.Log($"스테이지 {currentStageNumber} 대사 종료. 전투 씬 전환.");
-
-            // ★[추가된 로직] 전투 씬에 진입하기 전에 현재 스토리에 알맞은 '적 ID'를 저장합니다.
-            PlayerPrefs.SetInt("TargetEnemyID", currentStageNumber);
-            PlayerPrefs.Save();
-
-            SceneManager.LoadScene(nextSceneName);
-        }
-        else
-        {
-            ShowCurrentLine();
-        }
+        if (currentIndex >= currentStageLines.Count) SceneManager.LoadScene(nextSceneName);
+        else ShowCurrentLine();
     }
 }
