@@ -71,6 +71,8 @@ public class Character : MonoBehaviour
             float currentEffect = (i < skill.skillEffectValues.Count) ? skill.skillEffectValues[i] : 0f;
             ExecuteAbility(abilityID, currentEffect, target);
         }
+
+        
     }
 
     public void UseEnemySkill(int attackID, Character target)
@@ -106,6 +108,11 @@ public class Character : MonoBehaviour
         {
             case EffectType.NormalAttack:
                 target.TakeDamage(skillEffect);
+                if(BattleUI.Instance != null)
+                {
+                    bool isPlayer = (target == BattleManager.Instance.player);
+                    BattleUI.Instance.ShowDamage(isPlayer, (int)skillEffect);
+                }
                 break;
             case EffectType.Heal:
                 currentHP += skillEffect;

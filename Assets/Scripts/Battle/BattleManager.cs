@@ -155,6 +155,8 @@ public class BattleManager : MonoBehaviour
         int randomDamage = Random.Range(3, 8);
         player.TakeDamage(randomDamage);
 
+        BattleUI.Instance.ShowDamage(true, randomDamage);
+
         if (BattleUI.Instance != null)
             BattleUI.Instance.AddLog($"{enemy.charName}의 공격! {randomDamage} 피해!");
 

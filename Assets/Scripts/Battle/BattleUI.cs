@@ -32,6 +32,11 @@ public class BattleUI : MonoBehaviour
     [Header("Enemy Intention UI")]
     public TextMeshProUGUI enemyIntentionText;
 
+    [Header("Damage Text")]
+    public GameObject damageTextPrefab;
+    public Transform playerDamagePos;
+    public Transform enemyDamagePos;
+
     private Dictionary<int, Button> skillButtons = new Dictionary<int, Button>();
 
     public static BattleUI Instance;
@@ -241,5 +246,24 @@ public class BattleUI : MonoBehaviour
         {
             enemyIntentionText.gameObject.SetActive(false);
         }
+    }
+
+    public void ShowDamage(bool isPlayer, int damage)
+    {
+        if (damageTextPrefab == null) return;
+
+        Transform targetPos = isPlayer ? playerDamagePos : enemyDamagePos;
+
+        
+        GameObject obj = Instantiate(damageTextPrefab, targetPos);
+
+        obj.transform.localPosition = Vector3.zero; // 정확히 위치 고정
+
+        DamageText dt = obj.GetComponent<DamageText>();
+        if (dt != null)
+        {
+            dt.SetDamage(damage);
+        }
+        Destroy(obj, 1f);
     }
 }
