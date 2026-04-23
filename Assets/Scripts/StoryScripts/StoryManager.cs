@@ -1,10 +1,10 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-// JSON µ¥ÀÌÅÍ ±¸Á¶¿¡ ¸Â°Ô Æ²À» Â¥Áİ´Ï´Ù.
+// JSON ë°ì´í„° êµ¬ì¡°
 [System.Serializable]
 public class StoryLine
 {
@@ -12,9 +12,9 @@ public class StoryLine
     public int stage;
     public string characterName;
     public string text;
-    public string leftPortraitPath;  // ¿ŞÂÊ(ÄáÁã) ÃÊ»óÈ­ ÀÌ¸§
-    public string rightPortraitPath; // ¿À¸¥ÂÊ(»ó´ë¹æ) ÃÊ»óÈ­ ÀÌ¸§
-    public string backgroundPath;    // ¹è°æ ÀÌ¸§
+    public string leftPortraitPath;
+    public string rightPortraitPath;
+    public string backgroundPath;
 }
 
 [System.Serializable]
@@ -25,16 +25,16 @@ public class StoryDataWrapper
 
 public class StoryManager : MonoBehaviour
 {
-    [Header("UI ¿¬°á - ÅØ½ºÆ®")]
+    [Header("UI ì—°ê²° - í…ìŠ¤íŠ¸")]
     public TextMeshProUGUI speakerText;
     public TextMeshProUGUI dialogueText;
 
-    [Header("UI ¿¬°á - ÀÌ¹ÌÁö")]
-    public Image backgroundImage;     // ¹è°æ ÀÌ¹ÌÁö
-    public Image leftPortraitImage;   // ¿ŞÂÊ ÃÊ»óÈ­
-    public Image rightPortraitImage;  // ¿À¸¥ÂÊ ÃÊ»óÈ­
+    [Header("UI ì—°ê²° - ì´ë¯¸ì§€")]
+    public Image backgroundImage;
+    public Image leftPortraitImage;
+    public Image rightPortraitImage;
 
-    [Header("´ÙÀ½ ¾À ÀÌ¸§")]
+    [Header("ë‹¤ìŒ ì”¬ ì´ë¦„")]
     public string nextSceneName = "BattleScene";
 
     private List<StoryLine> currentStageLines = new List<StoryLine>();
@@ -44,28 +44,43 @@ public class StoryManager : MonoBehaviour
     void Start()
     {
         currentStageNumber = PlayerPrefs.GetInt("CurrentStage", 1);
+        Debug.Log($"í˜„ì¬ ìŠ¤í† ë¦¬ ìŠ¤í…Œì´ì§€: {currentStageNumber}");
+
         LoadStoryJson();
         ShowCurrentLine();
     }
 
     void Update()
     {
-        // Å¬¸¯ÇÏ¸é ´ÙÀ½ ´ë»ç·Î ³Ñ¾î°©´Ï´Ù.
+        // í™”ë©´ì„ í´ë¦­í•˜ë©´ ë‹¤ìŒ ëŒ€ì‚¬ë¡œ ë„˜ì–´ê°‘ë‹ˆë‹¤.
         if (Input.GetMouseButtonDown(0)) NextLine();
     }
 
     void LoadStoryJson()
     {
         TextAsset storyFile = Resources.Load<TextAsset>("JsonFile/StoryData");
-        if (storyFile == null) return;
+        if (storyFile == null)
+        {
+            Debug.LogError("StoryData.json íŒŒì¼ì„ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤!");
+            return;
+        }
 
         StoryDataWrapper wrapper = JsonUtility.FromJson<StoryDataWrapper>(storyFile.text);
         if (wrapper != null && wrapper.rows != null)
         {
             foreach (var line in wrapper.rows)
             {
-                if (line.stage == currentStageNumber) currentStageLines.Add(line);
+                // í˜„ì¬ ìŠ¤í…Œì´ì§€ ë²ˆí˜¸ì™€ ì¼ì¹˜í•˜ëŠ” ëŒ€ì‚¬ë§Œ ê°€ì ¸ì˜µë‹ˆë‹¤.
+                if (line.stage == currentStageNumber)
+                    currentStageLines.Add(line);
             }
+        }
+
+        // ë§Œì•½ í•´ë‹¹ ìŠ¤í…Œì´ì§€ì— ëŒ€ì‚¬ê°€ ì•„ì˜ˆ ì—†ìœ¼ë©´ ë©ˆì¶”ì§€ ì•Šê³  ë°”ë¡œ ì „íˆ¬ë¡œ ë³´ëƒ…ë‹ˆë‹¤! (ì˜¤ë¥˜ ë°©ì§€)
+        if (currentStageLines.Count == 0)
+        {
+            Debug.LogWarning($"ìŠ¤í…Œì´ì§€ {currentStageNumber}ì— í•´ë‹¹í•˜ëŠ” ëŒ€ì‚¬ê°€ ì—†ì–´ ë°”ë¡œ ë‹¤ìŒ ì”¬ìœ¼ë¡œ ë„˜ì–´ê°‘ë‹ˆë‹¤.");
+            SceneManager.LoadScene(nextSceneName);
         }
     }
 
@@ -75,60 +90,101 @@ public class StoryManager : MonoBehaviour
         {
             StoryLine currentLine = currentStageLines[currentIndex];
 
-            if (speakerText != null) speakerText.text = currentLine.characterName;
-            if (dialogueText != null) dialogueText.text = currentLine.text;
+            // ì´ë¦„ ì¶œë ¥ (ê´„í˜¸ ë“±ì„ ê¹”ë”í•˜ê²Œ ì •ë¦¬)
+            if (speakerText != null)
+                speakerText.text = currentLine.characterName.Replace("(ì‹œìŠ¤í…œ)", "ì‹œìŠ¤í…œ");
 
-            // ¿©±â¼­ ¹è°æ°ú ÃÊ»óÈ­¸¦ °»½ÅÇÕ´Ï´Ù!
+            // ëŒ€ì‚¬ ì¶œë ¥ (JSONì—ì„œ \nìœ¼ë¡œ ì“´ ì¤„ë°”ê¿ˆì´ ìœ ë‹ˆí‹°ì—ì„œ ì§„ì§œ ì¤„ë°”ê¿ˆì´ ë˜ë„ë¡ ì¹˜í™˜í•´ ì¤ë‹ˆë‹¤!)
+            if (dialogueText != null)
+            {
+                string parsedText = currentLine.text.Replace("\\n", "\n");
+                dialogueText.text = parsedText;
+            }
+
             UpdateVisuals(currentLine);
         }
     }
 
     void UpdateVisuals(StoryLine currentLine)
     {
-        // 1. ¹è°æ ÀÌ¹ÌÁö ·Îµå (Resources/Backgrounds Æú´õ¿¡¼­)
-        if (!string.IsNullOrEmpty(currentLine.backgroundPath) && backgroundImage != null)
+        // =========================================================
+        // 1. ë°°ê²½ ì´ë¯¸ì§€ ì—…ë°ì´íŠ¸
+        // =========================================================
+        if (backgroundImage != null)
         {
-            Sprite bgSprite = Resources.Load<Sprite>($"Backgrounds/{currentLine.backgroundPath}");
-            if (bgSprite != null) backgroundImage.sprite = bgSprite;
+            string targetBg = "Bg_Yard"; // ê¸°ë³¸ê°’ (ë§ˆë‹¹)
+
+            // JSONì— ë°°ê²½ì´ ì“°ì—¬ìˆë‹¤ë©´ ë¬´ì¡°ê±´ ê·¸ê±¸ ìµœìš°ì„ ìœ¼ë¡œ ì”ë‹ˆë‹¤!
+            if (!string.IsNullOrEmpty(currentLine.backgroundPath))
+            {
+                targetBg = currentLine.backgroundPath.Trim();
+            }
+            else
+            {
+                // JSONì— ë°°ê²½ì´ ì•ˆ ì í˜€ìˆì„ ë•Œë¥¼ ëŒ€ë¹„í•œ 2ì°¨ ì•ˆì „ì¥ì¹˜ (ìŠ¤í…Œì´ì§€ë³„ ê°•ì œ ê³ ì •)
+                if (currentStageNumber == 2) targetBg = "Bg_Morning";
+                else if (currentStageNumber == 3 || currentStageNumber == 4) targetBg = "Bg_Village";
+                else if (currentStageNumber == 5) targetBg = "Bg_Night";
+            }
+
+            Sprite bgSprite = Resources.Load<Sprite>($"Backgrounds/{targetBg}");
+            if (bgSprite != null)
+            {
+                backgroundImage.sprite = bgSprite;
+                backgroundImage.color = new Color(1f, 1f, 1f, 1f);
+            }
+            else
+            {
+                Debug.LogWarning($"ë°°ê²½ ì´ë¯¸ì§€ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤: Backgrounds/{targetBg}");
+            }
         }
 
-        // 2. ¿ŞÂÊ ÃÊ»óÈ­(ÄáÁã) ·Îµå (Resources/Portraits Æú´õ¿¡¼­)
+        // =========================================================
+        // 2. ìºë¦­í„° ì´ˆìƒí™” ì—…ë°ì´íŠ¸ (Trim()ìœ¼ë¡œ ë³´ì´ì§€ ì•ŠëŠ” ê³µë°± ì œê±°)
+        // =========================================================
+        // ì™¼ìª½ ì´ˆìƒí™”(ì½©ì¥ ìë¦¬)
         if (!string.IsNullOrEmpty(currentLine.leftPortraitPath) && leftPortraitImage != null)
         {
             leftPortraitImage.gameObject.SetActive(true);
-            Sprite leftSprite = Resources.Load<Sprite>($"Portraits/{currentLine.leftPortraitPath}");
+            Sprite leftSprite = Resources.Load<Sprite>($"Portraits/{currentLine.leftPortraitPath.Trim()}");
             if (leftSprite != null) leftPortraitImage.sprite = leftSprite;
         }
-        else if (leftPortraitImage != null) leftPortraitImage.gameObject.SetActive(false);
+        else if (leftPortraitImage != null) leftPortraitImage.gameObject.SetActive(false); // ì‚¬ì§„ ì—†ìœ¼ë©´ ìˆ¨ê¹€
 
-        // 3. ¿À¸¥ÂÊ ÃÊ»óÈ­(»ó´ë¹æ) ·Îµå
+        // ì˜¤ë¥¸ìª½ ì´ˆìƒí™”(ì  ìë¦¬)
         if (!string.IsNullOrEmpty(currentLine.rightPortraitPath) && rightPortraitImage != null)
         {
             rightPortraitImage.gameObject.SetActive(true);
-            Sprite rightSprite = Resources.Load<Sprite>($"Portraits/{currentLine.rightPortraitPath}");
+            Sprite rightSprite = Resources.Load<Sprite>($"Portraits/{currentLine.rightPortraitPath.Trim()}");
             if (rightSprite != null) rightPortraitImage.sprite = rightSprite;
         }
-        else if (rightPortraitImage != null) rightPortraitImage.gameObject.SetActive(false);
+        else if (rightPortraitImage != null) rightPortraitImage.gameObject.SetActive(false); // ì‚¬ì§„ ì—†ìœ¼ë©´ ìˆ¨ê¹€
 
-        // 4. ¸»ÇÏ´Â »ç¶÷¿¡ µû¶ó ¸í¾Ï(»ö»ó) Á¶Àı!
-        Color activeColor = new Color(1f, 1f, 1f, 1f);     // ¹àÀº ¿ø·¡ »ö»ó
-        Color dimColor = new Color(0.4f, 0.4f, 0.4f, 1f);  // ¾îµÎ¿î È¸»ö»ó
+        // =========================================================
+        // 3. í™”ìì— ë”°ë¥¸ ëª…ì•” ì¡°ì ˆ ë¡œì§ (ì •êµí•˜ê²Œ ì—…ê·¸ë ˆì´ë“œ!)
+        // =========================================================
+        Color activeColor = new Color(1f, 1f, 1f, 1f);     // ë§í•˜ëŠ” ì‚¬ëŒ (ë°ê²Œ)
+        Color dimColor = new Color(0.4f, 0.4f, 0.4f, 1f);  // ì•ˆ ë§í•˜ëŠ” ì‚¬ëŒ (ì–´ë‘¡ê²Œ)
 
-        if (currentLine.characterName.Contains("ÄáÁã"))
+        string speaker = currentLine.characterName.Trim();
+
+        // ë‚´ë©´, ì‹œìŠ¤í…œ, ì •ì²´ë¶ˆëª… ë“±ì€ í™”ë©´ì˜ ìºë¦­í„°ê°€ ì§ì ‘ ë§í•˜ëŠ” ê²Œ ì•„ë‹ˆë¯€ë¡œ ë‘˜ ë‹¤ ì–´ë‘¡ê²Œ!
+        bool isSystem = string.IsNullOrEmpty(speaker) || speaker.Contains("ì‹œìŠ¤í…œ") || speaker.Contains("í•´ì„¤") || speaker.Contains("ë‚´ë©´") || speaker.Contains("ì •ì²´ë¶ˆëª…");
+
+        if (isSystem)
         {
-            // ÄáÁã°¡ ¸»ÇÏ¸é: ¿ŞÂÊ ¹à°Ô, ¿À¸¥ÂÊ ¾îµÓ°Ô
-            if (leftPortraitImage != null) leftPortraitImage.color = activeColor;
-            if (rightPortraitImage != null) rightPortraitImage.color = dimColor;
-        }
-        else if (currentLine.characterName.Contains("½Ã½ºÅÛ"))
-        {
-            // ½Ã½ºÅÛ/ÇØ¼³ÀÌ¸é: µÑ ´Ù ¾îµÓ°Ô
             if (leftPortraitImage != null) leftPortraitImage.color = dimColor;
             if (rightPortraitImage != null) rightPortraitImage.color = dimColor;
         }
+        // "ì½©ì¥" ë³¸ì¸ì¼ ë•Œë§Œ ì™¼ìª½ì„ ë°ê²Œ! ("ë¯¸ë˜ì˜ ì½©ì¥"ëŠ” ì˜¤ë¥¸ìª½ ìºë¦­í„°ì´ë¯€ë¡œ ì˜ˆì™¸ ì²˜ë¦¬)
+        else if (speaker == "ì½©ì¥" || speaker.Contains("í•´ë‹˜") || speaker.Contains("ë‹¬ë‹˜"))
+        {
+            if (leftPortraitImage != null) leftPortraitImage.color = activeColor;
+            if (rightPortraitImage != null) rightPortraitImage.color = dimColor;
+        }
+        // íŒ¥ì¥, ê³„ëª¨, ì›ë‹˜, ë§ˆì„ì‚¬ëŒ, ë¯¸ë˜ì˜ ì½©ì¥ ë“± ìƒëŒ€ë°©ì´ ë§í•  ë•ŒëŠ” ì˜¤ë¥¸ìª½ì„ ë°ê²Œ!
         else
         {
-            // ´Ù¸¥ Ä³¸¯ÅÍ°¡ ¸»ÇÏ¸é: ¿À¸¥ÂÊ ¹à°Ô, ¿ŞÂÊ ¾îµÓ°Ô
             if (leftPortraitImage != null) leftPortraitImage.color = dimColor;
             if (rightPortraitImage != null) rightPortraitImage.color = activeColor;
         }
@@ -140,24 +196,24 @@ public class StoryManager : MonoBehaviour
 
         if (currentIndex >= currentStageLines.Count)
         {
-            // ÀÌº¥Æ® ¿¹¾àµÇ¾î ÀÖÀ¸¸é ÀÌº¥Æ® ¸ÕÀú
+            // ì´ë²¤íŠ¸ ì˜ˆì•½ë˜ì–´ ìˆìœ¼ë©´ ì´ë²¤íŠ¸ ë¨¼ì €
             if (PlayerPrefs.GetInt("NeedEvent", 0) == 1)
             {
-                Debug.Log("½ºÅä¸® ³¡ ¡æ ÀÌº¥Æ® ½ÇÇà");
+                Debug.Log("ìŠ¤í† ë¦¬ ë â†’ ì´ë²¤íŠ¸ ì‹¤í–‰");
 
                 PlayerPrefs.SetInt("NeedEvent", 0);
                 PlayerPrefs.Save();
 
-                // ÀÌº¥Æ® ÆĞ³Î ½ÇÇà
+                // ì´ë²¤íŠ¸ íŒ¨ë„ ì‹¤í–‰
                 if (EventManager.Instance != null)
                 {
                     EventManager.Instance.ShowPriestEvent();
                 }
 
-                return; // ¿©±â¼­ ¸ØÃç¾ß ÇÔ
+                return; // ì—¬ê¸°ì„œ ë©ˆì¶°ì•¼ í•¨
             }
 
-            // ÀÌº¥Æ® ¾øÀ¸¸é ÀüÅõ·Î
+            // ì´ë²¤íŠ¸ ì—†ìœ¼ë©´ ì „íˆ¬ë¡œ
             SceneManager.LoadScene(nextSceneName);
         }
         else
