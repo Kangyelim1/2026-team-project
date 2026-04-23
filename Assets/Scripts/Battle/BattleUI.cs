@@ -70,7 +70,7 @@ public class BattleUI : MonoBehaviour
         if (playerHPText != null) playerHPText.text = $"HP: {p.currentHP} / {p.maxHP}";
         if (enemyHPText != null) enemyHPText.text = $"HP: {e.currentHP} / {e.maxHP}";
 
-        // ★[수정된 로직] 콩쥐의 행동력(AP)을 "현재치 / 최대치" 로 명확히 표시합니다!
+        // [수정된 로직] 콩쥐의 행동력(AP)을 "현재치 / 최대치" 로 명확히 표시합니다!
         if (apText != null)
         {
             apText.text = $"AP: {p.currentAP} / {p.maxAP}";
@@ -96,7 +96,7 @@ public class BattleUI : MonoBehaviour
             }
         }
 
-        // ★[추가된 로직] AP가 0이 되면 턴이 자동으로 종료됩니다.
+        // [추가된 로직] AP가 0이 되면 턴이 자동으로 종료됩니다.
         if (p.currentAP <= 0 && BattleManager.Instance.currentState == BattleState.PlayerTurn)
         {
             Debug.Log("AP가 모두 소진되어 자동으로 턴을 종료합니다.");
@@ -149,10 +149,16 @@ public class BattleUI : MonoBehaviour
 
             TextMeshProUGUI[] texts = btnObj.GetComponentsInChildren<TextMeshProUGUI>();
 
+            float damage = 0;
+            if(skillData.skillEffectValues != null && skillData.skillEffectValues.Count > 0)
+            {
+                damage = skillData.skillEffectValues[0];
+            }
+
             if (texts.Length >= 2)
             {
-                texts[0].text = skillData.name;
-                texts[1].text = skillData.actionCost.ToString();
+                texts[0].text = $"{skillData.name}\n공격력: {damage}";
+                texts[1].text = $"AP: {skillData.actionCost}";
             }
             else if (texts.Length == 1)
             {
