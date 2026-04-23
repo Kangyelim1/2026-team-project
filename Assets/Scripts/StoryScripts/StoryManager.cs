@@ -137,7 +137,32 @@ public class StoryManager : MonoBehaviour
     public void NextLine()
     {
         currentIndex++;
-        if (currentIndex >= currentStageLines.Count) SceneManager.LoadScene(nextSceneName);
-        else ShowCurrentLine();
+
+        if (currentIndex >= currentStageLines.Count)
+        {
+            // 이벤트 예약되어 있으면 이벤트 먼저
+            if (PlayerPrefs.GetInt("NeedEvent", 0) == 1)
+            {
+                Debug.Log("스토리 끝 → 이벤트 실행");
+
+                PlayerPrefs.SetInt("NeedEvent", 0);
+                PlayerPrefs.Save();
+
+                // 이벤트 패널 실행
+                if (EventManager.Instance != null)
+                {
+                    EventManager.Instance.ShowPriestEvent();
+                }
+
+                return; // 여기서 멈춰야 함
+            }
+
+            // 이벤트 없으면 전투로
+            SceneManager.LoadScene(nextSceneName);
+        }
+        else
+        {
+            ShowCurrentLine();
+        }
     }
 }

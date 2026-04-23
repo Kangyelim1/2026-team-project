@@ -42,6 +42,21 @@ public class BattleManager : MonoBehaviour
         currentStage = PlayerPrefs.GetInt("CurrentStage", 1);
         Debug.Log($"Battle Start! PlayerID: {playerID}, Stage: {currentStage}");
 
+        if (PlayerPrefs.GetInt("NeedEvent", 0) == 1)
+        {
+            PlayerPrefs.SetInt("NeedEvent", 0);
+            PlayerPrefs.Save();
+
+            currentState = BattleState.Event;
+
+            if (EventManager.Instance != null)
+                EventManager.Instance.ShowPriestEvent();
+
+            Debug.Log("전투 시작 후 이벤트 실행");
+
+            return;
+        }
+
         // ====================================================
         // [스테이지별 첫 번째 등장 적 세팅 (새로운 ID 기준)]
         // ====================================================
@@ -52,6 +67,8 @@ public class BattleManager : MonoBehaviour
         else if (currentStage == 4) firstEnemyID = 6; // 스테이지 4: 원님 (ID: 6)
 
         SetupBattle(playerID, firstEnemyID);
+
+        
     }
 
     public void SetupBattle(int playerID, int enemyID)
@@ -240,6 +257,17 @@ public class BattleManager : MonoBehaviour
         int defeatedEnemyID = enemy.id;
         Debug.Log($"처치한 적 ID: {defeatedEnemyID}");
 
+        if (EventManager.Instance != null)
+        {
+            Debug.Log("적 처치 → 이벤트 실행");
+            EventManager.Instance.ShowPriestEvent();
+            return; // 여기서 멈춤 (중요)
+        }
+
+        //이벤트 예약
+        PlayerPrefs.SetInt("NeedEvent", 1);
+        PlayerPrefs.Save();
+
         // ====================================================
         // [연속 전투 분기]
         // ====================================================
@@ -324,5 +352,20 @@ public class BattleManager : MonoBehaviour
         currentState = BattleState.Start;
         eventTriggered = false;
         GoToNextStory();
+    }
+
+    public void StartBattleAfterEvent()
+    {
+        currentState = BattleState.Start;
+
+        int playerID = DataManager.SelectedPlayerID;
+        int enemyID = 1;
+
+        if (currentStage == 1) enemyID = 1;
+        else if (currentStage == 2) enemyID = 3;
+        else if (currentStage == 3) enemyID = 5;
+        else if (currentStage == 4) enemyID = 6;
+
+        SetupBattle(playerID, enemyID);
     }
 }

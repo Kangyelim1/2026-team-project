@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EventManager : MonoBehaviour
 {
@@ -61,7 +62,12 @@ public class EventManager : MonoBehaviour
         if (eventPanel != null)
             eventPanel.SetActive(false);
 
+        Debug.Log("이벤트 끝 → 스토리 이동");
+
         if (BattleManager.Instance != null)
-            BattleManager.Instance.EndEvent();
+        {
+            BattleManager.Instance.StartBattleAfterEvent();
+        }
+            
     }
 }
