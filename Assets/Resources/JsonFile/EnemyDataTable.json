@@ -27,6 +27,20 @@
       "attackIds": [ 13, 21, 31, 50, 401, 402 ],
       "hp": 150,
       "trait": "Boss"
+    },
+    {
+      "id": 5,
+      "name": "공격하는 베",
+      "attackIds": [ 10, 30 ],
+      "hp": 60,
+      "trait": "Mob"
+    },
+    {
+      "id": 6,
+      "name": "밑빠진 독",
+      "attackIds": [ 11, 30 ],
+      "hp": 80,
+      "trait": "Elite"
     }
   ]
 }
