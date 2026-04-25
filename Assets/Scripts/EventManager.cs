@@ -42,10 +42,6 @@ public class EventManager : MonoBehaviour
 
             Debug.Log($"체력 회복! +{healAmount}");
         }
-        else
-        {
-            Debug.LogWarning("플레이어가 없어 회복할 수 없습니다.");
-        }
 
         EndEvent();
     }
@@ -53,7 +49,6 @@ public class EventManager : MonoBehaviour
     public void UpgradeSkill()
     {
         Debug.Log("스킬 강화!");
-
         EndEvent();
     }
 
@@ -62,12 +57,13 @@ public class EventManager : MonoBehaviour
         if (eventPanel != null)
             eventPanel.SetActive(false);
 
-        Debug.Log("이벤트 끝 → 스토리 이동");
+        Debug.Log("이벤트 끝 → 스토리 씬으로 이동!");
 
+        // ★ 버그 수정: 이벤트가 끝나면 전투를 다시 세팅하는 게 아니라,
+        // 스테이지를 올리고 '스토리 씬(StoryScene)'으로 확실하게 보내줍니다!
         if (BattleManager.Instance != null)
         {
-            BattleManager.Instance.StartBattleAfterEvent();
+            BattleManager.Instance.GoToNextStoryAfterBoss();
         }
-            
     }
 }
