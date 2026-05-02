@@ -15,7 +15,7 @@ public class Character : MonoBehaviour
     [Header("전투 상태 정보 (에러 해결)")]
     public int maxAP = 3; // 기본 최대 행동력 (플레이어용)
     public List<int> usedSkillsThisTurn = new List<int>(); // 이번 턴에 사용한 스킬 기록
-    public List<int> skillList = new List<int>(); // 적이 사용하는 스킬(Attack ID) 리스트
+    public List<int> skillList = new List<int>(); // 플레이어/적이 사용하는 스킬(Attack ID) 리스트
 
     /// <summary>
     /// 플레이어 캐릭터 초기화 (게임 시작 시 호출됨)
@@ -23,6 +23,7 @@ public class Character : MonoBehaviour
     public void InitPlayer(int playerID)
     {
         this.id = playerID;
+        skillList.Clear(); // ★ 중요: 이전 스킬 리스트 초기화
 
         // ID가 1이면 콩쥐, 2면 해님달님 (데이터 매니저가 있다면 거기서 불러와도 됩니다)
         if (playerID == 1)
@@ -33,6 +34,9 @@ public class Character : MonoBehaviour
             this.maxAP = 3;
             this.currentAP = 3;
             this.trait = "Summoner";
+
+            // ★ [수정됨] 콩쥐의 스킬 ID 할당 (데이터매니저에 1번, 5번 스킬이 있어야 UI에 뜹니다!)
+            this.skillList.AddRange(new int[] { 1, 5 });
         }
         else if (playerID == 2)
         {
@@ -42,6 +46,9 @@ public class Character : MonoBehaviour
             this.maxAP = 2;
             this.currentAP = 2;
             this.trait = "Hunter";
+
+            // ★ [수정됨] 해님달님의 스킬 ID 할당 (데이터매니저에 6번, 7번 스킬이 있어야 UI에 뜹니다!)
+            this.skillList.AddRange(new int[] { 6, 7 });
         }
         else
         {
@@ -51,6 +58,7 @@ public class Character : MonoBehaviour
             this.currentHP = 100;
             this.maxAP = 3;
             this.currentAP = 3;
+            this.skillList.Add(1); // 기본 공격 하나는 주도록 설정
         }
 
         usedSkillsThisTurn.Clear();
@@ -88,7 +96,7 @@ public class Character : MonoBehaviour
     /// </summary>
     public void OnTurnStart()
     {
-        // 턴 시작 시 행동력 회복 (선택 사항)
+        // 턴 시작 시 행동력 회복
         this.currentAP = this.maxAP;
 
         // 이번 턴에 사용한 스킬 기록 초기화
@@ -169,6 +177,13 @@ public class Character : MonoBehaviour
                 if (BattleUI.Instance != null)
                     BattleUI.Instance.AddLog($"[이중타격] 추가 피해 {bonusDamage}!");
             }
+        }
+
+        // 화면에 데미지 텍스트 띄우기 (플레이어인지 적인지 판별)
+        if (BattleUI.Instance != null)
+        {
+            bool isPlayer = (this.trait == "Summoner" || this.trait == "Hunter" || this.id == 1 || this.id == 2);
+            BattleUI.Instance.ShowDamage(isPlayer, damage);
         }
     }
 }
