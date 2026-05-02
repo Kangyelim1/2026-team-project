@@ -35,7 +35,7 @@
     { "id": 31, "stage": 3, "characterName": "계모", "text": "뭐? 이 미친년이 정신이 드디어 나갔구나.\n가만 안 둬… 당장—", "leftPortraitPath": "FutureKongjwi_Smile", "rightPortraitPath": "StepMother_Angry", "backgroundPath": "Bg_Village"},
     { "id": 32, "stage": 3, "characterName": "콩쥐", "text": "이미 늦었어요.", "leftPortraitPath": "FutureKongjwi_Smile", "rightPortraitPath": "StepMother_Angry", "backgroundPath": "Bg_Village"},
 
-    { "id": 33, "stage": 4, "characterName": "마을 사람 1", "text": "사람이… 죽었어…", "leftPortraitPath": "FutureKongjwi_Normal", "rightPortraitPath": "", "backgroundPath": "Bg_Village" },
+    { "id": 33, "stage": 4, "characterName": "마 마을 사람 1", "text": "사람이… 죽었어…", "leftPortraitPath": "FutureKongjwi_Normal", "rightPortraitPath": "", "backgroundPath": "Bg_Village" },
     { "id": 34, "stage": 4, "characterName": "마을 사람 2", "text": "도망쳐!", "leftPortraitPath": "FutureKongjwi_Normal", "rightPortraitPath": "", "backgroundPath": "Bg_Village" },
     { "id": 35, "stage": 4, "characterName": "콩쥐", "text": "…다 똑같아요.", "leftPortraitPath": "FutureKongjwi_Sad", "rightPortraitPath": "", "backgroundPath": "Bg_Village" },
     { "id": 36, "stage": 4, "characterName": "마을 사람 1", "text": "우린 아무 상관도—", "leftPortraitPath": "FutureKongjwi_Sad", "rightPortraitPath": "", "backgroundPath": "Bg_Village" },
@@ -52,6 +52,54 @@
     { "id": 46, "stage": 5, "characterName": "콩쥐", "text": "…그러니까…\n…부숴야지.", "leftPortraitPath": "FutureKongjwi_Smile", "rightPortraitPath": "", "backgroundPath": "Bg_NightBridge" },
     { "id": 47, "stage": 5, "characterName": "(시스템)", "text": "(광기 섞인 웃음)", "leftPortraitPath": "FutureKongjwi_Smile", "rightPortraitPath": "", "backgroundPath": "Bg_NightBridge" },
     { "id": 48, "stage": 5, "characterName": "콩쥐", "text": "…전부 부숴버리면…\n…없어지겠지?", "leftPortraitPath": "FutureKongjwi_Smile", "rightPortraitPath": "", "backgroundPath": "Bg_NightBridge" },
-    { "id": 49, "stage": 5, "characterName": "콩쥐", "text": "나까지… 같이 찢어 없애버리면 되잖아!!!", "leftPortraitPath": "FutureKongjwi_Smile", "rightPortraitPath": "", "backgroundPath": "Bg_NightBridge" }
+    { "id": 49, "stage": 5, "characterName": "콩쥐", "text": "나까지… 같이 찢어 없애버리면 되잖아!!!", "leftPortraitPath": "FutureKongjwi_Smile", "rightPortraitPath": "", "backgroundPath": "Bg_NightBridge" },
+
+    { "id": 101, "stage": 11, "characterName": "(시스템)", "text": "가난하지만 홀어머니와 함께 행복하게 살던 오누이, 해님과 달님.", "leftPortraitPath": "", "rightPortraitPath": "", "backgroundPath": "Bg_Yard" },
+    { "id": 102, "stage": 11, "characterName": "(시스템)", "text": "어느 날, 두 사람의 머릿속에 끔찍한 환영이 밀려들었다.", "leftPortraitPath": "", "rightPortraitPath": "", "backgroundPath": "Bg_Yard" },
+    { "id": 103, "stage": 11, "characterName": "달님 (여동생)", "text": "오빠... 나 이상한 꿈을 꿨어. 호랑이가... 엄마를 갈기갈기...", "leftPortraitPath": "Dalnim_Sad", "rightPortraitPath": "", "backgroundPath": "Bg_Yard" },
+    { "id": 104, "stage": 11, "characterName": "해님 (오빠)", "text": "...나도 똑같은 걸 봤어. 그건 단순한 꿈이 아니야.\n'일그러진 미래라고 했어'다.", "leftPortraitPath": "Dalnim_Sad", "rightPortraitPath": "Haenim_Normal", "backgroundPath": "Bg_Yard" },
+    { "id": 105, "stage": 11, "characterName": "해님 (오빠)", "text": "그 놈이 마을로 내려오기 전에... 우리가 먼저 산으로 가자.", "leftPortraitPath": "Dalnim_Sad", "rightPortraitPath": "Haenim_Normal", "backgroundPath": "Bg_Yard" },
+    { "id": 106, "stage": 11, "characterName": "(시스템)", "text": "[깊은 숲 속의 입구]", "leftPortraitPath": "", "rightPortraitPath": "", "backgroundPath": "Bg_Morning" },
+    { "id": 107, "stage": 11, "characterName": "달님 (여동생)", "text": "앗, 오빠! 저기...", "leftPortraitPath": "Dalnim_Surprise", "rightPortraitPath": "", "backgroundPath": "Bg_Morning" },
+    { "id": 108, "stage": 11, "characterName": "(시스템)", "text": "풀숲 사이로 아무것도 모르는 작은 아기 호랑이가 나타났다.", "leftPortraitPath": "Dalnim_Surprise", "rightPortraitPath": "BabyTiger_Normal", "backgroundPath": "Bg_Morning" },
+    { "id": 109, "stage": 11, "characterName": "해님 (오빠)", "text": "......", "leftPortraitPath": "Haenim_Sad", "rightPortraitPath": "BabyTiger_Normal", "backgroundPath": "Bg_Morning" },
+    { "id": 110, "stage": 11, "characterName": "달님 (여동생)", "text": "아직 새끼잖아... 아무 짓도 안 했는데... 꼭 죽여야 해?", "leftPortraitPath": "Dalnim_Sad", "rightPortraitPath": "BabyTiger_Normal", "backgroundPath": "Bg_Morning" },
+    { "id": 111, "stage": 11, "characterName": "해님 (오빠)", "text": "...호랑이의 씨를 말려야 해. 나중엔 이놈이 어머니를 물어뜯을 거야. \n꽉 잡아, 달님아.", "leftPortraitPath": "Haenim_Sad", "rightPortraitPath": "BabyTiger_Normal", "backgroundPath": "Bg_Morning" },
+
+    { "id": 112, "stage": 12, "characterName": "달님 (여동생)", "text": "(덜덜 떨며) 오빠... 피가... 안 지워져...", "leftPortraitPath": "Dalnim_Sad", "rightPortraitPath": "", "backgroundPath": "Bg_Morning" },
+    { "id": 113, "stage": 12, "characterName": "해님 (오빠)", "text": "......정신 차려! 피비린내를 맡고 뭔가 오고 있어!", "leftPortraitPath": "Haenim_Surprise", "rightPortraitPath": "", "backgroundPath": "Bg_Morning" },
+    { "id": 114, "stage": 12, "characterName": "(시스템)", "text": "크아아아악!!", "leftPortraitPath": "", "rightPortraitPath": "ParentTiger_Angry", "backgroundPath": "Bg_Morning" },
+    { "id": 115, "stage": 12, "characterName": "해님 (오빠)", "text": "새끼를 잃은 부모 호랑이다... \n어머니를 살리려면 이놈들도 죽여야 해!", "leftPortraitPath": "Haenim_Angry", "rightPortraitPath": "ParentTiger_Angry", "backgroundPath": "Bg_Morning" },
+    { "id": 116, "stage": 12, "characterName": "달님 (여동생)", "text": "이게 맞는 걸까... 우리가 먼저 빼앗은 거잖아...", "leftPortraitPath": "Dalnim_Sad", "rightPortraitPath": "ParentTiger_Angry", "backgroundPath": "Bg_Morning" },
+
+    { "id": 117, "stage": 13, "characterName": "(시스템)", "text": "[안개 낀 스산한 고개]", "leftPortraitPath": "", "rightPortraitPath": "", "backgroundPath": "Bg_Night" },
+    { "id": 118, "stage": 13, "characterName": "달님 (여동생)", "text": "(중얼거리며) ...어미 호랑이 배를 갈랐을 때, 뜨거웠어. \n...우리가 괴물이 된 걸까?", "leftPortraitPath": "Dalnim_Sad", "rightPortraitPath": "", "backgroundPath": "Bg_Night" },
+    { "id": 119, "stage": 13, "characterName": "해님 (오빠)", "text": "입 닥쳐!! 어머니를 위해서야! 방해하는 건 다 찢어 죽이면 돼!", "leftPortraitPath": "Haenim_Angry", "rightPortraitPath": "", "backgroundPath": "Bg_Night" },
+    { "id": 120, "stage": 13, "characterName": "달님 (여동생)", "text": "오빠... 저기... 호랑이 형상이...", "leftPortraitPath": "Dalnim_Surprise", "rightPortraitPath": "", "backgroundPath": "Bg_Night" },
+    { "id": 121, "stage": 13, "characterName": "(시스템)", "text": "오누이의 지독한 죄책감과 광기가 뭉쳐, 안개 속에서 기괴한 유령 호랑이가 형상을 갖췄다.", "leftPortraitPath": "", "rightPortraitPath": "GhostTiger_Normal", "backgroundPath": "Bg_Night" },
+    { "id": 122, "stage": 13, "characterName": "해님 (오빠)", "text": "환영 따위가 날 가르치려 들다니! 찢어발겨 주마!", "leftPortraitPath": "Haenim_Angry", "rightPortraitPath": "GhostTiger_Normal", "backgroundPath": "Bg_Night" },
+
+    { "id": 123, "stage": 14, "characterName": "해님 (오빠)", "text": "(기괴하게 웃으며) 하아... 하아... 피가 모자라. 다 죽여야 해.", "leftPortraitPath": "Haenim_Smile", "rightPortraitPath": "", "backgroundPath": "Bg_Village" },
+    { "id": 124, "stage": 14, "characterName": "달님 (여동생)", "text": "오빠, 눈이 이상해... 오빠마저 짐승처럼 변하고 있어...", "leftPortraitPath": "Dalnim_Sad", "rightPortraitPath": "", "backgroundPath": "Bg_Village" },
+    { "id": 125, "stage": 14, "characterName": "해님 (오빠)", "text": "어머니를 지키려면 짐승보다 더한 괴물이 되어야 해!! \n저 앞만 지나면 '산의 주인'이다.", "leftPortraitPath": "Haenim_Angry", "rightPortraitPath": "", "backgroundPath": "Bg_Village" },
+    { "id": 126, "stage": 14, "characterName": "(시스템)", "text": "피 냄새에 이끌려 수많은 호랑이 무리가 앞을 가로막았다.", "leftPortraitPath": "", "rightPortraitPath": "TigerPack_Normal", "backgroundPath": "Bg_Village" },
+    { "id": 127, "stage": 14, "characterName": "해님 (오빠)", "text": "다 비켜라. 내 도끼가 목말라하고 있다.", "leftPortraitPath": "Haenim_Smile", "rightPortraitPath": "TigerPack_Normal", "backgroundPath": "Bg_Village" },
+
+    { "id": 128, "stage": 15, "characterName": "(시스템)", "text": "[산의 정상]", "leftPortraitPath": "", "rightPortraitPath": "", "backgroundPath": "Bg_NightBridge" },
+    { "id": 129, "stage": 15, "characterName": "달님 (여동생)", "text": "...저 놈이야. 거대한 산의 주인.", "leftPortraitPath": "Dalnim_Surprise", "rightPortraitPath": "", "backgroundPath": "Bg_NightBridge" },
+    { "id": 130, "stage": 15, "characterName": "산의 주인", "text": "해님아... 달님아...", "leftPortraitPath": "", "rightPortraitPath": "BossTiger_Normal", "backgroundPath": "Bg_NightBridge" },
+    { "id": 131, "stage": 15, "characterName": "달님 (여동생)", "text": "어...? 오빠, 호랑이 목소리가 이상해... 저건...", "leftPortraitPath": "Dalnim_Surprise", "rightPortraitPath": "BossTiger_Normal", "backgroundPath": "Bg_NightBridge" },
+    { "id": 132, "stage": 15, "characterName": "산의 주인", "text": "어머니가... 떡을 가져왔단다...", "leftPortraitPath": "", "rightPortraitPath": "BossTiger_Normal", "backgroundPath": "Bg_NightBridge" },
+    { "id": 133, "stage": 15, "characterName": "해님 (오빠)", "text": "환각이다!! 호랑이 새끼가 어머니 목소리를 흉내 내다니!! \n죽여버리겠어!!!", "leftPortraitPath": "Haenim_Angry", "rightPortraitPath": "BossTiger_Normal", "backgroundPath": "Bg_NightBridge" },
+
+    { "id": 134, "stage": 16, "characterName": "(시스템)", "text": "거대한 산의 주인이 쓰러졌다. \n아니, 산의 주인이 아니었다.", "leftPortraitPath": "", "rightPortraitPath": "", "backgroundPath": "Bg_Morning" },
+    { "id": 135, "stage": 16, "characterName": "어머니", "text": "(피투성이가 된 채) 해님아... 달님아... 다치진 않았느냐...", "leftPortraitPath": "", "rightPortraitPath": "Mother_Sad", "backgroundPath": "Bg_Morning" },
+    { "id": 136, "stage": 16, "characterName": "달님 (여동생)", "text": "아아아아악!! 어머니!! 안 돼, 어머니!!", "leftPortraitPath": "Dalnim_Surprise", "rightPortraitPath": "Mother_Sad", "backgroundPath": "Bg_Morning" },
+    { "id": 137, "stage": 16, "characterName": "(시스템)", "text": "오빠의 도끼에 찍혀 쓰러진 것은,\n밤늦게 자식들을 찾으러 산에 올라온 어머니였다.", "leftPortraitPath": "", "rightPortraitPath": "", "backgroundPath": "Bg_Morning" },
+    { "id": 138, "stage": 16, "characterName": "해님 (오빠)", "text": "(초점 없는 눈으로) ...아니야. 이건 호랑이야. \n호랑이가 어머니 가죽을 뒤집어쓴 거야.", "leftPortraitPath": "Haenim_Normal", "rightPortraitPath": "", "backgroundPath": "Bg_Morning" },
+    { "id": 139, "stage": 16, "characterName": "해님 (오빠)", "text": "...호랑이는 다 죽여야 해. \n...달님아, 왜 울어? 넌 왜 나를 그렇게 쳐다봐?", "leftPortraitPath": "Haenim_Normal", "rightPortraitPath": "", "backgroundPath": "Bg_Morning" },
+    { "id": 140, "stage": 16, "characterName": "달님 (여동생)", "text": "가까이 오지 마... 괴물아... 다가오지 마!!!", "leftPortraitPath": "Dalnim_Sad", "rightPortraitPath": "", "backgroundPath": "Bg_Morning" },
+    { "id": 141, "stage": 16, "characterName": "해님 (오빠)", "text": "너도 호랑이에게 홀렸구나... 내가 편하게 해줄게.", "leftPortraitPath": "Haenim_Smile", "rightPortraitPath": "", "backgroundPath": "Bg_Morning" },
+    { "id": 142, "stage": 16, "characterName": "(시스템)", "text": "핏빛으로 물든 도끼가 다시 한번 허공을 갈랐다.\n일그러진 미래는 비극을 피하려는 자들에 의해 스스로 완성되었다.", "leftPortraitPath": "", "rightPortraitPath": "", "backgroundPath": "Bg_Morning" }
   ]
 }

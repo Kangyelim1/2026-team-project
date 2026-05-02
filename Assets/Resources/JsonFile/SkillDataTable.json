@@ -14,7 +14,6 @@
       "skillEnhance": true,
       "enhanceFigure": 10,
       "iconPath": "SkillIcons/icon_attack"
-      
     },
     {
       "id": 2,
@@ -60,6 +59,51 @@
       "skillEnhance": true,
       "enhanceFigure": 10,
       "iconPath": "SkillIcons/icon_skill_toad"
+    },
+    {
+      "id": 5,
+      "name": "기본공격(해님달님)",
+      "userId": 2,
+      "skillType": "active",
+      "skillAbilityIds": [100],
+      "skillEffectValues": [4],
+      "actionCost": 0,
+      "activate": true,
+      "usingAgain": false,
+      "damageType": "direct",
+      "skillEnhance": true,
+      "enhanceFigure": 10,
+      "iconPath": "SkillIcons/icon_attack"
+    },
+    {
+      "id": 6,
+      "name": "떡 먹기",
+      "userId": 2,
+      "skillType": "active",
+      "skillAbilityIds": [200], 
+      "skillEffectValues": [5], 
+      "actionCost": 1,
+      "activate": true,
+      "usingAgain": true,
+      "damageType": "direct",
+      "skillEnhance": false,
+      "enhanceFigure": 0,
+      "iconPath": "SkillIcons/icon_ricecake"
+    },
+    {
+      "id": 7,
+      "name": "도끼질",
+      "userId": 2,
+      "skillType": "active",
+      "skillAbilityIds": [100],
+      "skillEffectValues": [10],
+      "actionCost": 1,
+      "activate": true,
+      "usingAgain": false,
+      "damageType": "direct",
+      "skillEnhance": true,
+      "enhanceFigure": 20,
+      "iconPath": "SkillIcons/icon_axe"
     }
   ]
 }
