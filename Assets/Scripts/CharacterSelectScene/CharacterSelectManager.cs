@@ -110,8 +110,26 @@ public class CharacterSelectManager : MonoBehaviour
             return;
         }
 
-        PlayerPrefs.SetInt("CurrentStage", 1);
+        // ★ [수정됨] 캐릭터 ID에 따라 시작 스테이지를 다르게 설정!
+        int currentID = DataManager.SelectedPlayerID;
+
+        if (currentID == 2)
+        {
+            // 해님달님이면 11스테이지부터 시작
+            PlayerPrefs.SetInt("CurrentStage", 11);
+            Debug.Log("해님달님 선택! 11스테이지 스토리 씬으로 이동합니다.");
+        }
+        else
+        {
+            // 콩쥐(ID 1) 또는 다른 캐릭터면 1스테이지부터 시작
+            PlayerPrefs.SetInt("CurrentStage", 1);
+            Debug.Log("콩쥐 선택! 1스테이지 스토리 씬으로 이동합니다.");
+        }
+
+        PlayerPrefs.SetInt("NeedEvent", 0);     // 이벤트 상태 초기화
+        PlayerPrefs.SetInt("IsEndingScene", 0); // 엔딩 상태 초기화
         PlayerPrefs.Save();
+
         SceneManager.LoadScene("StoryScene");
     }
 }

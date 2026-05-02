@@ -672,7 +672,7 @@ MonoBehaviour:
   detailIllustration: {fileID: 82872576}
   detailNameText: {fileID: 227733172}
   detailDescText: {fileID: 1858017303}
-  detailStatText: {fileID: 0}
+  detailStatText: {fileID: 1275149465}
   detailBackground: {fileID: 9578627}
   selectedCharacterCard: {fileID: 0}
 --- !u!1 &556873035
@@ -1715,6 +1715,7 @@ GameObject:
   - component: {fileID: 1273612750}
   - component: {fileID: 1273612749}
   - component: {fileID: 1273612748}
+  - component: {fileID: 1273612751}
   m_Layer: 5
   m_Name: CharButton02
   m_TagString: Untagged
@@ -1787,13 +1788,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 516120850}
-        m_TargetAssemblyTypeName: CharacterSelectManager, Assembly-CSharp
-        m_MethodName: OpenDetail
-        m_Mode: 2
+      - m_Target: {fileID: 1273612751}
+        m_TargetAssemblyTypeName: CharacterCard, Assembly-CSharp
+        m_MethodName: OnClickCard
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 5662688d0bfdbfd4bb806d4572b75d2c, type: 2}
-          m_ObjectArgumentAssemblyTypeName: CharacterData, Assembly-CSharp
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1837,6 +1838,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1273612746}
   m_CullTransparentMesh: 1
+--- !u!114 &1273612751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1273612746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88e656ae1337fbb4f98810ef8792f12d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myData: {fileID: 11400000, guid: 5662688d0bfdbfd4bb806d4572b75d2c, type: 2}
+  manager: {fileID: 516120850}
 --- !u!1 &1275149463
 GameObject:
   m_ObjectHideFlags: 0
@@ -1894,9 +1909,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'HP 100
-
-    ACTION 3'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

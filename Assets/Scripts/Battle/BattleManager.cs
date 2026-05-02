@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public enum BattleState { Start, PlayerTurn, EnemyTurn, Event, Win, Lose }
 
@@ -30,6 +31,7 @@ public class BattleManager : MonoBehaviour
 
     void Start()
     {
+        // 1. 선택한 캐릭터 ID 가져오기 (1: 콩쥐, 2: 해님달님)
         int playerID = DataManager.SelectedPlayerID;
         if (playerID == 0) playerID = PlayerPrefs.GetInt("SavedPlayerID", 1);
         else
@@ -38,8 +40,44 @@ public class BattleManager : MonoBehaviour
             PlayerPrefs.Save();
         }
 
+        // 2. 현재 스테이지 가져오기
         currentStage = PlayerPrefs.GetInt("CurrentStage", 1);
 
+        if (playerID == 2 && currentStage < 11)
+        {
+            currentStage = 11;
+            PlayerPrefs.SetInt("CurrentStage", currentStage);
+            PlayerPrefs.Save();
+        }
+
+        // ★ [수정됨] 3. 엔딩 스토리(스테이지 6 또는 16)를 보고 넘어왔거나, 엔딩 씬 플래그가 켜져있다면 게임 클리어!
+        if (currentStage == 6 || currentStage == 16 || PlayerPrefs.GetInt("IsEndingScene", 0) == 1)
+        {
+            PlayerPrefs.SetInt("IsEndingScene", 0);
+            PlayerPrefs.Save();
+
+            Debug.Log("마지막 스토리 완료 확인! ➡️ 전투 없이 바로 엔딩 클리어 창 팝업!");
+
+            if (BattleUI.Instance != null && BattleUI.Instance.battleBackground != null)
+            {
+                Sprite bgSprite = Resources.Load<Sprite>("Backgrounds/Bg_NightBridge");
+                if (bgSprite != null) BattleUI.Instance.battleBackground.sprite = bgSprite;
+            }
+
+            if (BattleUI.Instance != null)
+            {
+                if (BattleUI.Instance.playerIllustration != null) BattleUI.Instance.playerIllustration.gameObject.SetActive(false);
+                if (BattleUI.Instance.enemyIllustration != null) BattleUI.Instance.enemyIllustration.gameObject.SetActive(false);
+            }
+
+            currentState = BattleState.Win;
+
+            // 게임 클리어 창 팝업!
+            if (GameClearUI.Instance != null) GameClearUI.Instance.ShowGameClear();
+            return;
+        }
+
+        // 4. 사제 이벤트 (포켓몬 센터 같은 회복 이벤트)
         if (PlayerPrefs.GetInt("NeedEvent", 0) == 1)
         {
             currentState = BattleState.Event;
@@ -47,12 +85,22 @@ public class BattleManager : MonoBehaviour
             return;
         }
 
+        // 5. 현재 스테이지에 맞는 적 ID 설정
         currentEnemyID = 1;
+
+        // --- 콩쥐 스테이지 (1 ~ 5) ---
         if (currentStage == 1) currentEnemyID = 1;
         else if (currentStage == 2) currentEnemyID = 3;
         else if (currentStage == 3) currentEnemyID = 5;
         else if (currentStage == 4) currentEnemyID = 6;
-        else if (currentStage == 5) currentEnemyID = 7; // ★ 5스테이지: 최종보스 '흑화 콩쥐' (ID: 7)
+        else if (currentStage == 5) currentEnemyID = 7; // 최종보스: 내면의 콩쥐
+
+        // --- 해님달님 스테이지 (11 ~ 15) ---
+        else if (currentStage == 11) currentEnemyID = 11; // 아기 호랑이
+        else if (currentStage == 12) currentEnemyID = 12; // 부모 호랑이
+        else if (currentStage == 13) currentEnemyID = 13; // 유령 호랑이
+        else if (currentStage == 14) currentEnemyID = 14; // 호랑이 무리
+        else if (currentStage == 15) currentEnemyID = 15; // 최종보스: 산의 주인
 
         SetupBattle(playerID, currentEnemyID);
     }
@@ -66,29 +114,28 @@ public class BattleManager : MonoBehaviour
         player.InitPlayer(playerID);
         enemy.InitEnemy(enemyID);
 
-        // 마지막 5스테이지 콩쥐는 이름을 '내면의 콩쥐' 등으로 강제 변경
-        if (enemyID == 7) enemy.charName = "내면의 콩쥐";
-
         if (BattleUI.Instance != null)
         {
-            // 배경 설정
+            // 배경 이미지 설정
             if (BattleUI.Instance.battleBackground != null)
             {
                 string bgName = "Bg_Yard";
                 if (enemyID == 1) bgName = "Bg_Yard";
                 else if (enemyID == 2 || enemyID == 3) bgName = "Bg_Morning";
-                else if (enemyID == 4) bgName = "Bg_Night";
-                else if (enemyID == 5 || enemyID == 6) bgName = "Bg_Village";
-                else if (enemyID == 7) bgName = "Bg_NightBridge"; // 찐막 전투는 밤 다리 위에서!
+                else if (enemyID == 4 || enemyID == 11 || enemyID == 12) bgName = "Bg_Morning";
+                else if (enemyID == 13) bgName = "Bg_Night";
+                else if (enemyID == 5 || enemyID == 6 || enemyID == 14) bgName = "Bg_Village";
+                else if (enemyID == 7 || enemyID == 15) bgName = "Bg_NightBridge"; // 최종보스들
 
                 Sprite bgSprite = Resources.Load<Sprite>($"Backgrounds/{bgName}");
                 if (bgSprite != null) BattleUI.Instance.battleBackground.sprite = bgSprite;
             }
 
-            // 플레이어 이미지
+            // 플레이어 이미지 설정 (콩쥐 vs 해님달님)
             if (BattleUI.Instance.playerIllustration != null)
             {
-                Sprite playerSprite = Resources.Load<Sprite>("Portraits/Kongjwi_Sword");
+                string playerImgName = (playerID == 2) ? "Haenim_Normal" : "Kongjwi_Sword";
+                Sprite playerSprite = Resources.Load<Sprite>($"Portraits/{playerImgName}");
                 if (playerSprite != null)
                 {
                     BattleUI.Instance.playerIllustration.sprite = playerSprite;
@@ -100,13 +147,20 @@ public class BattleManager : MonoBehaviour
             if (BattleUI.Instance.enemyIllustration != null)
             {
                 string enemyImgName = "";
+                // 콩쥐 적
                 if (enemyID == 1) enemyImgName = "Monster_Rice";
                 else if (enemyID == 2) enemyImgName = "Monster_Loom";
                 else if (enemyID == 3) enemyImgName = "Patjwi_Normal";
                 else if (enemyID == 4) enemyImgName = "Monster_Pot";
                 else if (enemyID == 5) enemyImgName = "StepMother_Angry";
                 else if (enemyID == 6) enemyImgName = "Magistrate_Normal";
-                else if (enemyID == 7) enemyImgName = "FutureKongjwi_Normal"; // ★ 마지막 보스 사진: 흑화 콩쥐!
+                else if (enemyID == 7) enemyImgName = "FutureKongjwi_Normal";
+                // 해님달님 적
+                else if (enemyID == 11) enemyImgName = "BabyTiger_Normal";
+                else if (enemyID == 12) enemyImgName = "ParentTiger_Angry";
+                else if (enemyID == 13) enemyImgName = "GhostTiger_Normal";
+                else if (enemyID == 14) enemyImgName = "TigerPack_Normal";
+                else if (enemyID == 15) enemyImgName = "BossTiger_Normal";
 
                 Sprite enemySprite = Resources.Load<Sprite>($"Portraits/{enemyImgName}");
                 if (enemySprite != null)
@@ -138,8 +192,12 @@ public class BattleManager : MonoBehaviour
         currentState = BattleState.PlayerTurn;
         player.OnTurnStart();
 
-        if (DataManager.Instance.playerDict.ContainsKey(player.id))
-            player.currentAP = DataManager.Instance.playerDict[player.id].actionPoint;
+        // 턴 시작 시 AP 회복 로직 (데이터 매니저 연동용)
+        if (DataManager.Instance != null && DataManager.Instance.playerDict != null)
+        {
+            if (DataManager.Instance.playerDict.ContainsKey(player.id))
+                player.currentAP = DataManager.Instance.playerDict[player.id].actionPoint;
+        }
 
         if (BattleUI.Instance != null)
         {
@@ -169,12 +227,9 @@ public class BattleManager : MonoBehaviour
 
         if (plannedEnemyAttackID == -1) PlanNextEnemyAttack();
 
-        int randomDamage = Random.Range(3, 8);
-        player.TakeDamage(randomDamage);
-        BattleUI.Instance.ShowDamage(true, randomDamage);
-
-        if (BattleUI.Instance != null) BattleUI.Instance.AddLog($"{enemy.charName}의 공격! {randomDamage} 피해!");
+        // 적 스킬 사용
         enemy.UseEnemySkill(plannedEnemyAttackID, player);
+        if (BattleUI.Instance != null) BattleUI.Instance.AddLog($"{enemy.charName}의 공격!");
 
         if (CheckGameOver())
         {
@@ -215,6 +270,7 @@ public class BattleManager : MonoBehaviour
         if (eventTriggered) return;
         eventTriggered = true;
 
+        // 콩쥐 중간 보스 이벤트 분기
         if (currentEnemyID == 1)
         {
             Invoke(nameof(StartBattle_Loom), 2.0f);
@@ -226,15 +282,16 @@ public class BattleManager : MonoBehaviour
             return;
         }
 
-        // ★ 수정: 마지막 보스(ID 7 콩쥐)를 잡았으면 이벤트 띄우지 않고 바로 게임 클리어 창 호출!
-        if (currentEnemyID == 7)
+        // ★ [수정됨] 최종 보스 처치 시 바로 클리어 창을 띄우지 않고, 엔딩 스토리 씬으로 넘김!
+        if (currentEnemyID == 7 || currentEnemyID == 15)
         {
-            Debug.Log("마지막 보스 처치 완료! 게임 클리어 창 팝업!");
-            if (GameClearUI.Instance != null) GameClearUI.Instance.ShowGameClear();
+            Debug.Log("마지막 보스 처치 완료! 엔딩 스토리로 넘어갑니다.");
+            Invoke(nameof(GoToNextStoryAfterBoss), 2.0f); // 2초 뒤 스토리 씬으로 이동
             return;
         }
 
-        if (EventManager.Instance != null)
+        // 일반 승리 시 이벤트 센터로 갈 확률
+        if (EventManager.Instance != null && Random.Range(0, 100) < priestEventChance)
         {
             currentState = BattleState.Event;
             EventManager.Instance.ShowPriestEvent();
@@ -246,8 +303,8 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    private void StartBattle_Loom() { SetupBattle(DataManager.SelectedPlayerID, 2); }
-    private void StartBattle_Pot() { SetupBattle(DataManager.SelectedPlayerID, 4); }
+    private void StartBattle_Loom() { SetupBattle(player.id, 2); }
+    private void StartBattle_Pot() { SetupBattle(player.id, 4); }
 
     public void GoToNextStoryAfterBoss()
     {

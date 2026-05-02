@@ -42,8 +42,9 @@ public class StoryManager : MonoBehaviour
 
     void Start()
     {
+        // ★ PlayerPrefs에서 방금 저장한 스테이지(11)를 제대로 불러오는지 확인!
         currentStageNumber = PlayerPrefs.GetInt("CurrentStage", 1);
-        Debug.Log($"현재 스토리 스테이지: {currentStageNumber}");
+        Debug.Log($"현재 스토리 스테이지: {currentStageNumber}"); // 콘솔창에 11이 찍혀야 정상!
 
         LoadStoryJson();
         ShowCurrentLine();
