@@ -56,7 +56,17 @@ public class PlayerAttackSystem : MonoBehaviour
 
     void IsAttack(EnemySystem target)
     {
-        target.Enemy_CurrentHelth -= playerSystem.player_Damage;
-        Debug.Log($"플레이어 체력 {playerSystem.player_Damage} 만큼 감소, 현제 체력: {target.Enemy_CurrentHelth}");
+        if(target.Enemy_CurrentHelth > 0)
+        {
+            target.Enemy_CurrentHelth -= playerSystem.player_Damage;
+            Debug.Log($"플레이어 체력 {playerSystem.player_Damage} 만큼 감소, 현제 체력: {target.Enemy_CurrentHelth}");
+        }
+        else
+        {
+            Debug.Log($"{target.Enmey_Name} 사망");
+            _playerBattleSystem._battleManager.EndGame();
+            Destroy(target.gameObject);
+        }
+       
     }
 }

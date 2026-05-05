@@ -153,26 +153,7 @@ public class NewBattleManager : MonoBehaviour
         Turn();
     }
 
-    public void EnemyDie(GameObject enemy)
-    {
-        if (SpawnEnemy.Contains(enemy))
-        {
-            SpawnEnemy.Remove(enemy);
-        }
-
-        Destroy(enemy);
-
-        EnemyDieCount++;
-
-        Debug.Log($"적 사망 / 현재 웨이브 사망 수 : {EnemyDieCount}");
-
-        if (EnemyDieCount >= currentEnemyCount)
-        {
-            EndGame();
-        }
-    }
-
-    private void EndGame()
+    public void EndGame()
     {
         isGameEnd = true;
         Debug.Log("게임 종료");
