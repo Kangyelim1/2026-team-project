@@ -99,7 +99,7 @@ public class WarpSkillData
 }
 
 [Serializable]
-public class EnemyData
+public class EnemyDataBase
 {
     public int id;
     public string name;
@@ -149,7 +149,7 @@ public class WarpSkillDataTableWrapper
 [Serializable]
 public class EnemyDataTableWrapper
 {
-    public List<EnemyData> rows = new List<EnemyData>();
+    public List<EnemyDataBase> rows = new List<EnemyDataBase>();
 }
 
 [Serializable]

@@ -16,7 +16,7 @@ public class DataManager : MonoBehaviour
 
     public Dictionary<int, PlayerData> playerDict = new Dictionary<int, PlayerData>();
     public Dictionary<int, SkillData> skillDict = new Dictionary<int, SkillData>();
-    public Dictionary<int, EnemyData> enemyDict = new Dictionary<int, EnemyData>();
+    public Dictionary<int, EnemyDataBase> enemyDict = new Dictionary<int, EnemyDataBase>();
     public Dictionary<int, EnemyAttackData> enemyAttackDict = new Dictionary<int, EnemyAttackData>();
     public Dictionary<int, AbilityData> abilityDict = new Dictionary<int, AbilityData>();
 
