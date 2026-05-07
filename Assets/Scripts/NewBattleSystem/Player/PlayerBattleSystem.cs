@@ -31,12 +31,17 @@ public class PlayerBattleSystem : MonoBehaviour
 
     public void AutoSelectEnemey()
     {
-        if (_battleManager.isPlayerTurn || TargetEnemy == null)
+        if (_battleManager.spawnedEnemy == null) return;
+
+        TargetEnemy = _battleManager.spawnedEnemy.gameObject;
+        isTarget = true;
+        Debug.Log($"[PlayerBattleSystem] 타겟 선택: {TargetEnemy.name}");
+        /*if (_battleManager.isPlayerTurn || TargetEnemy == null)
         {
             TargetEnemy = _battleManager.spawnedEnemy.gameObject;
             Debug.Log($"타겟: {TargetEnemy.name}");
             isTarget = true;
-        }
+        }*/
     }
 
     void Attack()
@@ -44,6 +49,8 @@ public class PlayerBattleSystem : MonoBehaviour
         if (!_battleManager.isPlayerTurn) return;
 
         _playerAttackSystem = Object.FindAnyObjectByType<PlayerAttackSystem>();
+
+        if (_playerAttackSystem == null) return;
 
         StartCoroutine(_playerAttackSystem.isAttack());
         Debug.Log("Enemy 체력 감소 플레이어 공격 진행 완료");

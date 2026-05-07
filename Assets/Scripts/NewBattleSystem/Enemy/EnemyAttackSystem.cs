@@ -30,7 +30,7 @@ public class EnemyAttackSystem : MonoBehaviour
         if (_battleManager.spawnedPlayer == null)
         {
             Debug.Log("공격할 플레이어가 없습니다.");
-            _battleManager.EndGame();
+            _battleManager.EndGame(false);
             return;
         }
 

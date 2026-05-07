@@ -84,7 +84,7 @@ public class NewBattleManager : MonoBehaviour
         if (spawnedPlayer == null)
         {
             Debug.Log("플레이어가 없음 게임 패배");
-            EndGame();
+            EndGame(false);
             return;
         }
 
@@ -107,7 +107,7 @@ public class NewBattleManager : MonoBehaviour
         if (spawnedEnemy == null)
         {
             Debug.Log("적이 없음 게임 승리");
-            EndGame();
+            EndGame(true);
             return;
         }
 
@@ -131,9 +131,23 @@ public class NewBattleManager : MonoBehaviour
         Turn();
     }
 
-    public void EndGame()
+    public void EndGame(bool isVictory)
     {
+        if (isGameEnd) return;
         isGameEnd = true;
-        Debug.Log("게임 종료");
+
+        if (isVictory)
+            Debug.Log("[BattleManager] 전투 승리!");
+        else
+            Debug.Log("[BattleManager] 전투 패배...");
+        //Debug.Log("게임 종료");
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.ReturnToField();
+        }
+        else
+        {
+            Debug.LogError("[BattleManager] GameManager 인스턴스를 찾을 수 없습니다. 씬 복귀 불가.");
+        }
     }
 }

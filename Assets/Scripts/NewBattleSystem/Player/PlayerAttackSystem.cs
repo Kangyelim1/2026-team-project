@@ -38,7 +38,32 @@ public class PlayerAttackSystem : MonoBehaviour
 
         _playerBattleSystem.TargetEnemy.TryGetComponent<EnemySystem>(out EnemySystem enemy);
 
-        IsAttack(enemy);
+        if (enemy != null)
+            DealDamage(enemy);
+        else
+            Debug.LogWarning("[PlayerAttackSystem] 타겟에 EnemySystem 컴포넌트가 없습니다.");
+
+        Debug.Log("원위치로 복귀");
+
+        // 원래 위치로 복귀
+        while (Vector3.Distance(transform.position, playerPoition) > 0.1f)
+        {
+            Vector3 backDirection = (playerPoition - transform.position).normalized;
+            transform.position += backDirection * playerSystem.player_Speed * Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = playerPoition;
+        Debug.Log("복귀 완료");
+
+        yield return new WaitForSeconds(1f);
+
+        // [수정] isTarget 초기화 — 다음 턴에 타겟 재선택 가능하도록
+        _playerBattleSystem.isTarget = false;
+
+        _playerBattleSystem._battleManager.EndPlayerTurn();
+
+        /*IsAttack(enemy);
 
         Debug.Log("원위치");
 
@@ -52,7 +77,23 @@ public class PlayerAttackSystem : MonoBehaviour
         transform.position = playerPoition;
         Debug.Log("복귀 완료");
         yield return new WaitForSeconds(1);
-        _playerBattleSystem._battleManager.EndPlayerTurn();
+        _playerBattleSystem._battleManager.EndPlayerTurn();*/
+    }
+
+    void DealDamage(EnemySystem target)
+    {
+        
+        target.Enemy_CurrentHelth -= playerSystem.player_Damage;
+        Debug.Log($"[공격] {target.Enmey_Name}에게 {playerSystem.player_Damage} 데미지. 남은 체력: {target.Enemy_CurrentHelth}");
+
+        
+        if (target.Enemy_CurrentHelth <= 0)
+        {
+            Debug.Log($"[사망] {target.Enmey_Name} 처치!");
+            Destroy(target.gameObject);
+            
+            _playerBattleSystem._battleManager.EndGame(true);
+        }
     }
 
     void IsAttack(EnemySystem target)
@@ -65,7 +106,7 @@ public class PlayerAttackSystem : MonoBehaviour
         else
         {
             Debug.Log($"{target.Enmey_Name} 사망");
-            _playerBattleSystem._battleManager.EndGame();
+            _playerBattleSystem._battleManager.EndGame(true);
             Destroy(target.gameObject);
         }
        
