@@ -132,7 +132,7 @@ public class QuestSystem : MonoBehaviour
                 }
                 break;
 
-            case "Move":
+            case "move":
                 SuccessQuest();
                 break;
 

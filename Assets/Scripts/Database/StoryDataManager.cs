@@ -6,12 +6,19 @@ using UnityEngine;
 
 public class StoryDataManager : MonoBehaviour
 {
+    [Header("-------------------------------------------------------------------------------")]
+    [Header("스토리 전용 데이터 매니져")]
+
+    [Header("Json 파일 이름을 StoryData 변경하고 반드시 StreamingAssets 파일에 넣어 주세요.")]
+
+    [Header("-------------------------------------------------------------------------------")]
+
+    public StoryDataSO storyDataSO;
+
     private void Start()
     {
         ConvertJsonToSO();
     }
-
-    public StoryDataSO storyDataSO;
 
     private void ConvertJsonToSO()
     {

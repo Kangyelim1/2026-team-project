@@ -6,6 +6,13 @@ using UnityEngine;
 
 public class QuestDataManager : MonoBehaviour
 {
+    [Header("-------------------------------------------------------------------------------")]
+    [Header("퀘스트 전용 데이터 매니져")]
+
+    [Header("Json 파일 이름을 QuestData 변경하고 반드시 StreamingAssets 파일에 넣어 주세요.")]
+
+    [Header("-------------------------------------------------------------------------------")]
+
     public QuestDataSO questDataSO;
 
     private void Start()
@@ -14,7 +21,7 @@ public class QuestDataManager : MonoBehaviour
     }
     public void ConvertJsonToSO()
     {
-        string path = Path.Combine(Application.streamingAssetsPath, "QuestData.json");
+        string path = Path.Combine(Application.streamingAssetsPath, "QuestData.json");      // 경로 지정및 파일 이름
 
         if (File.Exists(path))
         {
