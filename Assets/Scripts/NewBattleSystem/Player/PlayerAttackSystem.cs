@@ -37,6 +37,7 @@ public class PlayerAttackSystem : MonoBehaviour
         //playerSystem.playerAnimator.SetBool("isAttack", false);
 
         _playerBattleSystem.TargetEnemy.TryGetComponent<EnemySystem>(out EnemySystem enemy);
+
         IsAttack(enemy);
 
         Debug.Log("원위치");

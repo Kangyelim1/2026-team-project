@@ -33,12 +33,7 @@ public class PlayerBattleSystem : MonoBehaviour
     {
         if (_battleManager.isPlayerTurn || TargetEnemy == null)
         {
-            int targetEnemy = Mathf.Min(_battleManager.enemyData.Count);
-            targetEnemy -= 1;
-            GameObject target = _battleManager.SpawnEnemy[targetEnemy];
-            EnemySystem enemySystem = target.GetComponent<EnemySystem>();
-
-            TargetEnemy = enemySystem.EnemyPrefab;
+            TargetEnemy = _battleManager.spawnedEnemy.gameObject;
             Debug.Log($"타겟: {TargetEnemy.name}");
             isTarget = true;
         }

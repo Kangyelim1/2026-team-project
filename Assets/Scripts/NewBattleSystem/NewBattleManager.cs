@@ -1,28 +1,20 @@
-using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class NewBattleManager : MonoBehaviour
 {
     [Header("데이터")]
-    public List<EnemySystem> enemyData = new List<EnemySystem>();
-    public List<PlayerSystem> playerData = new List<PlayerSystem>();
+    public PlayerSystem playerData;
+    public EnemySystem enemyData;
 
     [Header("전투 상태")]
-    public int EnemyDieCount;
-    public int currentEnemyCount;
     public PlayerBattleSystem _playerBattleSystem;
-    public EnemyAttackSystem _enemyAttackSystem;
 
     [Header("스폰 위치")]
-    public List<Transform> Player_SpawnPoint;
-    public List<Transform> Enemy_SpawnPoint;
+    public Transform Player_SpawnPoint;
+    public Transform Enemy_SpawnPoint;
 
-    public List<GameObject> spawnedPlayers = new List<GameObject>();
-    public List<GameObject> SpawnEnemy = new List<GameObject>();
-
-    public int currentPlayerTurnIndex = 0;
-    public int currentEnemyTurnIndex = 0;
+    public GameObject spawnedPlayer;
+    public GameObject spawnedEnemy;
 
     public bool isPlayerTurn = true;
     public bool isGameEnd = false;
@@ -30,126 +22,112 @@ public class NewBattleManager : MonoBehaviour
     private void Start()
     {
         StartGame();
-        _playerBattleSystem = Object.FindAnyObjectByType<PlayerBattleSystem>();
     }
 
     private void StartGame()
     {
-        SpawnPlayers();
-        SpawnEnemies();
+        SpawnPlayer();
+        SpawnEnemy();
+
+        _playerBattleSystem = Object.FindAnyObjectByType<PlayerBattleSystem>();
 
         isPlayerTurn = true;
-        currentPlayerTurnIndex = 0;
-        currentEnemyTurnIndex = 0;
 
         Debug.Log("게임 시작");
         Debug.Log("플레이어 턴 시작");
+
         Turn();
     }
 
-    private void SpawnPlayers()
+    private void SpawnPlayer()
     {
-        spawnedPlayers.Clear();
-
-        int spawnCount = Mathf.Min(playerData.Count, Player_SpawnPoint.Count);
-
-        for (int i = 0; i < spawnCount; i++)
+        if (playerData == null)
         {
-            if (playerData[i] == null) continue;
-            if (playerData[i].playerPrefab == null) continue;
-
-            GameObject player = Instantiate(playerData[i].playerPrefab, Player_SpawnPoint[i].position, Player_SpawnPoint[i].rotation);
-            spawnedPlayers.Add(player);
+            Debug.LogError("playerData가 비어 있습니다.");
+            return;
         }
+
+        if (playerData.playerPrefab == null)
+        {
+            Debug.LogError("playerPrefab이 비어 있습니다.");
+            return;
+        }
+
+        spawnedPlayer = Instantiate(
+            playerData.playerPrefab,
+            Player_SpawnPoint.position,
+            Player_SpawnPoint.rotation
+        );
     }
 
-    private void SpawnEnemies()
+    private void SpawnEnemy()
     {
-        SpawnEnemy.Clear();
+        if (enemyData == null || enemyData.EnemyPrefab == null) return;
 
-        currentEnemyCount = 3;
-        int spawnCount = Mathf.Min(currentEnemyCount, Enemy_SpawnPoint.Count);
+        spawnedEnemy = Instantiate(enemyData.EnemyPrefab, Enemy_SpawnPoint.position, Enemy_SpawnPoint.rotation);
 
-        for (int i = 0; i < spawnCount; i++)
-        {
-            EnemySystem randomEnemy = enemyData[Random.Range(0, enemyData.Count)];
-
-            if (randomEnemy == null) continue;
-            if (randomEnemy.EnemyPrefab == null) continue;
-
-            GameObject enemy = Instantiate(randomEnemy.EnemyPrefab, Enemy_SpawnPoint[i].position,Enemy_SpawnPoint[i].rotation);
-            SpawnEnemy.Add(enemy);
-        }
-
-        EnemyDieCount = 0;
-
-        Debug.Log($"적 {SpawnEnemy.Count}명 생성");
+        Debug.Log($"{spawnedEnemy.name} 적 생성");
     }
 
     public void Turn()
     {
         if (isGameEnd) return;
 
-        if (isPlayerTurn) PlayerTurn();
-        else EnemyTurn();
+        if (isPlayerTurn)
+            PlayerTurn();
+        else
+            EnemyTurn();
     }
 
     private void PlayerTurn()
     {
-        if (spawnedPlayers.Count <= 0)
+        if (spawnedPlayer == null)
         {
             Debug.Log("플레이어가 없음 게임 패배");
-            isGameEnd = true;
+            EndGame();
             return;
         }
 
-        GameObject currentPlayer = spawnedPlayers[currentPlayerTurnIndex];
+        Debug.Log($"{spawnedPlayer.name} 플레이어 공격");
 
-        Debug.Log($"{currentPlayer.name} 플레이어 공격");
-
-        if (!_playerBattleSystem.isTarget)
+        if (_playerBattleSystem != null && !_playerBattleSystem.isTarget)
         {
             _playerBattleSystem.PlayerAttackTarget();
-        } 
-
+        }
     }
 
     public void EndPlayerTurn()
     {
-        currentPlayerTurnIndex++;
-
-        if (currentPlayerTurnIndex >= spawnedPlayers.Count)
-        {
-            currentPlayerTurnIndex = 0;
-            isPlayerTurn = false;
-        }
+        isPlayerTurn = false;
         Turn();
     }
 
     private void EnemyTurn()
     {
-        if (SpawnEnemy.Count <= 0) return;
-
-        if (currentEnemyTurnIndex >= SpawnEnemy.Count)
+        if (spawnedEnemy == null)
         {
-            currentEnemyTurnIndex = 0;
-            isPlayerTurn = true;
-            Turn();
+            Debug.Log("적이 없음 게임 승리");
+            EndGame();
             return;
         }
 
-        GameObject currentEnemy = SpawnEnemy[currentEnemyTurnIndex];
-        Debug.Log($"{currentEnemy.name} 적 공격 (인덱스: {currentEnemyTurnIndex})");
+        Debug.Log($"{spawnedEnemy.name} 적 공격");
 
-        EnemyAttackSystem currentEnemyAI = currentEnemy.GetComponent<EnemyAttackSystem>();
+        EnemyAttackSystem currentEnemyAI = spawnedEnemy.GetComponent<EnemyAttackSystem>();
 
-        if (currentEnemyAI != null) currentEnemyAI.AutoSelectPlayer();
-        else EndEnemyTurn();
+        if (currentEnemyAI != null)
+        {
+            currentEnemyAI.AutoSelectPlayer();
+        }
+        else
+        {
+            EndEnemyTurn();
+        }
     }
 
     public void EndEnemyTurn()
     {
-        currentEnemyTurnIndex++;
+        isPlayerTurn = true;
         Turn();
     }
 

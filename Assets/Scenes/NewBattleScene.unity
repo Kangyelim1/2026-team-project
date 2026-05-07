@@ -728,22 +728,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c933dce91af402941ab8a31194667a1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewBattleManager
-  enemyData:
-  - {fileID: 889044675867583206, guid: d91be32f86054c34489d5c5e2ae9f956, type: 3}
-  playerData:
-  - {fileID: 6801801390486318378, guid: 7cccd6264d5faec458dc378796ca0d2b, type: 3}
-  EnemyDieCount: 0
-  currentEnemyCount: 0
+  playerData: {fileID: 6801801390486318378, guid: 7cccd6264d5faec458dc378796ca0d2b, type: 3}
+  enemyData: {fileID: 889044675867583206, guid: d91be32f86054c34489d5c5e2ae9f956, type: 3}
   _playerBattleSystem: {fileID: 1477928375}
-  _enemyAttackSystem: {fileID: 0}
-  Player_SpawnPoint:
-  - {fileID: 1417717432}
-  Enemy_SpawnPoint:
-  - {fileID: 631576146}
-  spawnedPlayers: []
-  SpawnEnemy: []
-  currentPlayerTurnIndex: 0
-  currentEnemyTurnIndex: 0
+  Player_SpawnPoint: {fileID: 1417717432}
+  Enemy_SpawnPoint: {fileID: 631576146}
+  spawnedPlayer: {fileID: 0}
+  spawnedEnemy: {fileID: 0}
   isPlayerTurn: 1
   isGameEnd: 0
 --- !u!114 &1477928375
