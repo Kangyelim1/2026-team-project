@@ -1424,7 +1424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebb7c7cabe5991f4e8c29bd8e297ea77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestDataManager
-  questDataSO: {fileID: 11400000, guid: 86d57c7d2af65eb4bb1c077bc26be55c, type: 2}
+  questDataSO: {fileID: 11400000, guid: 756b46d35f5eb704f902d8cfaf5e42b0, type: 2}
 --- !u!4 &1974778023
 Transform:
   m_ObjectHideFlags: 0

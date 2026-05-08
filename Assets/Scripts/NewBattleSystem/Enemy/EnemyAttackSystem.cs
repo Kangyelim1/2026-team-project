@@ -16,6 +16,21 @@ public class EnemyAttackSystem : MonoBehaviour
         enemySystem = GetComponent<EnemySystem>();
         _battleManager = Object.FindAnyObjectByType<NewBattleManager>();
 
+        StartCoroutine(StartBattle());
+    }
+
+    IEnumerator StartBattle()
+    {
+        while (Vector3.Distance(transform.position, _battleManager._playerBattleSystem.EnemyOpPoint.transform.position) > attackRange)
+        {
+            Vector3 direction = (_battleManager._playerBattleSystem.EnemyOpPoint.transform.position - transform.position).normalized;
+            transform.position += direction * enemySystem.Enemy_Speed * Time.deltaTime;
+
+            yield return null;
+
+        }
+
+        yield return new WaitForSeconds(0.7f);
         enemyStartPosition = transform.position;
     }
 

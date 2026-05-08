@@ -9,25 +9,25 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/TitleScene.unity
-    guid: 84f4704e76052374686db11300925501
-  - enabled: 1
-    path: Assets/Scenes/StoryScene.unity
-    guid: 54dd39fdf94e3a9409085861f409095b
-  - enabled: 1
-    path: Assets/Scenes/OptionScene.unity
-    guid: 48666e50275b7844caa8c3d346700d1e
-  - enabled: 1
-    path: Assets/Scenes/CharacterSelectScene.unity
-    guid: db1c2880d9c091542877691e0a7b92f9
-  - enabled: 1
-    path: Assets/Scenes/BattleScene.unity
-    guid: 0d8eab2eb795ca149bc6cc4b0aa60c48
-  - enabled: 1
     path: Assets/Scenes/TestScene.unity
     guid: 80bfa9b3bc42b2046abfe93a27bcbb9b
   - enabled: 1
     path: Assets/Scenes/NewBattleScene.unity
     guid: d06f52f2bd392ab45a3fc1fad675e46a
+  - enabled: 0
+    path: Assets/Scenes/TitleScene.unity
+    guid: 84f4704e76052374686db11300925501
+  - enabled: 0
+    path: Assets/Scenes/StoryScene.unity
+    guid: 54dd39fdf94e3a9409085861f409095b
+  - enabled: 0
+    path: Assets/Scenes/OptionScene.unity
+    guid: 48666e50275b7844caa8c3d346700d1e
+  - enabled: 0
+    path: Assets/Scenes/CharacterSelectScene.unity
+    guid: db1c2880d9c091542877691e0a7b92f9
+  - enabled: 0
+    path: Assets/Scenes/BattleScene.unity
+    guid: 0d8eab2eb795ca149bc6cc4b0aa60c48
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

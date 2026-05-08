@@ -19,9 +19,15 @@ public class NewBattleManager : MonoBehaviour
     public bool isPlayerTurn = true;
     public bool isGameEnd = false;
 
+    public FadeManager fadeManager;
+
     private void Start()
     {
+        fadeManager = Object.FindAnyObjectByType<FadeManager>();
+
         StartGame();
+        _playerBattleSystem.ButtonHose.gameObject.SetActive(false);
+
     }
 
     private void StartGame()
@@ -74,9 +80,17 @@ public class NewBattleManager : MonoBehaviour
         if (isGameEnd) return;
 
         if (isPlayerTurn)
+        {
             PlayerTurn();
+            _playerBattleSystem.ButtonHose.gameObject.SetActive(true);
+        }
+           
         else
+        {
             EnemyTurn();
+            _playerBattleSystem.ButtonHose.gameObject.SetActive(false);
+        }
+            
     }
 
     private void PlayerTurn()
@@ -123,6 +137,12 @@ public class NewBattleManager : MonoBehaviour
         {
             EndEnemyTurn();
         }
+    }
+
+    public void NextTurn()
+    {
+        isPlayerTurn = false;
+        Turn();
     }
 
     public void EndEnemyTurn()

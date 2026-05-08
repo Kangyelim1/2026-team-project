@@ -17,7 +17,25 @@ public class PlayerAttackSystem : MonoBehaviour
         _playerBattleSystem = Object.FindAnyObjectByType<PlayerBattleSystem>();
 
         currentDamage = playerSystem.player_Damage;
+        _playerBattleSystem.ButtonHose.gameObject.SetActive(false);
+        
+        StartCoroutine(StartBattle());
+    }
+
+    IEnumerator StartBattle()
+    {
+        while (Vector3.Distance(transform.position, _playerBattleSystem.playerOpPoint.transform.position) > attackRange)
+        {
+            Vector3 direction = (_playerBattleSystem.playerOpPoint.transform.position - transform.position).normalized;
+            transform.position += direction * playerSystem.player_Speed * Time.deltaTime;
+
+            yield return null;
+
+        }
+
+        yield return new WaitForSeconds(0.7f);
         playerPoition = transform.position;
+        _playerBattleSystem.ButtonHose.gameObject.SetActive(true);
     }
 
     public IEnumerator isAttack()
