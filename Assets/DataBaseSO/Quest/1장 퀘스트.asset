@@ -12,4 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e082bd9b5e7ae994580a9f02219adcee, type: 3}
   m_Name: "1\uC7A5 \uD018\uC2A4\uD2B8"
   m_EditorClassIdentifier: Assembly-CSharp::QuestDataSO
-  quests: []
+  quests:
+  - Quest_ID: 0
+    Quest_Title: 
+    Quest_Description: 
+    Quest_Type: 
+    Quest_StoryID: 0
+    Quest_EnemyNPC: 
+    Location_Asset: 
+    BGM_Asset: 
+    Qeust_EnemyCount: 0
+    Rewards: 
+    rewardIcon1: {fileID: 0}
+    rewardIcon2: {fileID: 0}
+  - Quest_ID: 0
+    Quest_Title: 
+    Quest_Description: 
+    Quest_Type: 
+    Quest_StoryID: 0
+    Quest_EnemyNPC: 
+    Location_Asset: 
+    BGM_Asset: 
+    Qeust_EnemyCount: 0
+    Rewards: 
+    rewardIcon1: {fileID: 0}
+    rewardIcon2: {fileID: 0}
