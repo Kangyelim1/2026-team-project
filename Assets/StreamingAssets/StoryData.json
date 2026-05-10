@@ -1,0 +1,470 @@
+ [
+    {
+      "Story_ID": 10001,
+      "Speaker": "시스템",
+      "Dialogue": "일찍이 어머니를 여의고 계모와 팥쥐에게 구박받으며 자란 콩쥐.",
+      "Is_Image": true,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": "Bg_Yard",
+      "TargetAudio": null,
+      "TargetMusic": "평화로운브금"
+    },
+    {
+      "Story_ID": 10002,
+      "Speaker": "시스템",
+      "Dialogue": "어느 날, 눈앞에 피투성이가 된 미래의 자신이 나타나 속삭였다.",
+      "Is_Image": false,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": null,
+      "TargetAudio": "심장박동소리",
+      "TargetMusic": "무서운브금"
+    },
+    {
+      "Story_ID": 10003,
+      "Speaker": "미래의 콩쥐",
+      "Dialogue": "...이대로 가다간, 연못에 빠져 죽게 될 거야. 살고 싶다면 전부 베어버려.",
+      "Is_Image": true,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": "FutureKongjwi_Sad",
+      "TargetAudio": null,
+      "TargetMusic": null
+    },
+    {
+      "Story_ID": 10004,
+      "Speaker": "콩쥐",
+      "Dialogue": "내가... 내가 죽는다고? 안 돼, 살아야 해...",
+      "Is_Image": true,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": "Kongjwi_Normal",
+      "TargetAudio": null,
+      "TargetMusic": "긴박한브금"
+    },
+    {
+      "Story_ID": 10005,
+      "Speaker": "계모",
+      "Dialogue": "이년아! 멍하니 서서 뭐 해! 당장 이 마당의 벼를 다 베어놓지 못할까!",
+      "Is_Image": true,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": "StepMother_Angry",
+      "TargetAudio": "호통소리",
+      "TargetMusic": null
+    },
+    {
+      "Story_ID": 10006,
+      "Speaker": "콩쥐",
+      "Dialogue": "네, 네... 어머니. 금방 다 베겠습니다.",
+      "Is_Image": true,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": "Kongjwi_Normal",
+      "TargetAudio": null,
+      "TargetMusic": null
+    },
+    {
+      "Story_ID": 10007,
+      "Speaker": "콩쥐",
+      "Dialogue": "...맞아. 낫으로 다 베어버리면, 내가 살 수 있어.",
+      "Is_Image": true,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": "Kongjwi_CrazySmile",
+      "TargetAudio": "낫휘두르는소리",
+      "TargetMusic": null
+    },
+    {
+      "Story_ID": 10008,
+      "Speaker": null,
+      "Dialogue": null,
+      "Is_Image": false,
+      "Audio": false,
+      "EndPoint": true,
+      "TargetImageName": null,
+      "TargetAudio": null,
+      "TargetMusic": null
+    },
+
+    {
+      "Story_ID": 10009,
+      "Speaker": "시스템",
+      "Dialogue": "산더미 같던 무한의 벼를 다 베어버린 콩쥐.",
+      "Is_Image": true,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": "Bg_Morning",
+      "TargetAudio": null,
+      "TargetMusic": "평화로운브금"
+    },
+    {
+      "Story_ID": 10010,
+      "Speaker": "시스템",
+      "Dialogue": "하지만 베틀이 스스로 움직이며 콩쥐를 위협하기 시작했다.",
+      "Is_Image": true,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": null,
+      "TargetAudio": "베틀소리",
+      "TargetMusic": "긴박한브금"
+    },
+    {
+      "Story_ID": 10011,
+      "Speaker": "콩쥐",
+      "Dialogue": "내 앞을 막는 건 그게 무엇이든 다 부숴버릴 거야.",
+      "Is_Image": true,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": "Kongjwi_Sword",
+      "TargetAudio": "무기꺼내는소리",
+      "TargetMusic": null
+    },
+    {
+      "Story_ID": 10012,
+      "Speaker": null,
+      "Dialogue": null,
+      "Is_Image": false,
+      "Audio": false,
+      "EndPoint": true,
+      "TargetImageName": null,
+      "TargetAudio": null,
+      "TargetMusic": null
+    },
+
+    {
+      "Story_ID": 10013,
+      "Speaker": "팥쥐",
+      "Dialogue": "야, 콩쥐! 일은 다 끝냈어? 어라... 네 손에 든 건 뭐야?",
+      "Is_Image": true,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": "Patjwi_Normal",
+      "TargetAudio": null,
+      "TargetMusic": "평화로운브금"
+    },
+    {
+      "Story_ID": 10014,
+      "Speaker": "콩쥐",
+      "Dialogue": "팥쥐야. 늘 네가 내 옷을 뺏고, 나를 때렸지. 이제 네 차례야.",
+      "Is_Image": true,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": "Kongjwi_CrazySmile",
+      "TargetAudio": null,
+      "TargetMusic": "스산한브금"
+    },
+    {
+      "Story_ID": 10015,
+      "Speaker": "팥쥐",
+      "Dialogue": "꺄아아악! 이 미친년이 돌았나! 가까이 오지 마!",
+      "Is_Image": true,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": "Patjwi_Surprise",
+      "TargetAudio": "발걸음소리",
+      "TargetMusic": null
+    },
+    {
+      "Story_ID": 10016,
+      "Speaker": "콩쥐",
+      "Dialogue": "걱정 마. 아프지 않게, 단번에 끝내줄게.",
+      "Is_Image": true,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": "Kongjwi_Sword",
+      "TargetAudio": "웃음소리",
+      "TargetMusic": null
+    },
+    {
+      "Story_ID": 10017,
+      "Speaker": "시스템",
+      "Dialogue": "팥쥐를 쓰러뜨린 콩쥐는, 아무리 부어도 채워지지 않는 밑 빠진 독 앞에 섰다.",
+      "Is_Image": true,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": "Bg_Night",
+      "TargetAudio": "물붓는소리",
+      "TargetMusic": "스산한브금"
+    },
+    {
+      "Story_ID": 10018,
+      "Speaker": "콩쥐",
+      "Dialogue": "채워지지 않아... 내 마음처럼. 전부 깨부수면 편해질까?",
+      "Is_Image": true,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": "Kongjwi_Normal",
+      "TargetAudio": "항아리깨지는소리",
+      "TargetMusic": null
+    },
+    {
+      "Story_ID": 10019,
+      "Speaker": null,
+      "Dialogue": null,
+      "Is_Image": false,
+      "Audio": false,
+      "EndPoint": true,
+      "TargetImageName": null,
+      "TargetAudio": null,
+      "TargetMusic": null
+    },
+
+    {
+      "Story_ID": 10020,
+      "Speaker": "계모",
+      "Dialogue": "팥쥐야! 우리 예쁜 팥쥐 어딨니? 콩쥐 이년아, 동생 못 봤느냐!",
+      "Is_Image": true,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": "StepMother_Normal",
+      "TargetAudio": null,
+      "TargetMusic": "평화로운브금"
+    },
+    {
+      "Story_ID": 10021,
+      "Speaker": "콩쥐",
+      "Dialogue": "팥쥐요? 아... 제가 아까 조용하게 만들어 줬어요. 영원히요.",
+      "Is_Image": true,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": "Kongjwi_CrazySmile",
+      "TargetAudio": null,
+      "TargetMusic": "스산한브금"
+    },
+    {
+      "Story_ID": 10022,
+      "Speaker": "계모",
+      "Dialogue": "뭐, 뭣이?! 네, 네년이 감히 내 딸을...!",
+      "Is_Image": true,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": "StepMother_Angry",
+      "TargetAudio": "심장박동소리",
+      "TargetMusic": null
+    },
+    {
+      "Story_ID": 10023,
+      "Speaker": "콩쥐",
+      "Dialogue": "시끄러워요 어머니. 이제 어머니도 조용해질 시간이에요.",
+      "Is_Image": true,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": "Kongjwi_Sword",
+      "TargetAudio": "발걸음소리",
+      "TargetMusic": null
+    },
+    {
+      "Story_ID": 10024,
+      "Speaker": "계모",
+      "Dialogue": "이 천하의 몹쓸 년! 내가 오늘 널 찢어 죽이고 말 테다!!",
+      "Is_Image": true,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": "StepMother_Angry",
+      "TargetAudio": "호통소리",
+      "TargetMusic": "보스전브금"
+    },
+    {
+      "Story_ID": 10025,
+      "Speaker": null,
+      "Dialogue": null,
+      "Is_Image": false,
+      "Audio": false,
+      "EndPoint": true,
+      "TargetImageName": null,
+      "TargetAudio": null,
+      "TargetMusic": null
+    },
+
+    {
+      "Story_ID": 10026,
+      "Speaker": "시스템",
+      "Dialogue": "밖에서 들려오는 마을 사람들의 비명소리. 피투성이가 된 콩쥐 앞에 원님이 나타났다.",
+      "Is_Image": true,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": "Bg_Village",
+      "TargetAudio": "비명소리다수",
+      "TargetMusic": "무서운브금"
+    },
+    {
+      "Story_ID": 10027,
+      "Speaker": "원님",
+      "Dialogue": "콩쥐야! 이게 무슨 짓이냐! 대체 어쩌다 이렇게 상처투성이가 된 게야...",
+      "Is_Image": true,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": "Magistrate_Normal",
+      "TargetAudio": null,
+      "TargetMusic": null
+    },
+    {
+      "Story_ID": 10028,
+      "Speaker": "콩쥐",
+      "Dialogue": "걱정? 이제 와서 제 걱정을 하시는 겁니까?",
+      "Is_Image": true,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": "Kongjwi_CrazySmile",
+      "TargetAudio": null,
+      "TargetMusic": "긴박한브금"
+    },
+    {
+      "Story_ID": 10029,
+      "Speaker": "콩쥐",
+      "Dialogue": "제가 매일 매 맞아 죽어갈 때는 어디서 뭘 하고 계셨습니까!! 왜 그때는 구해주지 않고 이제 와서 참견이냐고요!!",
+      "Is_Image": true,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": "Kongjwi_Angry",
+      "TargetAudio": "심장박동소리",
+      "TargetMusic": null
+    },
+    {
+      "Story_ID": 10030,
+      "Speaker": "원님",
+      "Dialogue": "그, 그건... 하지만 살인은 용서받을 수 없는 대죄다! 더 큰 죄를 막기 위해 내 널 쳐야겠구나!",
+      "Is_Image": true,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": "Magistrate_Normal",
+      "TargetAudio": "무기꺼내는소리",
+      "TargetMusic": "보스전브금"
+    },
+    {
+      "Story_ID": 10031,
+      "Speaker": "콩쥐",
+      "Dialogue": "위선자... 당신도 다 똑같아. 전부 다 베어버리겠어!!",
+      "Is_Image": false,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": "Kongjwi_Sword",
+      "TargetAudio": "비명소리",
+      "TargetMusic": null
+    },
+    {
+      "Story_ID": 10032,
+      "Speaker": null,
+      "Dialogue": null,
+      "Is_Image": false,
+      "Audio": false,
+      "EndPoint": true,
+      "TargetImageName": null,
+      "TargetAudio": null,
+      "TargetMusic": null
+    },
+
+    {
+      "Story_ID": 10033,
+      "Speaker": "콩쥐",
+      "Dialogue": "...이건 내가 아니야. 내 손... 이 얼굴... 전부 틀렸어...",
+      "Is_Image": true,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": "Kongjwi_Cry",
+      "TargetAudio": "숨소리",
+      "TargetMusic": "슬픈브금"
+    },
+    {
+      "Story_ID": 10034,
+      "Speaker": "콩쥐",
+      "Dialogue": "더러워졌어... 그러니까 다 부숴야 해... 다 부수면... 사라질까?",
+      "Is_Image": true,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": "Kongjwi_CrazySmile",
+      "TargetAudio": null,
+      "TargetMusic": "무서운브금"
+    },
+    {
+      "Story_ID": 10035,
+      "Speaker": "시스템",
+      "Dialogue": "콩쥐의 뒤틀린 원망과 광기가 뭉쳐, 그녀의 내면이 형상을 갖추기 시작했다.",
+      "Is_Image": true,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": "FutureKongjwi_Normal",
+      "TargetAudio": "귀신울음소리",
+      "TargetMusic": null
+    },
+    {
+      "Story_ID": 10036,
+      "Speaker": "내면의 콩쥐",
+      "Dialogue": "그래... 너 자신까지 찢어발기면, 이 고통도 끝날 거야.",
+      "Is_Image": true,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": "FutureKongjwi_Smile",
+      "TargetAudio": null,
+      "TargetMusic": null
+    },
+    {
+      "Story_ID": 10037,
+      "Speaker": "콩쥐",
+      "Dialogue": "꺄아아아아아악!!! 날 찢어발기면!!!",
+      "Is_Image": true,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": "Kongjwi_Sword",
+      "TargetAudio": "비명소리",
+      "TargetMusic": "최종보스브금"
+    },
+    {
+      "Story_ID": 10038,
+      "Speaker": null,
+      "Dialogue": null,
+      "Is_Image": false,
+      "Audio": false,
+      "EndPoint": true,
+      "TargetImageName": null,
+      "TargetAudio": null,
+      "TargetMusic": null
+    },
+
+    {
+      "Story_ID": 10039,
+      "Speaker": "시스템",
+      "Dialogue": "모든 것을 파괴한 콩쥐는, 결국 텅 빈 공허 속에 홀로 남겨졌다.",
+      "Is_Image": true,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": "Bg_NightBridge",
+      "TargetAudio": "스산한바람소리",
+      "TargetMusic": "슬픈브금"
+    },
+    {
+      "Story_ID": 10040,
+      "Speaker": "콩쥐",
+      "Dialogue": "...끝났어. 내가 이겼어. 내가 다 죽였어...",
+      "Is_Image": true,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": "Kongjwi_Broken",
+      "TargetAudio": null,
+      "TargetMusic": null
+    },
+    {
+      "Story_ID": 10041,
+      "Speaker": "시스템",
+      "Dialogue": "미래의 죽음을 피하기 위해 휘두른 칼날은, 결국 그녀 자신마저 베어버렸다.",
+      "Is_Image": true,
+      "Audio": false,
+      "EndPoint": false,
+      "TargetImageName": null,
+      "TargetAudio": "피튀기는소리",
+      "TargetMusic": null
+    },
+    {
+      "Story_ID": 10042,
+      "Speaker": null,
+      "Dialogue": null,
+      "Is_Image": false,
+      "Audio": false,
+      "EndPoint": true,
+      "TargetImageName": null,
+      "TargetAudio": null,
+      "TargetMusic": null
+    }
+  ]

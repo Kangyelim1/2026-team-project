@@ -50,7 +50,7 @@ public class GuildUIManager : MonoBehaviour
         panel2.SetActive(false);
 
         // 퀘스트 버튼 생성
-        CreateQuestButtons();
+        //CreateQuestButtons();
     }
 
     private void Update()

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 25ecbb8ff08fc674eb8f404e9daed90b, type: 3}
-  m_Name: "\uC784\uC2DC Player"
+  m_Name: TestPlayer
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSO
   playerName: "\uC784\uC2DC \uD50C\uB808\uC774\uC5B4"
   playerMaxHelth: 1000

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00cf296dab446b842acd66f5d1e7bcbc, type: 3}
-  m_Name: "\uC784\uC2DC Enemy"
+  m_Name: TestEnemy
   m_EditorClassIdentifier: Assembly-CSharp::EnemySO
   EnemyName: "\uC784\uC2DC \uC801"
   EnemyLevel: 1

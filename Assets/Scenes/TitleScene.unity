@@ -1419,12 +1419,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1974778019}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ebb7c7cabe5991f4e8c29bd8e297ea77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestDataManager
-  questDataSO: {fileID: 11400000, guid: 756b46d35f5eb704f902d8cfaf5e42b0, type: 2}
+  questDataSO: {fileID: 0}
 --- !u!4 &1974778023
 Transform:
   m_ObjectHideFlags: 0

@@ -18,7 +18,6 @@ public class StorySystem : MonoBehaviour
 
     public string current_ImageName;
   
-
     public bool isStoryEndPoint;
     public bool isFinishStory;
     public string current_TargetAudio;
@@ -30,10 +29,7 @@ public class StorySystem : MonoBehaviour
     public GameObject StoryUI;
     public Button StoryButton;
     public TextMeshProUGUI characterNameText;
-    public Image nameBox;
     public TextMeshProUGUI StoryDialogue;
-
-    public AudioSource storyDubbingAudioSource;
 
     public bool isNotStoryTimedelay;
     public bool isStory;

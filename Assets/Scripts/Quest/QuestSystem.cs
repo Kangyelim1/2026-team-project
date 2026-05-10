@@ -1,10 +1,5 @@
-using JetBrains.Annotations;
-using System.Collections;
-using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using UnityEngine.Video;
+
 
 public class QuestSystem : MonoBehaviour
 {
@@ -27,7 +22,7 @@ public class QuestSystem : MonoBehaviour
 
     public int currnet_EnmeyDieCount;
 
-    public GameObject QuestCanavarse;
+    //public GameObject QuestCanavarse;
 
     [Header("플레이어 정보")]
     public int playerLevel = 1;
@@ -67,6 +62,8 @@ public class QuestSystem : MonoBehaviour
     {
         storySystem = GetComponent<StorySystem>();
 
+        if (questData == null) return;
+
         if (playerQuestID == 0 && questData.quests.Count > 0)
         {
             // 신규 플레이
@@ -86,6 +83,7 @@ public class QuestSystem : MonoBehaviour
         Debug.Log($"현재 플레이어 퀘스트 ID: {playerQuestID}, 이름: {playerQuestTitle}, 진행될 스토리 ID: {playerQuestStoryID}," +
                     $"처치할 몬스터: {currentQuestEnemyNPC}, 처치할 몬스터 수: {currentQuestEnemyCount}");
         storySystem.QuestStory(playerQuestStoryID);
+        finishQuest = false;
         //questText.text = playerquestName;
     }
 
@@ -97,7 +95,7 @@ public class QuestSystem : MonoBehaviour
 
         if (!finishQuest)
         {
-            SuccessChack();
+            SuccessCheck();
 
             if (Input.GetKeyDown(KeyCode.N))
             {
@@ -121,15 +119,12 @@ public class QuestSystem : MonoBehaviour
 
     }
 
-    void SuccessChack()
+    void SuccessCheck()
     {
         switch (playerQuestType)
         {
-            case "Story":
-                if(storySystem.isFinishStory == true)
-                {
-                    SuccessQuest();
-                }
+            case "story":
+                if(storySystem.isFinishStory == true) SuccessQuest();
                 break;
 
             case "move":
@@ -143,7 +138,7 @@ public class QuestSystem : MonoBehaviour
                     currnet_EnmeyDieCount = 0;
                 }
                 break;
-            case "Finish":
+            case "finish":
                 finishQuest = true;
                 SuccessQuest();
                 Debug.Log($"{playerQuestTitle} 종료");
@@ -153,6 +148,7 @@ public class QuestSystem : MonoBehaviour
     }
     void SuccessQuest()
     {
+        Debug.Log("퀘스트 완료 호출");
         if (isProcessingQuest) return;
 
         if (!finishQuest)
@@ -217,10 +213,6 @@ public class QuestSystem : MonoBehaviour
                 storySystem.QuestStory(playerQuestStoryID);
                 //questText.text = playerquestName;
             }
-        }
-        else
-        {
-            finishQuest = true;
         }
     }
 }

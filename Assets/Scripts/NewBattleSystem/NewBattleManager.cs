@@ -1,3 +1,5 @@
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class NewBattleManager : MonoBehaviour
@@ -27,6 +29,8 @@ public class NewBattleManager : MonoBehaviour
 
         StartGame();
         _playerBattleSystem.ButtonHose.gameObject.SetActive(false);
+
+        fadeManager.StartFadeIn(0.4f);
 
     }
 
@@ -121,7 +125,7 @@ public class NewBattleManager : MonoBehaviour
         if (spawnedEnemy == null)
         {
             Debug.Log("적이 없음 게임 승리");
-            EndGame(true);
+            StartCoroutine(EndGame(true));
             return;
         }
 
@@ -151,9 +155,9 @@ public class NewBattleManager : MonoBehaviour
         Turn();
     }
 
-    public void EndGame(bool isVictory)
+    public IEnumerator EndGame(bool isVictory)
     {
-        if (isGameEnd) return;
+        if (isGameEnd) yield break;
         isGameEnd = true;
 
         if (isVictory)
@@ -161,6 +165,11 @@ public class NewBattleManager : MonoBehaviour
         else
             Debug.Log("[BattleManager] 전투 패배...");
         //Debug.Log("게임 종료");
+
+        fadeManager.StartFadeOut(0.4f);
+
+        yield return new WaitForSeconds(0.4f);
+
         if (GameManager.Instance != null)
         {
             GameManager.Instance.ReturnToField();
