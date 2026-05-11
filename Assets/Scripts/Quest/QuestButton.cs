@@ -7,7 +7,7 @@ public class QuestButton : MonoBehaviour
     private QuestData currentQuest;
 
     // 버튼 텍스트
-    public TMP_Text questTitleText;
+    public TextMeshProUGUI questTitleText;
 
     // 퀘스트 설정
     public void Setup(QuestData quest)
@@ -15,7 +15,7 @@ public class QuestButton : MonoBehaviour
         currentQuest = quest;
 
         //버튼 이름 표시
-        questTitleText.text = quest.Quest_Title;
+        questTitleText.text = $"{quest.Quest_ID}";
     }
 
     // 버튼 클릭 시

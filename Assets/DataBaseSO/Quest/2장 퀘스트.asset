@@ -1,0 +1,226 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e082bd9b5e7ae994580a9f02219adcee, type: 3}
+  m_Name: "2\uC7A5 \uD018\uC2A4\uD2B8"
+  m_EditorClassIdentifier: Assembly-CSharp::QuestDataSO
+  quests:
+  - Quest_ID: 20001
+    Quest_Title: 
+    Quest_Description: 
+    Quest_Type: story
+    Quest_StoryID: 20001
+    Quest_EnemyNPC: 
+    Location_Asset: 
+    BGM_Asset: 
+    Qeust_EnemyCount: 0
+    Rewards: 
+    rewardIcon1: {fileID: 0}
+    rewardIcon2: {fileID: 0}
+  - Quest_ID: 20002
+    Quest_Title: "\uC0B0 \uC785\uAD6C\uB85C \uC774\uB3D9"
+    Quest_Description: "\uB054\uCC0D\uD55C \uD658\uC601\uC744 \uBCF8 \uC624\uB204\uC774\uB294
+      \uD638\uB791\uC774\uC758 \uC528\uB97C \uB9D0\uB9AC\uAE30 \uC704\uD574 \uBA3C\uC800
+      \uC0B0\uC73C\uB85C \uD5A5\uD55C\uB2E4."
+    Quest_Type: move
+    Quest_StoryID: 0
+    Quest_EnemyNPC: 
+    Location_Asset: 
+    BGM_Asset: 
+    Qeust_EnemyCount: 0
+    Rewards: Money_100
+    rewardIcon1: {fileID: 0}
+    rewardIcon2: {fileID: 0}
+  - Quest_ID: 20003
+    Quest_Title: 
+    Quest_Description: 
+    Quest_Type: story
+    Quest_StoryID: 20007
+    Quest_EnemyNPC: 
+    Location_Asset: 
+    BGM_Asset: 
+    Qeust_EnemyCount: 0
+    Rewards: 
+    rewardIcon1: {fileID: 0}
+    rewardIcon2: {fileID: 0}
+  - Quest_ID: 20004
+    Quest_Title: "\uC0B0\uAE38\uC758 \uC544\uAE30 \uD638\uB791\uC774"
+    Quest_Description: "\uD480\uC232 \uC0AC\uC774\uB85C \uC544\uBB34\uAC83\uB3C4
+      \uBAA8\uB974\uB294 \uC791\uC740 \uC544\uAE30 \uD638\uB791\uC774\uAC00 \uB098\uD0C0\uB0AC\uB2E4."
+    Quest_Type: Battle
+    Quest_StoryID: 0
+    Quest_EnemyNPC: "\uC544\uAE30 \uD638\uB791\uC774"
+    Location_Asset: Bg_Morning
+    BGM_Asset: 
+    Qeust_EnemyCount: 0
+    Rewards: Skill_6
+    rewardIcon1: {fileID: 0}
+    rewardIcon2: {fileID: 0}
+  - Quest_ID: 20005
+    Quest_Title: "\uC0B0 \uC911\uD131\uC73C\uB85C \uC774\uB3D9"
+    Quest_Description: "\uC190\uC5D0 \uBB3B\uC740 \uD53C\uAC00 \uC9C0\uC6CC\uC9C0\uC9C0
+      \uC54A\uB294\uB2E4. \uD53C\uBE44\uB9B0\uB0B4\uB97C \uB9E1\uACE0 \uBB34\uC5B8\uAC00
+      \uB2E4\uAC00\uC624\uACE0 \uC788\uB2E4."
+    Quest_Type: move
+    Quest_StoryID: 0
+    Quest_EnemyNPC: 
+    Location_Asset: 
+    BGM_Asset: 
+    Qeust_EnemyCount: 0
+    Rewards: Money_100
+    rewardIcon1: {fileID: 0}
+    rewardIcon2: {fileID: 0}
+  - Quest_ID: 20006
+    Quest_Title: 
+    Quest_Description: 
+    Quest_Type: story
+    Quest_StoryID: 20014
+    Quest_EnemyNPC: 
+    Location_Asset: 
+    BGM_Asset: 
+    Qeust_EnemyCount: 0
+    Rewards: 
+    rewardIcon1: {fileID: 0}
+    rewardIcon2: {fileID: 0}
+  - Quest_ID: 20007
+    Quest_Title: "\uD638\uB791\uC774\uC758 \uC704\uD611"
+    Quest_Description: "\uC0C8\uB07C\uB97C \uC783\uC740 \uBD80\uBAA8 \uD638\uB791\uC774\uAC00
+      \uAE38\uC744 \uB9C9\uB294\uB2E4. \uC5B4\uBA38\uB2C8\uB97C \uC0B4\uB9AC\uB824\uBA74
+      \uB188\uB4E4\uC744 \uC8FD\uC5EC\uC57C\uB9CC \uD55C\uB2E4."
+    Quest_Type: Battle
+    Quest_StoryID: 0
+    Quest_EnemyNPC: "\uBD80\uBAA8 \uD638\uB791\uC774"
+    Location_Asset: Bg_Morning
+    BGM_Asset: 
+    Qeust_EnemyCount: 0
+    Rewards: Skill_7
+    rewardIcon1: {fileID: 0}
+    rewardIcon2: {fileID: 0}
+  - Quest_ID: 20008
+    Quest_Title: 
+    Quest_Description: 
+    Quest_Type: story
+    Quest_StoryID: 20020
+    Quest_EnemyNPC: 
+    Location_Asset: 
+    BGM_Asset: 
+    Qeust_EnemyCount: 0
+    Rewards: 
+    rewardIcon1: {fileID: 0}
+    rewardIcon2: {fileID: 0}
+  - Quest_ID: 20009
+    Quest_Title: "\uC720\uB839 \uD638\uB791\uC774\uC758 \uC6D0\uD55C"
+    Quest_Description: "\uC624\uB204\uC774\uC758 \uC9C0\uB3C5\uD55C \uC8C4\uCC45\uAC10\uACFC
+      \uAD11\uAE30\uAC00 \uBB49\uCCD0 \uC548\uAC1C \uC18D\uC5D0\uC11C \uC720\uB839
+      \uD638\uB791\uC774\uAC00 \uD615\uC0C1\uC744 \uAC16\uCDC4\uB2E4."
+    Quest_Type: Battle
+    Quest_StoryID: 0
+    Quest_EnemyNPC: "\uC720\uB839 \uD638\uB791\uC774"
+    Location_Asset: Bg_Night
+    BGM_Asset: 
+    Qeust_EnemyCount: 0
+    Rewards: Skill_8
+    rewardIcon1: {fileID: 0}
+    rewardIcon2: {fileID: 0}
+  - Quest_ID: 20010
+    Quest_Title: 
+    Quest_Description: 
+    Quest_Type: story
+    Quest_StoryID: 20027
+    Quest_EnemyNPC: 
+    Location_Asset: 
+    BGM_Asset: 
+    Qeust_EnemyCount: 0
+    Rewards: 
+    rewardIcon1: {fileID: 0}
+    rewardIcon2: {fileID: 0}
+  - Quest_ID: 20011
+    Quest_Title: "\uD638\uB791\uC774 \uBB34\uB9AC\uC758 \uC2B5\uACA9"
+    Quest_Description: "\uD53C \uB0C4\uC0C8\uC5D0 \uC774\uB04C\uB824 \uD638\uB791\uC774
+      \uBB34\uB9AC\uAC00 \uAC00\uB85C\uB9C9\uB294\uB2E4. \uC9D0\uC2B9\uBCF4\uB2E4
+      \uB354\uD55C \uAD34\uBB3C\uC774 \uB418\uC5B4\uBC84\uB838\uB2E4."
+    Quest_Type: Battle
+    Quest_StoryID: 0
+    Quest_EnemyNPC: "\uD638\uB791\uC774 \uBB34\uB9AC"
+    Location_Asset: Bg_Village
+    BGM_Asset: 
+    Qeust_EnemyCount: 0
+    Rewards: Skill_9
+    rewardIcon1: {fileID: 0}
+    rewardIcon2: {fileID: 0}
+  - Quest_ID: 20012
+    Quest_Title: "\uC815\uC0C1\uC73C\uB85C \uC774\uB3D9"
+    Quest_Description: "\uBAA8\uB4E0 \uAC83\uC744 \uCC22\uC5B4\uBC1C\uAE30\uBA70
+      \uC0B0\uC758 \uC8FC\uC778\uC774 \uC788\uB294 \uC815\uC0C1\uC73C\uB85C \uBC1C\uAC78\uC74C\uC744
+      \uC62E\uAE34\uB2E4."
+    Quest_Type: move
+    Quest_StoryID: 0
+    Quest_EnemyNPC: 
+    Location_Asset: 
+    BGM_Asset: 
+    Qeust_EnemyCount: 0
+    Rewards: Money_200
+    rewardIcon1: {fileID: 0}
+    rewardIcon2: {fileID: 0}
+  - Quest_ID: 20013
+    Quest_Title: 
+    Quest_Description: 
+    Quest_Type: story
+    Quest_StoryID: 20033
+    Quest_EnemyNPC: 
+    Location_Asset: 
+    BGM_Asset: 
+    Qeust_EnemyCount: 0
+    Rewards: 
+    rewardIcon1: {fileID: 0}
+    rewardIcon2: {fileID: 0}
+  - Quest_ID: 20014
+    Quest_Title: "\uC0B0\uC758 \uC8FC\uC778"
+    Quest_Description: "\uAC70\uB300\uD55C \uC0B0\uC758 \uC8FC\uC778\uC774 \uB098\uD0C0\uB0AC\uB2E4.
+      \uADF8\uB7F0\uB370 \uC65C \uB188\uC5D0\uAC8C\uC11C \uC5B4\uBA38\uB2C8\uC758
+      \uBAA9\uC18C\uB9AC\uAC00 \uB098\uB294 \uAC78\uAE4C?"
+    Quest_Type: Battle
+    Quest_StoryID: 0
+    Quest_EnemyNPC: "\uC0B0\uC758 \uC8FC\uC778"
+    Location_Asset: Bg_NightBridge
+    BGM_Asset: 
+    Qeust_EnemyCount: 0
+    Rewards: Ending_3
+    rewardIcon1: {fileID: 0}
+    rewardIcon2: {fileID: 0}
+  - Quest_ID: 20015
+    Quest_Title: "2\uC7A5 \uC885\uB8CC \uB300\uAE30"
+    Quest_Description: "\uC4F0\uB7EC\uC9C4 \uAC83\uC740 \uC5B4\uBA38\uB2C8\uC600\uB2E4.
+      \uC644\uC804\uD788 \uAD11\uAE30\uC5D0 \uD640\uB9B0 \uC624\uBE60\uAC00 \uB3D9\uC0DD\uC744
+      \uD5A5\uD574 \uB3C4\uB07C\uB97C \uCE58\uCF1C\uB4E0\uB2E4."
+    Quest_Type: story
+    Quest_StoryID: 20040
+    Quest_EnemyNPC: 
+    Location_Asset: 
+    BGM_Asset: 
+    Qeust_EnemyCount: 0
+    Rewards: Money_100
+    rewardIcon1: {fileID: 0}
+    rewardIcon2: {fileID: 0}
+  - Quest_ID: 20016
+    Quest_Title: "2\uC7A5 \uC885\uB8CC"
+    Quest_Description: "\uC77C\uADF8\uB7EC\uC9C4 \uBBF8\uB798\uB294 \uBE44\uADF9\uC744
+      \uD53C\uD558\uB824\uB294 \uC790\uB4E4\uC5D0 \uC758\uD574 \uC2A4\uC2A4\uB85C
+      \uC644\uC131\uB418\uC5C8\uB2E4."
+    Quest_Type: finish
+    Quest_StoryID: 0
+    Quest_EnemyNPC: 
+    Location_Asset: 
+    BGM_Asset: 
+    Qeust_EnemyCount: 0
+    Rewards: Money_500
+    rewardIcon1: {fileID: 0}
+    rewardIcon2: {fileID: 0}

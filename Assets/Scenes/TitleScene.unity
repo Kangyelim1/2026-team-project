@@ -1378,7 +1378,6 @@ GameObject:
   - component: {fileID: 1974778023}
   - component: {fileID: 1974778022}
   - component: {fileID: 1974778021}
-  - component: {fileID: 1974778020}
   m_Layer: 0
   m_Name: DataManager
   m_TagString: Untagged
@@ -1386,19 +1385,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1974778020
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1974778019}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5275baf7af2a6b49a46de1630b9e9ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyDataManager
-  enemySO: {fileID: 0}
 --- !u!114 &1974778021
 MonoBehaviour:
   m_ObjectHideFlags: 0

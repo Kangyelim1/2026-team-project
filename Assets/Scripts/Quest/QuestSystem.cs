@@ -6,6 +6,8 @@ public class QuestSystem : MonoBehaviour
     public static QuestSystem instance;
     public QuestDataSO questData;
     public StorySystem storySystem;
+    public PlayerInteraction _playerInteraction;
+
 
     public int playerQuestID;
     public string playerQuestTitle;
@@ -61,6 +63,7 @@ public class QuestSystem : MonoBehaviour
     private void Start()
     {
         storySystem = GetComponent<StorySystem>();
+
 
         if (questData == null) return;
 

@@ -23,7 +23,7 @@ public class GuildUIManager : MonoBehaviour
     public Transform contentParent; // ScrollView Content
     public GameObject questButtonPrefab;
 
-    public QuestDataSO questDataSO;
+    public QuestList questList;
 
     // 현재 상호작용 중인 길드
     private Interactable currentGuild;
@@ -44,13 +44,15 @@ public class GuildUIManager : MonoBehaviour
         // Player 찾기
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
+        questList = Object.FindAnyObjectByType<QuestList>();
+
         // 시작 시 전부 끄기
         questPanel.SetActive(false);
         panel1.SetActive(false);
         panel2.SetActive(false);
 
         // 퀘스트 버튼 생성
-        //CreateQuestButtons();
+        CreateQuestButtons();
     }
 
     private void Update()
@@ -118,21 +120,20 @@ public class GuildUIManager : MonoBehaviour
     void CreateQuestButtons()
     {
         Debug.Log("퀘스트 버튼 생성 시작");
-        foreach (QuestData quest in questDataSO.quests)
+        foreach (QuestDataSO questSO in questList.questList)
         {
-            Debug.Log("생성할 퀘스트: " + quest.Quest_Title);
+            Debug.Log(questSO.name);
 
-            // 버튼 생성
-            GameObject buttonObj = Instantiate(
-                questButtonPrefab,
-                contentParent
-            );
+            // 1. 버튼 생성
+            GameObject buttonObj = Instantiate(questButtonPrefab, contentParent);
 
-            // QuestButton 스크립트 가져오기
             QuestButton button = buttonObj.GetComponent<QuestButton>();
 
-            // 퀘스트 데이터 연결
-            button.Setup(quest);
+            if (button != null)
+            {
+                QuestData currentQuest = questSO.quests[0];
+                button.Setup(currentQuest);
+            }
         }
     }
 }

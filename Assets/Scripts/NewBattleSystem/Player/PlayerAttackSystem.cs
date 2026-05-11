@@ -6,6 +6,7 @@ public class PlayerAttackSystem : MonoBehaviour
 {
     public PlayerSystem playerSystem;
     public PlayerBattleSystem _playerBattleSystem;
+    public QuestSystem _questSystem;
     
     public int currentDamage;
     public Vector3 playerPoition;
@@ -15,6 +16,7 @@ public class PlayerAttackSystem : MonoBehaviour
     {
         playerSystem = Object.FindAnyObjectByType<PlayerSystem>();
         _playerBattleSystem = Object.FindAnyObjectByType<PlayerBattleSystem>();
+        _questSystem = Object.FindAnyObjectByType<QuestSystem>();
 
         currentDamage = playerSystem.player_Damage;
         _playerBattleSystem.ButtonHose.gameObject.SetActive(false);
@@ -111,6 +113,13 @@ public class PlayerAttackSystem : MonoBehaviour
             Destroy(target.gameObject);
             
             _playerBattleSystem._battleManager.EndGame(true);
+
+
+            if(target.Enmey_Name == _questSystem.currentQuestEnemyNPC)
+            {
+                _questSystem.currnet_EnmeyDieCount++;
+                return;
+            }
         }
     }
 
