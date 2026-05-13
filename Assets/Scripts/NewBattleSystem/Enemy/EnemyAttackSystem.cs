@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using UnityEngine;
 
@@ -68,8 +69,7 @@ public class EnemyAttackSystem : MonoBehaviour
     {
         Debug.Log("플레이어 위치로 이동");
 
-        while (TargetPlayer != null &&
-               Vector3.Distance(transform.position, TargetPlayer.transform.position) > attackRange)
+        while (TargetPlayer != null && Vector3.Distance(transform.position, TargetPlayer.transform.position) > attackRange)
         {
             Vector3 direction = (TargetPlayer.transform.position - transform.position).normalized;
             transform.position += direction * enemySystem.Enemy_Speed * Time.deltaTime;
@@ -79,7 +79,6 @@ public class EnemyAttackSystem : MonoBehaviour
 
         if (TargetPlayer == null)
         {
-            Debug.Log("플레이어가 사라져 공격을 취소합니다.");
             _battleManager.EndEnemyTurn();
             yield break;
         }
@@ -88,12 +87,11 @@ public class EnemyAttackSystem : MonoBehaviour
 
         PlayerSystem player = TargetPlayer.GetComponent<PlayerSystem>();
 
-        if (player != null)
-        {
-            IsAttack(player);
-        }
 
-        yield return new WaitForSeconds(0.2f);
+        player.HitEffect.SetActive(true);
+        if (player != null) IsAttack(player);
+        yield return new WaitForSeconds(1f);
+        player.HitEffect.SetActive(false);
 
         Debug.Log("원위치");
 
@@ -118,11 +116,10 @@ public class EnemyAttackSystem : MonoBehaviour
     {
         if (target.player_CurrentHelth > 0)
         {
-            target.player_CurrentHelth -= enemySystem.Enemy_Damage;
+            int currentDamage = enemySystem.Enemy_Damage - _battleManager._playerBattleSystem._playerSystem.player_Defense;
+            target.player_CurrentHelth -= currentDamage;
 
-            Debug.Log(
-                $"플레이어 체력 {enemySystem.Enemy_Damage} 만큼 감소, 현재 체력: {target.player_CurrentHelth}"
-            );
+            Debug.Log($"플레이어 체력 {currentDamage} 만큼 감소, 현재 체력: {target.player_CurrentHelth}");
 
             if (target.player_CurrentHelth <= 0)
             {

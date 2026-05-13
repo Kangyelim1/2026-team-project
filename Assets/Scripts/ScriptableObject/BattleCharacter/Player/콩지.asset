@@ -13,10 +13,13 @@ MonoBehaviour:
   m_Name: "\uCF69\uC9C0"
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSO
   playerName: "\uCF69\uC9C0"
-  playerMaxHelth: 8000
-  playerDamage: 100
+  playerMaxHelth: 100
+  playerDamage: 10
   playerSpeed: 20
   Skill01Image: {fileID: 21300000, guid: 80ebaa38d25d9c441b53cec3a9ce0fa1, type: 3}
   Skill02Image: {fileID: 21300000, guid: f362608d60c6860489e473994d042717, type: 3}
   Skill03Image: {fileID: 21300000, guid: c9884567464e9f54aadc15405ed84c98, type: 3}
   Skill04Image: {fileID: 21300000, guid: dbb1741e07e8a7645b7621051849d484, type: 3}
+  SkillAttackType02: "\uB450\uAEBC\uBE44"
+  SkillAttackType03: "\uC0C8 \uB54C"
+  SkillAttackType04: "\uD669\uC18C"

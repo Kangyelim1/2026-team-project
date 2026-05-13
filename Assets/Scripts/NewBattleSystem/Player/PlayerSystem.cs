@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class PlayerSystem : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class PlayerSystem : MonoBehaviour
     public string player_Name;
     public int player_MaxHelth;
     public int player_Damage;
+    public int player_Defense;
     public int player_Speed;
     public GameObject playerPrefab;
     public Animator playerAnimator;
@@ -27,6 +29,10 @@ public class PlayerSystem : MonoBehaviour
     public int player_CurrentHelth;
     public Slider playerHelthSlider;
     [SerializeField] private float smoothSpeed = 5f;
+
+    [Header("VFX")]
+    public GameObject HitEffect;
+    public GameObject HillEffect;
 
     private void Awake()
     {

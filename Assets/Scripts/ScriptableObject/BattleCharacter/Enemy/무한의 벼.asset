@@ -15,5 +15,6 @@ MonoBehaviour:
   EnemyName: "\uBB34\uD55C\uC758 \uBCBC"
   EnemyLevel: 1
   EnemyMaxHelth: 300
-  EnemyDamage: 100
+  EnemyDamage: 5
+  enemyAttackType: 0
   EnemySpeed: 20
