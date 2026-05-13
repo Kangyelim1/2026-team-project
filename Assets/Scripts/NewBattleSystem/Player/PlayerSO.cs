@@ -11,4 +11,7 @@ public class PlayerSO : ScriptableObject
     public Sprite Skill02Image;
     public Sprite Skill03Image;
     public Sprite Skill04Image;
+    public string SkillAttackType02;
+    public string SkillAttackType03;
+    public string SkillAttackType04;
 }

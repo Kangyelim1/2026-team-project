@@ -50,7 +50,7 @@ public class PlayerAttackSystem : MonoBehaviour
             yield return null;
         }
 
-        Debug.Log("적 공격");
+        Debug.Log("근거리 일반 공격");
         //playerSystem.playerAnimator.SetBool("isAttack", true);
         yield return new WaitForSeconds(0.2f);
         //playerSystem.playerAnimator.SetBool("isAttack", false);
@@ -72,9 +72,33 @@ public class PlayerAttackSystem : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         _playerBattleSystem.isTarget = false;
-
         _playerBattleSystem._battleManager.EndPlayerTurn();
 
+    }
+
+    public void SkillAttack(string playerName, string AttackType)
+    {
+        switch(playerName, AttackType)
+        {
+            case("콩지", "두꺼비"):
+                Debug.Log("방어력 증가");
+                _playerBattleSystem.isTarget = false;
+                _playerBattleSystem._battleManager.EndPlayerTurn();
+                break;
+            case ("콩지", "새 때"):
+                Debug.Log("새 때 공격 진행");
+                _playerBattleSystem.isTarget = false;
+                _playerBattleSystem._battleManager.EndPlayerTurn();
+                break;
+            case ("콩지", "황소"):
+                Debug.Log("항소 공격 진행");
+                _playerBattleSystem.isTarget = false;
+                _playerBattleSystem._battleManager.EndPlayerTurn();
+                break;
+            default:
+                Debug.Log("공격 타입 미존재");
+                break;
+        }
     }
 
     void DealDamage(EnemySystem target)

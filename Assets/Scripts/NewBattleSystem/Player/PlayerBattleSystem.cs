@@ -53,6 +53,16 @@ public class PlayerBattleSystem : MonoBehaviour
         ChangeSprite();
     }
 
+    public void Update()
+    {
+        if (isAttack || !_battleManager.isPlayerTurn) return;
+
+        if (Input.GetKeyDown(KeyCode.Alpha1)) SkillAttack01();
+        if (Input.GetKeyDown(KeyCode.Alpha2)) SkillAttack02();
+        if (Input.GetKeyDown(KeyCode.Alpha3)) SkillAttack03();
+        if (Input.GetKeyDown(KeyCode.Alpha4)) SkillAttack04();
+    }
+
     public void ChangeSprite()
     {
         Skill01.sprite = _playerSystem.skill01;
@@ -78,7 +88,6 @@ public class PlayerBattleSystem : MonoBehaviour
     void SkillAttack01()
     {
         if (!_battleManager.isPlayerTurn || isAttack) return;
-
         _playerAttackSystem = Object.FindAnyObjectByType<PlayerAttackSystem>();
 
         if (_playerAttackSystem == null) return;
@@ -90,16 +99,31 @@ public class PlayerBattleSystem : MonoBehaviour
 
     void SkillAttack02()
     {
+        if (!_battleManager.isPlayerTurn || isAttack) return;
+        _playerAttackSystem = Object.FindAnyObjectByType<PlayerAttackSystem>();
+        if (_playerAttackSystem == null) return;
+        
         Debug.Log("스킬 공격2 진행");
+        _playerAttackSystem.SkillAttack(_playerSystem.player_Name, _playerSystem.skillAttack02Type);
     }
 
     void SkillAttack03()
     {
+        if (!_battleManager.isPlayerTurn || isAttack) return;
+        _playerAttackSystem = Object.FindAnyObjectByType<PlayerAttackSystem>();
+        if (_playerAttackSystem == null) return;
+
         Debug.Log("스킬 공격3 진행");
+        _playerAttackSystem.SkillAttack(_playerSystem.player_Name, _playerSystem.skillAttack03Type);
     }
 
     void SkillAttack04()
     {
+        if (!_battleManager.isPlayerTurn || isAttack) return;
+        _playerAttackSystem = Object.FindAnyObjectByType<PlayerAttackSystem>();
+        if (_playerAttackSystem == null) return;
+
         Debug.Log("스킬 공격4 진행");
+        _playerAttackSystem.SkillAttack(_playerSystem.player_Name, _playerSystem.skillAttack04Type);
     }
 }

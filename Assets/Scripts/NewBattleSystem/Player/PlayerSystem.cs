@@ -11,10 +11,17 @@ public class PlayerSystem : MonoBehaviour
     public int player_Speed;
     public GameObject playerPrefab;
     public Animator playerAnimator;
+
+    [Header("버튼")]
     public Sprite skill01;
     public Sprite skill02;
     public Sprite skill03;
     public Sprite skill04;
+
+    [Header("AttackType")]
+    public string skillAttack02Type;
+    public string skillAttack03Type;
+    public string skillAttack04Type;
 
     [Header("Helth")]
     public int player_CurrentHelth;
@@ -27,10 +34,15 @@ public class PlayerSystem : MonoBehaviour
         player_MaxHelth = playerSO.playerMaxHelth;
         player_Damage = playerSO.playerDamage;
         player_Speed = playerSO.playerSpeed;
+
         skill01 = playerSO.Skill01Image;
         skill02 = playerSO.Skill02Image;
         skill03 = playerSO.Skill03Image;
         skill04 = playerSO.Skill04Image;
+
+        skillAttack02Type = playerSO.SkillAttackType02;
+        skillAttack03Type = playerSO.SkillAttackType03;
+        skillAttack04Type = playerSO.SkillAttackType04;
 
         player_CurrentHelth = player_MaxHelth;
     }

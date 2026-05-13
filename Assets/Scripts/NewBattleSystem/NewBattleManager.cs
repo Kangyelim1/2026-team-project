@@ -1,3 +1,4 @@
+using Microsoft.Unity.VisualStudio.Editor;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -21,11 +22,13 @@ public class NewBattleManager : MonoBehaviour
     public bool isPlayerTurn = true;
     public bool isGameEnd = false;
 
+    public GameObject fadeImage;
     public FadeManager fadeManager;
 
     private void Start()
     {
         fadeManager = Object.FindAnyObjectByType<FadeManager>();
+        fadeImage.gameObject.SetActive(true);
 
         StartGame();
         _playerBattleSystem.ButtonHose.gameObject.SetActive(false);

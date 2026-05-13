@@ -1547,6 +1547,7 @@ MonoBehaviour:
   spawnedEnemy: {fileID: 0}
   isPlayerTurn: 1
   isGameEnd: 0
+  fadeImage: {fileID: 1740586325}
   fadeManager: {fileID: 0}
 --- !u!114 &1477928375
 MonoBehaviour:
