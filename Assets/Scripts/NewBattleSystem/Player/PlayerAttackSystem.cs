@@ -40,9 +40,8 @@ public class PlayerAttackSystem : MonoBehaviour
         _playerBattleSystem.ButtonHose.gameObject.SetActive(true);
     }
 
-    public IEnumerator isAttack()
+    public IEnumerator isNomalAttack()
     {
-        Debug.Log("적 위치로 이동");
         while (Vector3.Distance(transform.position, _playerBattleSystem.TargetEnemy.transform.position) > attackRange)
         {
             Vector3 direction = (_playerBattleSystem.TargetEnemy.transform.position - transform.position).normalized;
@@ -58,14 +57,8 @@ public class PlayerAttackSystem : MonoBehaviour
 
         _playerBattleSystem.TargetEnemy.TryGetComponent<EnemySystem>(out EnemySystem enemy);
 
-        if (enemy != null)
-            DealDamage(enemy);
-        else
-            Debug.LogWarning("[PlayerAttackSystem] 타겟에 EnemySystem 컴포넌트가 없습니다.");
+        if (enemy != null) DealDamage(enemy);
 
-        Debug.Log("원위치로 복귀");
-
-        // 원래 위치로 복귀
         while (Vector3.Distance(transform.position, playerPoition) > 0.1f)
         {
             Vector3 backDirection = (playerPoition - transform.position).normalized;
@@ -78,38 +71,22 @@ public class PlayerAttackSystem : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        // [수정] isTarget 초기화 — 다음 턴에 타겟 재선택 가능하도록
         _playerBattleSystem.isTarget = false;
 
         _playerBattleSystem._battleManager.EndPlayerTurn();
 
-        /*IsAttack(enemy);
-
-        Debug.Log("원위치");
-
-        while (Vector3.Distance(transform.position, playerPoition) > 0.1f)
-        {
-            Vector3 backDirection = (playerPoition - transform.position).normalized;
-            transform.position += backDirection * playerSystem.player_Speed * Time.deltaTime;
-
-            yield return null;
-        }
-        transform.position = playerPoition;
-        Debug.Log("복귀 완료");
-        yield return new WaitForSeconds(1);
-        _playerBattleSystem._battleManager.EndPlayerTurn();*/
     }
 
     void DealDamage(EnemySystem target)
     {
         
         target.Enemy_CurrentHelth -= playerSystem.player_Damage;
-        Debug.Log($"[공격] {target.Enmey_Name}에게 {playerSystem.player_Damage} 데미지. 남은 체력: {target.Enemy_CurrentHelth}");
+        Debug.Log($"{target.Enmey_Name}에게 {playerSystem.player_Damage} 데미지. 남은 체력: {target.Enemy_CurrentHelth}");
 
         
         if (target.Enemy_CurrentHelth <= 0)
         {
-            Debug.Log($"[사망] {target.Enmey_Name} 처치!");
+            Debug.Log($"{target.Enmey_Name} 처치!");
             Destroy(target.gameObject);
             
             _playerBattleSystem._battleManager.EndGame(true);
@@ -121,21 +98,5 @@ public class PlayerAttackSystem : MonoBehaviour
                 return;
             }
         }
-    }
-
-    void IsAttack(EnemySystem target)
-    {
-        if(target.Enemy_CurrentHelth > 0)
-        {
-            target.Enemy_CurrentHelth -= playerSystem.player_Damage;
-            Debug.Log($"플레이어 체력 {playerSystem.player_Damage} 만큼 감소, 현제 체력: {target.Enemy_CurrentHelth}");
-        }
-        else
-        {
-            Debug.Log($"{target.Enmey_Name} 사망");
-            _playerBattleSystem._battleManager.EndGame(true);
-            Destroy(target.gameObject);
-        }
-       
     }
 }

@@ -353,6 +353,7 @@ MonoBehaviour:
   EnemyPrefab: {fileID: 1514139213867732349}
   Enemy_CurrentHelth: 0
   enemyHelthSlider: {fileID: 3303237851871085852}
+  smoothSpeed: 5
 --- !u!114 &2335944953326873087
 MonoBehaviour:
   m_ObjectHideFlags: 0

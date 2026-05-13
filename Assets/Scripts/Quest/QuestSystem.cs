@@ -65,29 +65,31 @@ public class QuestSystem : MonoBehaviour
         storySystem = GetComponent<StorySystem>();
 
 
-        if (questData == null) return;
+        StartQuest();
 
-        if (playerQuestID == 0 && questData.quests.Count > 0)
-        {
-            // 신규 플레이
-            QuestData firstQuest = questData.quests[0];
-            ShowQuest(firstQuest);
+        //if (questData == null) return;
 
-        }
-        else
-        {
-            QuestData quest = questData.quests.Find(q => q.Quest_ID == playerQuestID);
-            if (quest != null)
-            {
-                currentQuestIndex = lastQuestIndex;
-                ShowQuest(quest);
-            }
-        }
-        Debug.Log($"현재 플레이어 퀘스트 ID: {playerQuestID}, 이름: {playerQuestTitle}, 진행될 스토리 ID: {playerQuestStoryID}," +
-                    $"처치할 몬스터: {currentQuestEnemyNPC}, 처치할 몬스터 수: {currentQuestEnemyCount}");
-        storySystem.QuestStory(playerQuestStoryID);
-        finishQuest = false;
-        //questText.text = playerquestName;
+        //if (playerQuestID == 0 && questData.quests.Count > 0)
+        //{
+        //    // 신규 플레이
+        //    QuestData firstQuest = questData.quests[0];
+        //    ShowQuest(firstQuest);
+
+        //}
+        //else
+        //{
+        //    QuestData quest = questData.quests.Find(q => q.Quest_ID == playerQuestID);
+        //    if (quest != null)
+        //    {
+        //        currentQuestIndex = lastQuestIndex;
+        //        ShowQuest(quest);
+        //    }
+        //}
+        //Debug.Log($"현재 플레이어 퀘스트 ID: {playerQuestID}, 이름: {playerQuestTitle}, 진행될 스토리 ID: {playerQuestStoryID}," +
+        //            $"처치할 몬스터: {currentQuestEnemyNPC}, 처치할 몬스터 수: {currentQuestEnemyCount}");
+        //storySystem.QuestStory(playerQuestStoryID);
+        //finishQuest = false;
+        ////questText.text = playerquestName;
     }
 
 
@@ -186,9 +188,45 @@ public class QuestSystem : MonoBehaviour
 
     void ResetQuestFlag() { isProcessingQuest = false; }
 
+    void StartQuest()
+    {
+        int firstQuest = currentQuestAndSotorys;
+
+        if (_questAndStoryDatabase != null)
+        {
+            StoryDataSO StartStory = _questAndStoryDatabase.storyDataSOs[currentQuestAndSotorys];
+
+            if (StartStory != null)
+            {
+                storySystem.StoryDataSO = StartStory;
+                storySystem.current_StoryCount = 0;
+                Debug.Log($"{StartStory.name} 스토리 적용");
+                storySystem.isFinishStory = false;
+            }
+            else { Debug.LogWarning("활당된 퀘스트 미존재");}
+
+            QuestDataSO StartQuest = _questAndStoryDatabase.questDataSOs[currentQuestAndSotorys];
+            if (StartQuest != null)
+            {
+                questData = StartQuest;
+                QuestData ChangeFirstQuest = questData.quests[0];
+                ShowQuest(ChangeFirstQuest);
+                currentQuestIndex = 0;
+                Debug.Log($"{StartQuest.name} 으로 쳅터 변경 완료");
+                finishQuest = false;
+                Debug.Log($"현재 플레이어 퀘스트 ID: {playerQuestID}, 이름: {playerQuestTitle}, 진행될 스토리 ID: {playerQuestStoryID}," +
+                $"처치할 몬스터: {currentQuestEnemyNPC}, 처치할 몬스터 수: {currentQuestEnemyCount}");
+                storySystem.QuestStory(playerQuestStoryID);
+                //questText.text = playerquestName;
+            }
+            else { Debug.LogWarning("활당된 퀘스트 미존재"); }
+        }
+
+    }
+
     void ChangeQuest()
     {
-        currentQuestAndSotorys += 1;
+        currentQuestAndSotorys ++;
 
         int nextIndex = currentQuestAndSotorys;
         if (_questAndStoryDatabase != null && nextIndex < _questAndStoryDatabase.questDataSOs.Count)
@@ -201,6 +239,8 @@ public class QuestSystem : MonoBehaviour
                 Debug.Log($"{nextStory.name}으로 스토리 변경 완료");
                 storySystem.isFinishStory = false;
             }
+            else { Debug.LogWarning("활당된 퀘스트 미존재"); }
+    
 
             QuestDataSO nextQuest = _questAndStoryDatabase.questDataSOs[currentQuestAndSotorys];
             if (nextQuest != null)
@@ -216,6 +256,7 @@ public class QuestSystem : MonoBehaviour
                 storySystem.QuestStory(playerQuestStoryID);
                 //questText.text = playerquestName;
             }
+            else { Debug.LogWarning("활당된 퀘스트 미존재"); }
         }
     }
 }

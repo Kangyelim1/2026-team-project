@@ -2218,7 +2218,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28c5012eac99a4e4a84f39575c3ff362, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
-  currentEnemy: {fileID: 0}
 --- !u!1 &999272957
 GameObject:
   m_ObjectHideFlags: 0
@@ -2633,7 +2632,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1099273658
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4452,9 +4451,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1982727723}
+  - component: {fileID: 1982727720}
   - component: {fileID: 1982727722}
   - component: {fileID: 1982727721}
-  - component: {fileID: 1982727720}
   m_Layer: 0
   m_Name: QuestManager
   m_TagString: Untagged
@@ -4475,11 +4474,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestAndStoryDatabase
   questDataSOs:
-  - {fileID: 11400000, guid: 756b46d35f5eb704f902d8cfaf5e42b0, type: 2}
-  - {fileID: 11400000, guid: 4f133e4b8608f4b488d8b87b1a917160, type: 2}
+  - {fileID: 0}
   storyDataSOs:
-  - {fileID: 11400000, guid: 2e73577046037e5498b69e6edac06ad9, type: 2}
-  - {fileID: 11400000, guid: d3bf69b989ab4074481527542ec74fd8, type: 2}
+  - {fileID: 0}
 --- !u!114 &1982727721
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4492,7 +4489,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d92ef5adc88da004e9df221dfc88f18d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StorySystem
-  StoryDataSO: {fileID: 11400000, guid: 2e73577046037e5498b69e6edac06ad9, type: 2}
+  StoryDataSO: {fileID: 0}
   questSystem: {fileID: 1982727722}
   current_StoryID: 0
   current_StoryCount: 0
@@ -4523,7 +4520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ea55d735ebdab94b84a94fdc1f3c487, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestSystem
-  questData: {fileID: 11400000, guid: 756b46d35f5eb704f902d8cfaf5e42b0, type: 2}
+  questData: {fileID: 0}
   storySystem: {fileID: 1982727721}
   _playerInteraction: {fileID: 0}
   playerQuestID: 0
@@ -4536,7 +4533,7 @@ MonoBehaviour:
   currentBGMAeest: 
   currentQuestEnemyCount: 0
   currentRewards: 
-  finishQuest: 0
+  finishQuest: 1
   currnet_EnmeyDieCount: 0
   playerLevel: 1
   playerExperience: 0
