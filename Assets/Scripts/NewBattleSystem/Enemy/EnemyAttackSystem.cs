@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class EnemyAttackSystem : MonoBehaviour
 {
@@ -147,6 +148,7 @@ public class EnemyAttackSystem : MonoBehaviour
 
         int currentDamage = shoot.Soot_Damage + _battleManager._playerBattleSystem._playerSystem.player_Damage;
         enemySystem.Enemy_CurrentHelth -= currentDamage;
+        _battleManager.CreateDamageText(transform.position, currentDamage, AttackType.Attack);
 
         yield return new WaitForSeconds(1f);
         enemySystem.HitEffect.gameObject.SetActive(false);

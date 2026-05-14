@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: "\uD669\uC18C"
   m_EditorClassIdentifier: Assembly-CSharp::ShootObjectSO
   ShootName: "\uD669\uC18C"
-  ShootSpeed: 20
-  SootDamege: 10
+  ShootSpeed: 10
+  SootDamege: 50
