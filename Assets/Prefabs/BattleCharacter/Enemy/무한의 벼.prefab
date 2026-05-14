@@ -214,9 +214,10 @@ GameObject:
   - component: {fileID: 6371776804622384048}
   - component: {fileID: 1043202135786330120}
   - component: {fileID: 931473611829387974}
+  - component: {fileID: 7088183035826900145}
   m_Layer: 0
   m_Name: "\uBB34\uD55C\uC758 \uBCBC"
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -397,6 +398,33 @@ MonoBehaviour:
   TargetPlayer: {fileID: 0}
   enemySystem: {fileID: 0}
   _battleManager: {fileID: 0}
+--- !u!50 &7088183035826900145
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4264402159236601626}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!1 &5300435990178104850
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,7 +7,7 @@ public enum EnemyAttackType
     long_distance
 }
 
-[CreateAssetMenu(fileName = "Enemy", menuName = "Database/Enemy")]
+[CreateAssetMenu(fileName = "Enemy", menuName = "BattleCharacter/Enemy")]
 public class EnemySO : ScriptableObject
 {
     public string EnemyName;

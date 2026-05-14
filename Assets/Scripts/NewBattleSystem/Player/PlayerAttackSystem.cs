@@ -1,5 +1,6 @@
 using JetBrains.Annotations;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerAttackSystem : MonoBehaviour
@@ -10,10 +11,22 @@ public class PlayerAttackSystem : MonoBehaviour
     public SkillAttackSystem _skillAttackSystem;
     
     public int currentDamage;
-    public int Skill04Stemina;
-    public int currentSkill04Stemina;
+
     public Vector3 playerPoition;
     public float attackRange = 1.0f;
+
+    [Header("발사체 관련")]
+    public GameObject ShootPoiont;
+    public GameObject ShootObject01;
+    public GameObject ShootObject02;
+
+    [Header("궁극기 Stemina 관련")]
+    public int Skill04Stemina = 10;
+    public int currentSkill04Stemina;
+
+    public int Skill01Stemina = 1;
+    public int Skill02Stemina = 2;
+    public int Skill03Stemina = 3;
 
     private void Start()
     {
@@ -117,7 +130,7 @@ public class PlayerAttackSystem : MonoBehaviour
         target.Enemy_CurrentHelth -= playerSystem.player_Damage;
         Debug.Log($"{target.Enemy_Name}에게 {playerSystem.player_Damage} 데미지. 남은 체력: {target.Enemy_CurrentHelth}");
         _playerBattleSystem._battleManager.CreateDamageText(target.transform.position, currentDamage, AttackType.Attack);
-        currentSkill04Stemina += 1;
+        currentSkill04Stemina += Skill01Stemina;
 
         if (target.Enemy_CurrentHelth <= 0)
         {

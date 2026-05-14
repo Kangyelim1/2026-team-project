@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Player", menuName = "Database/Player")]
+[CreateAssetMenu(fileName = "Player", menuName = "BattleCharacter/Player")]
 public class PlayerSO : ScriptableObject
 {
     public string playerName;

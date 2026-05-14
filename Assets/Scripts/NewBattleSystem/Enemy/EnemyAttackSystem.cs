@@ -130,4 +130,25 @@ public class EnemyAttackSystem : MonoBehaviour
             }
         }
     }
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            collision.gameObject.TryGetComponent<ShootObjectSystem>(out ShootObjectSystem shoot);
+
+           StartCoroutine(ShootDamage(shoot));
+        }
+    }
+
+    IEnumerator ShootDamage(ShootObjectSystem shoot)
+    {
+        enemySystem.HitEffect.gameObject.SetActive(true);
+
+        int currentDamage = shoot.Soot_Damage + _battleManager._playerBattleSystem._playerSystem.player_Damage;
+        enemySystem.Enemy_CurrentHelth -= currentDamage;
+
+        yield return new WaitForSeconds(1f);
+        enemySystem.HitEffect.gameObject.SetActive(false);
+    }
 }
