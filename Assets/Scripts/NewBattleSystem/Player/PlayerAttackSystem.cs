@@ -10,6 +10,8 @@ public class PlayerAttackSystem : MonoBehaviour
     public SkillAttackSystem _skillAttackSystem;
     
     public int currentDamage;
+    public int Skill04Stemina;
+    public int currentSkill04Stemina;
     public Vector3 playerPoition;
     public float attackRange = 1.0f;
 
@@ -92,11 +94,13 @@ public class PlayerAttackSystem : MonoBehaviour
                 
                 break;
             case ("콩지", "새 때"):
+                StartCoroutine(_skillAttackSystem.aFlockOfBirds());
                 Debug.Log("새 때 공격 진행");
                 _playerBattleSystem.isTarget = false;
             
                 break;
             case ("콩지", "황소"):
+                StartCoroutine(_skillAttackSystem.Bull());
                 Debug.Log("항소 공격 진행");
                 _playerBattleSystem.isTarget = false;
              
@@ -112,8 +116,9 @@ public class PlayerAttackSystem : MonoBehaviour
         
         target.Enemy_CurrentHelth -= playerSystem.player_Damage;
         Debug.Log($"{target.Enemy_Name}에게 {playerSystem.player_Damage} 데미지. 남은 체력: {target.Enemy_CurrentHelth}");
+        _playerBattleSystem._battleManager.CreateDamageText(target.transform.position, currentDamage, AttackType.Attack);
+        currentSkill04Stemina += 1;
 
-        
         if (target.Enemy_CurrentHelth <= 0)
         {
             Debug.Log($"{target.Enemy_Name} 처치!");

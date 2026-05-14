@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -49,7 +50,6 @@ public class PlayerBattleSystem : MonoBehaviour
         AttackButton03.onClick.AddListener(SkillAttack03);
         AttackButton04.onClick.AddListener(SkillAttack04);
         NextTurnButton.onClick.AddListener(() => { _battleManager.NextTurn();});
-
         ChangeSprite();
     }
 
@@ -119,7 +119,9 @@ public class PlayerBattleSystem : MonoBehaviour
 
     void SkillAttack04()
     {
-        if (!_battleManager.isPlayerTurn || isAttack) return;
+        if (!_battleManager.isPlayerTurn || isAttack 
+            || _playerAttackSystem.currentSkill04Stemina < _playerAttackSystem.Skill04Stemina) return;
+
         _playerAttackSystem = Object.FindAnyObjectByType<PlayerAttackSystem>();
         if (_playerAttackSystem == null) return;
 

@@ -3,6 +3,14 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
+public enum AttackType
+{
+    Attack,
+    Hit,
+    Hill,
+    Defense
+}
+
 public class NewBattleManager : MonoBehaviour
 {
     [Header("데이터")]
@@ -24,6 +32,11 @@ public class NewBattleManager : MonoBehaviour
 
     public GameObject fadeImage;
     public FadeManager fadeManager;
+
+    public GameObject damageTextPrefab;
+    public Canvas battleCanvas;
+    public AttackType attackType;
+
 
     private void Start()
     {
@@ -167,5 +180,14 @@ public class NewBattleManager : MonoBehaviour
         {
             Debug.LogError("[BattleManager] GameManager 인스턴스를 찾을 수 없습니다. 씬 복귀 불가.");
         }
+    }
+
+    public void CreateDamageText(Vector3 target, int damage, AttackType type)
+    {
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(target);
+
+        GameObject obj = Instantiate(damageTextPrefab,screenPos,Quaternion.identity,battleCanvas.transform);
+
+        obj.GetComponent<NewDamageText>().ShowDamage(damage, type);
     }
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class EnemySystem : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class EnemySystem : MonoBehaviour
     public int Enemy_Damage;
     public int Enemy_Speed;
     public GameObject EnemyPrefab;
+    public TextMeshProUGUI nameText;
 
     [Header("VFX")]
     public GameObject HitEffect;
@@ -37,6 +39,8 @@ public class EnemySystem : MonoBehaviour
     {
         enemyHelthSlider.minValue = 0;
         enemyHelthSlider.maxValue = Enemy_MaxHelth;
+
+        nameText.text = Enemy_Name;
 
         HelthUI();
     }

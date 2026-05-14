@@ -118,6 +118,7 @@ public class EnemyAttackSystem : MonoBehaviour
         {
             int currentDamage = enemySystem.Enemy_Damage - _battleManager._playerBattleSystem._playerSystem.player_Defense;
             target.player_CurrentHelth -= currentDamage;
+            _battleManager.CreateDamageText(target.transform.position, currentDamage, AttackType.Hit);
 
             Debug.Log($"플레이어 체력 {currentDamage} 만큼 감소, 현재 체력: {target.player_CurrentHelth}");
 

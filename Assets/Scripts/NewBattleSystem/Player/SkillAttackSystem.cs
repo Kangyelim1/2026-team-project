@@ -11,12 +11,27 @@ public class SkillAttackSystem : MonoBehaviour
         _playerBattleSystem._playerSystem.HillEffect.gameObject.SetActive(false);
     }
 
-    public IEnumerator Toad()
+    public IEnumerator Toad()       // 콩지, 두꺼비
     {
         _playerBattleSystem._playerSystem.player_Defense = 5;
         _playerBattleSystem._playerSystem.HillEffect.gameObject.SetActive(true);
+        _playerBattleSystem._battleManager.CreateDamageText(transform.position, _playerBattleSystem._playerSystem.player_Defense, AttackType.Defense);
         yield return new WaitForSeconds(1f);
         _playerBattleSystem._playerSystem.HillEffect.gameObject.SetActive(false);
+        _playerBattleSystem.isTarget = false;
+        _playerBattleSystem._battleManager.EndPlayerTurn();
+    }
+
+    public IEnumerator aFlockOfBirds()  // 콩지, 새때
+    {
+        yield return new WaitForSeconds(1f);
+        _playerBattleSystem.isTarget = false;
+        _playerBattleSystem._battleManager.EndPlayerTurn();
+    }
+
+    public IEnumerator Bull()  // 콩지, 황소
+    {
+        yield return new WaitForSeconds(1f);
         _playerBattleSystem.isTarget = false;
         _playerBattleSystem._battleManager.EndPlayerTurn();
     }
