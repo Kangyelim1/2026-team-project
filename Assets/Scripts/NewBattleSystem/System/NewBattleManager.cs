@@ -19,6 +19,7 @@ public class NewBattleManager : MonoBehaviour
 
     [Header("전투 상태")]
     public PlayerBattleSystem _playerBattleSystem;
+    
 
     [Header("스폰 위치")]
     public Transform Player_SpawnPoint;
@@ -53,7 +54,6 @@ public class NewBattleManager : MonoBehaviour
     private void StartGame()
     {
         SpawnPlayer();
-        SpawnEnemy();
 
         _playerBattleSystem = Object.FindAnyObjectByType<PlayerBattleSystem>();
 
@@ -65,19 +65,19 @@ public class NewBattleManager : MonoBehaviour
         Turn();
     }
 
-    private void SpawnPlayer()
+    public void SpawnPlayer()
     {
         if (playerData == null || playerData.playerPrefab == null) return;
 
         spawnedPlayer = Instantiate(playerData.playerPrefab, Player_SpawnPoint.position, Player_SpawnPoint.rotation);
     }
 
-    private void SpawnEnemy()
+    public void SpawnEnemy()
     {
         if (enemyData == null || enemyData.EnemyPrefab == null) return;
 
         spawnedEnemy = Instantiate(enemyData.EnemyPrefab, Enemy_SpawnPoint.position, Enemy_SpawnPoint.rotation);
-
+        _playerBattleSystem._playerAttackSystem.TargetEnemy = enemyData.EnemyPrefab;
         Debug.Log($"{spawnedEnemy.name} 적 생성");
     }
 

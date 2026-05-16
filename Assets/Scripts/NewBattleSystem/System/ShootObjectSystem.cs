@@ -21,7 +21,7 @@ public class ShootObjectSystem : MonoBehaviour
 
     private void Update()
     {
-        Vector3 Derection = (_playerBattleSystem.TargetEnemy.transform.position - transform.position).normalized;
+        Vector3 Derection = (_playerBattleSystem._playerAttackSystem.TargetEnemy.transform.position - transform.position).normalized;
         Vector3 Move = Derection * Soot_Speed * Time.deltaTime;
         transform.position += Move;
     }

@@ -8,7 +8,6 @@ public class QuestSystem : MonoBehaviour
     public StorySystem storySystem;
     public PlayerInteraction _playerInteraction;
 
-
     public int playerQuestID;
     public string playerQuestTitle;
     public string playerQuestDescription;
@@ -37,6 +36,8 @@ public class QuestSystem : MonoBehaviour
     private int currentQuestIndex = 0;
 
     public QuestAndStoryDatabase _questAndStoryDatabase;
+
+    public string currentEnemy;
 
     // 추후 저장 시스탬 구연후 사용
     private int lastQuestIndex;

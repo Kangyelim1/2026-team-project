@@ -1455,7 +1455,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyInteractable
   enemyId: 1
-  enemyName: "\uCF69\uC950"
+  enemyName: "\uBB34\uD55C\uC758 \uBCBC"
   interactRadius: 2
 --- !u!212 &646807461
 SpriteRenderer:
@@ -6343,6 +6343,7 @@ MonoBehaviour:
   playerLevel: 1
   playerExperience: 0
   _questAndStoryDatabase: {fileID: 1982727720}
+  currentEnemy: 
   playerquest_Is_success: 0
   currentQuestAndSotorys: 0
 --- !u!4 &1982727723

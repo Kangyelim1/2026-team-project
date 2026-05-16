@@ -20,9 +20,6 @@ public class PlayerBattleSystem : MonoBehaviour
     public Button NextTurnButton;
     public GameObject ButtonHose;
 
-    [Header("몬스터")]
-    public GameObject TargetEnemy;
-
     [Header("전퉁 시작전 오프닝 Poition")]
     public Transform playerOpPoint;
     public Transform EnemyOpPoint;
@@ -80,9 +77,9 @@ public class PlayerBattleSystem : MonoBehaviour
     {
         if (_battleManager.spawnedEnemy == null) return;
 
-        TargetEnemy = _battleManager.spawnedEnemy.gameObject;
+        _playerAttackSystem.TargetEnemy = _battleManager.spawnedEnemy.gameObject;
         isTarget = true;
-        Debug.Log($"[PlayerBattleSystem] 타겟 선택: {TargetEnemy.name}");
+        Debug.Log($"[PlayerBattleSystem] 타겟 선택: {_playerAttackSystem.TargetEnemy.name}");
     }
 
     void SkillAttack01()

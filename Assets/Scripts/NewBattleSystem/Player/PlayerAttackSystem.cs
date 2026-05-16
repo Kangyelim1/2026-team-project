@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -9,7 +8,9 @@ public class PlayerAttackSystem : MonoBehaviour
     public PlayerBattleSystem _playerBattleSystem;
     public QuestSystem _questSystem;
     public SkillAttackSystem _skillAttackSystem;
-    
+    public EnemySystem _enemySystem;
+    public GameObject TargetEnemy;
+
     public int currentDamage;
 
     public Vector3 playerPoition;
@@ -34,6 +35,7 @@ public class PlayerAttackSystem : MonoBehaviour
         _playerBattleSystem = Object.FindAnyObjectByType<PlayerBattleSystem>();
         _questSystem = Object.FindAnyObjectByType<QuestSystem>();
         _skillAttackSystem = Object.FindAnyObjectByType<SkillAttackSystem>();
+        _enemySystem = Object.FindAnyObjectByType<EnemySystem>();
 
         currentDamage = playerSystem.player_Damage;
         _playerBattleSystem.ButtonHose.gameObject.SetActive(false);
@@ -59,15 +61,15 @@ public class PlayerAttackSystem : MonoBehaviour
 
     public IEnumerator isNomalAttack()
     {
-        while (Vector3.Distance(transform.position, _playerBattleSystem.TargetEnemy.transform.position) > attackRange)
+        while (Vector3.Distance(transform.position, TargetEnemy.transform.position) > attackRange)
         {
-            Vector3 direction = (_playerBattleSystem.TargetEnemy.transform.position - transform.position).normalized;
+            Vector3 direction = (TargetEnemy.transform.position - transform.position).normalized;
             transform.position += direction * playerSystem.player_Speed * Time.deltaTime;
 
             yield return null;
         }
 
-        _playerBattleSystem.TargetEnemy.TryGetComponent<EnemySystem>(out EnemySystem enemy);
+        _playerBattleSystem._playerAttackSystem.TargetEnemy.TryGetComponent<EnemySystem>(out EnemySystem enemy);
 
         if (enemy == null) yield break;
 
@@ -126,7 +128,6 @@ public class PlayerAttackSystem : MonoBehaviour
 
     void DealDamage(EnemySystem target)
     {
-        
         target.Enemy_CurrentHelth -= playerSystem.player_Damage;
         Debug.Log($"{target.Enemy_Name}에게 {playerSystem.player_Damage} 데미지. 남은 체력: {target.Enemy_CurrentHelth}");
         _playerBattleSystem._battleManager.CreateDamageText(target.transform.position, currentDamage, AttackType.Attack);

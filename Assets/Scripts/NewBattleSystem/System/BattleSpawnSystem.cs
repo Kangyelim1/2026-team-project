@@ -1,6 +1,4 @@
-using NUnit.Framework;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class BattleSpawnSystem : MonoBehaviour
@@ -15,17 +13,27 @@ public class BattleSpawnSystem : MonoBehaviour
     private void Start()
     {
         _questSystem = Object.FindAnyObjectByType<QuestSystem>();
+        _battleManager = Object.FindAnyObjectByType<NewBattleManager>();
+
+        FIndEnemy();
     }
 
     public void FIndEnemy()
     {
         if (_questSystem == null) return;
 
-        EnemySystem currentEnemy = Enemys.Find(ce => ce.Enemy_Name == _questSystem.currentQuestEnemyNPC);
+        EnemySystem currentEnemy = Enemys.Find(ce => ce.Enemy_Name == _questSystem.currentEnemy);
 
-        if (currentEnemy == null) return;
-        _battleManager.enemyData = currentEnemy;
-        Debug.Log($"{currentEnemy.Enemy_Name} 소환 완료");
+        Debug.Log(currentEnemy);
+
+        if (currentEnemy != null)
+        {
+            _battleManager.enemyData = currentEnemy;
+            _battleManager.SpawnEnemy();
+            Debug.Log($"{currentEnemy.Enemy_Name} 소환 완료");
+        }
+        else
+            Debug.Log($"{currentEnemy} 가 존재하지 않음");
     }
 
 }

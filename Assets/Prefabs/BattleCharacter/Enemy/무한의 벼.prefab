@@ -370,7 +370,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySystem
   enemySO: {fileID: 11400000, guid: 8b261ba85cf90994db3dfbfc08b4c20c, type: 2}
-  Enemy_Name: 
+  Enemy_Name: "\uBB34\uD55C\uC758 \uBCBC"
   Enemy_Levle: 0
   Enemy_MaxHelth: 0
   Enemy_Damage: 0

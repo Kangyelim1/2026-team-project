@@ -5,6 +5,13 @@ public class PlayerInteraction : MonoBehaviour
     private Interactable currentInteractable;
 
     private EnemyInteractable currentEnemy;
+    private QuestSystem _questSystem;
+
+
+    private void Start()
+    {
+        _questSystem = Object.FindAnyObjectByType<QuestSystem>();
+    }
 
     void Update()
     {
@@ -15,6 +22,7 @@ public class PlayerInteraction : MonoBehaviour
 
         if(Input.GetMouseButtonDown(0) && currentEnemy != null)
         {
+            _questSystem.currentEnemy = currentEnemy.enemyName;
             currentEnemy.OnAttacked(transform.position);
         }
     }
