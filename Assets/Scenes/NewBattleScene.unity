@@ -1702,7 +1702,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 31, y: 0}
+  m_AnchoredPosition: {x: 573, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1113588364
@@ -2302,7 +2302,6 @@ MonoBehaviour:
   AttackButton04: {fileID: 1640193737}
   NextTurnButton: {fileID: 297581601}
   ButtonHose: {fileID: 1036073186}
-  TargetEnemy: {fileID: 1740586325}
   playerOpPoint: {fileID: 922613065}
   EnemyOpPoint: {fileID: 532620467}
   Skill01: {fileID: 494939606}
@@ -2871,6 +2870,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BattleSpawnSystem
   Enemys:
   - {fileID: 1043202135786330120, guid: 0681f84666d03a841ae22b5cc5315763, type: 3}
+  - {fileID: 1043202135786330120, guid: aba8c1e2ff36e884b89a0e9658650d9a, type: 3}
   Players: []
   _questSystem: {fileID: 0}
   _battleManager: {fileID: 0}

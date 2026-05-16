@@ -6,6 +6,11 @@ using UnityEngine.SceneManagement;
 public class FadeManager : MonoBehaviour
 {
     public Image fadeImage;
+
+    private void Start()
+    {
+        StartFadeIn(1f);
+    }
     public void StartFadeIn(float duration)
     {
         StartCoroutine(Fade(1f, 0f, duration));

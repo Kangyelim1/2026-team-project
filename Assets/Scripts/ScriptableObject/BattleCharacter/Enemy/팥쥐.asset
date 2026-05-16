@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00cf296dab446b842acd66f5d1e7bcbc, type: 3}
-  m_Name: "\uBB34\uD55C\uC758 \uBCBC"
+  m_Name: "\uD325\uC950"
   m_EditorClassIdentifier: Assembly-CSharp::EnemySO
-  EnemyName: "\uBB34\uD55C\uC758 \uBCBC"
+  EnemyName: "\uD325\uC950"
   EnemyLevel: 1
   EnemyMaxHelth: 300
-  EnemyDamage: 8
+  EnemyDamage: 10
   enemyAttackType: 0
   EnemySpeed: 20
