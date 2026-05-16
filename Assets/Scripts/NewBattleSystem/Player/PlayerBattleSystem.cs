@@ -58,8 +58,9 @@ public class PlayerBattleSystem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha2)) SkillAttack02();
         if (Input.GetKeyDown(KeyCode.Alpha3)) SkillAttack03();
         if (Input.GetKeyDown(KeyCode.Alpha4)) SkillAttack04();
-    }
 
+        PlayerAttackTarget();
+    }
     public void ChangeSprite()
     {
         Skill01.sprite = _playerSystem.skill01;
@@ -78,8 +79,17 @@ public class PlayerBattleSystem : MonoBehaviour
         if (_battleManager.spawnedEnemy == null) return;
 
         _playerAttackSystem.TargetEnemy = _battleManager.spawnedEnemy.gameObject;
-        isTarget = true;
-        Debug.Log($"[PlayerBattleSystem] 타겟 선택: {_playerAttackSystem.TargetEnemy.name}");
+
+        if (_playerAttackSystem.TargetEnemy)
+        {
+            isTarget = true;
+            Debug.Log($"[PlayerBattleSystem] 타겟 선택: {_playerAttackSystem.TargetEnemy.name}");
+            ButtonHose.gameObject.SetActive(true);
+        }
+        else
+        {
+            ButtonHose.gameObject.SetActive(false);
+        }     
     }
 
     void SkillAttack01()
@@ -89,7 +99,7 @@ public class PlayerBattleSystem : MonoBehaviour
 
         if (_playerAttackSystem == null) return;
 
-        ButtonHose.gameObject.SetActive(false);
+        AutoSelectEnemey();
         StartCoroutine(_playerAttackSystem.isNomalAttack());
         Debug.Log("Enemy 체력 감소 플레이어 공격 진행 완료");
     }

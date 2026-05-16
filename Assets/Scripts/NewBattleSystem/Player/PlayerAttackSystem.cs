@@ -45,6 +45,10 @@ public class PlayerAttackSystem : MonoBehaviour
 
     IEnumerator StartBattle()
     {
+        _playerBattleSystem._battleManager.fadeManager.StartFadeIn(1f);
+
+        yield return new WaitForSeconds(2f);
+
         while (Vector3.Distance(transform.position, _playerBattleSystem.playerOpPoint.transform.position) > attackRange)
         {
             Vector3 direction = (_playerBattleSystem.playerOpPoint.transform.position - transform.position).normalized;

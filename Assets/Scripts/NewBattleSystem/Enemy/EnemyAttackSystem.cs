@@ -23,6 +23,9 @@ public class EnemyAttackSystem : MonoBehaviour
 
     IEnumerator StartBattle()
     {
+        yield return new WaitForSeconds(0.1f);
+
+
         while (Vector3.Distance(transform.position, _battleManager._playerBattleSystem.EnemyOpPoint.transform.position) > attackRange)
         {
             Vector3 direction = (_battleManager._playerBattleSystem.EnemyOpPoint.transform.position - transform.position).normalized;
