@@ -6,6 +6,7 @@ public class Interactable : MonoBehaviour
 
     // 길드 여부 확인용
     public bool isGuild;
+    public bool isShop;
 
     public void Interact()
     {
@@ -15,6 +16,18 @@ public class Interactable : MonoBehaviour
         if (isGuild)
         {
             GuildUIManager.Instance.OpenGuildUI(this);
+        }
+        if (isShop)
+        {
+            Debug.Log("상점 UI 열기 시도");
+
+            if (ShopUIManager.Instance == null)
+            {
+                Debug.LogError("ShopUIManager Instance 없음!");
+                return;
+            }
+
+            ShopUIManager.Instance.OpenShopUI(this);
         }
     }
 }

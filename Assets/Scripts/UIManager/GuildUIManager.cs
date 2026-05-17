@@ -57,19 +57,7 @@ public class GuildUIManager : MonoBehaviour
 
     private void Update()
     {
-        // 길드와 멀어지면 UI 닫기
-        if (currentGuild != null)
-        {
-            float distance = Vector2.Distance(
-                player.position,
-                currentGuild.transform.position
-            );
-
-            if (distance > closeDistance)
-            {
-                CloseGuildUI();
-            }
-        }
+        
     }
 
     // 길드 UI 열기
