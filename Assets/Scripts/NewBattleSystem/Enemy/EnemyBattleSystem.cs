@@ -9,18 +9,12 @@ public class EnemyBattleSystem : MonoBehaviour
 
     private void Start()
     {
-        _enemyAttackSystem = FindAnyObjectByType<EnemyAttackSystem>();
         _battleManager = FindAnyObjectByType<NewBattleManager>();
-    }
-
-    private void Update()
-    {
-        if (_enemyAttackSystem == null)
-            _enemyAttackSystem = FindAnyObjectByType<EnemyAttackSystem>();
     }
 
     public IEnumerator ShootDamage(ShootObjectSystem shoot)
     {
+        _enemyAttackSystem = FindAnyObjectByType<EnemyAttackSystem>();
         Debug.Log("코루틴 진입 성공");
 
         if(shoot != null)
