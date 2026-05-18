@@ -38,7 +38,6 @@ public class NewBattleManager : MonoBehaviour
     public Canvas battleCanvas;
     public AttackType attackType;
 
-
     private void Start()
     {
         fadeManager = Object.FindAnyObjectByType<FadeManager>();

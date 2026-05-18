@@ -13,12 +13,14 @@ public class EnemyAttackSystem : MonoBehaviour
     public EnemySystem enemySystem;
     public NewBattleManager _battleManager;
     public EnemyBattleSystem _enemyBattleSystem;
+    public QuestSystem _questSystem;
 
     private void Start()
     {
         enemySystem = GetComponent<EnemySystem>();
         _battleManager = Object.FindAnyObjectByType<NewBattleManager>();
         _enemyBattleSystem = Object.FindAnyObjectByType<EnemyBattleSystem>();
+        _questSystem = Object.FindAnyObjectByType<QuestSystem>();
 
         StartCoroutine(StartBattle());
     }
@@ -140,6 +142,7 @@ public class EnemyAttackSystem : MonoBehaviour
             {
                 Debug.Log("플레이어 사망");
                 Destroy(target.gameObject);
+                _questSystem.currentEnemy = null;
                 _battleManager.spawnedPlayer = null;
             }
         }
