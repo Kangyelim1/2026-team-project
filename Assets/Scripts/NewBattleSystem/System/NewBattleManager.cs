@@ -45,7 +45,6 @@ public class NewBattleManager : MonoBehaviour
         fadeImage.gameObject.SetActive(true);
 
         StartGame();
-        _playerBattleSystem.ButtonHose.gameObject.SetActive(false);
 
         fadeManager.StartFadeIn(0.4f);
 

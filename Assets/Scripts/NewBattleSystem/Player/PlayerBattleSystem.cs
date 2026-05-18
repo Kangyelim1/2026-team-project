@@ -82,12 +82,7 @@ public class PlayerBattleSystem : MonoBehaviour
         {
             isTarget = true;
             Debug.Log($"[PlayerBattleSystem] 타겟 선택: {_playerAttackSystem.TargetEnemy.name}");
-            ButtonHose.gameObject.SetActive(true);
-        }
-        else
-        {
-            ButtonHose.gameObject.SetActive(false);
-        }     
+        }   
     }
 
     void SkillAttack01()
@@ -105,6 +100,7 @@ public class PlayerBattleSystem : MonoBehaviour
     void SkillAttack02()
     {
         if (!_battleManager.isPlayerTurn || isAttack) return;
+        ButtonHose.gameObject.SetActive(false);
         _playerAttackSystem = Object.FindAnyObjectByType<PlayerAttackSystem>();
         if (_playerAttackSystem == null) return;
         isAttack = true;
@@ -117,6 +113,7 @@ public class PlayerBattleSystem : MonoBehaviour
     void SkillAttack03()
     {
         if (!_battleManager.isPlayerTurn || isAttack) return;
+        ButtonHose.gameObject.SetActive(false);
         _playerAttackSystem = Object.FindAnyObjectByType<PlayerAttackSystem>();
         if (_playerAttackSystem == null) return;
         isAttack = true;
@@ -130,6 +127,7 @@ public class PlayerBattleSystem : MonoBehaviour
         if (!_battleManager.isPlayerTurn || isAttack 
             || _playerAttackSystem.currentSkill04Stemina < _playerAttackSystem.Skill04Stemina) return;
 
+        ButtonHose.gameObject.SetActive(false);
         _playerAttackSystem = Object.FindAnyObjectByType<PlayerAttackSystem>();
         if (_playerAttackSystem == null) return;
         isAttack = true;

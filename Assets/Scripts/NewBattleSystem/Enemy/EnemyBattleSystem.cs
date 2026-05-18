@@ -12,6 +12,11 @@ public class EnemyBattleSystem : MonoBehaviour
         _battleManager = FindAnyObjectByType<NewBattleManager>();
     }
 
+    private void Update()
+    {
+        if (_battleManager.isGameEnd) _enemyAttackSystem = null;
+    }
+
     public IEnumerator ShootDamage(ShootObjectSystem shoot)
     {
         _enemyAttackSystem = FindAnyObjectByType<EnemyAttackSystem>();
