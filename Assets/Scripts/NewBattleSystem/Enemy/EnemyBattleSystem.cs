@@ -33,11 +33,9 @@ public class EnemyBattleSystem : MonoBehaviour
 
                 if (_enemyAttackSystem.enemySystem.Enemy_CurrentHelth <= 0)
                 {
-                    _questSystem.currentEnemy = null;
                     Destroy( _enemyAttackSystem.enemySystem.gameObject);
                     StartCoroutine(_battleManager.EndGame(true));
                 }
-
             }
         }
     }

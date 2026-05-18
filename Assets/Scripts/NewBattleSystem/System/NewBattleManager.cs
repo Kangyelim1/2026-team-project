@@ -20,7 +20,6 @@ public class NewBattleManager : MonoBehaviour
     [Header("전투 상태")]
     public PlayerBattleSystem _playerBattleSystem;
     
-
     [Header("스폰 위치")]
     public Transform Player_SpawnPoint;
     public Transform Enemy_SpawnPoint;
@@ -37,6 +36,7 @@ public class NewBattleManager : MonoBehaviour
     public GameObject damageTextPrefab;
     public Canvas battleCanvas;
     public AttackType attackType;
+
 
     private void Start()
     {
@@ -86,8 +86,6 @@ public class NewBattleManager : MonoBehaviour
         if (isPlayerTurn)
         {
             PlayerTurn();
-
-            if (_playerBattleSystem._playerSystem.player_CurrentHelth <= 0) return;
             _playerBattleSystem.ButtonHose.gameObject.SetActive(true);
         }
            

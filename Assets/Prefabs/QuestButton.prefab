@@ -134,6 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1133a95df99be38439fd3de2639d1108, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestButton
+  myButton: {fileID: 6321477143018701758}
   questTitleText: {fileID: 5697255685481432226}
 --- !u!1 &7364128384458823574
 GameObject:

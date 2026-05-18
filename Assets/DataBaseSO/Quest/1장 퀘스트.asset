@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::QuestDataSO
   quests:
   - Quest_ID: 10001
-    Quest_Title: 
+    Quest_Title: "1\uC7A5 \uD018\uC2A4\uD2B8"
     Quest_Description: 
     Quest_Type: story
     Quest_StoryID: 10001

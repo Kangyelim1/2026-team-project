@@ -141,7 +141,6 @@ public class EnemyAttackSystem : MonoBehaviour
             {
                 Debug.Log("플레이어 사망");
                 Destroy(target.gameObject);
-                _questSystem.currentEnemy = null;
                 _battleManager.spawnedPlayer = null;
             }
         }
@@ -156,6 +155,4 @@ public class EnemyAttackSystem : MonoBehaviour
            StartCoroutine(_enemyBattleSystem.ShootDamage(shoot));
         }
     }
-
-   
 }

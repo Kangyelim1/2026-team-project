@@ -5,4 +5,5 @@ using UnityEngine;
 public class QuestList : MonoBehaviour
 {
     public List<QuestDataSO> questList = new List<QuestDataSO>();
+    public List<StoryDataSO> storyList = new List<StoryDataSO>();
 }

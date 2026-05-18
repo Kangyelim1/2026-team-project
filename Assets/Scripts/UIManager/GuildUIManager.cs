@@ -13,8 +13,8 @@ public class GuildUIManager : MonoBehaviour
     public GameObject panel2;
 
     [Header("Panel2 UI")]
-    public TMP_Text questTitleText;
-    public TMP_Text questDescriptionText;
+    public TextMeshProUGUI questTitleText;
+    public TextMeshProUGUI questDescriptionText;
     public Image rewardImage1;
     public Image rewardImage2;
 

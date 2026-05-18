@@ -5,12 +5,8 @@ public class PlayerInteraction : MonoBehaviour
     private Interactable currentInteractable;
 
     private EnemyInteractable currentEnemy;
-    private QuestSystem _questSystem;
+    public QuestSystem _questSystem;
 
-    private void Start()
-    {
-        _questSystem = Object.FindAnyObjectByType<QuestSystem>();
-    }
 
     void Update()
     {
@@ -24,6 +20,9 @@ public class PlayerInteraction : MonoBehaviour
             _questSystem.currentEnemy = currentEnemy.enemyName;
             currentEnemy.OnAttacked(transform.position);
         }
+
+        if(_questSystem == null)
+            _questSystem = Object.FindAnyObjectByType<QuestSystem>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -40,8 +39,9 @@ public class PlayerInteraction : MonoBehaviour
         if (enemy != null)
         {
             currentEnemy = enemy;
-            _questSystem.currentEnemy = currentEnemy.enemyName;
-          Debug.Log($"[PlayerInteraction] 공격 가능한 적 감지: {enemy.enemyName}");
+            _questSystem.currentEnemy = enemy.enemyName;
+            Debug.Log($"[PlayerInteraction] 공격 가능한 적 감지: {enemy.enemyName}");
+          
         }
     }
 
