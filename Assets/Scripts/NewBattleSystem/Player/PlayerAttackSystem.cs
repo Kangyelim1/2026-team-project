@@ -79,7 +79,8 @@ public class PlayerAttackSystem : MonoBehaviour
         DealDamage(enemy);
         yield return new WaitForSeconds(1f);
         //playerSystem.playerAnimator.SetBool("isAttack", false);
-        enemy.HitEffect.gameObject.SetActive(false);
+
+        if(enemy != null) enemy.HitEffect.gameObject.SetActive(false);
 
         while (Vector3.Distance(transform.position, playerPoition) > 0.1f)
         {
