@@ -86,6 +86,8 @@ public class NewBattleManager : MonoBehaviour
         if (isPlayerTurn)
         {
             PlayerTurn();
+
+            if (_playerBattleSystem._playerSystem.player_CurrentHelth <= 0) return;
             _playerBattleSystem.ButtonHose.gameObject.SetActive(true);
         }
            

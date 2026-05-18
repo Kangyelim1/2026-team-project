@@ -102,7 +102,6 @@ public class EnemyAttackSystem : MonoBehaviour
 
         PlayerSystem player = TargetPlayer.GetComponent<PlayerSystem>();
 
-
         player.HitEffect.SetActive(true);
         if (player != null) IsAttack(player);
         yield return new WaitForSeconds(1f);

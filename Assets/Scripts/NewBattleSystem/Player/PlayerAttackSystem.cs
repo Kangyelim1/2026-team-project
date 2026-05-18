@@ -39,7 +39,7 @@ public class PlayerAttackSystem : MonoBehaviour
 
         currentDamage = playerSystem.player_Damage;
         _playerBattleSystem.ButtonHose.gameObject.SetActive(false);
-        
+        _playerBattleSystem.isAttack = true;
         StartCoroutine(StartBattle());
     }
 
@@ -57,6 +57,7 @@ public class PlayerAttackSystem : MonoBehaviour
         yield return new WaitForSeconds(0.7f);
         playerPoition = transform.position;
         _playerBattleSystem.ButtonHose.gameObject.SetActive(true);
+        _playerBattleSystem.isAttack = false;
     }
 
     public IEnumerator isNomalAttack()
