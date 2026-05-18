@@ -536,7 +536,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 4
+  m_text: 3
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d98b15d31a2a3bb49a93e9e041a09422, type: 2}
   m_sharedMaterial: {fileID: 532456781552652187, guid: d98b15d31a2a3bb49a93e9e041a09422, type: 2}
@@ -1005,7 +1005,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 2
+  m_text: 1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d98b15d31a2a3bb49a93e9e041a09422, type: 2}
   m_sharedMaterial: {fileID: 532456781552652187, guid: d98b15d31a2a3bb49a93e9e041a09422, type: 2}
@@ -1394,7 +1394,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &888532594
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1702,7 +1702,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 573, y: 0}
+  m_AnchoredPosition: {x: 569, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1113588364
@@ -1959,7 +1959,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 3
+  m_text: 2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d98b15d31a2a3bb49a93e9e041a09422, type: 2}
   m_sharedMaterial: {fileID: 532456781552652187, guid: d98b15d31a2a3bb49a93e9e041a09422, type: 2}
@@ -2232,6 +2232,7 @@ GameObject:
   - component: {fileID: 1477928373}
   - component: {fileID: 1477928374}
   - component: {fileID: 1477928375}
+  - component: {fileID: 1477928377}
   - component: {fileID: 1477928376}
   m_Layer: 0
   m_Name: BattleManager
@@ -2323,6 +2324,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SkillAttackSystem
   _playerBattleSystem: {fileID: 0}
+--- !u!114 &1477928377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1477928372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8ae82f12cf1b0248a881a435db48bb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyBattleSystem
+  enemySystem: {fileID: 0}
+  _battleManager: {fileID: 0}
 --- !u!1 &1640193735
 GameObject:
   m_ObjectHideFlags: 0
@@ -2869,8 +2884,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BattleSpawnSystem
   Enemys:
-  - {fileID: 1043202135786330120, guid: 0681f84666d03a841ae22b5cc5315763, type: 3}
-  - {fileID: 1043202135786330120, guid: aba8c1e2ff36e884b89a0e9658650d9a, type: 3}
+  - {fileID: 1043202135786330120, guid: e43a65e8833ec504cb95db6ca79be8e2, type: 3}
+  - {fileID: 1043202135786330120, guid: 7cb72cfcec1c7a0439f31f2a573ed25b, type: 3}
+  - {fileID: 1043202135786330120, guid: 796a08f5dd0fb1b47a82aa075832db2a, type: 3}
   Players: []
   _questSystem: {fileID: 0}
   _battleManager: {fileID: 0}

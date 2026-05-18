@@ -12,11 +12,13 @@ public class EnemyAttackSystem : MonoBehaviour
 
     public EnemySystem enemySystem;
     public NewBattleManager _battleManager;
+    public EnemyBattleSystem _enemyBattleSystem;
 
     private void Start()
     {
         enemySystem = GetComponent<EnemySystem>();
         _battleManager = Object.FindAnyObjectByType<NewBattleManager>();
+        _enemyBattleSystem = Object.FindAnyObjectByType<EnemyBattleSystem>();
 
         StartCoroutine(StartBattle());
     }
@@ -66,7 +68,14 @@ public class EnemyAttackSystem : MonoBehaviour
 
         Debug.Log($"타겟 플레이어 지정 완료: {playerSystem.player_Name}");
 
-        StartCoroutine(EnemyAttack());
+        if (enemySystem.Enemy_CurrentHelth <= 0)
+        {
+            StartCoroutine(_battleManager.EndGame(true));
+        }
+        else
+        {
+            StartCoroutine(EnemyAttack());
+        }
     }
 
     private IEnumerator EnemyAttack()
@@ -95,7 +104,8 @@ public class EnemyAttackSystem : MonoBehaviour
         player.HitEffect.SetActive(true);
         if (player != null) IsAttack(player);
         yield return new WaitForSeconds(1f);
-        player.HitEffect.SetActive(false);
+
+        if(player != null) player.HitEffect.SetActive(false);
 
         Debug.Log("원위치");
 
@@ -141,19 +151,9 @@ public class EnemyAttackSystem : MonoBehaviour
         {
             collision.gameObject.TryGetComponent<ShootObjectSystem>(out ShootObjectSystem shoot);
 
-           StartCoroutine(ShootDamage(shoot));
+           StartCoroutine(_enemyBattleSystem.ShootDamage(shoot));
         }
     }
 
-    IEnumerator ShootDamage(ShootObjectSystem shoot)
-    {
-        enemySystem.HitEffect.gameObject.SetActive(true);
-
-        int currentDamage = shoot.Soot_Damage + _battleManager._playerBattleSystem._playerSystem.player_Damage;
-        enemySystem.Enemy_CurrentHelth -= currentDamage;
-        _battleManager.CreateDamageText(transform.position, currentDamage, AttackType.Attack);
-
-        yield return new WaitForSeconds(1f);
-        enemySystem.HitEffect.gameObject.SetActive(false);
-    }
+   
 }

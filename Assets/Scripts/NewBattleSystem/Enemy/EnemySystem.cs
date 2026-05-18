@@ -21,6 +21,8 @@ public class EnemySystem : MonoBehaviour
     public int Enemy_CurrentHelth;
     public Slider enemyHelthSlider;
     [SerializeField] private float smoothSpeed = 5f;
+    public TextMeshProUGUI HelthText;
+
 
 
 
@@ -41,7 +43,7 @@ public class EnemySystem : MonoBehaviour
         enemyHelthSlider.maxValue = Enemy_MaxHelth;
 
         nameText.text = Enemy_Name;
-
+        HelthText.text = $"{Enemy_CurrentHelth} / {Enemy_MaxHelth}";
         HelthUI();
     }
 

@@ -104,7 +104,7 @@ public class NewBattleManager : MonoBehaviour
         if (spawnedPlayer == null)
         {
             Debug.Log("플레이어가 없음 게임 패배");
-            EndGame(false);
+            StartCoroutine(EndGame(false));
             return;
         }
 
@@ -169,8 +169,6 @@ public class NewBattleManager : MonoBehaviour
         //Debug.Log("게임 종료");
 
         fadeManager.StartFadeOut(0.4f);
-
-        yield return new WaitForSeconds(0.4f);
 
         if (GameManager.Instance != null)
         {

@@ -42,7 +42,6 @@ public class PlayerBattleSystem : MonoBehaviour
     public void Start()
     {
         _playerSystem = Object.FindAnyObjectByType<PlayerSystem>();
-        AttackButton01.onClick.AddListener(SkillAttack01);
         AttackButton02.onClick.AddListener(SkillAttack02);
         AttackButton03.onClick.AddListener(SkillAttack03);
         AttackButton04.onClick.AddListener(SkillAttack04);
@@ -54,10 +53,9 @@ public class PlayerBattleSystem : MonoBehaviour
     {
         if (isAttack || !_battleManager.isPlayerTurn) return;
 
-        if (Input.GetKeyDown(KeyCode.Alpha1)) SkillAttack01();
-        if (Input.GetKeyDown(KeyCode.Alpha2)) SkillAttack02();
-        if (Input.GetKeyDown(KeyCode.Alpha3)) SkillAttack03();
-        if (Input.GetKeyDown(KeyCode.Alpha4)) SkillAttack04();
+        if (Input.GetKeyDown(KeyCode.Alpha1)) SkillAttack02();
+        if (Input.GetKeyDown(KeyCode.Alpha2)) SkillAttack03();
+        if (Input.GetKeyDown(KeyCode.Alpha3)) SkillAttack04();
 
         PlayerAttackTarget();
     }
@@ -109,9 +107,11 @@ public class PlayerBattleSystem : MonoBehaviour
         if (!_battleManager.isPlayerTurn || isAttack) return;
         _playerAttackSystem = Object.FindAnyObjectByType<PlayerAttackSystem>();
         if (_playerAttackSystem == null) return;
-        
+        isAttack = true;
         Debug.Log("스킬 공격2 진행");
+        AutoSelectEnemey();
         _playerAttackSystem.SkillAttack(_playerSystem.player_Name, _playerSystem.skillAttack02Type);
+ 
     }
 
     void SkillAttack03()
@@ -119,8 +119,9 @@ public class PlayerBattleSystem : MonoBehaviour
         if (!_battleManager.isPlayerTurn || isAttack) return;
         _playerAttackSystem = Object.FindAnyObjectByType<PlayerAttackSystem>();
         if (_playerAttackSystem == null) return;
-
+        isAttack = true;
         Debug.Log("스킬 공격3 진행");
+        AutoSelectEnemey();
         _playerAttackSystem.SkillAttack(_playerSystem.player_Name, _playerSystem.skillAttack03Type);
     }
 
@@ -131,8 +132,10 @@ public class PlayerBattleSystem : MonoBehaviour
 
         _playerAttackSystem = Object.FindAnyObjectByType<PlayerAttackSystem>();
         if (_playerAttackSystem == null) return;
+        isAttack = true;
 
         Debug.Log("스킬 공격4 진행");
+        AutoSelectEnemey();
         _playerAttackSystem.SkillAttack(_playerSystem.player_Name, _playerSystem.skillAttack04Type);
     }
 }
