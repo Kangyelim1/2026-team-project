@@ -39,7 +39,15 @@ public class PlayerInteraction : MonoBehaviour
         if (enemy != null)
         {
             currentEnemy = enemy;
-            _questSystem.currentEnemy = enemy.enemyName;
+            if(_questSystem != null)
+            {
+                _questSystem.currentEnemy = enemy.enemyName;
+            }
+            else
+            {
+                Debug.LogWarning("라이프 타임 한 바뀌 돌고 가져올꺼임");
+            }
+            
             Debug.Log($"[PlayerInteraction] 공격 가능한 적 감지: {enemy.enemyName}");
           
         }
