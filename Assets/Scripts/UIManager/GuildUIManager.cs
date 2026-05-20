@@ -31,8 +31,7 @@ public class GuildUIManager : MonoBehaviour
     // 플레이어
     private Transform player;
 
-    // 길드 UI 자동 종료 거리
-    public float closeDistance = 3f;
+    
 
     private void Awake()
     {

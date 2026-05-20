@@ -49,8 +49,7 @@ public class ShopUIManager : MonoBehaviour
     // 플레이어
     private Transform player;
 
-    // 거리 제한
-    public float closeDistance = 3f;
+    
 
     private void Awake()
     {
