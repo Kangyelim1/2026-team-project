@@ -1,0 +1,481 @@
+fileFormatVersion: 2
+guid: 668d40f9c00cab24aa0739faebb3e8ce
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3474143676944022421
+    second: monster_jar_motion_0
+  - first:
+      213: 7957635599074606676
+    second: monster_jar_motion_1
+  - first:
+      213: 9103102054276743789
+    second: monster_jar_motion_2
+  - first:
+      213: 1377843970351974079
+    second: monster_jar_motion_3
+  - first:
+      213: 7873342544486497407
+    second: monster_jar_motion_4
+  - first:
+      213: -1787241541512264649
+    second: monster_jar_motion_5
+  - first:
+      213: 4486684897184867050
+    second: monster_jar_motion_6
+  - first:
+      213: 6915534001800876361
+    second: monster_jar_motion_7
+  - first:
+      213: 5173367782476729095
+    second: monster_jar_motion_8
+  - first:
+      213: -4305286539337769455
+    second: monster_jar_motion_9
+  - first:
+      213: -1947047779681038972
+    second: monster_jar_motion_10
+  - first:
+      213: -4945097430323750990
+    second: monster_jar_motion_11
+  - first:
+      213: 8614466156055011151
+    second: monster_jar_motion_12
+  - first:
+      213: 769372373772427787
+    second: monster_jar_motion_13
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: monster_jar_motion_0
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 938
+        width: 868
+        height: 678
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b64051d8bbc59cfc0800000000000000
+      internalID: -3474143676944022421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_jar_motion_1
+      rect:
+        serializedVersion: 2
+        x: 1566
+        y: 977
+        width: 772
+        height: 655
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45e38de7a633f6e60800000000000000
+      internalID: 7957635599074606676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_jar_motion_2
+      rect:
+        serializedVersion: 2
+        x: 2338
+        y: 1034
+        width: 7
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d624b4b8617b45e70800000000000000
+      internalID: 9103102054276743789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_jar_motion_3
+      rect:
+        serializedVersion: 2
+        x: 2345
+        y: 1042
+        width: 8
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb64eb87ac51f1310800000000000000
+      internalID: 1377843970351974079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_jar_motion_4
+      rect:
+        serializedVersion: 2
+        x: 1583
+        y: 939
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7c7617545bb34d60800000000000000
+      internalID: 7873342544486497407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_jar_motion_5
+      rect:
+        serializedVersion: 2
+        x: 1609
+        y: 831
+        width: 36
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 734075689417237e0800000000000000
+      internalID: -1787241541512264649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_jar_motion_6
+      rect:
+        serializedVersion: 2
+        x: 2102
+        y: 827
+        width: 29
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae260db7428e34e30800000000000000
+      internalID: 4486684897184867050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_jar_motion_7
+      rect:
+        serializedVersion: 2
+        x: 2122
+        y: 876
+        width: 15
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9411a79d889e8ff50800000000000000
+      internalID: 6915534001800876361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_jar_motion_8
+      rect:
+        serializedVersion: 2
+        x: 2150
+        y: 879
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70bc9f6a69e7bc740800000000000000
+      internalID: 5173367782476729095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_jar_motion_9
+      rect:
+        serializedVersion: 2
+        x: 2175
+        y: 829
+        width: 13
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11e508ee3bc8044c0800000000000000
+      internalID: -4305286539337769455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_jar_motion_10
+      rect:
+        serializedVersion: 2
+        x: 2183
+        y: 836
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48d066b3c52baf4e0800000000000000
+      internalID: -1947047779681038972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_jar_motion_11
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 113
+        width: 1006
+        height: 684
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b71bdd561c7f5bb0800000000000000
+      internalID: -4945097430323750990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_jar_motion_12
+      rect:
+        serializedVersion: 2
+        x: 1151
+        y: 638
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4f9849d35bbc8770800000000000000
+      internalID: 8614466156055011151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: monster_jar_motion_13
+      rect:
+        serializedVersion: 2
+        x: 1215
+        y: 106
+        width: 1109
+        height: 669
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0264bef81c5daa00800000000000000
+      internalID: 769372373772427787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      monster_jar_motion_0: -3474143676944022421
+      monster_jar_motion_1: 7957635599074606676
+      monster_jar_motion_10: -1947047779681038972
+      monster_jar_motion_11: -4945097430323750990
+      monster_jar_motion_12: 8614466156055011151
+      monster_jar_motion_13: 769372373772427787
+      monster_jar_motion_2: 9103102054276743789
+      monster_jar_motion_3: 1377843970351974079
+      monster_jar_motion_4: 7873342544486497407
+      monster_jar_motion_5: -1787241541512264649
+      monster_jar_motion_6: 4486684897184867050
+      monster_jar_motion_7: 6915534001800876361
+      monster_jar_motion_8: 5173367782476729095
+      monster_jar_motion_9: -4305286539337769455
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
