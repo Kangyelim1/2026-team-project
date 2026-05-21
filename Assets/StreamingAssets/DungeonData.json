@@ -1,0 +1,43 @@
+
+  [
+    {
+      "DungeonID": 100,
+      "WorldType": "서양동화",
+      "DungeonName": "오즈의 마법사",
+      "StageIndex": 1,
+      "MonsterList": "마녀;서쪽의 마녀;동쪽의 마녀;칼리다;늑대;까마귀",
+      "RecommendedLevel": 1,
+      "ClearReward_Gold": 100,
+      "ClearReward_ItemID": 1002
+    },
+    {
+      "DungeonID": 101,
+      "WorldType": "서양동화",
+      "DungeonName": "미녀와 야수",
+      "StageIndex": 2,
+      "MonsterList": "가스톤;포르테;내면의 야수성",
+      "RecommendedLevel": 2,
+      "ClearReward_Gold": 150,
+      "ClearReward_ItemID": 1007
+    },
+    {
+      "DungeonID": 102,
+      "WorldType": "동양동화",
+      "DungeonName": "금도끼 은도끼",
+      "StageIndex": 1,
+      "MonsterList": "신성령",
+      "RecommendedLevel": 1,
+      "ClearReward_Gold": 80,
+      "ClearReward_ItemID": 1005
+    },
+    {
+      "DungeonID": 103,
+      "WorldType": "동양동화",
+      "DungeonName": "토끼전",
+      "StageIndex": 2,
+      "MonsterList": "거북이;상어;물고기",
+      "RecommendedLevel": 2,
+      "ClearReward_Gold": 140,
+      "ClearReward_ItemID": 1019
+    }
+  ]
