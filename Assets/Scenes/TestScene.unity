@@ -4312,10 +4312,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Interactable
   objectName: "\uB358\uC804"
-  isGuild: 1
+  isGuild: 0
   isShop: 0
   isInventory: 0
-  isDungeon: 0
+  isDungeon: 1
 --- !u!61 &665006767
 BoxCollider2D:
   m_ObjectHideFlags: 0
