@@ -1,7 +1,5 @@
-using JetBrains.Annotations;
 using System.Collections;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class EnemyAttackSystem : MonoBehaviour
 {
@@ -10,10 +8,14 @@ public class EnemyAttackSystem : MonoBehaviour
     public Vector3 enemyStartPosition;
     public GameObject TargetPlayer;
 
+    [Header("외부 스크립트")]
     public EnemySystem enemySystem;
     public NewBattleManager _battleManager;
     public EnemyBattleSystem _enemyBattleSystem;
     public QuestSystem _questSystem;
+
+    [Header("보스 전용")]
+    public BossEnemyPatternSystem _bossEnemyPatternSystem;
 
     private void Start()
     {
@@ -21,8 +23,11 @@ public class EnemyAttackSystem : MonoBehaviour
         _battleManager = Object.FindAnyObjectByType<NewBattleManager>();
         _enemyBattleSystem = Object.FindAnyObjectByType<EnemyBattleSystem>();
         _questSystem = Object.FindAnyObjectByType<QuestSystem>();
-
+ 
         StartCoroutine(StartBattle());
+
+        if(enemySystem.Enemy_Type == EnemyType.Boss)
+            _bossEnemyPatternSystem = Object.FindAnyObjectByType<BossEnemyPatternSystem>();
     }
 
     IEnumerator StartBattle()
@@ -76,11 +81,23 @@ public class EnemyAttackSystem : MonoBehaviour
         }
         else
         {
-            StartCoroutine(EnemyAttack());
+            EnemyAttack();
         }
     }
 
-    private IEnumerator EnemyAttack()
+    private void EnemyAttack()
+    {
+        if(enemySystem.Enemy_Type == EnemyType.Boss)
+        {
+            BossEnemyAttack();
+        }
+        else
+        {
+            StartCoroutine(NomalEnemyAttack());
+        }
+    }
+
+    private IEnumerator NomalEnemyAttack()
     {
         Debug.Log("플레이어 위치로 이동");
 
@@ -127,12 +144,47 @@ public class EnemyAttackSystem : MonoBehaviour
         _battleManager.EndEnemyTurn();
     }
 
+    void BossEnemyAttack()
+    {
+        int randomPattern = Random.Range(0, enemySystem.bossPatternNameLIst.Count);
+
+        string patternName = enemySystem.bossPatternNameLIst[randomPattern];
+
+        BossPattern(enemySystem.Enemy_Name, patternName);
+    }
+
+    public void BossPattern(string BossName, string AttackType)
+    {
+        switch(BossName, AttackType)
+        {
+            case ("원님", "일반 공격"):
+                StartCoroutine(NomalEnemyAttack());
+                break;
+            case ("원님", "관아의 위엄"):
+                StartCoroutine(_bossEnemyPatternSystem.Wonnim01());
+                break;
+            case ("원님", "풍월 일섬"):
+               StartCoroutine(_bossEnemyPatternSystem.Wonnim02());
+                break;
+            case ("원님", "난무"):
+                StartCoroutine(_bossEnemyPatternSystem.Wonnim03());
+                break;
+            case ("원님", "월하 집행"):
+                StartCoroutine(_bossEnemyPatternSystem.Wonnim04());
+                break;
+            default:
+                Debug.LogWarning("패턴 미존재");
+                break;
+        }
+    }
+
     private void IsAttack(PlayerSystem target)
     {
         if (target.player_CurrentHelth > 0)
         {
             int currentDamage = enemySystem.Enemy_Damage - _battleManager._playerBattleSystem._playerSystem.player_Defense;
             target.player_CurrentHelth -= currentDamage;
+            target.player_CurrentHelth = Mathf.Clamp(target.player_CurrentHelth, 0, target.player_MaxHelth);
             _battleManager.CreateDamageText(target.transform.position, currentDamage, AttackType.Hit);
 
             Debug.Log($"플레이어 체력 {currentDamage} 만큼 감소, 현재 체력: {target.player_CurrentHelth}");

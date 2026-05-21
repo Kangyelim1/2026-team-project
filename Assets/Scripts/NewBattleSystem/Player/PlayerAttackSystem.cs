@@ -60,45 +60,45 @@ public class PlayerAttackSystem : MonoBehaviour
         _playerBattleSystem.isAttack = false;
     }
 
-    public IEnumerator isNomalAttack()
-    {
-        while (Vector3.Distance(transform.position, TargetEnemy.transform.position) > attackRange)
-        {
-            Vector3 direction = (TargetEnemy.transform.position - transform.position).normalized;
-            transform.position += direction * playerSystem.player_Speed * Time.deltaTime;
+    //public IEnumerator isNomalAttack()
+    //{
+    //    while (Vector3.Distance(transform.position, TargetEnemy.transform.position) > attackRange)
+    //    {
+    //        Vector3 direction = (TargetEnemy.transform.position - transform.position).normalized;
+    //        transform.position += direction * playerSystem.player_Speed * Time.deltaTime;
 
-            yield return null;
-        }
+    //        yield return null;
+    //    }
 
-        _playerBattleSystem._playerAttackSystem.TargetEnemy.TryGetComponent<EnemySystem>(out EnemySystem enemy);
+    //    _playerBattleSystem._playerAttackSystem.TargetEnemy.TryGetComponent<EnemySystem>(out EnemySystem enemy);
 
-        if (enemy == null) yield break;
+    //    if (enemy == null) yield break;
 
-        Debug.Log("근거리 일반 공격");
-        //playerSystem.playerAnimator.SetBool("isAttack", true);
-        enemy.HitEffect.gameObject.SetActive(true);
-        DealDamage(enemy);
-        yield return new WaitForSeconds(1f);
-        //playerSystem.playerAnimator.SetBool("isAttack", false);
+    //    Debug.Log("근거리 일반 공격");
+    //    //playerSystem.playerAnimator.SetBool("isAttack", true);
+    //    enemy.HitEffect.gameObject.SetActive(true);
+    //    DealDamage(enemy);
+    //    yield return new WaitForSeconds(1f);
+    //    //playerSystem.playerAnimator.SetBool("isAttack", false);
 
-        if(enemy != null) enemy.HitEffect.gameObject.SetActive(false);
+    //    if(enemy != null) enemy.HitEffect.gameObject.SetActive(false);
 
-        while (Vector3.Distance(transform.position, playerPoition) > 0.1f)
-        {
-            Vector3 backDirection = (playerPoition - transform.position).normalized;
-            transform.position += backDirection * playerSystem.player_Speed * Time.deltaTime;
-            yield return null;
-        }
+    //    while (Vector3.Distance(transform.position, playerPoition) > 0.1f)
+    //    {
+    //        Vector3 backDirection = (playerPoition - transform.position).normalized;
+    //        transform.position += backDirection * playerSystem.player_Speed * Time.deltaTime;
+    //        yield return null;
+    //    }
 
-        transform.position = playerPoition;
-        Debug.Log("복귀 완료");
+    //    transform.position = playerPoition;
+    //    Debug.Log("복귀 완료");
 
-        yield return new WaitForSeconds(1f);
+    //    yield return new WaitForSeconds(1f);
 
-        _playerBattleSystem.isTarget = false;
-        _playerBattleSystem._battleManager.EndPlayerTurn();
+    //    _playerBattleSystem.isTarget = false;
+    //    _playerBattleSystem._battleManager.EndPlayerTurn();
 
-    }
+    //}
 
     public void SkillAttack(string playerName, string AttackType)
     {
@@ -128,26 +128,26 @@ public class PlayerAttackSystem : MonoBehaviour
         }
     }
 
-    void DealDamage(EnemySystem target)
-    {
-        target.Enemy_CurrentHelth -= playerSystem.player_Damage;
-        Debug.Log($"{target.Enemy_Name}에게 {playerSystem.player_Damage} 데미지. 남은 체력: {target.Enemy_CurrentHelth}");
-        _playerBattleSystem._battleManager.CreateDamageText(target.transform.position, currentDamage, AttackType.Attack);
-        currentSkill04Stemina += Skill01Stemina;
+    //void DealDamage(EnemySystem target)
+    //{
+    //    target.Enemy_CurrentHelth -= playerSystem.player_Damage;
+    //    Debug.Log($"{target.Enemy_Name}에게 {playerSystem.player_Damage} 데미지. 남은 체력: {target.Enemy_CurrentHelth}");
+    //    _playerBattleSystem._battleManager.CreateDamageText(target.transform.position, currentDamage, AttackType.Attack);
+    //    currentSkill04Stemina += Skill01Stemina;
 
-        if (target.Enemy_CurrentHelth <= 0)
-        {
-            Debug.Log($"{target.Enemy_Name} 처치!");
-            Destroy(target.gameObject);
+    //    if (target.Enemy_CurrentHelth <= 0)
+    //    {
+    //        Debug.Log($"{target.Enemy_Name} 처치!");
+    //        Destroy(target.gameObject);
             
-            _playerBattleSystem._battleManager.EndGame(true);
+    //        _playerBattleSystem._battleManager.EndGame(true);
 
 
-            if(target.Enemy_Name == _questSystem.currentQuestEnemyNPC)
-            {
-                _questSystem.currnet_EnmeyDieCount++;
-                return;
-            }
-        }
-    }
+    //        if(target.Enemy_Name == _questSystem.currentQuestEnemyNPC)
+    //        {
+    //            _questSystem.currnet_EnmeyDieCount++;
+    //            return;
+    //        }
+    //    }
+    //}
 }

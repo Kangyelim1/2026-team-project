@@ -1,6 +1,7 @@
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class EnemySystem : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class EnemySystem : MonoBehaviour
     public int Enemy_Levle;
     public int Enemy_MaxHelth;
     public int Enemy_Damage;
+    public EnemyType Enemy_Type;
     public int Enemy_Speed;
     public GameObject EnemyPrefab;
     public TextMeshProUGUI nameText;
@@ -24,16 +26,19 @@ public class EnemySystem : MonoBehaviour
     public TextMeshProUGUI HelthText;
 
 
+    [Header("보스 전용")]
+    public List<string> bossPatternNameLIst = new List<string>();
+    public GameObject Boss_Image;
 
 
-    private void Start()
+    private void Awake()
     {
         Enemy_Name = enemySO.EnemyName;
         Enemy_Levle = enemySO.EnemyLevel;
         Enemy_MaxHelth = enemySO.EnemyMaxHelth;
         Enemy_Damage = enemySO.EnemyDamage;
+        Enemy_Type = enemySO.enemyType;
         Enemy_Speed = enemySO.EnemySpeed;
-
         Enemy_CurrentHelth = Enemy_MaxHelth;
     }
 

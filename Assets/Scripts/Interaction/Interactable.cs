@@ -7,6 +7,8 @@ public class Interactable : MonoBehaviour
     // 길드 여부 확인용
     public bool isGuild;
     public bool isShop;
+    public bool isInventory;
+    public bool isDungeon;
 
     public void Interact()
     {
@@ -28,6 +30,23 @@ public class Interactable : MonoBehaviour
             }
 
             ShopUIManager.Instance.OpenShopUI(this);
+        }
+        if (isInventory)
+        {
+            Debug.Log("인벤토리 UI 열기 시도");
+
+            if (InventoryUIManager.Instance == null)
+            {
+                Debug.LogError("InventoryUIManager Instance 없음!");
+                return;
+            }
+
+            InventoryUIManager.Instance.OpenInventoryUI(this);
+        }
+
+        if (isDungeon)
+        {
+            Debug.Log("던전 UI 열기 시도");
         }
     }
 }
