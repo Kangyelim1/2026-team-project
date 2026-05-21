@@ -27,6 +27,10 @@ public class NewBattleManager : MonoBehaviour
     public GameObject spawnedPlayer;
     public GameObject spawnedEnemy;
 
+    [Header("UI")]
+    public GameObject WinUI;
+    public GameObject LoserUI;
+
     public bool isPlayerTurn = true;
     public bool isGameEnd = false;
 
@@ -36,6 +40,7 @@ public class NewBattleManager : MonoBehaviour
     public GameObject damageTextPrefab;
     public Canvas battleCanvas;
     public AttackType attackType;
+
 
 
     private void Start()
@@ -161,13 +166,20 @@ public class NewBattleManager : MonoBehaviour
         isGameEnd = true;
 
         if (isVictory)
+        {
             Debug.Log("[BattleManager] 전투 승리!");
+            WinUI.gameObject.SetActive(true);
+        }
         else
+        {
             Debug.Log("[BattleManager] 전투 패배...");
-        //Debug.Log("게임 종료");
+            LoserUI.gameObject.SetActive(true);
+        }
+        Debug.Log("게임 종료");       
+    }
 
-        fadeManager.StartFadeOut(0.4f);
-
+    public void ExitBattleScene()
+    {
         if (GameManager.Instance != null)
         {
             GameManager.Instance.ReturnToField();
