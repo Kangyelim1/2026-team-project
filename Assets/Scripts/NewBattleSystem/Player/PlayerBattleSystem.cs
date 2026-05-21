@@ -85,17 +85,17 @@ public class PlayerBattleSystem : MonoBehaviour
         }   
     }
 
-    void SkillAttack01()
-    {
-        if (!_battleManager.isPlayerTurn || isAttack) return;
-        _playerAttackSystem = Object.FindAnyObjectByType<PlayerAttackSystem>();
+    //void SkillAttack01()
+    //{
+    //    if (!_battleManager.isPlayerTurn || isAttack) return;
+    //    _playerAttackSystem = Object.FindAnyObjectByType<PlayerAttackSystem>();
 
-        if (_playerAttackSystem == null) return;
+    //    if (_playerAttackSystem == null) return;
 
-        AutoSelectEnemey();
-        StartCoroutine(_playerAttackSystem.isNomalAttack());
-        Debug.Log("Enemy 체력 감소 플레이어 공격 진행 완료");
-    }
+    //    AutoSelectEnemey();
+    //    StartCoroutine(_playerAttackSystem.isNomalAttack());
+    //    Debug.Log("Enemy 체력 감소 플레이어 공격 진행 완료");
+    //}
 
     void SkillAttack02()
     {

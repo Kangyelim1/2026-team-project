@@ -375,6 +375,7 @@ MonoBehaviour:
   Enemy_Levle: 0
   Enemy_MaxHelth: 0
   Enemy_Damage: 0
+  Enemy_Type: 1
   Enemy_Speed: 0
   EnemyPrefab: {fileID: 4264402159236601626}
   nameText: {fileID: 2403435829804663043}
@@ -383,6 +384,11 @@ MonoBehaviour:
   enemyHelthSlider: {fileID: 1171091794126063801}
   smoothSpeed: 5
   HelthText: {fileID: 7142010569795634538}
+  bossPatternNameLIst:
+  - "\uC77C\uBC18 \uACF5\uACA9"
+  - "\uD328\uD134\uACF5\uACA901"
+  - "\uD328\uD134\uACF5\uACA902"
+  - "\uD328\uD134\uACF5\uACA903"
 --- !u!114 &931473611829387974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -400,6 +406,9 @@ MonoBehaviour:
   TargetPlayer: {fileID: 0}
   enemySystem: {fileID: 0}
   _battleManager: {fileID: 0}
+  _enemyBattleSystem: {fileID: 0}
+  _questSystem: {fileID: 0}
+  _bossEnemyPatternSystem: {fileID: 0}
 --- !u!50 &7088183035826900145
 Rigidbody2D:
   serializedVersion: 5

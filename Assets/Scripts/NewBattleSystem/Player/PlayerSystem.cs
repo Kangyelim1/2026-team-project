@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Unity.VisualScripting;
 
 public class PlayerSystem : MonoBehaviour
 {
@@ -29,6 +28,7 @@ public class PlayerSystem : MonoBehaviour
     public int player_CurrentHelth;
     public Slider playerHelthSlider;
     [SerializeField] private float smoothSpeed = 5f;
+    public TextMeshProUGUI playerHelthText;
 
     [Header("VFX")]
     public GameObject HitEffect;
@@ -57,6 +57,7 @@ public class PlayerSystem : MonoBehaviour
     {
         playerHelthSlider.minValue = 0;
         playerHelthSlider.maxValue = player_MaxHelth;
+        playerHelthText.text = $"{player_CurrentHelth} / {player_MaxHelth}";
 
         HelthUI();
     }

@@ -8,6 +8,7 @@ public class Interactable : MonoBehaviour
     public bool isGuild;
     public bool isShop;
     public bool isInventory;
+    public bool isDungeon;
 
     public void Interact()
     {
@@ -41,6 +42,11 @@ public class Interactable : MonoBehaviour
             }
 
             InventoryUIManager.Instance.OpenInventoryUI(this);
+        }
+
+        if (isDungeon)
+        {
+            Debug.Log("던전 UI 열기 시도");
         }
     }
 }

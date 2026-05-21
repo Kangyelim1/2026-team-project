@@ -26,6 +26,7 @@ public class EnemyBattleSystem : MonoBehaviour
             {
                 int currentDamage = shoot.Soot_Damage + _battleManager._playerBattleSystem._playerSystem.player_Damage;
                 _enemyAttackSystem.enemySystem.Enemy_CurrentHelth -= currentDamage;
+                _enemyAttackSystem.enemySystem.Enemy_CurrentHelth = Mathf.Clamp(_enemyAttackSystem.enemySystem.Enemy_CurrentHelth, 0, _enemyAttackSystem.enemySystem.Enemy_MaxHelth);
                 _battleManager.CreateDamageText(_enemyAttackSystem.transform.position, currentDamage, AttackType.Attack);
 
                 yield return new WaitForSeconds(1f);
