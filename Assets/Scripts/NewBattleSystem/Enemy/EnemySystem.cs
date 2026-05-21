@@ -28,6 +28,7 @@ public class EnemySystem : MonoBehaviour
 
     [Header("보스 전용")]
     public List<string> bossPatternNameLIst = new List<string>();
+    public GameObject Boss_Image;
 
 
     private void Awake()
@@ -38,10 +39,8 @@ public class EnemySystem : MonoBehaviour
         Enemy_Damage = enemySO.EnemyDamage;
         Enemy_Type = enemySO.enemyType;
         Enemy_Speed = enemySO.EnemySpeed;
-
         Enemy_CurrentHelth = Enemy_MaxHelth;
     }
-
 
     private void Update()
     {

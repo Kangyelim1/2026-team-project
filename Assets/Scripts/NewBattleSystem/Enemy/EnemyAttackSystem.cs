@@ -160,17 +160,20 @@ public class EnemyAttackSystem : MonoBehaviour
             case ("원님", "일반 공격"):
                 StartCoroutine(NomalEnemyAttack());
                 break;
-            case ("원님", "패턴공격01"):
+            case ("원님", "관아의 위엄"):
                 StartCoroutine(_bossEnemyPatternSystem.Wonnim01());
                 break;
-            case ("원님", "패턴공격02"):
+            case ("원님", "풍월 일섬"):
                StartCoroutine(_bossEnemyPatternSystem.Wonnim02());
                 break;
-            case ("원님", "패턴공격03"):
+            case ("원님", "난무"):
                 StartCoroutine(_bossEnemyPatternSystem.Wonnim03());
                 break;
+            case ("원님", "월하 집행"):
+                StartCoroutine(_bossEnemyPatternSystem.Wonnim04());
+                break;
             default:
-                Debug.LogWarning("패턴 미존제");
+                Debug.LogWarning("패턴 미존재");
                 break;
         }
     }
