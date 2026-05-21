@@ -1,7 +1,5 @@
-using JetBrains.Annotations;
 using System.Collections;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class BossEnemyPatternSystem : MonoBehaviour
 {
@@ -55,7 +53,7 @@ public class BossEnemyPatternSystem : MonoBehaviour
         
     }
 
-    public IEnumerator Wonnim03()   // 4번의 배기 공격
+    public IEnumerator Wonnim03()   // 4번 배기 공격
     {
         Debug.Log("난무 진행");
 
@@ -82,11 +80,9 @@ public class BossEnemyPatternSystem : MonoBehaviour
 
         while (Vector3.Distance(_enemySystem.transform.position, _enemyAttackSystem.enemyStartPosition) > 0.1f)
         {
-            Vector3 backDirection =
-                (_enemyAttackSystem.enemyStartPosition - _enemySystem.transform.position).normalized;
+            Vector3 backDirection = (_enemyAttackSystem.enemyStartPosition - _enemySystem.transform.position).normalized;
 
-            _enemySystem.transform.position +=
-                backDirection * _enemySystem.Enemy_Speed * Time.deltaTime;
+            _enemySystem.transform.position += backDirection * _enemySystem.Enemy_Speed * Time.deltaTime;
 
             yield return null;
         }
@@ -99,6 +95,15 @@ public class BossEnemyPatternSystem : MonoBehaviour
 
     public IEnumerator Wonnim04()   // 궁극기
     {
+        Debug.Log("전용 영상 실행");
+        yield return new WaitForSeconds(8f);
+        int currentDamage = _enemySystem.Enemy_Damage + 1000;
+        _playerSystem.HitEffect.gameObject.SetActive(true);
+        TakeDamage(currentDamage);
+
+        yield return new WaitForSeconds(1f);
+        _playerSystem.HitEffect.gameObject.SetActive(false);
+
         Debug.Log("월하 집행 진행");
         yield return new WaitForSeconds(1f);
         _enemyBattleSystem._battleManager.EndEnemyTurn();
