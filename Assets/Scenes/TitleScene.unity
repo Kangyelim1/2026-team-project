@@ -1379,6 +1379,8 @@ GameObject:
   - component: {fileID: 1974778022}
   - component: {fileID: 1974778021}
   - component: {fileID: 1974778024}
+  - component: {fileID: 1974778025}
+  - component: {fileID: 1974778026}
   m_Layer: 0
   m_Name: DataManager
   m_TagString: Untagged
@@ -1434,12 +1436,38 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1974778019}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5275baf7af2a6b49a46de1630b9e9ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DungeonDataManager
-  dungeonSO: {fileID: 11400000, guid: 6f9a975433280e041911f678e1ec8f06, type: 2}
+  dungeonSO: {fileID: 0}
+--- !u!114 &1974778025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974778019}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edc1a294e0bb7f54d80b87cec654c5fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkillDataManager
+  skillDataSO: {fileID: 0}
+--- !u!114 &1974778026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974778019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b1d34d2da682e046aea36f936edf81c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDataManager
+  itemDataSO: {fileID: 11400000, guid: 7c7bc6a714ffd1648b23afb6250e2c86, type: 2}
 --- !u!1 &2003317795
 GameObject:
   m_ObjectHideFlags: 0
