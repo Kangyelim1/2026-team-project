@@ -27,7 +27,7 @@ EditorBuildSettings:
     path: Assets/Scenes/CharacterSelectScene.unity
     guid: db1c2880d9c091542877691e0a7b92f9
   - enabled: 0
-    path: Assets/Scenes/BattleScene.unity
+    path: Assets/Scenes/OldBattleScene.unity
     guid: 0d8eab2eb795ca149bc6cc4b0aa60c48
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
