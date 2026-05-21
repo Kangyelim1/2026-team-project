@@ -3,11 +3,20 @@ using UnityEngine;
 
 public class BossEnemyPatternSystem : MonoBehaviour
 {
+    [Header("외부 스크립트")]
     public EnemyBattleSystem _enemyBattleSystem;
     public EnemyAttackSystem _enemyAttackSystem;
     public EnemySystem _enemySystem;
     public PlayerSystem _playerSystem;
     public NewBattleManager _battleManager;
+
+    [Header("원님 패턴 공격력")]
+    [Tooltip("순간 이동후 강공격(풍월 일섬)")]
+    public int WonnimPattern02;
+    [Tooltip("4번 연속 공격(난무)")]
+    public int WonnimPattern03;
+    [Tooltip("궁극기(월하 집행)")]
+    public int WonnimPattern04; 
 
     private void Start()
     {
@@ -42,7 +51,7 @@ public class BossEnemyPatternSystem : MonoBehaviour
         _enemySystem.Boss_Image.gameObject.SetActive(true);
         Debug.Log("순간 이동 완료");
         yield return new WaitForSeconds(0.1f);
-        int currentDamage = _enemySystem.Enemy_Damage + 50;
+        int currentDamage = _enemySystem.Enemy_Damage + WonnimPattern02;
         _playerSystem.HitEffect.gameObject.SetActive(true);
         TakeDamage(currentDamage);
        yield return new WaitForSeconds(1f);
@@ -67,7 +76,7 @@ public class BossEnemyPatternSystem : MonoBehaviour
 
         yield return new WaitForSeconds(0.2f);
 
-        int currentDamage = _enemySystem.Enemy_Damage + 10;
+        int currentDamage = _enemySystem.Enemy_Damage + WonnimPattern03;
         for (int i = 0; i < 4; i++)
         {
             _playerSystem.HitEffect.gameObject.SetActive(true);
@@ -97,7 +106,7 @@ public class BossEnemyPatternSystem : MonoBehaviour
     {
         Debug.Log("전용 영상 실행");
         yield return new WaitForSeconds(8f);
-        int currentDamage = _enemySystem.Enemy_Damage + 1000;
+        int currentDamage = _enemySystem.Enemy_Damage + WonnimPattern04;
         _playerSystem.HitEffect.gameObject.SetActive(true);
         TakeDamage(currentDamage);
 
