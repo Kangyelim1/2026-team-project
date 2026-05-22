@@ -17,13 +17,16 @@ public class BossUISystem : MonoBehaviour
     {
         if(enemySystem == null) enemySystem = FindAnyObjectByType<EnemySystem>();
 
-        bossHelthSlider.minValue = 0;
-        bossHelthSlider.maxValue = enemySystem.Enemy_MaxHelth;
+        if(enemySystem != null)
+        {
+            bossHelthSlider.minValue = 0;
+            bossHelthSlider.maxValue = enemySystem.Enemy_MaxHelth;
 
-        bossNameText.text = enemySystem.Enemy_Name;
-        bossHelthText.text = $"{enemySystem.Enemy_CurrentHelth} / {enemySystem.Enemy_MaxHelth}";
-        HelthUI();
-        StartBass();
+            bossNameText.text = enemySystem.Enemy_Name;
+            bossHelthText.text = $"{enemySystem.Enemy_CurrentHelth} / {enemySystem.Enemy_MaxHelth}";
+            HelthUI();
+            StartBass();
+        }
     }
 
     public void StartBass()
