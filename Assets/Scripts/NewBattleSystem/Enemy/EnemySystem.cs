@@ -23,7 +23,7 @@ public class EnemySystem : MonoBehaviour
     [Header("Helth")]
     public int Enemy_CurrentHelth;
     public Slider enemyHelthSlider;
-    [SerializeField] private float smoothSpeed = 5f;
+    public float smoothSpeed = 5f;
     public TextMeshProUGUI HelthText;
 
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class BossEnemyPatternSystem : MonoBehaviour
 {
@@ -131,6 +132,7 @@ public class BossEnemyPatternSystem : MonoBehaviour
             Debug.Log(Damage);
             _playerSystem.player_CurrentHelth -= Damage;
             _playerSystem.player_CurrentHelth = Mathf.Clamp(_playerSystem.player_CurrentHelth, 0, Damage);
+            _battleManager.CreateDamageText(_playerSystem.transform.position, Damage, AttackType.Hit);
             if (_playerSystem.player_CurrentHelth <= 0)
             {
                 Debug.Log("플레이어 사망");
