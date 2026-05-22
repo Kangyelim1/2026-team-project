@@ -34,11 +34,13 @@ public class BossEnemyPatternSystem : MonoBehaviour
     public IEnumerator Wonnim01()   // 플레이어 턴을 바로 넘김
     {
         Debug.Log("관아의 위엄 진행");
+        _playerSystem.DebuffEffect.gameObject.SetActive(true);
         yield return new WaitForSeconds(1f);
-        _enemyBattleSystem._battleManager.EndEnemyTurn();
+        _playerSystem.DebuffEffect.gameObject.SetActive(false);
+        Debug.Log("플레이어 턴 넘김 패턴");
         yield return new WaitForSeconds(0.1f);
         _enemyBattleSystem._battleManager.EndPlayerTurn();
-        Debug.Log("플레이어 턴 넘김 패턴");
+        
     }
 
     public IEnumerator Wonnim02()   // 강공격
@@ -51,11 +53,13 @@ public class BossEnemyPatternSystem : MonoBehaviour
         _enemySystem.Boss_Image.gameObject.SetActive(true);
         Debug.Log("순간 이동 완료");
         yield return new WaitForSeconds(0.1f);
+        _enemySystem.AttackEffect.gameObject.SetActive(true);
         int currentDamage = _enemySystem.Enemy_Damage + WonnimPattern02;
         _playerSystem.HitEffect.gameObject.SetActive(true);
         TakeDamage(currentDamage);
        yield return new WaitForSeconds(1f);
        if(_playerSystem != null) _playerSystem.HitEffect.gameObject.SetActive(false);
+        _enemySystem.AttackEffect.gameObject.SetActive(false);
         _enemySystem.transform.position = _enemyAttackSystem.enemyStartPosition;
         yield return new WaitForSeconds(1f);
         _enemyBattleSystem._battleManager.EndEnemyTurn();
@@ -79,10 +83,12 @@ public class BossEnemyPatternSystem : MonoBehaviour
         int currentDamage = _enemySystem.Enemy_Damage + WonnimPattern03;
         for (int i = 0; i < 4; i++)
         {
+            _enemySystem.AttackEffect.gameObject.SetActive(true);
             _playerSystem.HitEffect.gameObject.SetActive(true);
             TakeDamage(currentDamage);
             yield return new WaitForSeconds(0.1f);
             if (_playerSystem != null) _playerSystem.HitEffect.gameObject.SetActive(false);
+            _enemySystem.AttackEffect.gameObject.SetActive(false);
 
             yield return null;
         }

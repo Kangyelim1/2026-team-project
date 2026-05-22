@@ -33,6 +33,7 @@ public class PlayerSystem : MonoBehaviour
     [Header("VFX")]
     public GameObject HitEffect;
     public GameObject DefanseEffect;
+    public GameObject DebuffEffect;
 
     private void Awake()
     {
@@ -57,6 +58,7 @@ public class PlayerSystem : MonoBehaviour
     {
         if(HitEffect != null) HitEffect.gameObject.SetActive(false);
         if (DefanseEffect != null)  DefanseEffect.gameObject.SetActive(false);
+        if (DebuffEffect != null) DebuffEffect.gameObject.SetActive(false);
     }
 
     private void Update()
