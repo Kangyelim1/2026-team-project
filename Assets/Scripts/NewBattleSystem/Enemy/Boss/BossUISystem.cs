@@ -7,6 +7,9 @@ public class BossUISystem : MonoBehaviour
     public EnemySystem enemySystem;
     public TextMeshProUGUI bossNameText;
 
+    [Header("스킬 4 관련")]
+    public Image Skill04Image;
+
     [Header("체력 관련")]
     public GameObject bossUI;
     public Slider bossHelthSlider;

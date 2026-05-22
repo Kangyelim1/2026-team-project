@@ -166,19 +166,41 @@ public class NewBattleManager : MonoBehaviour
         if (isGameEnd) yield break;
         isGameEnd = true;
 
-        if (isVictory)
-        {
-            Debug.Log("[BattleManager] 전투 승리!");
-            WinUI.gameObject.SetActive(true);
-        }
-        else
-        {
-            Debug.Log("[BattleManager] 전투 패배...");
-            LoserUI.gameObject.SetActive(true);
-        }
-        Debug.Log("게임 종료");       
-    }
+        GameObject targetUI = isVictory ? WinUI : LoserUI;
 
+        targetUI.SetActive(true);
+
+        CanvasGroup cg = targetUI.GetComponent<CanvasGroup>();
+
+        if (cg == null)
+        {
+            cg = targetUI.AddComponent<CanvasGroup>();
+        }
+
+        RectTransform rect = targetUI.GetComponent<RectTransform>();
+
+        cg.alpha = 0f;
+        rect.localScale = Vector3.one * 0.7f;
+
+        Vector3 startPos = rect.localPosition;
+        rect.localPosition = startPos + new Vector3(0, -80f, 0);
+
+        Sequence seq = DOTween.Sequence();
+
+        seq.Append(cg.DOFade(1f, 0.35f));
+
+        seq.Join(
+            rect.DOScale(1f, 0.4f)
+            .SetEase(Ease.OutBack)
+        );
+
+        seq.Join(
+            rect.DOLocalMove(startPos, 0.4f)
+            .SetEase(Ease.OutQuad)
+        );
+
+        Debug.Log("게임 종료");
+    }
     public void ExitBattleScene()
     {
         if (GameManager.Instance != null)

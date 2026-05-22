@@ -11,6 +11,7 @@ public class BossEnemyPatternSystem : MonoBehaviour
     public PlayerSystem _playerSystem;
     public NewBattleManager _battleManager;
     public ScreenHitEffect _screenHitEffect;
+    public BossUISystem _bossUISystem;
 
     [Header("원님 패턴 공격력")]
     [Tooltip("순간 이동후 강공격(풍월 일섬)")]
@@ -25,6 +26,7 @@ public class BossEnemyPatternSystem : MonoBehaviour
         _enemyBattleSystem = Object.FindAnyObjectByType<EnemyBattleSystem>();
         _battleManager = Object.FindAnyObjectByType<NewBattleManager>();
         _screenHitEffect = Object.FindAnyObjectByType<ScreenHitEffect>();
+        _bossUISystem = Object.FindAnyObjectByType<BossUISystem>();
     }
 
     private void Update()
@@ -50,23 +52,48 @@ public class BossEnemyPatternSystem : MonoBehaviour
     {
         Debug.Log("풍월 일섬 진행");
 
-        _enemySystem.Boss_Image.gameObject.SetActive(false);
-        yield return new WaitForSeconds(0.2f);
-        _enemySystem.transform.position = _enemyAttackSystem.TargetPlayer.transform.position;
-        _enemySystem.Boss_Image.gameObject.SetActive(true);
+        SpriteRenderer bossSprite = _enemySystem.Boss_Image.GetComponent<SpriteRenderer>();
+
+        Vector3 startPos = _enemyAttackSystem.enemyStartPosition;
+        Vector3 targetPos = _enemyAttackSystem.TargetPlayer.transform.position + new Vector3(1.2f, 0f, 0f);
+        Vector3 originalScale = new Vector3(0.4f, 0.4f, 1f);
+
+        yield return bossSprite.DOFade(0f, 0.15f).WaitForCompletion();
+
+        _enemySystem.transform.position = targetPos;
+        _enemySystem.transform.localScale = originalScale * 1.2f;
+
+        yield return bossSprite.DOFade(1f, 0.15f).WaitForCompletion();
+        yield return _enemySystem.transform.DOScale(originalScale, 0.12f).WaitForCompletion();
+
         Debug.Log("순간 이동 완료");
+
         yield return new WaitForSeconds(0.1f);
+
         _enemySystem.AttackEffect.gameObject.SetActive(true);
+
         int currentDamage = _enemySystem.Enemy_Damage + WonnimPattern02;
+
         _playerSystem.HitEffect.gameObject.SetActive(true);
+
         TakeDamage(currentDamage);
-       yield return new WaitForSeconds(1f);
-       if(_playerSystem != null) _playerSystem.HitEffect.gameObject.SetActive(false);
-        _enemySystem.AttackEffect.gameObject.SetActive(false);
-        _enemySystem.transform.position = _enemyAttackSystem.enemyStartPosition;
+
         yield return new WaitForSeconds(1f);
+
+        if (_playerSystem != null)
+            _playerSystem.HitEffect.gameObject.SetActive(false);
+
+        _enemySystem.AttackEffect.gameObject.SetActive(false);
+
+        yield return bossSprite.DOFade(0f, 0.12f).WaitForCompletion();
+
+        _enemySystem.transform.position = startPos;
+
+        yield return bossSprite.DOFade(1f, 0.12f).WaitForCompletion();
+
+        yield return new WaitForSeconds(0.3f);
+
         _enemyBattleSystem._battleManager.EndEnemyTurn();
-        
     }
 
     public IEnumerator Wonnim03()   // 4번 배기 공격
@@ -114,8 +141,15 @@ public class BossEnemyPatternSystem : MonoBehaviour
 
     public IEnumerator Wonnim04()   // 궁극기
     {
-        Debug.Log("전용 영상 실행");
-        yield return new WaitForSeconds(8f);
+        _bossUISystem.Skill04Image.gameObject.SetActive(true);
+        _bossUISystem.Skill04Image.color = new Color(_bossUISystem.Skill04Image.color.r, _bossUISystem.Skill04Image.color.g, _bossUISystem.Skill04Image.color.b,0f);
+
+        yield return _bossUISystem.Skill04Image.DOFade(1f, 0.5f).WaitForCompletion();
+        yield return new WaitForSeconds(1f);
+        yield return _bossUISystem.Skill04Image.DOFade(0f, 0.5f).WaitForCompletion();
+
+        _bossUISystem.Skill04Image.gameObject.SetActive(false);
+
         int currentDamage = _enemySystem.Enemy_Damage + WonnimPattern04;
         _playerSystem.HitEffect.gameObject.SetActive(true);
         TakeDamage(currentDamage);
