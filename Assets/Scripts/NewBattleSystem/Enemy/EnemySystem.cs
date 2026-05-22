@@ -31,7 +31,8 @@ public class EnemySystem : MonoBehaviour
     [Header("보스 전용")]
     public List<string> bossPatternNameLIst = new List<string>();
     public GameObject Boss_Image;
-
+    public GameObject Skill04Effect;
+    
 
     private void Awake()
     {
@@ -48,6 +49,7 @@ public class EnemySystem : MonoBehaviour
     {
         if (HitEffect != null) HitEffect.gameObject.SetActive(false);
         if (AttackEffect != null) AttackEffect.gameObject.SetActive(false);
+        if (Skill04Effect != null) Skill04Effect.gameObject.SetActive(false);
     }
 
     private void Update()

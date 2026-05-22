@@ -150,15 +150,15 @@ public class BossEnemyPatternSystem : MonoBehaviour
 
         _bossUISystem.Skill04Image.gameObject.SetActive(false);
 
+        
         int currentDamage = _enemySystem.Enemy_Damage + WonnimPattern04;
+        _enemySystem.Skill04Effect.gameObject.SetActive(true);
         _playerSystem.HitEffect.gameObject.SetActive(true);
         TakeDamage(currentDamage);
-
-        yield return new WaitForSeconds(1f);
-        _playerSystem.HitEffect.gameObject.SetActive(false);
-
         Debug.Log("월하 집행 진행");
         yield return new WaitForSeconds(1f);
+        _playerSystem.HitEffect.gameObject.SetActive(false);
+        _enemySystem.Skill04Effect.gameObject.SetActive(false);
         _enemyBattleSystem._battleManager.EndEnemyTurn();
     }
 
