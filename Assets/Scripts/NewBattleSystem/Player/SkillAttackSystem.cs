@@ -39,7 +39,7 @@ public class SkillAttackSystem : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
         _playerBattleSystem.isTarget = false;
-        _playerAttackSystem.currentSkill04Stemina += _playerBattleSystem._playerAttackSystem.Skill03Stemina;
+        _playerAttackSystem.currentSkill04Stemina += _playerAttackSystem.Skill03Stemina;
         _playerBattleSystem.isAttack = false;
         _playerBattleSystem._battleManager.EndPlayerTurn();
     }
@@ -51,7 +51,7 @@ public class SkillAttackSystem : MonoBehaviour
         yield return new WaitForSeconds(1f);
         _playerBattleSystem.isTarget = false;
         _playerBattleSystem.isAttack = false;
-        _playerAttackSystem.currentSkill04Stemina = _playerBattleSystem._playerAttackSystem.currentSkill04Stemina = 0;
+        _playerAttackSystem.currentSkill04Stemina = _playerAttackSystem.currentSkill04Stemina = 0;
         _playerBattleSystem._battleManager.EndPlayerTurn();
     }
 }

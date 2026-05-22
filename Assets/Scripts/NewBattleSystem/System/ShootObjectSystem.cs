@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class ShootObjectSystem : MonoBehaviour
@@ -21,17 +22,26 @@ public class ShootObjectSystem : MonoBehaviour
 
     private void Update()
     {
-        Vector3 Derection = (_playerBattleSystem._playerAttackSystem.TargetEnemy.transform.position - transform.position).normalized;
-        Vector3 Move = Derection * Soot_Speed * Time.deltaTime;
-        transform.position += Move;
+        if(_playerBattleSystem._playerAttackSystem.TargetEnemy != null)
+        {
+            Vector3 Derection = (_playerBattleSystem._playerAttackSystem.TargetEnemy.transform.position - transform.position).normalized;
+            Vector3 Move = Derection * Soot_Speed * Time.deltaTime;
+            transform.position += Move;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log("충돌");
-            Destroy(gameObject);
+            if (Shoot_Name == "황소") StartCoroutine(bull());
+            else Destroy(gameObject);
         }
+    }
+
+    IEnumerator bull()
+    {
+        yield return new WaitForSeconds(0.2f);
+        Destroy(gameObject);
     }
 }
