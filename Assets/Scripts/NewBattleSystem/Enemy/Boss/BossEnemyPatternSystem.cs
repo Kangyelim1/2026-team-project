@@ -186,7 +186,7 @@ public class BossEnemyPatternSystem : MonoBehaviour
     {
         yield return new WaitForSeconds(1.2f);
         Destroy(_playerSystem.gameObject);
-        _battleManager.spawnedPlayer = null;
+        StartCoroutine(_battleManager.EndGame(false));
     }
 }
 
