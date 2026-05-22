@@ -1,6 +1,6 @@
+using DG.Tweening;
 using System.Collections;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class BossEnemyPatternSystem : MonoBehaviour
 {
@@ -10,6 +10,7 @@ public class BossEnemyPatternSystem : MonoBehaviour
     public EnemySystem _enemySystem;
     public PlayerSystem _playerSystem;
     public NewBattleManager _battleManager;
+    public ScreenHitEffect _screenHitEffect;
 
     [Header("원님 패턴 공격력")]
     [Tooltip("순간 이동후 강공격(풍월 일섬)")]
@@ -23,6 +24,7 @@ public class BossEnemyPatternSystem : MonoBehaviour
     {
         _enemyBattleSystem = Object.FindAnyObjectByType<EnemyBattleSystem>();
         _battleManager = Object.FindAnyObjectByType<NewBattleManager>();
+        _screenHitEffect = Object.FindAnyObjectByType<ScreenHitEffect>();
     }
 
     private void Update()
@@ -130,6 +132,10 @@ public class BossEnemyPatternSystem : MonoBehaviour
         if(_playerSystem.player_CurrentHelth > 0)
         {
             Debug.Log(Damage);
+            _playerSystem.transform.DOShakePosition(0.25f, 0.2f, 20, 90);
+            _battleManager.MainCamera.transform.DOShakePosition(0.25f, 0.2f, 20, 90);
+            _playerSystem.Hit();
+            _screenHitEffect.PlayerHitFlash();
             _playerSystem.player_CurrentHelth -= Damage;
             _playerSystem.player_CurrentHelth = Mathf.Clamp(_playerSystem.player_CurrentHelth, 0, Damage);
             _battleManager.CreateDamageText(_playerSystem.transform.position, Damage, AttackType.Hit);

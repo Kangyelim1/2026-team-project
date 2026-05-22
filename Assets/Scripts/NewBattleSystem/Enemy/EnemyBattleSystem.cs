@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 
@@ -26,6 +27,9 @@ public class EnemyBattleSystem : MonoBehaviour
             {
                 int currentDamage = shoot.Soot_Damage + _battleManager._playerBattleSystem._playerSystem.player_Damage;
                 _enemyAttackSystem.enemySystem.Enemy_CurrentHelth -= currentDamage;
+                _enemyAttackSystem.transform.DOShakePosition(0.25f, 0.2f, 20, 90);
+                _battleManager.MainCamera.DOShakePosition(0.25f, 0.2f, 20, 90);
+                _enemyAttackSystem.enemySystem.Hit();
                 _enemyAttackSystem.enemySystem.Enemy_CurrentHelth = Mathf.Clamp(_enemyAttackSystem.enemySystem.Enemy_CurrentHelth, 0, _enemyAttackSystem.enemySystem.Enemy_MaxHelth);
                 _battleManager.CreateDamageText(_enemyAttackSystem.transform.position, currentDamage, AttackType.Attack);
 

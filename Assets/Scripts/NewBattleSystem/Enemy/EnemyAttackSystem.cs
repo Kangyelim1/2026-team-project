@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 
@@ -13,6 +14,7 @@ public class EnemyAttackSystem : MonoBehaviour
     public NewBattleManager _battleManager;
     public EnemyBattleSystem _enemyBattleSystem;
     public QuestSystem _questSystem;
+    public ScreenHitEffect _screenHitEffect;
 
     [Header("보스 전용")]
     public BossEnemyPatternSystem _bossEnemyPatternSystem;
@@ -23,7 +25,9 @@ public class EnemyAttackSystem : MonoBehaviour
         _battleManager = Object.FindAnyObjectByType<NewBattleManager>();
         _enemyBattleSystem = Object.FindAnyObjectByType<EnemyBattleSystem>();
         _questSystem = Object.FindAnyObjectByType<QuestSystem>();
- 
+        _screenHitEffect = Object.FindAnyObjectByType<ScreenHitEffect>();
+
+
         StartCoroutine(StartBattle());
 
         if(enemySystem.Enemy_Type == EnemyType.Boss)
@@ -183,6 +187,10 @@ public class EnemyAttackSystem : MonoBehaviour
         if (target.player_CurrentHelth > 0)
         {
             int currentDamage = enemySystem.Enemy_Damage - _battleManager._playerBattleSystem._playerSystem.player_Defense;
+            target.transform.DOShakePosition(0.25f, 0.2f, 20, 90);
+            _battleManager.MainCamera.transform.DOShakePosition(0.25f, 0.2f, 20, 90);
+            target.Hit();
+            _screenHitEffect.PlayerHitFlash();
             target.player_CurrentHelth -= currentDamage;
             target.player_CurrentHelth = Mathf.Clamp(target.player_CurrentHelth, 0, target.player_MaxHelth);
             _battleManager.CreateDamageText(target.transform.position, currentDamage, AttackType.Hit);

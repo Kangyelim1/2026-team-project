@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -62,5 +63,14 @@ public class EnemySystem : MonoBehaviour
     private void HelthUI()
     {
         enemyHelthSlider.value = Mathf.Lerp(enemyHelthSlider.value, Enemy_CurrentHelth, smoothSpeed * Time.deltaTime);
+    }
+
+    public void Hit()
+    {
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(sr.DOColor(Color.red, 0.08f));
+        seq.Append(sr.DOColor(Color.white, 0.12f));
     }
 }

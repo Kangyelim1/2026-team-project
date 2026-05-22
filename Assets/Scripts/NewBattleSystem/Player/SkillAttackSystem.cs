@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-
 public class SkillAttackSystem : MonoBehaviour
 {
     public PlayerBattleSystem _playerBattleSystem;

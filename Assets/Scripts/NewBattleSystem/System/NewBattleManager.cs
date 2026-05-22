@@ -1,6 +1,5 @@
-using Microsoft.Unity.VisualStudio.Editor;
+using DG.Tweening;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public enum AttackType
@@ -37,10 +36,12 @@ public class NewBattleManager : MonoBehaviour
     public GameObject fadeImage;
     public FadeManager fadeManager;
 
+    public Camera MainCamera;
+
     public GameObject damageTextPrefab;
     public Canvas battleCanvas;
     public AttackType attackType;
-
+    
 
 
     private void Start()

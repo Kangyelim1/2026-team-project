@@ -1,6 +1,7 @@
+using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class PlayerSystem : MonoBehaviour
 {
@@ -73,5 +74,14 @@ public class PlayerSystem : MonoBehaviour
     private void HelthUI()
     {
         playerHelthSlider.value = Mathf.Lerp(player_CurrentHelth, player_CurrentHelth, smoothSpeed * Time.deltaTime);
+    }
+
+    public void Hit()
+    {
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(sr.DOColor(Color.red, 0.08f));
+        seq.Append(sr.DOColor(Color.white, 0.12f));
     }
 }
