@@ -114,7 +114,7 @@ public class BossEnemyPatternSystem : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             _enemySystem.AttackEffect.gameObject.SetActive(true);
-            _playerSystem.HitEffect.gameObject.SetActive(true);
+            if(_playerSystem != null)_playerSystem.HitEffect.gameObject.SetActive(true);
             TakeDamage(currentDamage);
             yield return new WaitForSeconds(0.1f);
             if (_playerSystem != null) _playerSystem.HitEffect.gameObject.SetActive(false);
@@ -153,11 +153,11 @@ public class BossEnemyPatternSystem : MonoBehaviour
         
         int currentDamage = _enemySystem.Enemy_Damage + WonnimPattern04;
         _enemySystem.Skill04Effect.gameObject.SetActive(true);
-        _playerSystem.HitEffect.gameObject.SetActive(true);
+        if(_playerSystem != null)_playerSystem.HitEffect.gameObject.SetActive(true);
         TakeDamage(currentDamage);
         Debug.Log("월하 집행 진행");
         yield return new WaitForSeconds(1f);
-        _playerSystem.HitEffect.gameObject.SetActive(false);
+        if (_playerSystem != null)_playerSystem.HitEffect.gameObject.SetActive(false);
         _enemySystem.Skill04Effect.gameObject.SetActive(false);
         _enemyBattleSystem._battleManager.EndEnemyTurn();
     }
@@ -184,7 +184,7 @@ public class BossEnemyPatternSystem : MonoBehaviour
 
     IEnumerator DiePlayer()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.2f);
         Destroy(_playerSystem.gameObject);
         _battleManager.spawnedPlayer = null;
     }
