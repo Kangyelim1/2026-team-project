@@ -92,6 +92,7 @@ public class BossEnemyPatternSystem : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             if (_playerSystem != null) _playerSystem.HitEffect.gameObject.SetActive(false);
             _enemySystem.AttackEffect.gameObject.SetActive(false);
+            Debug.Log(currentDamage);
 
             yield return null;
         }
@@ -137,7 +138,7 @@ public class BossEnemyPatternSystem : MonoBehaviour
             _playerSystem.Hit();
             _screenHitEffect.PlayerHitFlash();
             _playerSystem.player_CurrentHelth -= Damage;
-            _playerSystem.player_CurrentHelth = Mathf.Clamp(_playerSystem.player_CurrentHelth, 0, Damage);
+            _playerSystem.player_CurrentHelth = Mathf.Clamp(_playerSystem.player_CurrentHelth, 0, _playerSystem.player_MaxHelth);
             _battleManager.CreateDamageText(_playerSystem.transform.position, Damage, AttackType.Hit);
             if (_playerSystem.player_CurrentHelth <= 0)
             {
