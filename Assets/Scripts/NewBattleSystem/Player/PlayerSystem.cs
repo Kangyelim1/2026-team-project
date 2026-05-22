@@ -32,7 +32,7 @@ public class PlayerSystem : MonoBehaviour
 
     [Header("VFX")]
     public GameObject HitEffect;
-    public GameObject HillEffect;
+    public GameObject DefanseEffect;
 
     private void Awake()
     {
@@ -51,6 +51,12 @@ public class PlayerSystem : MonoBehaviour
         skillAttack04Type = playerSO.SkillAttackType04;
 
         player_CurrentHelth = player_MaxHelth;
+    }
+
+    private void Start()
+    {
+        if(HitEffect != null) HitEffect.gameObject.SetActive(false);
+        if (DefanseEffect != null)  DefanseEffect.gameObject.SetActive(false);
     }
 
     private void Update()

@@ -18,6 +18,7 @@ public class EnemySystem : MonoBehaviour
 
     [Header("VFX")]
     public GameObject HitEffect;
+    public GameObject AttackEffect;
 
     [Header("Helth")]
     public int Enemy_CurrentHelth;
@@ -40,6 +41,12 @@ public class EnemySystem : MonoBehaviour
         Enemy_Type = enemySO.enemyType;
         Enemy_Speed = enemySO.EnemySpeed;
         Enemy_CurrentHelth = Enemy_MaxHelth;
+    }
+
+    private void Start()
+    {
+        if (HitEffect != null) HitEffect.gameObject.SetActive(false);
+        if (AttackEffect != null) AttackEffect.gameObject.SetActive(false);
     }
 
     private void Update()
