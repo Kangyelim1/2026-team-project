@@ -5236,6 +5236,7 @@ MonoBehaviour:
   HelthText: {fileID: 7142010569795634538}
   bossPatternNameLIst: []
   Boss_Image: {fileID: 0}
+  Skill04Effect: {fileID: 0}
 --- !u!114 &931473611829387974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5255,6 +5256,7 @@ MonoBehaviour:
   _battleManager: {fileID: 0}
   _enemyBattleSystem: {fileID: 0}
   _questSystem: {fileID: 0}
+  _screenHitEffect: {fileID: 0}
   _bossEnemyPatternSystem: {fileID: 0}
 --- !u!50 &7088183035826900145
 Rigidbody2D:
@@ -25196,8 +25198,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281545523
-  m_fontColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -25220,7 +25222,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535

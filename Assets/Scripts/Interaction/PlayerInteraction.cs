@@ -2,9 +2,8 @@ using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
 {
-    private Interactable currentInteractable;
-
-    private EnemyInteractable currentEnemy;
+    public Interactable currentInteractable;
+    public EnemyInteractable currentEnemy;
     public QuestSystem _questSystem;
 
 

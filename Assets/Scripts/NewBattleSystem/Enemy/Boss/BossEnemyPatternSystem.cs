@@ -115,6 +115,7 @@ public class BossEnemyPatternSystem : MonoBehaviour
         {
             _enemySystem.AttackEffect.gameObject.SetActive(true);
             if(_playerSystem != null)_playerSystem.HitEffect.gameObject.SetActive(true);
+
             TakeDamage(currentDamage);
             yield return new WaitForSeconds(0.1f);
             if (_playerSystem != null) _playerSystem.HitEffect.gameObject.SetActive(false);

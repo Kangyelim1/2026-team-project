@@ -40,6 +40,9 @@ public class EnemyBattleSystem : MonoBehaviour
                 {
                     Destroy( _enemyAttackSystem.enemySystem.gameObject);
                     StartCoroutine(_battleManager.EndGame(true));
+
+                    if (_questSystem.currentQuestEnemyNPC == _enemyAttackSystem.enemySystem.Enemy_Name)
+                        _questSystem.currnet_EnmeyDieCount++;  
                 }
             }
         }

@@ -58,6 +58,8 @@ public class QuestSystem : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        _playerInteraction = FindAnyObjectByType<PlayerInteraction>();
     }
 
     private void Start()
@@ -66,30 +68,30 @@ public class QuestSystem : MonoBehaviour
 
 
         StartQuest();
+        // PlayerEXPO 끝난후 삭제 예정
+        if (questData == null) return;
 
-        //if (questData == null) return;
+        if (playerQuestID == 0 && questData.quests.Count > 0)
+        {
+            // 신규 플레이
+            QuestData firstQuest = questData.quests[0];
+            ShowQuest(firstQuest);
 
-        //if (playerQuestID == 0 && questData.quests.Count > 0)
-        //{
-        //    // 신규 플레이
-        //    QuestData firstQuest = questData.quests[0];
-        //    ShowQuest(firstQuest);
-
-        //}
-        //else
-        //{
-        //    QuestData quest = questData.quests.Find(q => q.Quest_ID == playerQuestID);
-        //    if (quest != null)
-        //    {
-        //        currentQuestIndex = lastQuestIndex;
-        //        ShowQuest(quest);
-        //    }
-        //}
-        //Debug.Log($"현재 플레이어 퀘스트 ID: {playerQuestID}, 이름: {playerQuestTitle}, 진행될 스토리 ID: {playerQuestStoryID}," +
-        //            $"처치할 몬스터: {currentQuestEnemyNPC}, 처치할 몬스터 수: {currentQuestEnemyCount}");
-        //storySystem.QuestStory(playerQuestStoryID);
-        //finishQuest = false;
-        ////questText.text = playerquestName;
+        }
+        else
+        {
+            QuestData quest = questData.quests.Find(q => q.Quest_ID == playerQuestID);
+            if (quest != null)
+            {
+                currentQuestIndex = lastQuestIndex;
+                ShowQuest(quest);
+            }
+        }
+        Debug.Log($"현재 플레이어 퀘스트 ID: {playerQuestID}, 이름: {playerQuestTitle}, 진행될 스토리 ID: {playerQuestStoryID}," +
+                    $"처치할 몬스터: {currentQuestEnemyNPC}, 처치할 몬스터 수: {currentQuestEnemyCount}");
+        storySystem.QuestStory(playerQuestStoryID);
+        finishQuest = false;
+        //questText.text = playerquestName;
     }
 
 
@@ -134,6 +136,7 @@ public class QuestSystem : MonoBehaviour
                 break;
 
             case "move":
+                if (_playerInteraction.currentInteractable.name == currentRewards || _playerInteraction.currentEnemy.name == currentEnemy)
                 SuccessQuest();
                 break;
 

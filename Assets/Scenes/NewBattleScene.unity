@@ -757,7 +757,7 @@ MonoBehaviour:
   _screenHitEffect: {fileID: 0}
   _bossUISystem: {fileID: 0}
   WonnimPattern02: 100
-  WonnimPattern03: 30
+  WonnimPattern03: 20
   WonnimPattern04: 500
 --- !u!4 &179033724
 Transform:
@@ -5015,6 +5015,7 @@ MonoBehaviour:
   - {fileID: 1043202135786330120, guid: e43a65e8833ec504cb95db6ca79be8e2, type: 3}
   - {fileID: 1043202135786330120, guid: 7cb72cfcec1c7a0439f31f2a573ed25b, type: 3}
   - {fileID: 1043202135786330120, guid: 796a08f5dd0fb1b47a82aa075832db2a, type: 3}
+  - {fileID: 1043202135786330120, guid: 324e78044be11904790aa4b572321a98, type: 3}
   Players: []
   _questSystem: {fileID: 0}
   _battleManager: {fileID: 0}
