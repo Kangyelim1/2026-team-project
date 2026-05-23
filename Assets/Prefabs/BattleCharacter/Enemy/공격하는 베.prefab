@@ -5065,7 +5065,7 @@ GameObject:
   - component: {fileID: 931473611829387974}
   - component: {fileID: 7088183035826900145}
   m_Layer: 0
-  m_Name: "\uBC30"
+  m_Name: "\uACF5\uACA9\uD558\uB294 \uBCA0"
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5220,7 +5220,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySystem
   enemySO: {fileID: 11400000, guid: a943f1022b7129043957025d39bcf6a5, type: 2}
-  Enemy_Name: "\uBC30"
+  Enemy_Name: "\uACF5\uACA9\uD558\uB294 \uBCA0"
   Enemy_Levle: 0
   Enemy_MaxHelth: 0
   Enemy_Damage: 0
@@ -5257,6 +5257,7 @@ MonoBehaviour:
   _enemyBattleSystem: {fileID: 0}
   _questSystem: {fileID: 0}
   _screenHitEffect: {fileID: 0}
+  _audioSystem: {fileID: 0}
   _bossEnemyPatternSystem: {fileID: 0}
 --- !u!50 &7088183035826900145
 Rigidbody2D:

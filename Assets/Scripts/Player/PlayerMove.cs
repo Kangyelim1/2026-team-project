@@ -8,15 +8,21 @@ public class PlayerMove : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 movement;
 
+    public QuestSystem questSystem;
+
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         worldPlayerAniamtor = GetComponent<Animator>();
+
+        if(questSystem == null) questSystem = FindAnyObjectByType<QuestSystem>();
     }
 
     void Update()
     {
+        if (questSystem.storySystem.isStory) return;
+
         float moveX = Input.GetAxisRaw("Horizontal"); 
         float moveY = Input.GetAxisRaw("Vertical");   
 

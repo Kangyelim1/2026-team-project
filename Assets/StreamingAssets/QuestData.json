@@ -1,4 +1,4 @@
-[
+ [
     {
       "Quest_ID": 10001,
       "Quest_Title": "콩지 팥쥐",
@@ -53,19 +53,6 @@
     },
     {
       "Quest_ID": 10005,
-      "Quest_Title": null,
-      "Quest_Description": null,
-      "Quest_Type": "story",
-      "Quest_StoryID": 10009,
-      "Quest_EnemyNPC": null,
-      "Location_Asset": null,
-      "BGM_Asset": null,
-      "Qeust_EnemyCount": 0,
-      "Rewards": null,
-      "Destination": null
-    },
-    {
-      "Quest_ID": 10006,
       "Quest_Title": "팥쥐 찾기",
       "Quest_Description": "일을 마치고 마당에 가니 팥쥐가 말을 걸어온다.",
       "Quest_Type": "move",
@@ -78,8 +65,8 @@
       "Destination": "팥쥐"
     },
     {
-      "Quest_ID": 10007,
-      "Quest_Title": null,
+      "Quest_ID": 10006,
+      "Quest_Title": "팥쥐와 대화",
       "Quest_Description": null,
       "Quest_Type": "story",
       "Quest_StoryID": 10013,
@@ -91,7 +78,7 @@
       "Destination": null
     },
     {
-      "Quest_ID": 10008,
+      "Quest_ID": 10007,
       "Quest_Title": "팥쥐의 괴롭힘",
       "Quest_Description": "팥쥐가 노골적으로 시비를 걸어온다.",
       "Quest_Type": "Battle",
@@ -104,7 +91,7 @@
       "Destination": null
     },
     {
-      "Quest_ID": 10009,
+      "Quest_ID": 10008,
       "Quest_Title": "밑 빠진 독",
       "Quest_Description": "아무리 물을 부어도 채워지지 않는 독.",
       "Quest_Type": "Battle",
@@ -117,7 +104,7 @@
       "Destination": null
     },
     {
-      "Quest_ID": 10010,
+      "Quest_ID": 10009,
       "Quest_Title": "계모 찾기",
       "Quest_Description": "팥쥐와의 싸움을 끝내고, 계모가 있는 곳으로 발걸음을 옮긴다.",
       "Quest_Type": "move",
@@ -130,8 +117,8 @@
       "Destination": "계모"
     },
     {
-      "Quest_ID": 10011,
-      "Quest_Title": null,
+      "Quest_ID": 10010,
+      "Quest_Title": "계모와 대화",
       "Quest_Description": null,
       "Quest_Type": "story",
       "Quest_StoryID": 10020,
@@ -143,7 +130,7 @@
       "Destination": null
     },
     {
-      "Quest_ID": 10012,
+      "Quest_ID": 10011,
       "Quest_Title": "계모의 분노",
       "Quest_Description": "계모가 폭발하여 직접 공격해온다.",
       "Quest_Type": "Battle",
@@ -156,8 +143,8 @@
       "Destination": null
     },
     {
-      "Quest_ID": 10013,
-      "Quest_Title": null,
+      "Quest_ID": 10012,
+      "Quest_Title": "원님과 대화",
       "Quest_Description": null,
       "Quest_Type": "story",
       "Quest_StoryID": 10026,
@@ -169,7 +156,7 @@
       "Destination": null
     },
     {
-      "Quest_ID": 10014,
+      "Quest_ID": 10013,
       "Quest_Title": "원님 찿기",
       "Quest_Description": "모든 억울함을 끝맺기 위해, 원님이 있는 곳으로 향한다.",
       "Quest_Type": "move",
@@ -182,7 +169,7 @@
       "Destination": "원님"
     },
     {
-      "Quest_ID": 10015,
+      "Quest_ID": 10014,
       "Quest_Title": "원님의 심판",
       "Quest_Description": "마을의 원님이 찾아와 모든 것을 심판하려 한다.",
       "Quest_Type": "Battle",
@@ -195,8 +182,8 @@
       "Destination": null
     },
     {
-      "Quest_ID": 10016,
-      "Quest_Title": null,
+      "Quest_ID": 10015,
+      "Quest_Title": "내면의 콩지와 대화",
       "Quest_Description": null,
       "Quest_Type": "story",
       "Quest_StoryID": 10033,
@@ -208,7 +195,7 @@
       "Destination": null
     },
     {
-      "Quest_ID": 10017,
+      "Quest_ID": 10016,
       "Quest_Title": "내면의 콩지와 싸우기",
       "Quest_Description": "콩쥐의 억눌린 분노가 형상화되었다.",
       "Quest_Type": "Battle",
@@ -221,7 +208,7 @@
       "Destination": null
     },
     {
-      "Quest_ID": 10018,
+      "Quest_ID": 10017,
       "Quest_Title": null,
       "Quest_Description": null,
       "Quest_Type": "story",
@@ -234,7 +221,7 @@
       "Destination": null
     },
     {
-      "Quest_ID": 10019,
+      "Quest_ID": 10018,
       "Quest_Title": "1장 종료",
       "Quest_Description": "1장 종료",
       "Quest_Type": "finish",

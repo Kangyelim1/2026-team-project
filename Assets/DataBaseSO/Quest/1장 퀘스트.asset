@@ -69,19 +69,6 @@ MonoBehaviour:
     rewardIcon1: {fileID: 0}
     rewardIcon2: {fileID: 0}
   - Quest_ID: 10005
-    Quest_Title: 
-    Quest_Description: 
-    Quest_Type: story
-    Quest_StoryID: 10009
-    Quest_EnemyNPC: 
-    Location_Asset: 
-    BGM_Asset: 
-    Qeust_EnemyCount: 0
-    Rewards: 
-    Destination: 
-    rewardIcon1: {fileID: 0}
-    rewardIcon2: {fileID: 0}
-  - Quest_ID: 10006
     Quest_Title: "\uD325\uC950 \uCC3E\uAE30"
     Quest_Description: "\uC77C\uC744 \uB9C8\uCE58\uACE0 \uB9C8\uB2F9\uC5D0 \uAC00\uB2C8
       \uD325\uC950\uAC00 \uB9D0\uC744 \uAC78\uC5B4\uC628\uB2E4."
@@ -95,8 +82,8 @@ MonoBehaviour:
     Destination: "\uD325\uC950"
     rewardIcon1: {fileID: 0}
     rewardIcon2: {fileID: 0}
-  - Quest_ID: 10007
-    Quest_Title: 
+  - Quest_ID: 10006
+    Quest_Title: "\uD325\uC950\uC640 \uB300\uD654"
     Quest_Description: 
     Quest_Type: story
     Quest_StoryID: 10013
@@ -108,7 +95,7 @@ MonoBehaviour:
     Destination: 
     rewardIcon1: {fileID: 0}
     rewardIcon2: {fileID: 0}
-  - Quest_ID: 10008
+  - Quest_ID: 10007
     Quest_Title: "\uD325\uC950\uC758 \uAD34\uB86D\uD798"
     Quest_Description: "\uD325\uC950\uAC00 \uB178\uACE8\uC801\uC73C\uB85C \uC2DC\uBE44\uB97C
       \uAC78\uC5B4\uC628\uB2E4."
@@ -122,7 +109,7 @@ MonoBehaviour:
     Destination: 
     rewardIcon1: {fileID: 0}
     rewardIcon2: {fileID: 0}
-  - Quest_ID: 10009
+  - Quest_ID: 10008
     Quest_Title: "\uBC11 \uBE60\uC9C4 \uB3C5"
     Quest_Description: "\uC544\uBB34\uB9AC \uBB3C\uC744 \uBD80\uC5B4\uB3C4 \uCC44\uC6CC\uC9C0\uC9C0
       \uC54A\uB294 \uB3C5."
@@ -136,7 +123,7 @@ MonoBehaviour:
     Destination: 
     rewardIcon1: {fileID: 0}
     rewardIcon2: {fileID: 0}
-  - Quest_ID: 10010
+  - Quest_ID: 10009
     Quest_Title: "\uACC4\uBAA8 \uCC3E\uAE30"
     Quest_Description: "\uD325\uC950\uC640\uC758 \uC2F8\uC6C0\uC744 \uB05D\uB0B4\uACE0,
       \uACC4\uBAA8\uAC00 \uC788\uB294 \uACF3\uC73C\uB85C \uBC1C\uAC78\uC74C\uC744
@@ -151,8 +138,8 @@ MonoBehaviour:
     Destination: "\uACC4\uBAA8"
     rewardIcon1: {fileID: 0}
     rewardIcon2: {fileID: 0}
-  - Quest_ID: 10011
-    Quest_Title: 
+  - Quest_ID: 10010
+    Quest_Title: "\uACC4\uBAA8\uC640 \uB300\uD654"
     Quest_Description: 
     Quest_Type: story
     Quest_StoryID: 10020
@@ -164,7 +151,7 @@ MonoBehaviour:
     Destination: 
     rewardIcon1: {fileID: 0}
     rewardIcon2: {fileID: 0}
-  - Quest_ID: 10012
+  - Quest_ID: 10011
     Quest_Title: "\uACC4\uBAA8\uC758 \uBD84\uB178"
     Quest_Description: "\uACC4\uBAA8\uAC00 \uD3ED\uBC1C\uD558\uC5EC \uC9C1\uC811
       \uACF5\uACA9\uD574\uC628\uB2E4."
@@ -178,8 +165,8 @@ MonoBehaviour:
     Destination: 
     rewardIcon1: {fileID: 0}
     rewardIcon2: {fileID: 0}
-  - Quest_ID: 10013
-    Quest_Title: 
+  - Quest_ID: 10012
+    Quest_Title: "\uC6D0\uB2D8\uACFC \uB300\uD654"
     Quest_Description: 
     Quest_Type: story
     Quest_StoryID: 10026
@@ -191,7 +178,7 @@ MonoBehaviour:
     Destination: 
     rewardIcon1: {fileID: 0}
     rewardIcon2: {fileID: 0}
-  - Quest_ID: 10014
+  - Quest_ID: 10013
     Quest_Title: "\uC6D0\uB2D8 \uCC3F\uAE30"
     Quest_Description: "\uBAA8\uB4E0 \uC5B5\uC6B8\uD568\uC744 \uB05D\uB9FA\uAE30
       \uC704\uD574, \uC6D0\uB2D8\uC774 \uC788\uB294 \uACF3\uC73C\uB85C \uD5A5\uD55C\uB2E4."
@@ -205,7 +192,7 @@ MonoBehaviour:
     Destination: "\uC6D0\uB2D8"
     rewardIcon1: {fileID: 0}
     rewardIcon2: {fileID: 0}
-  - Quest_ID: 10015
+  - Quest_ID: 10014
     Quest_Title: "\uC6D0\uB2D8\uC758 \uC2EC\uD310"
     Quest_Description: "\uB9C8\uC744\uC758 \uC6D0\uB2D8\uC774 \uCC3E\uC544\uC640
       \uBAA8\uB4E0 \uAC83\uC744 \uC2EC\uD310\uD558\uB824 \uD55C\uB2E4."
@@ -219,8 +206,8 @@ MonoBehaviour:
     Destination: 
     rewardIcon1: {fileID: 0}
     rewardIcon2: {fileID: 0}
-  - Quest_ID: 10016
-    Quest_Title: 
+  - Quest_ID: 10015
+    Quest_Title: "\uB0B4\uBA74\uC758 \uCF69\uC9C0\uC640 \uB300\uD654"
     Quest_Description: 
     Quest_Type: story
     Quest_StoryID: 10033
@@ -232,7 +219,7 @@ MonoBehaviour:
     Destination: 
     rewardIcon1: {fileID: 0}
     rewardIcon2: {fileID: 0}
-  - Quest_ID: 10017
+  - Quest_ID: 10016
     Quest_Title: "\uB0B4\uBA74\uC758 \uCF69\uC9C0\uC640 \uC2F8\uC6B0\uAE30"
     Quest_Description: "\uCF69\uC950\uC758 \uC5B5\uB20C\uB9B0 \uBD84\uB178\uAC00
       \uD615\uC0C1\uD654\uB418\uC5C8\uB2E4."
@@ -246,7 +233,7 @@ MonoBehaviour:
     Destination: 
     rewardIcon1: {fileID: 0}
     rewardIcon2: {fileID: 0}
-  - Quest_ID: 10018
+  - Quest_ID: 10017
     Quest_Title: 
     Quest_Description: 
     Quest_Type: story
@@ -259,7 +246,7 @@ MonoBehaviour:
     Destination: 
     rewardIcon1: {fileID: 0}
     rewardIcon2: {fileID: 0}
-  - Quest_ID: 10019
+  - Quest_ID: 10018
     Quest_Title: "1\uC7A5 \uC885\uB8CC"
     Quest_Description: "1\uC7A5 \uC885\uB8CC"
     Quest_Type: finish

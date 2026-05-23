@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using TMPro;
 
 public class PlayerInteraction : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class PlayerInteraction : MonoBehaviour
     public CanvasGroup interactionCanvasGroup;
     public string QuestTargetEnemy;
     private Coroutine fadeCoroutine;
+
+    public GameObject FunctionUI;
+    public TextMeshProUGUI FunctionText;
 
     void Start()
     {
@@ -24,7 +28,7 @@ public class PlayerInteraction : MonoBehaviour
             currentInteractable.Interact();
         }
 
-        if(Input.GetMouseButtonDown(0) && currentEnemy != null)
+        if(Input.GetMouseButtonDown(0) && currentEnemy != null && !_questSystem.storySystem.isStory)
         {
             _questSystem.currentEnemy = currentEnemy.enemyName;
             currentEnemy.OnAttacked(transform.position);
@@ -42,6 +46,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             currentInteractable = interactable;
             Debug.Log("상호작용 가능 대상 진입");
+
             interactionUI.SetActive(true);
             interactionCanvasGroup.alpha = 1f;
             if(fadeCoroutine != null)
@@ -66,7 +71,15 @@ public class PlayerInteraction : MonoBehaviour
             }
             
             Debug.Log($"[PlayerInteraction] 공격 가능한 적 감지: {enemy.enemyName}");
-          
+            if (!_questSystem.storySystem.isStory)
+            {
+                FunctionText.text = $"{enemy.enemyName}과 싸우기 [마우스 좌클릭]";
+                FunctionUI.gameObject.SetActive(true);
+            }
+            else
+            {
+                FunctionUI.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -79,6 +92,7 @@ public class PlayerInteraction : MonoBehaviour
             currentInteractable = null;
             Debug.Log("상호작용 대상 벗어남");
             interactionUI.SetActive(false);
+
         }
 
         EnemyInteractable enemy = collision.GetComponent<EnemyInteractable>();
@@ -87,6 +101,7 @@ public class PlayerInteraction : MonoBehaviour
             currentEnemy = null;
             Debug.Log("[PlayerInteraction] 적 범위 이탈");
         }
+        FunctionUI.gameObject.SetActive(false);
     }
     IEnumerator FadeInteractionUI()
     {
