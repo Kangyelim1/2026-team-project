@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00cf296dab446b842acd66f5d1e7bcbc, type: 3}
   m_Name: "\uB0B4\uBA74\uC758 \uCF69\uC950"
   m_EditorClassIdentifier: Assembly-CSharp::EnemySO
-  EnemyName: 
-  EnemyLevel: 0
-  EnemyMaxHelth: 0
-  EnemyDamage: 0
+  EnemyName: "\uB0B4\uBA74\uC758 \uCF69\uC950"
+  EnemyLevel: 1
+  EnemyMaxHelth: 10000
+  EnemyDamage: 200
   enemyAttackType: 0
-  enemyType: 1
-  EnemySpeed: 0
+  enemyType: 0
+  EnemySpeed: 20

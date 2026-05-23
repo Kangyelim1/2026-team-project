@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSO
   playerName: "\uCF69\uC9C0"
   playerMaxHelth: 10000
-  playerDamage: 50
+  playerDamage: 100
   playerSpeed: 20
   Skill01Image: {fileID: 21300000, guid: 80ebaa38d25d9c441b53cec3a9ce0fa1, type: 3}
   Skill02Image: {fileID: 21300000, guid: f362608d60c6860489e473994d042717, type: 3}

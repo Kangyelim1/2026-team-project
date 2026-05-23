@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemySO
   EnemyName: "\uBB34\uD55C\uC758 \uBCBC"
   EnemyLevel: 1
-  EnemyMaxHelth: 800
-  EnemyDamage: 30
+  EnemyMaxHelth: 2000
+  EnemyDamage: 60
   enemyAttackType: 0
   enemyType: 0
   EnemySpeed: 20
