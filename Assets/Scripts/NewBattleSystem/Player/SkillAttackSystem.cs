@@ -6,11 +6,13 @@ public class SkillAttackSystem : MonoBehaviour
     public PlayerAttackSystem _playerAttackSystem;
     public PlayerSystem _playerSystem;
     public NewBattleManager _battleManager;
+    public AudioSystem _audioSystem;
 
     private void Start()
     {
         if (_playerBattleSystem == null) _playerBattleSystem = Object.FindAnyObjectByType<PlayerBattleSystem>();
         if (_battleManager == null) _battleManager = Object.FindAnyObjectByType<NewBattleManager>();
+        if(_audioSystem == null) _audioSystem = Object.FindAnyObjectByType<AudioSystem>();
     }
 
     private void Update()
@@ -22,6 +24,7 @@ public class SkillAttackSystem : MonoBehaviour
     public IEnumerator Toad()       // 콩지, 두꺼비
     {
         _playerSystem.player_Defense = 5;
+        _audioSystem.FinSoundEffectAudioClip("버프 효과");
         _playerSystem.DefanseEffect.gameObject.SetActive(true);
         _battleManager.CreateDamageText(transform.position, _playerSystem.player_Defense, AttackType.Defense);
         yield return new WaitForSeconds(1f);

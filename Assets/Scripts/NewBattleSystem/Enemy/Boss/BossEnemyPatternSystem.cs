@@ -12,6 +12,7 @@ public class BossEnemyPatternSystem : MonoBehaviour
     public NewBattleManager _battleManager;
     public ScreenHitEffect _screenHitEffect;
     public BossUISystem _bossUISystem;
+    public AudioSystem _audioSystem;
 
     [Header("원님 패턴 공격력")]
     [Tooltip("순간 이동후 강공격(풍월 일섬)")]
@@ -27,6 +28,7 @@ public class BossEnemyPatternSystem : MonoBehaviour
         _battleManager = Object.FindAnyObjectByType<NewBattleManager>();
         _screenHitEffect = Object.FindAnyObjectByType<ScreenHitEffect>();
         _bossUISystem = Object.FindAnyObjectByType<BossUISystem>();
+        _audioSystem = Object.FindAnyObjectByType<AudioSystem>();
     }
 
     private void Update()
@@ -39,6 +41,7 @@ public class BossEnemyPatternSystem : MonoBehaviour
     public IEnumerator Wonnim01()   // 플레이어 턴을 바로 넘김
     {
         Debug.Log("관아의 위엄 진행");
+        _audioSystem.FinSoundEffectAudioClip("관아의 위엄");
         _playerSystem.DebuffEffect.gameObject.SetActive(true);
         yield return new WaitForSeconds(1f);
         _playerSystem.DebuffEffect.gameObject.SetActive(false);
@@ -70,6 +73,7 @@ public class BossEnemyPatternSystem : MonoBehaviour
 
         yield return new WaitForSeconds(0.1f);
 
+        _audioSystem.FinSoundEffectAudioClip("원님 일반 공격");
         _enemySystem.AttackEffect.gameObject.SetActive(true);
 
         int currentDamage = _enemySystem.Enemy_Damage + WonnimPattern02;
@@ -113,6 +117,7 @@ public class BossEnemyPatternSystem : MonoBehaviour
         int currentDamage = _enemySystem.Enemy_Damage + WonnimPattern03;
         for (int i = 0; i < 4; i++)
         {
+            _audioSystem.FinSoundEffectAudioClip("원님 일반 공격");
             _enemySystem.AttackEffect.gameObject.SetActive(true);
             if(_playerSystem != null)_playerSystem.HitEffect.gameObject.SetActive(true);
 

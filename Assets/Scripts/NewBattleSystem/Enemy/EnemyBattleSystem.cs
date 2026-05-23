@@ -8,11 +8,13 @@ public class EnemyBattleSystem : MonoBehaviour
     public EnemyAttackSystem _enemyAttackSystem;
     public NewBattleManager _battleManager;
     public QuestSystem _questSystem;
+    public AudioSystem _audioSystem;
 
     private void Start()
     {
         _battleManager = FindAnyObjectByType<NewBattleManager>();
         _questSystem = FindAnyObjectByType<QuestSystem>();
+        _audioSystem = FindAnyObjectByType<AudioSystem>();
     }
 
     public IEnumerator ShootDamage(ShootObjectSystem shoot)
@@ -30,6 +32,7 @@ public class EnemyBattleSystem : MonoBehaviour
                 _enemyAttackSystem.transform.DOShakePosition(0.25f, 0.2f, 20, 90);
                 _battleManager.MainCamera.DOShakePosition(0.25f, 0.2f, 20, 90);
                 _enemyAttackSystem.enemySystem.Hit();
+                _audioSystem.FinSoundEffectAudioClip("일반 공격");
                 _enemyAttackSystem.enemySystem.Enemy_CurrentHelth = Mathf.Clamp(_enemyAttackSystem.enemySystem.Enemy_CurrentHelth, 0, _enemyAttackSystem.enemySystem.Enemy_MaxHelth);
                 _battleManager.CreateDamageText(_enemyAttackSystem.transform.position, currentDamage, AttackType.Attack);
 

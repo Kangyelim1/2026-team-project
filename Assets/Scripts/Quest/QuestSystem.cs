@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using TMPro;
 
 public class QuestSystem : MonoBehaviour
 {
@@ -18,20 +18,22 @@ public class QuestSystem : MonoBehaviour
     public string currentBGMAeest;
     public int currentQuestEnemyCount;
     public string currentRewards;
+    public string currentDestination;
 
     public bool finishQuest;
+    public bool victory;
 
     public int currnet_EnmeyDieCount;
 
-    //public GameObject QuestCanavarse;
+    public GameObject QuestCanavarse;
 
     [Header("플레이어 정보")]
     public int playerLevel = 1;
     public int playerExperience = 0;
 
     [Header("퀘스트 UI")]
-    //public TextMeshProUGUI cuttentQuestName;
-    //public TextMeshProUGUI questText;
+    public TextMeshProUGUI cuttentQuestName;
+    public TextMeshProUGUI questText;
     private int currentQuestIndex = 0;
 
     public QuestAndStoryDatabase _questAndStoryDatabase;
@@ -68,7 +70,7 @@ public class QuestSystem : MonoBehaviour
 
 
         StartQuest();
-        // PlayerEXPO 끝난후 삭제 예정
+
         if (questData == null) return;
 
         if (playerQuestID == 0 && questData.quests.Count > 0)
@@ -91,14 +93,14 @@ public class QuestSystem : MonoBehaviour
                     $"처치할 몬스터: {currentQuestEnemyNPC}, 처치할 몬스터 수: {currentQuestEnemyCount}");
         storySystem.QuestStory(playerQuestStoryID);
         finishQuest = false;
-        //questText.text = playerquestName;
+        questText.text = playerQuestTitle;
     }
 
 
     private void Update()
     {
-        //if(playerquestPart != null)
-        //    cuttentQuestName.text = $"{playerquestPart}";
+      
+        cuttentQuestName.text = $"{questData.name}";
 
         if (!finishQuest)
         {
@@ -124,6 +126,7 @@ public class QuestSystem : MonoBehaviour
         playerQuestLocation_Asset = quest.Location_Asset;
         currentBGMAeest = quest.BGM_Asset;
         currentRewards = quest.Rewards;
+        currentDestination = quest.Destination;
 
     }
 
@@ -136,7 +139,7 @@ public class QuestSystem : MonoBehaviour
                 break;
 
             case "move":
-                if (_playerInteraction.currentInteractable.name == currentRewards || _playerInteraction.currentEnemy.name == currentEnemy)
+                if (currentEnemy == currentDestination)
                 SuccessQuest();
                 break;
 
@@ -179,7 +182,7 @@ public class QuestSystem : MonoBehaviour
             QuestData nextQuest = questData.quests[currentQuestIndex];
             ShowQuest(nextQuest);
 
-            //questText.text = playerquestName;
+            questText.text = playerQuestTitle;
             currnet_EnmeyDieCount = 0;
 
             Debug.Log($"현재 플레이어 퀘스트 ID: {playerQuestID}, 이름: {playerQuestTitle}, 진행될 스토리 ID: {playerQuestStoryID}," +
@@ -233,7 +236,7 @@ public class QuestSystem : MonoBehaviour
                 $"처치할 몬스터: {currentQuestEnemyNPC}, 처치할 몬스터 수: {currentQuestEnemyCount}");
 
                 storySystem.QuestStory(playerQuestStoryID);
-                //questText.text = playerquestName;
+                questText.text = playerQuestTitle;
             }
             else { Debug.LogWarning("활당된 퀘스트 미존재"); }
         }
@@ -271,7 +274,7 @@ public class QuestSystem : MonoBehaviour
                 $"처치할 몬스터: {currentQuestEnemyNPC}, 처치할 몬스터 수: {currentQuestEnemyCount}");
 
                 storySystem.QuestStory(playerQuestStoryID);
-                //questText.text = playerquestName;
+                questText.text = playerQuestTitle;
             }
             else { Debug.LogWarning("할당된 퀘스트 미존재"); }
 

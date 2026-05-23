@@ -8,6 +8,7 @@ public class PlayerInteraction : MonoBehaviour
     public QuestSystem _questSystem;
     public GameObject interactionUI;
     public CanvasGroup interactionCanvasGroup;
+    public string QuestTargetEnemy;
     private Coroutine fadeCoroutine;
 
     void Start()
@@ -55,7 +56,7 @@ public class PlayerInteraction : MonoBehaviour
         if (enemy != null)
         {
             currentEnemy = enemy;
-            if(_questSystem != null)
+            if (_questSystem != null)
             {
                 _questSystem.currentEnemy = enemy.enemyName;
             }

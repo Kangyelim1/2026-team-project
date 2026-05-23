@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class EnemyInteractable : MonoBehaviour
@@ -13,6 +14,33 @@ public class EnemyInteractable : MonoBehaviour
 
     // 클릭 감지를 위한 콜라이더 필요 여부 확인용
     private Collider2D col;
+
+    public QuestSystem questSystem;
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    // 씬 이동 직후 즉시 호출되는 메서드
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "TestScene")
+        {
+            if (questSystem == null) questSystem = FindAnyObjectByType<QuestSystem>();
+            if (questSystem.victory == true)
+            {
+                questSystem.victory = false;
+                gameObject.SetActive(false);
+            }
+            else return;
+        }
+    }
 
     void Start()
     {

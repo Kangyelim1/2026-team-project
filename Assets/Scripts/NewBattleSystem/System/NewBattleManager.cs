@@ -18,6 +18,7 @@ public class NewBattleManager : MonoBehaviour
 
     [Header("전투 상태")]
     public PlayerBattleSystem _playerBattleSystem;
+    public QuestSystem _questSystem;
     
     [Header("스폰 위치")]
     public Transform Player_SpawnPoint;
@@ -47,6 +48,7 @@ public class NewBattleManager : MonoBehaviour
     private void Start()
     {
         fadeManager = Object.FindAnyObjectByType<FadeManager>();
+        _questSystem = FindAnyObjectByType<QuestSystem>();
         fadeImage.gameObject.SetActive(true);
 
         StartGame();
@@ -165,7 +167,7 @@ public class NewBattleManager : MonoBehaviour
     {
         if (isGameEnd) yield break;
         isGameEnd = true;
-
+        _questSystem.victory = true;
         GameObject targetUI = isVictory ? WinUI : LoserUI;
 
         targetUI.SetActive(true);

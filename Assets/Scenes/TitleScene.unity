@@ -312,7 +312,8 @@ MonoBehaviour:
   m_text: "\uC2DC\uC791"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d98b15d31a2a3bb49a93e9e041a09422, type: 2}
-  m_sharedMaterial: {fileID: 532456781552652187, guid: d98b15d31a2a3bb49a93e9e041a09422, type: 2}
+  m_sharedMaterial: {fileID: 532456781552652187, guid: d98b15d31a2a3bb49a93e9e041a09422,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -555,7 +556,8 @@ MonoBehaviour:
   m_text: "\uC635\uC158"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d98b15d31a2a3bb49a93e9e041a09422, type: 2}
-  m_sharedMaterial: {fileID: 532456781552652187, guid: d98b15d31a2a3bb49a93e9e041a09422, type: 2}
+  m_sharedMaterial: {fileID: 532456781552652187, guid: d98b15d31a2a3bb49a93e9e041a09422,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -961,7 +963,8 @@ MonoBehaviour:
   m_text: "\uC885\uB8CC"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d98b15d31a2a3bb49a93e9e041a09422, type: 2}
-  m_sharedMaterial: {fileID: 532456781552652187, guid: d98b15d31a2a3bb49a93e9e041a09422, type: 2}
+  m_sharedMaterial: {fileID: 532456781552652187, guid: d98b15d31a2a3bb49a93e9e041a09422,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1408,12 +1411,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1974778019}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ebb7c7cabe5991f4e8c29bd8e297ea77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestDataManager
-  questDataSO: {fileID: 0}
+  questDataSO: {fileID: 11400000, guid: 756b46d35f5eb704f902d8cfaf5e42b0, type: 2}
 --- !u!4 &1974778023
 Transform:
   m_ObjectHideFlags: 0
@@ -1462,7 +1465,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1974778019}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0b1d34d2da682e046aea36f936edf81c, type: 3}
   m_Name: 
@@ -1528,7 +1531,8 @@ MonoBehaviour:
   m_text: "\uCF5C\uB809\uC158"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d98b15d31a2a3bb49a93e9e041a09422, type: 2}
-  m_sharedMaterial: {fileID: 532456781552652187, guid: d98b15d31a2a3bb49a93e9e041a09422, type: 2}
+  m_sharedMaterial: {fileID: 532456781552652187, guid: d98b15d31a2a3bb49a93e9e041a09422,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

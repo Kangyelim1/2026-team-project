@@ -14,6 +14,7 @@ public class QuestData
     public string BGM_Asset;
     public int Qeust_EnemyCount;
     public string Rewards;
+    public string Destination;
     public Sprite rewardIcon1;
     public Sprite rewardIcon2;
 }

@@ -15,6 +15,7 @@ public class EnemyAttackSystem : MonoBehaviour
     public EnemyBattleSystem _enemyBattleSystem;
     public QuestSystem _questSystem;
     public ScreenHitEffect _screenHitEffect;
+    public AudioSystem _audioSystem;
 
     [Header("보스 전용")]
     public BossEnemyPatternSystem _bossEnemyPatternSystem;
@@ -26,6 +27,7 @@ public class EnemyAttackSystem : MonoBehaviour
         _enemyBattleSystem = Object.FindAnyObjectByType<EnemyBattleSystem>();
         _questSystem = Object.FindAnyObjectByType<QuestSystem>();
         _screenHitEffect = Object.FindAnyObjectByType<ScreenHitEffect>();
+        _audioSystem = FindAnyObjectByType<AudioSystem>();
 
 
         StartCoroutine(StartBattle());
@@ -191,6 +193,7 @@ public class EnemyAttackSystem : MonoBehaviour
             _battleManager.MainCamera.transform.DOShakePosition(0.25f, 0.2f, 20, 90);
             target.Hit();
             _screenHitEffect.PlayerHitFlash();
+            _audioSystem.FinSoundEffectAudioClip("일반 공격");
             target.player_CurrentHelth -= currentDamage;
             target.player_CurrentHelth = Mathf.Clamp(target.player_CurrentHelth, 0, target.player_MaxHelth);
             _battleManager.CreateDamageText(target.transform.position, currentDamage, AttackType.Hit);
