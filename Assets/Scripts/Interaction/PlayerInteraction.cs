@@ -1,11 +1,20 @@
 using UnityEngine;
+using System.Collections;
 
 public class PlayerInteraction : MonoBehaviour
 {
     public Interactable currentInteractable;
     public EnemyInteractable currentEnemy;
     public QuestSystem _questSystem;
+    public GameObject interactionUI;
+    public CanvasGroup interactionCanvasGroup;
+    private Coroutine fadeCoroutine;
 
+    void Start()
+    {
+        
+        interactionUI.SetActive(false);
+    }
 
     void Update()
     {
@@ -32,6 +41,14 @@ public class PlayerInteraction : MonoBehaviour
         {
             currentInteractable = interactable;
             Debug.Log("상호작용 가능 대상 진입");
+            interactionUI.SetActive(true);
+            interactionCanvasGroup.alpha = 1f;
+            if(fadeCoroutine != null)
+            {
+                StopCoroutine(fadeCoroutine);
+            }
+            fadeCoroutine =
+                StartCoroutine(FadeInteractionUI());
         }
 
         EnemyInteractable enemy = collision.GetComponent<EnemyInteractable>();
@@ -60,6 +77,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             currentInteractable = null;
             Debug.Log("상호작용 대상 벗어남");
+            interactionUI.SetActive(false);
         }
 
         EnemyInteractable enemy = collision.GetComponent<EnemyInteractable>();
@@ -67,6 +85,24 @@ public class PlayerInteraction : MonoBehaviour
         {
             currentEnemy = null;
             Debug.Log("[PlayerInteraction] 적 범위 이탈");
+        }
+    }
+    IEnumerator FadeInteractionUI()
+    {
+        // 1초 대기
+        yield return new WaitForSeconds(1f);
+
+        // 천천히 사라지기
+        float time = 0f;
+
+        while (time < 1f)
+        {
+            time += Time.deltaTime;
+
+            interactionCanvasGroup.alpha =
+                Mathf.Lerp(1f, 0f, time);
+
+            yield return null;
         }
     }
 }

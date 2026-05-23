@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InventoryItemData
   itemName: LionCourage
   itemDescription: "\uC0AC\uC790\uC758\uC6A9\uAE30"
-  itemIcon: {fileID: -1796461765, guid: 7810966f0f690954c87305933cabf2b0, type: 3}
+  itemIcon: {fileID: -1434773558029330451, guid: b9da99e341ed0814e8fc7440e05cad96,
+    type: 3}
   itemType: 2
   attackPower: 30
   healthPower: 0

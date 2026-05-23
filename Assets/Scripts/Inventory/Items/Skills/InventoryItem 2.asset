@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a62dfaa30c3f74240ae0d26635b7854b, type: 3}
-  m_Name: InventoryItem
+  m_Name: InventoryItem 2
   m_EditorClassIdentifier: Assembly-CSharp::InventoryItemData
-  itemName: SteelHeart
-  itemDescription: "\uAC15\uCCA0\uC2EC\uC7A5"
-  itemIcon: {fileID: -5786500704676793787, guid: e2f00a998ce1f3b43b7f39ceacb1a47e,
+  itemName: HealthUp
+  itemDescription: "\uCCB4\uB825 \uD68C\uBCF5"
+  itemIcon: {fileID: 5696903391960029474, guid: 2b7d64e9641e0fe478b43723e67ba9a2,
     type: 3}
   itemType: 2
   attackPower: 0
