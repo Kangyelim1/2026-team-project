@@ -1,4 +1,4 @@
- [
+[
     {
       "Quest_ID": 10001,
       "Quest_Title": "콩지 팥쥐",
@@ -44,7 +44,7 @@
       "Quest_Description": "베틀이 스스로 움직이며 공격해온다.",
       "Quest_Type": "Battle",
       "Quest_StoryID": 0,
-      "Quest_EnemyNPC": "배",
+      "Quest_EnemyNPC": "공격하는 베",
       "Location_Asset": "Bg_Yard",
       "BGM_Asset": null,
       "Qeust_EnemyCount": 1,

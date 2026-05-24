@@ -34,6 +34,8 @@ public class PlayerMove : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (questSystem.storySystem.isStory) return;
+
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
 
         if (movement != Vector2.zero)

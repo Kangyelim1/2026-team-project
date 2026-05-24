@@ -60,7 +60,7 @@ MonoBehaviour:
       \uACF5\uACA9\uD574\uC628\uB2E4."
     Quest_Type: Battle
     Quest_StoryID: 0
-    Quest_EnemyNPC: "\uBC30"
+    Quest_EnemyNPC: "\uACF5\uACA9\uD558\uB294 \uBCA0"
     Location_Asset: Bg_Yard
     BGM_Asset: 
     Qeust_EnemyCount: 1
