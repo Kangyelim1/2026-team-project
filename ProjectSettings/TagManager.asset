@@ -6,6 +6,11 @@ TagManager:
   tags:
   - IsNotJumpObject
   - Ground
+  - EnemyHitPoint
+  - PlayerHitPoint
+  - SavePoint
+  - Bullet
+  - Enemy
   layers:
   - Default
   - TransparentFX

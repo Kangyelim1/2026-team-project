@@ -1,0 +1,207 @@
+using System.Collections;
+using UnityEngine;
+
+public class EnemySystem : MonoBehaviour
+{
+    public EnemySO enemySO;
+    public string enemyName;
+    public EnemyType enemyType;
+    public Transform TargetPlayer;
+
+    public Transform ShootPoint;
+    public GameObject BulletPrefab;
+    public GameObject BoomEffect;
+
+    public PlayerMoveSystem playerMoveSystem;
+    public PlayerHelthSystem playerHelthSystem;
+
+    public float moveSpeed = 3f;
+    public float stopDistance = 1.2f;
+    public float shootDelay = 1f;
+    public float bulletSpeed = 8f;
+    public float chaseAfterExitTime = 3f;
+
+    private bool isAttack;
+    private bool isDistonse;
+    private bool isShoot;
+    private bool isShortAttack;
+    private bool isBoom;
+
+    private Coroutine chaseStopCoroutine;
+
+    private void Awake()
+    {
+        enemyName = enemySO.enemyName;
+        enemyType = enemySO.enemyType;
+    }
+
+    private void Start()
+    {
+        playerMoveSystem = FindAnyObjectByType<PlayerMoveSystem>();
+        playerHelthSystem = FindAnyObjectByType<PlayerHelthSystem>();
+
+        if (playerMoveSystem != null)
+            TargetPlayer = playerMoveSystem.transform;
+    }
+
+    private void Update()
+    {
+        if (TargetPlayer != null)
+            FlipToPlayer();
+
+        if (isAttack)
+            StartAttack();
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            if (chaseStopCoroutine != null)
+            {
+                StopCoroutine(chaseStopCoroutine);
+                chaseStopCoroutine = null;
+            }
+
+            isAttack = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            if (enemyType == EnemyType.Shortdistance)
+                return;
+
+            if (enemyType == EnemyType.Boom)
+            {
+                isAttack = false;
+                return;
+            }
+
+            if (chaseStopCoroutine != null)
+                StopCoroutine(chaseStopCoroutine);
+
+            chaseStopCoroutine = StartCoroutine(StopChaseAfterDelay());
+        }
+    }
+
+    private IEnumerator StopChaseAfterDelay()
+    {
+        yield return new WaitForSeconds(chaseAfterExitTime);
+        isAttack = false;
+        chaseStopCoroutine = null;
+    }
+
+    private void StartAttack()
+    {
+        switch (enemyType)
+        {
+            case EnemyType.Shortdistance:
+                MoveToPlayer();
+                break;
+
+            case EnemyType.LongDistanc:
+                LongDistanceAttack();
+                break;
+
+            case EnemyType.Boom:
+                MoveToPlayer();
+                break;
+        }
+    }
+
+    private void MoveToPlayer()
+    {
+        if (TargetPlayer == null) return;
+
+        float distance = Vector2.Distance(transform.position, TargetPlayer.position);
+
+        if (distance > stopDistance)
+        {
+            Vector2 direction = (TargetPlayer.position - transform.position).normalized;
+            transform.position += (Vector3)(direction * moveSpeed * Time.deltaTime);
+            isDistonse = false;
+        }
+        else
+        {
+            isDistonse = true;
+
+            if (enemyType == EnemyType.Boom)
+            {
+                if (!isBoom)
+                    StartCoroutine(Boom());
+            }
+            else
+            {
+                if (!isShortAttack)
+                    StartCoroutine(ShortdistanceAttack());
+            }
+        }
+    }
+
+    private IEnumerator ShortdistanceAttack()
+    {
+        isShortAttack = true;
+
+        yield return new WaitForSeconds(1f);
+
+        if (isDistonse && playerHelthSystem != null)
+            playerHelthSystem.Die();
+
+        yield return new WaitForSeconds(1f);
+
+        isShortAttack = false;
+    }
+
+    private void LongDistanceAttack()
+    {
+        if (!isShoot)
+            StartCoroutine(ShootBullet());
+    }
+
+    private IEnumerator ShootBullet()
+    {
+        isShoot = true;
+
+        yield return new WaitForSeconds(shootDelay);
+
+        if (BulletPrefab != null && ShootPoint != null && TargetPlayer != null)
+        {
+            GameObject bullet = Instantiate(BulletPrefab, ShootPoint.position, Quaternion.identity);
+            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+
+            if (rb != null)
+            {
+                Vector2 direction = (TargetPlayer.position - ShootPoint.position).normalized;
+                rb.linearVelocity = direction * bulletSpeed;
+            }
+        }
+
+        isShoot = false;
+    }
+
+    private IEnumerator Boom()
+    {
+        isBoom = true;
+        isAttack = false;
+
+        yield return new WaitForSeconds(1f);
+
+        if (isDistonse && playerHelthSystem != null)
+            playerHelthSystem.Die();
+
+        Destroy(gameObject);
+    }
+
+    private void FlipToPlayer()
+    {
+        if (TargetPlayer == null) return;
+
+        if (TargetPlayer.position.x < transform.position.x)
+            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        else if (TargetPlayer.position.x > transform.position.x)
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+    }
+}

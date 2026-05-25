@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+
 public class PlayerMoveSystem : MonoBehaviour
 {
     public float PlayerMoveSpeed = 5f;
@@ -17,12 +16,22 @@ public class PlayerMoveSystem : MonoBehaviour
     public Rigidbody2D PlayerRigidbody;
     public SpriteRenderer PlayerSpriteRenderer;
 
-    private float moveX;
+    public EnemyHelthSystem enemyHelthSystem;
+    public bool isDashAttack;
 
+    public GameManger gameManger;
+
+    private float moveX;
     private bool isDash;
     private bool isRoll;
 
+
     private Camera mainCamera;
+
+    private void Start()
+    {
+        gameManger = FindAnyObjectByType<GameManger>();
+    }
 
     private void Awake()
     {
@@ -69,10 +78,11 @@ public class PlayerMoveSystem : MonoBehaviour
 
     private IEnumerator Dash()
     {
-        Debug.Log(" 근거리 공격 진행");
+        Debug.Log("근거리 공격 진행");
         isDash = true;
+        isDashAttack = true;
 
-        float direction = PlayerSpriteRenderer.flipX ? -1f : 1f;
+        float direction = transform.localScale.x < 0 ? -1f : 1f;
 
         Vector3 startPos = transform.position;
         Vector3 targetPos = startPos + new Vector3(direction * PlayerDashDistance, 0f, 0f);
@@ -82,7 +92,6 @@ public class PlayerMoveSystem : MonoBehaviour
         while (time < PlayerDashDuration)
         {
             time += Time.deltaTime;
-
             transform.position = Vector3.Lerp(startPos, targetPos, time / PlayerDashDuration);
             yield return null;
         }
@@ -90,6 +99,7 @@ public class PlayerMoveSystem : MonoBehaviour
         transform.position = targetPos;
 
         isDash = false;
+        isDashAttack = false;
     }
 
     private IEnumerator Roll()
@@ -97,7 +107,7 @@ public class PlayerMoveSystem : MonoBehaviour
         Debug.Log("구르기 진행");
         isRoll = true;
 
-        float direction = PlayerSpriteRenderer.flipX ? -1f : 1f;
+        float direction = transform.localScale.x < 0 ? -1f : 1f;
 
         Vector3 startPos = transform.position;
         Vector3 targetPos = startPos + new Vector3(direction * PlayerRollDistance, 0f, 0f);
@@ -107,7 +117,6 @@ public class PlayerMoveSystem : MonoBehaviour
         while (time < PlayerRollDuration)
         {
             time += Time.deltaTime;
-
             transform.position = Vector3.Lerp(startPos, targetPos, time / PlayerRollDuration);
             yield return null;
         }
@@ -121,13 +130,24 @@ public class PlayerMoveSystem : MonoBehaviour
     {
         Vector3 mouseWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
 
-        if (mouseWorldPos.x < transform.position.x)
+        if (mouseWorldPos.x > transform.position.x)
         {
-            PlayerSpriteRenderer.flipX = true;
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
         else
         {
-            PlayerSpriteRenderer.flipX = false;
+            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        Debug.Log("트리거 감지: " + collision.name);
+
+        if (collision.CompareTag("SavePoint"))
+        {
+            Debug.Log("충돌");
+            gameManger.SavePoint = collision.gameObject;
         }
     }
 }
