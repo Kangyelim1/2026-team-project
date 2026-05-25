@@ -6,7 +6,6 @@ public class EnemySystem : MonoBehaviour
     public EnemySO enemySO;
     public string enemyName;
     public EnemyType enemyType;
-    public Transform TargetPlayer;
 
     public Transform ShootPoint;
     public GameObject BulletPrefab;
@@ -35,19 +34,15 @@ public class EnemySystem : MonoBehaviour
         enemyType = enemySO.enemyType;
     }
 
-    private void Start()
-    {
-        playerMoveSystem = FindAnyObjectByType<PlayerMoveSystem>();
-        playerHelthSystem = FindAnyObjectByType<PlayerHelthSystem>();
-
-        if (playerMoveSystem != null)
-            TargetPlayer = playerMoveSystem.transform;
-    }
-
     private void Update()
     {
-        if (TargetPlayer != null)
-            FlipToPlayer();
+
+        if(playerHelthSystem == null)
+            playerHelthSystem = FindAnyObjectByType<PlayerHelthSystem>();
+
+        if (playerMoveSystem == null)
+            playerMoveSystem = FindAnyObjectByType<PlayerMoveSystem>();
+        else FlipToPlayer();
 
         if (isAttack)
             StartAttack();
@@ -114,13 +109,13 @@ public class EnemySystem : MonoBehaviour
 
     private void MoveToPlayer()
     {
-        if (TargetPlayer == null) return;
+        if (playerMoveSystem == null) return;
 
-        float distance = Vector2.Distance(transform.position, TargetPlayer.position);
+        float distance = Vector2.Distance(transform.position, playerMoveSystem.transform.position);
 
         if (distance > stopDistance)
         {
-            Vector2 direction = (TargetPlayer.position - transform.position).normalized;
+            Vector2 direction = (playerMoveSystem.transform.position - transform.position).normalized;
             transform.position += (Vector3)(direction * moveSpeed * Time.deltaTime);
             isDistonse = false;
         }
@@ -145,14 +140,17 @@ public class EnemySystem : MonoBehaviour
     {
         isShortAttack = true;
 
+        Debug.Log("적 일반 공격 애니매이션 실행");
         yield return new WaitForSeconds(1f);
 
         if (isDistonse && playerHelthSystem != null)
+        {
             playerHelthSystem.Die();
+        }
 
         yield return new WaitForSeconds(1f);
-
         isShortAttack = false;
+
     }
 
     private void LongDistanceAttack()
@@ -167,14 +165,14 @@ public class EnemySystem : MonoBehaviour
 
         yield return new WaitForSeconds(shootDelay);
 
-        if (BulletPrefab != null && ShootPoint != null && TargetPlayer != null)
+        if (BulletPrefab != null && ShootPoint != null && playerMoveSystem != null)
         {
             GameObject bullet = Instantiate(BulletPrefab, ShootPoint.position, Quaternion.identity);
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
 
             if (rb != null)
             {
-                Vector2 direction = (TargetPlayer.position - ShootPoint.position).normalized;
+                Vector2 direction = (playerMoveSystem.transform.position - ShootPoint.position).normalized;
                 rb.linearVelocity = direction * bulletSpeed;
             }
         }
@@ -197,11 +195,11 @@ public class EnemySystem : MonoBehaviour
 
     private void FlipToPlayer()
     {
-        if (TargetPlayer == null) return;
+        if (playerMoveSystem == null) return;
 
-        if (TargetPlayer.position.x < transform.position.x)
+        if (playerMoveSystem.transform.position.x < transform.position.x)
             transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-        else if (TargetPlayer.position.x > transform.position.x)
+        else if (playerMoveSystem.transform.position.x > transform.position.x)
             transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
     }
 }

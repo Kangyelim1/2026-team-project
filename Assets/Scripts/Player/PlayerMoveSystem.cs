@@ -139,15 +139,4 @@ public class PlayerMoveSystem : MonoBehaviour
             transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
     }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        Debug.Log("트리거 감지: " + collision.name);
-
-        if (collision.CompareTag("SavePoint"))
-        {
-            Debug.Log("충돌");
-            gameManger.SavePoint = collision.gameObject;
-        }
-    }
 }

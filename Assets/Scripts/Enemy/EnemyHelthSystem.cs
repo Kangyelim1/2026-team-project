@@ -5,11 +5,13 @@ public class EnemyHelthSystem : MonoBehaviour
 {
     public EnemySystem enemySystem;
     public PlayerAttackSystem playerAttackSystem;
+    public PlayerMoveSystem playerMoveSystem;
 
     private void Start()
     {
-        enemySystem = FindAnyObjectByType<EnemySystem>();
+        enemySystem = GetComponentInParent<EnemySystem>();
         playerAttackSystem = FindAnyObjectByType<PlayerAttackSystem>();
+        playerMoveSystem = FindAnyObjectByType<PlayerMoveSystem>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -28,7 +30,7 @@ public class EnemyHelthSystem : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (enemySystem.playerMoveSystem.isDashAttack && collision.gameObject.CompareTag("Player"))
+        if (playerMoveSystem.isDashAttack && collision.gameObject.CompareTag("Player"))
         {
             Die();
         }

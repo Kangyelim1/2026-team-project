@@ -26,8 +26,9 @@ public class PlayerHelthSystem : MonoBehaviour
 
     public void Die()
     {
+        if (gameManger == null) return;
         Debug.Log("플레이어 사망");
-        StartCoroutine(gameManger.DiePlayer());
+        gameManger.isDiePlayer = true;
         Destroy(MoveSystem.gameObject);
     }
 }
