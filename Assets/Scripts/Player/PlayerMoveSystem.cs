@@ -9,9 +9,7 @@ public class PlayerMoveSystem : MonoBehaviour
     public float PlayerDashDistance = 4f;
     public float PlayerDashDuration = 0.15f;
 
-    [Header("구르기")]
-    public float PlayerRollDistance = 2.5f;
-    public float PlayerRollDuration = 0.25f;
+    public float JumpForce = 7f;
 
     public Rigidbody2D PlayerRigidbody;
     public SpriteRenderer PlayerSpriteRenderer;
@@ -23,7 +21,7 @@ public class PlayerMoveSystem : MonoBehaviour
 
     private float moveX;
     private bool isDash;
-    private bool isRoll;
+    private bool isJump;
 
 
     private Camera mainCamera;
@@ -50,21 +48,21 @@ public class PlayerMoveSystem : MonoBehaviour
 
         Flip();
 
-        if (Input.GetMouseButtonDown(1) && !isDash && !isRoll)
+        if (Input.GetMouseButtonDown(1) && !isDash && !isJump)
         {
             StartCoroutine(Dash());
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && !isRoll && !isDash)
+        if (Input.GetKeyDown(KeyCode.Space) && !isJump && !isDash)
         {
-            StartCoroutine(Roll());
+            Jump();
         }
     }
 
     private void FixedUpdate()
-    {
-        if (!isDash && !isRoll)
-        {
+    {               
+        if (!isDash && !isJump)
+        {   
             Move();
         }
     }
@@ -102,28 +100,22 @@ public class PlayerMoveSystem : MonoBehaviour
         isDashAttack = false;
     }
 
-    private IEnumerator Roll()
+    private void Jump()
     {
-        Debug.Log("구르기 진행");
-        isRoll = true;
+        Debug.Log("점프");
 
-        float direction = transform.localScale.x < 0 ? -1f : 1f;
+        isJump = true;
 
-        Vector3 startPos = transform.position;
-        Vector3 targetPos = startPos + new Vector3(direction * PlayerRollDistance, 0f, 0f);
+        PlayerRigidbody.linearVelocity = new Vector2(PlayerRigidbody.linearVelocity.x, 0f);
+        PlayerRigidbody.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
+    }
 
-        float time = 0f;
-
-        while (time < PlayerRollDuration)
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
         {
-            time += Time.deltaTime;
-            transform.position = Vector3.Lerp(startPos, targetPos, time / PlayerRollDuration);
-            yield return null;
+            isJump = false;
         }
-
-        transform.position = targetPos;
-
-        isRoll = false;
     }
 
     private void Flip()

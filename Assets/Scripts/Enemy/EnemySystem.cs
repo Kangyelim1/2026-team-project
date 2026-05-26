@@ -19,6 +19,7 @@ public class EnemySystem : MonoBehaviour
     public float shootDelay = 1f;
     public float bulletSpeed = 8f;
     public float chaseAfterExitTime = 3f;
+    public float chaseDistance = 10f;
 
     private bool isAttack;
     private bool isDistonse;
@@ -113,25 +114,30 @@ public class EnemySystem : MonoBehaviour
 
         float distance = Vector2.Distance(transform.position, playerMoveSystem.transform.position);
 
-        if (distance > stopDistance)
+        if (distance <= chaseDistance)
         {
-            Vector2 direction = (playerMoveSystem.transform.position - transform.position).normalized;
-            transform.position += (Vector3)(direction * moveSpeed * Time.deltaTime);
-            isDistonse = false;
-        }
-        else
-        {
-            isDistonse = true;
-
-            if (enemyType == EnemyType.Boom)
+            if (distance > stopDistance)
             {
-                if (!isBoom)
-                    StartCoroutine(Boom());
+                Vector3 targetPos = new Vector3(playerMoveSystem.transform.position.x, transform.position.y, transform.position.z);
+
+                Vector2 direction = (targetPos - transform.position).normalized;
+
+                transform.position += (Vector3)(direction * moveSpeed * Time.deltaTime);
+
+                isDistonse = false;
             }
             else
             {
-                if (!isShortAttack)
-                    StartCoroutine(ShortdistanceAttack());
+                isDistonse = true;
+
+                if (enemyType == EnemyType.Boom)
+                {
+                    if (!isBoom) StartCoroutine(Boom());
+                }
+                else
+                {
+                    if (!isShortAttack) StartCoroutine(ShortdistanceAttack());
+                }
             }
         }
     }

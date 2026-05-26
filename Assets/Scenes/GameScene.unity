@@ -206,13 +206,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1635546834697167743, guid: b8003e871529a79449d33f35229ff521, type: 3}
+      propertyPath: shootDelay
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2011524338714188303, guid: b8003e871529a79449d33f35229ff521, type: 3}
       propertyPath: m_Name
       value: Enemy02
       objectReference: {fileID: 0}
     - target: {fileID: 4189645221569157837, guid: b8003e871529a79449d33f35229ff521, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.9576
+      objectReference: {fileID: 0}
+    - target: {fileID: 4189645221569157837, guid: b8003e871529a79449d33f35229ff521, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 19.83
+      value: 19.8088
       objectReference: {fileID: 0}
     - target: {fileID: 4189645221569157837, guid: b8003e871529a79449d33f35229ff521, type: 3}
       propertyPath: m_LocalPosition.y
@@ -263,6 +271,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1635546834697167743, guid: 2df7eef7589e11f46a4d687b8358b931, type: 3}
+      propertyPath: shootDelay
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2011524338714188303, guid: 2df7eef7589e11f46a4d687b8358b931, type: 3}
       propertyPath: m_Name
       value: Enemy01
