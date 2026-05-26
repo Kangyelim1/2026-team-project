@@ -20,6 +20,11 @@ public class BulletSystem : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.CompareTag("Wall"))
+        {
+            Destroy(gameObject);
+        }
+
         if (collision.CompareTag("EnemyHitPoint") && type == BulletType.PlayerBullet)
         {
             Debug.Log("몬스터 명중");

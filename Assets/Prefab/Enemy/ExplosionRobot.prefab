@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: 1635546834697167743}
   - component: {fileID: 7432597354560567054}
   - component: {fileID: 1634630000721641122}
-  m_Layer: 0
-  m_Name: Enemy03
+  m_Layer: 6
+  m_Name: ExplosionRobot
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -177,7 +177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemySystem
   enemySO: {fileID: 11400000, guid: 26d13a281a890024796c03df47799903, type: 2}
   enemyName: 
-  enemyType: 2
+  enemyType: 0
   ShootPoint: {fileID: 4358743506519599011}
   BulletPrefab: {fileID: 5149882320093515215, guid: 785cf17f7de90d44598a7729786e9c5a, type: 3}
   BoomEffect: {fileID: 0}
@@ -186,7 +186,7 @@ MonoBehaviour:
   moveSpeed: 3
   stopDistance: 1.2
   shootDelay: 5
-  bulletSpeed: 100
+  bulletSpeed: 80
   chaseAfterExitTime: 3
   chaseDistance: 10
 --- !u!58 &7432597354560567054
@@ -281,7 +281,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5583387137748658827}
   - component: {fileID: 5558411738991961484}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -374,7 +374,7 @@ GameObject:
   - component: {fileID: 635003639166537440}
   - component: {fileID: 8208927188532243406}
   - component: {fileID: 8383991254347880133}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EnemyHitPoint
   m_TagString: EnemyHitPoint
   m_Icon: {fileID: 0}
@@ -490,7 +490,7 @@ CapsuleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 2}
+  m_Size: {x: 2, y: 2}
   m_Direction: 0
 --- !u!114 &8383991254347880133
 MonoBehaviour:
@@ -517,7 +517,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4358743506519599011}
   - component: {fileID: 6966284274847382844}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
