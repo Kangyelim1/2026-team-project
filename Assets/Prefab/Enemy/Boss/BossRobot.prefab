@@ -12,9 +12,11 @@ GameObject:
   - component: {fileID: 6295003308817284142}
   - component: {fileID: 3435450080154996783}
   - component: {fileID: 5913606708751784088}
-  - component: {fileID: 1635546834697167743}
-  - component: {fileID: 7432597354560567054}
   - component: {fileID: 1634630000721641122}
+  - component: {fileID: 4715083581712032632}
+  - component: {fileID: 1635546834697167743}
+  - component: {fileID: -3603097062710773006}
+  - component: {fileID: 7014246280253384298}
   m_Layer: 6
   m_Name: BossRobot
   m_TagString: Enemy
@@ -163,69 +165,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &1635546834697167743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2011524338714188303}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 628ab210aad9cd64eab7bafb83c23235, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemySystem
-  enemySO: {fileID: 11400000, guid: 15f3d71398f060a4bbc073eec63713c5, type: 2}
-  enemyName: 
-  enemyType: 3
-  ShootPoint: {fileID: 4358743506519599011}
-  BulletPrefab: {fileID: 5149882320093515215, guid: 785cf17f7de90d44598a7729786e9c5a, type: 3}
-  BoomEffect: {fileID: 0}
-  bossPattern: {fileID: 0}
-  playerMoveSystem: {fileID: 0}
-  playerHelthSystem: {fileID: 0}
-  moveSpeed: 3
-  stopDistance: 1.2
-  shootDelay: 5
-  bulletSpeed: 80
-  chaseAfterExitTime: 3
-  chaseDistance: 10
---- !u!58 &7432597354560567054
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2011524338714188303}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 5
 --- !u!61 &1634630000721641122
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -270,8 +209,112 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 0.01}
+  m_Size: {x: 2, y: 0.01}
   m_EdgeRadius: 0
+--- !u!61 &4715083581712032632
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011524338714188303}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 2}
+    newSize: {x: 1, y: 2}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 50, y: 0.2}
+  m_EdgeRadius: 0
+--- !u!114 &1635546834697167743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011524338714188303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 628ab210aad9cd64eab7bafb83c23235, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemySystem
+  enemySO: {fileID: 11400000, guid: 15f3d71398f060a4bbc073eec63713c5, type: 2}
+  enemyName: 
+  enemyType: 3
+  ShootPoint: {fileID: 4358743506519599011}
+  BulletPrefab: {fileID: 5149882320093515215, guid: 785cf17f7de90d44598a7729786e9c5a, type: 3}
+  BoomEffect: {fileID: 0}
+  bossPattern: {fileID: 0}
+  playerMoveSystem: {fileID: 0}
+  playerHelthSystem: {fileID: 0}
+  moveSpeed: 3
+  stopDistance: 1.2
+  shootDelay: 5
+  bulletSpeed: 80
+  chaseAfterExitTime: 3
+  chaseDistance: 10
+--- !u!114 &-3603097062710773006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011524338714188303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4833c4a0339350a44924f558e693daa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossSystem
+  enemySystem: {fileID: 0}
+  bossPatternSystem: {fileID: 0}
+  PatternList:
+  - "\uD328\uD13401"
+  - "\uD328\uD13402"
+--- !u!114 &7014246280253384298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011524338714188303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 734b49c62dbc16644a23c95867281c7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossPatternSystem
+  bossSystem: {fileID: 0}
+  playerHelthSystem: {fileID: 0}
 --- !u!1 &4643278937863815941
 GameObject:
   m_ObjectHideFlags: 0

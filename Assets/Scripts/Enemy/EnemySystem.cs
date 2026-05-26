@@ -11,7 +11,7 @@ public class EnemySystem : MonoBehaviour
     public GameObject BulletPrefab;
     public GameObject BoomEffect;
 
-    public BossPattern bossPattern;
+    public BossSystem bossPattern;
 
     public PlayerMoveSystem playerMoveSystem;
     public PlayerHelthSystem playerHelthSystem;
@@ -51,7 +51,7 @@ public class EnemySystem : MonoBehaviour
             StartAttack();
 
         if (enemyType == EnemyType.Boss && bossPattern == null)
-            bossPattern = FindAnyObjectByType<BossPattern>();
+            bossPattern = FindAnyObjectByType<BossSystem>();
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -104,8 +104,7 @@ public class EnemySystem : MonoBehaviour
                 if (IsPlayerInAttackRange())
                     StartCoroutine(Boom());
                 break;
-            case EnemyType.Boss:
-                bossPattern.BossRandomPattern();
+            default:
                 break;
         }
     }
