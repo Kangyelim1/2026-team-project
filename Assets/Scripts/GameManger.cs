@@ -45,7 +45,7 @@ public class GameManger : MonoBehaviour
         if (fadeManger != null)
             fadeManger.StartFadeOut(0.5f);
 
-        yield return new WaitForSecondsRealtime(0.5f);
+        yield return new WaitForSecondsRealtime(3f);
 
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.name);

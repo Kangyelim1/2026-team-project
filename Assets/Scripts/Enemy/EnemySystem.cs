@@ -65,22 +65,13 @@ public class EnemySystem : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            if (enemyType == EnemyType.Shortdistance)
-                return;
+        if (!collision.CompareTag("Player")) return;
 
-            if (enemyType == EnemyType.Boom)
-            {
-                isAttack = false;
-                return;
-            }
+        if (enemyType == EnemyType.Shortdistance || enemyType == EnemyType.Boom) return;
 
-            if (chaseStopCoroutine != null)
-                StopCoroutine(chaseStopCoroutine);
+        if (chaseStopCoroutine != null) StopCoroutine(chaseStopCoroutine);
 
-            chaseStopCoroutine = StartCoroutine(StopChaseAfterDelay());
-        }
+        chaseStopCoroutine = StartCoroutine(StopChaseAfterDelay());
     }
 
     private IEnumerator StopChaseAfterDelay()
@@ -103,7 +94,10 @@ public class EnemySystem : MonoBehaviour
                 break;
 
             case EnemyType.Boom:
+                if (isBoom) return;
                 MoveToPlayer();
+                if (IsPlayerInAttackRange())
+                    StartCoroutine(Boom());
                 break;
         }
     }
@@ -191,12 +185,27 @@ public class EnemySystem : MonoBehaviour
         isBoom = true;
         isAttack = false;
 
-        yield return new WaitForSeconds(1f);
+        Debug.Log("폭팔 카운트 시작 3초");
+        yield return new WaitForSeconds(3f);
 
         if (isDistonse && playerHelthSystem != null)
+        {
+            Debug.Log("플레이어가 폭팔 범위 안에 있음");
             playerHelthSystem.Die();
+        }
+        else Debug.Log("플레이어가 폭팔 범위에서 벗어남");
+            
 
         Destroy(gameObject);
+    }
+
+    private bool IsPlayerInAttackRange()
+    {
+        if (playerMoveSystem == null) return false;
+
+        float distance = Vector2.Distance(transform.position, playerMoveSystem.transform.position);
+
+        return distance <= stopDistance;
     }
 
     private void FlipToPlayer()

@@ -188,7 +188,7 @@ MonoBehaviour:
   shootDelay: 5
   bulletSpeed: 100
   chaseAfterExitTime: 3
-  chaseDistance: 30
+  chaseDistance: 10
 --- !u!58 &7432597354560567054
 CircleCollider2D:
   m_ObjectHideFlags: 0
