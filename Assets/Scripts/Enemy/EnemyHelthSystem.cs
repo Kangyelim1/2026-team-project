@@ -22,7 +22,7 @@ public class EnemyHelthSystem : MonoBehaviour
             {
                 if (bullet.type == BulletType.PlayerBullet)
                 {
-                    Die();
+                    Helth();
                 }
             }
         }
@@ -32,8 +32,17 @@ public class EnemyHelthSystem : MonoBehaviour
     {
         if (playerMoveSystem.isDashAttack && collision.gameObject.CompareTag("Player"))
         {
-            Die();
+            Helth();
         }
+    }
+
+    void Helth()
+    {
+        if (enemySystem.enemyType == EnemyType.Boss)
+        {
+            Debug.Log("보스 체력 감소");
+        }
+        else Die();
     }
 
     public void Die()
