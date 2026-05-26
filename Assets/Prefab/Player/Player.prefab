@@ -522,7 +522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttackSystem
   bulletPrefab: {fileID: 5149882320093515215, guid: 2890a21f19944814aa34cfbbd1b106c9, type: 3}
   firePoint: {fileID: 6105248085853683986}
-  bulletSpeed: 80
+  bulletSpeed: 50
 --- !u!1 &5530221043126533809
 GameObject:
   m_ObjectHideFlags: 0

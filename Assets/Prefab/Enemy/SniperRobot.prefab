@@ -181,12 +181,13 @@ MonoBehaviour:
   ShootPoint: {fileID: 4358743506519599011}
   BulletPrefab: {fileID: 5149882320093515215, guid: 785cf17f7de90d44598a7729786e9c5a, type: 3}
   BoomEffect: {fileID: 0}
+  bossPattern: {fileID: 0}
   playerMoveSystem: {fileID: 0}
   playerHelthSystem: {fileID: 0}
   moveSpeed: 3
   stopDistance: 1.2
   shootDelay: 5
-  bulletSpeed: 80
+  bulletSpeed: 50
   chaseAfterExitTime: 3
   chaseDistance: 10
 --- !u!58 &7432597354560567054
