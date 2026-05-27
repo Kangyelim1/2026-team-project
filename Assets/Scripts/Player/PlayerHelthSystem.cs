@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class PlayerHelthSystem : MonoBehaviour
 {
-    public PlayerMoveSystem MoveSystem;
+    public PlayerSystem playerSystem;
     public GameManger gameManger;
 
     private void Update()
     {
-        if(MoveSystem == null)
-            MoveSystem = FindAnyObjectByType<PlayerMoveSystem>();
+        if(playerSystem == null)
+            playerSystem = FindAnyObjectByType<PlayerSystem>();
 
         if(gameManger == null)
             gameManger = FindAnyObjectByType<GameManger>();
@@ -33,6 +33,6 @@ public class PlayerHelthSystem : MonoBehaviour
         if (gameManger == null) return;
         Debug.Log("플레이어 사망");
         gameManger.isDiePlayer = true;
-        Destroy(MoveSystem.gameObject);
+        Destroy(playerSystem.gameObject);
     }
 }

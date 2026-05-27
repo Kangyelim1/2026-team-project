@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemySystem : MonoBehaviour
@@ -13,7 +14,7 @@ public class EnemySystem : MonoBehaviour
 
     public BossSystem bossPattern;
 
-    public PlayerMoveSystem playerMoveSystem;
+    public PlayerSystem playerSystem;
     public PlayerHelthSystem playerHelthSystem;
 
     public float moveSpeed = 3f;
@@ -43,8 +44,8 @@ public class EnemySystem : MonoBehaviour
         if(playerHelthSystem == null)
             playerHelthSystem = FindAnyObjectByType<PlayerHelthSystem>();
 
-        if (playerMoveSystem == null)
-            playerMoveSystem = FindAnyObjectByType<PlayerMoveSystem>();
+        if (playerSystem == null)
+            playerSystem = FindAnyObjectByType<PlayerSystem>();
         else FlipToPlayer();
 
         if (isAttack)
@@ -111,15 +112,15 @@ public class EnemySystem : MonoBehaviour
 
     private void MoveToPlayer()
     {
-        if (playerMoveSystem == null) return;
+        if (playerSystem == null) return;
 
-        float distance = Vector2.Distance(transform.position, playerMoveSystem.transform.position);
+        float distance = Vector2.Distance(transform.position, playerSystem.transform.position);
 
         if (distance <= chaseDistance)
         {
             if (distance > stopDistance)
             {
-                Vector3 targetPos = new Vector3(playerMoveSystem.transform.position.x, transform.position.y, transform.position.z);
+                Vector3 targetPos = new Vector3(playerSystem.transform.position.x, transform.position.y, transform.position.z);
 
                 Vector2 direction = (targetPos - transform.position).normalized;
 
@@ -174,14 +175,14 @@ public class EnemySystem : MonoBehaviour
 
         yield return new WaitForSeconds(shootDelay);
 
-        if (BulletPrefab != null && ShootPoint != null && playerMoveSystem != null)
+        if (BulletPrefab != null && ShootPoint != null && playerSystem != null)
         {
             GameObject bullet = Instantiate(BulletPrefab, ShootPoint.position, Quaternion.identity);
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
 
             if (rb != null)
             {
-                Vector2 direction = (playerMoveSystem.transform.position - ShootPoint.position).normalized;
+                Vector2 direction = (playerSystem.transform.position - ShootPoint.position).normalized;
                 rb.linearVelocity = direction * bulletSpeed;
             }
         }
@@ -197,7 +198,9 @@ public class EnemySystem : MonoBehaviour
         Debug.Log("폭팔 카운트 시작 3초");
         yield return new WaitForSeconds(3f);
 
-        if (isDistonse && playerHelthSystem != null)
+        float distance = Vector2.Distance(transform.position, playerSystem.transform.position);
+
+        if (distance <= stopDistance && playerHelthSystem != null)
         {
             Debug.Log("플레이어가 폭팔 범위 안에 있음");
             playerHelthSystem.Die();
@@ -210,20 +213,20 @@ public class EnemySystem : MonoBehaviour
 
     private bool IsPlayerInAttackRange()
     {
-        if (playerMoveSystem == null) return false;
+        if (playerSystem == null) return false;
 
-        float distance = Vector2.Distance(transform.position, playerMoveSystem.transform.position);
+        float distance = Vector2.Distance(transform.position, playerSystem.transform.position);
 
         return distance <= stopDistance;
     }
 
     private void FlipToPlayer()
     {
-        if (playerMoveSystem == null) return;
+        if (playerSystem == null) return;
 
-        if (playerMoveSystem.transform.position.x < transform.position.x)
+        if (playerSystem.transform.position.x < transform.position.x)
             transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-        else if (playerMoveSystem.transform.position.x > transform.position.x)
+        else if (playerSystem.transform.position.x > transform.position.x)
             transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
     }
 }
