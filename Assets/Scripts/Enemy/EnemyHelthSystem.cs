@@ -28,13 +28,6 @@ public class EnemyHelthSystem : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (playerSystem.isDashAttack && collision.gameObject.CompareTag("Player"))
-        {
-            Helth();
-        }
-    }
 
     void Helth()
     {

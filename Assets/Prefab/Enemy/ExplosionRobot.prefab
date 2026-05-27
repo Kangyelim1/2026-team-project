@@ -90,7 +90,7 @@ SpriteRenderer:
   m_SortingOrder: 10
   m_MaskInteraction: 0
   m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
-  m_Color: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 1}
+  m_Color: {r: 0.6385708, g: 0, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -182,7 +182,7 @@ MonoBehaviour:
   BulletPrefab: {fileID: 5149882320093515215, guid: 785cf17f7de90d44598a7729786e9c5a, type: 3}
   BoomEffect: {fileID: 0}
   bossPattern: {fileID: 0}
-  playerMoveSystem: {fileID: 0}
+  playerSystem: {fileID: 0}
   playerHelthSystem: {fileID: 0}
   moveSpeed: 3
   stopDistance: 2
@@ -507,7 +507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHelthSystem
   enemySystem: {fileID: 1635546834697167743}
   playerAttackSystem: {fileID: 0}
-  playerMoveSystem: {fileID: 0}
+  playerSystem: {fileID: 0}
 --- !u!1 &8955180800484366012
 GameObject:
   m_ObjectHideFlags: 0

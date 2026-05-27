@@ -76,7 +76,7 @@ public class PlayerSystem : MonoBehaviour
 
     private IEnumerator Dash()
     {
-        Debug.Log("근거리 공격 진행");
+        Debug.Log("구르기");
         isDash = true;
         isDashAttack = true;
 
