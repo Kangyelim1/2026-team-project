@@ -152,7 +152,7 @@ public class EnemySystem : MonoBehaviour
         yield return new WaitForSeconds(1f);
         Debug.Log("코루틴 진행1");
 
-        if (isDistonse && playerHelthSystem != null)
+        if ( playerHelthSystem != null)
         {
             playerHelthSystem.Die();
         }
