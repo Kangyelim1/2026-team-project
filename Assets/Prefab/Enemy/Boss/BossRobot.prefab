@@ -279,7 +279,7 @@ MonoBehaviour:
   playerMoveSystem: {fileID: 0}
   playerHelthSystem: {fileID: 0}
   moveSpeed: 3
-  stopDistance: 1.2
+  stopDistance: 2
   shootDelay: 5
   bulletSpeed: 80
   chaseAfterExitTime: 3

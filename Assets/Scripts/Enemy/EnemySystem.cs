@@ -149,6 +149,7 @@ public class EnemySystem : MonoBehaviour
 
         Debug.Log("적 일반 공격 애니매이션 실행");
         yield return new WaitForSeconds(1f);
+        Debug.Log("코루틴 진행1");
 
         if (isDistonse && playerHelthSystem != null)
         {
@@ -156,6 +157,7 @@ public class EnemySystem : MonoBehaviour
         }
 
         yield return new WaitForSeconds(1f);
+        Debug.Log("코루틴 진행2");
         isShortAttack = false;
 
     }

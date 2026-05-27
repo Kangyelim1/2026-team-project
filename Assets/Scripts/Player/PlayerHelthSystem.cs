@@ -5,10 +5,13 @@ public class PlayerHelthSystem : MonoBehaviour
     public PlayerMoveSystem MoveSystem;
     public GameManger gameManger;
 
-    private void Start()
+    private void Update()
     {
-        MoveSystem = FindAnyObjectByType<PlayerMoveSystem>();
-        gameManger = FindAnyObjectByType<GameManger>();
+        if(MoveSystem == null)
+            MoveSystem = FindAnyObjectByType<PlayerMoveSystem>();
+
+        if(gameManger == null)
+            gameManger = FindAnyObjectByType<GameManger>();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -26,6 +29,7 @@ public class PlayerHelthSystem : MonoBehaviour
 
     public void Die()
     {
+        Debug.Log("Die 함수 호출 확인");
         if (gameManger == null) return;
         Debug.Log("플레이어 사망");
         gameManger.isDiePlayer = true;
