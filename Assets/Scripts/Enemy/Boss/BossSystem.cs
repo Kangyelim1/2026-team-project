@@ -32,7 +32,7 @@ public class BossSystem : MonoBehaviour
         switch(BossName)
         {
             case "보스" when Pattern == "패턴01":
-                StartCoroutine(bossPatternSystem.BossPattern01());
+                StartCoroutine(bossPatternSystem.LaserAttack());
                 break;
             case "보스" when Pattern == "패턴02":
                 StartCoroutine(bossPatternSystem.BossPattern02());
