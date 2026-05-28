@@ -9,9 +9,19 @@ public class EnemyHelthSystem : MonoBehaviour
     public int MinBossHelth;
     public int currentBossHelth;
 
+    private StageClearManager stageClearManager;
+    private BossClearSystem bossClearSystem;
+
     private void Start()
     {
         enemySystem = GetComponentInParent<EnemySystem>();
+
+        
+        // 씬에 있는 StageClearManager 찾기
+        stageClearManager = FindAnyObjectByType<StageClearManager>();
+
+        // 씬에 있는 BossClearSystem 찾기
+        bossClearSystem = FindAnyObjectByType<BossClearSystem>();
 
         if (enemySystem.enemyType == EnemyType.Boss)
         {
@@ -55,6 +65,20 @@ public class EnemyHelthSystem : MonoBehaviour
     public void Die()
     {
         Debug.Log("몬스터 사망");
+
+        if (stageClearManager != null)
+        {
+            stageClearManager.EnemyDead();
+        }
+
+       
+        if (enemySystem.enemyType == EnemyType.Boss)
+        {
+            if (bossClearSystem != null)
+            {
+                bossClearSystem.GameClear();
+            }
+        }
         Destroy(enemySystem.gameObject);
     }
 }
