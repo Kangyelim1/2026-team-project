@@ -13,4 +13,7 @@ public class EnemySO : ScriptableObject
 {
     public string enemyName;
     public  EnemyType enemyType;
+
+    [Header("보스 전용")]
+    public int BossHelth;
 }

@@ -5,8 +5,12 @@ using UnityEngine;
 public class EnemySystem : MonoBehaviour
 {
     public EnemySO enemySO;
+
     public string enemyName;
     public EnemyType enemyType;
+
+    [Header("보스 전용")]
+    public int BossHelth;
 
     public Transform ShootPoint;
     public GameObject BulletPrefab;
@@ -38,6 +42,14 @@ public class EnemySystem : MonoBehaviour
         enemyType = enemySO.enemyType;
     }
 
+    private void Start()
+    {
+        if(enemyType == EnemyType.Boss)
+        {
+            BossHelth = enemySO.BossHelth;
+        }
+    }
+
     private void Update()
     {
 
@@ -51,7 +63,7 @@ public class EnemySystem : MonoBehaviour
         if (isAttack)
             StartAttack();
 
-        if (enemyType == EnemyType.Boss && bossPattern == null)
+        if (enemyType == EnemyType.Boss && bossPattern == null) { }
             bossPattern = FindAnyObjectByType<BossSystem>();
     }
 
