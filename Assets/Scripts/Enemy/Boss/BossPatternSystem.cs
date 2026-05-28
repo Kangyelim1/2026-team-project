@@ -33,6 +33,8 @@ public class BossPatternSystem : MonoBehaviour
 
     public IEnumerator LaserAttack()
     {
+        if (player == null) yield break;
+
         laserLine01.enabled = true;
         laserLine02.enabled = true;
 
@@ -60,6 +62,7 @@ public class BossPatternSystem : MonoBehaviour
         }
 
         hitCollider.transform.position = targetPos;
+        yield return new WaitForSeconds(0.5f);
         hitCollider.SetActive(true);
 
         yield return new WaitForSeconds(0.2f);

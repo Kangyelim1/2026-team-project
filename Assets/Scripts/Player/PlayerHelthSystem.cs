@@ -25,6 +25,11 @@ public class PlayerHelthSystem : MonoBehaviour
                 }
             }
         }
+
+        if (collision.gameObject.CompareTag("LaserHitPoint"))
+        {
+            Die();
+        }
     }
 
     public void Die()
