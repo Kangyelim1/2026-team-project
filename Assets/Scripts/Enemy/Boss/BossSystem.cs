@@ -31,11 +31,14 @@ public class BossSystem : MonoBehaviour
     {
         switch(BossName)
         {
-            case "보스" when Pattern == "패턴01":
+            case "보스" when Pattern == "레이져":
                 StartCoroutine(bossPatternSystem.LaserAttack());
                 break;
-            case "보스" when Pattern == "패턴02":
+            case "보스" when Pattern == "전기":
                 StartCoroutine(bossPatternSystem.BossPattern02());
+                break;
+            case "보스" when Pattern == "검은 물체":
+                StartCoroutine(bossPatternSystem.CreateObjectPattern());
                 break;
             default:
                 break;

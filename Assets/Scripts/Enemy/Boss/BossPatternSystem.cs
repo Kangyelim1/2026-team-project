@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BossPatternSystem : MonoBehaviour
@@ -18,6 +19,9 @@ public class BossPatternSystem : MonoBehaviour
     public GameObject WormHole01;
     public GameObject WormHole02;
     public GameObject electricObject;
+
+    [Header("검은 물체 생성 패턴")]
+    public List<GameObject> objectList = new List<GameObject>();
 
     public Transform player;
     public Transform laserStart01;
@@ -115,4 +119,29 @@ public class BossPatternSystem : MonoBehaviour
         yield return new WaitForSeconds(5f);
         bossSystem.BossRandomPattern();
     }
+
+    public IEnumerator CreateObjectPattern()
+    {
+        List<GameObject> randomObjects = new List<GameObject>();
+
+        while (randomObjects.Count < 3)
+        {
+            int randomIndex = Random.Range(0, objectList.Count);
+            GameObject randomObj = objectList[randomIndex];
+
+            if (!randomObjects.Contains(randomObj))
+            {
+                randomObjects.Add(randomObj);
+                randomObj.SetActive(true);
+            }
+        }
+
+        yield return new WaitForSeconds(0.5f);
+
+        foreach (GameObject obj in randomObjects)
+        {
+            obj.SetActive(false);
+        }
+    }
 }
+
