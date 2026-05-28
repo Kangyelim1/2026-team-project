@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using System.Collections;
 using UnityEngine;
 
 public class BulletSystem : MonoBehaviour
@@ -15,8 +16,16 @@ public class BulletSystem : MonoBehaviour
 
     private void Start()
     {
-        Destroy(gameObject, lifeTime);
+        StartCoroutine(DestroyBullet());
     }
+
+
+    IEnumerator DestroyBullet()
+    {
+        yield return new WaitForSeconds(lifeTime);
+        Destroy(gameObject);
+    }
+    
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

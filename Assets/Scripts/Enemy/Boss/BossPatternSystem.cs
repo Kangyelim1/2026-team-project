@@ -91,7 +91,7 @@ public class BossPatternSystem : MonoBehaviour
         laserLine01.enabled = false;
         laserLine02.enabled = false;
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(5f);
         bossSystem.BossRandomPattern();
     }
 
@@ -112,7 +112,7 @@ public class BossPatternSystem : MonoBehaviour
         WormHole01.SetActive(false);
         WormHole02.SetActive(false);
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(5f);
         bossSystem.BossRandomPattern();
     }
 }

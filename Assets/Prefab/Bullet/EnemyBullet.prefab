@@ -107,7 +107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BulletSystem
   bulletSO: {fileID: 11400000, guid: 530291fae4a99864682ddaa6f8c87d18, type: 2}
-  lifeTime: 3
+  lifeTime: 0.01
   type: 0
 --- !u!58 &8996354636734520928
 CircleCollider2D:
@@ -171,4 +171,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 6
