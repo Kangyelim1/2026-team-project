@@ -6,7 +6,8 @@ public enum EnemyType
     LongDistanc,
     Boom,
     Boss,
-    Charge
+    Charge,
+    Shield
 }
 
 [CreateAssetMenu(fileName = "EnemySO", menuName = "ScriptableObject/Enemy")]

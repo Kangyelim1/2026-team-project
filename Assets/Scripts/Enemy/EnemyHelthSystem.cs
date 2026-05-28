@@ -33,13 +33,13 @@ public class EnemyHelthSystem : MonoBehaviour
             {
                 if (bullet.type == BulletType.PlayerBullet)
                 {
-                    Helth();
+                    Helth(collision.transform.position);
                 }
             }
         }
     }
 
-    void Helth()
+    void Helth(Vector2 hitPos)
     {
         EnemyChargeSystem chargeSystem = GetComponentInParent<EnemyChargeSystem>();
         if (chargeSystem != null && chargeSystem.isInvincible)
@@ -48,15 +48,18 @@ public class EnemyHelthSystem : MonoBehaviour
             return;
         }
 
+        EnemyShieldSystem shieldSystem = GetComponentInParent<EnemyShieldSystem>();
+        if (shieldSystem != null)
+        {
+            bool canDamage = shieldSystem.TryTakeDamage(hitPos);
+            if (!canDamage) return;
+        }
+
         if (enemySystem.enemyType == EnemyType.Boss)
         {
             currentBossHelth -= 8;
             Debug.Log("보스 체력 감소");
-
-            if (currentBossHelth <= 0)
-            {
-                Die();
-            }
+            if (currentBossHelth <= 0) Die();
         }
         else
         {

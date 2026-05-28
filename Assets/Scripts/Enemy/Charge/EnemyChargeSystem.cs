@@ -27,7 +27,7 @@ public class EnemyChargeSystem : MonoBehaviour
     [Header("스턴 설정")]
     public float stunTime = 1f;
 
-    [Header("상태 확인 (건드리지 마세요)")]
+    [Header("상태 확인")]
     public bool isInvincible = false;
 
     private Rigidbody2D rb;
