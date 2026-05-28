@@ -10,6 +10,8 @@ public class BossPatternSystem : MonoBehaviour
     public PlayerHelthSystem playerHelthSystem;
     public PlayerSystem playerSystem;
 
+    public float BossPatternTime;
+
     [Header("레이져 공격")]
     public LineRenderer laserLine01;
     public LineRenderer laserLine02;
@@ -95,7 +97,7 @@ public class BossPatternSystem : MonoBehaviour
         laserLine01.enabled = false;
         laserLine02.enabled = false;
 
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(BossPatternTime);
         bossSystem.BossRandomPattern();
     }
 
@@ -116,7 +118,7 @@ public class BossPatternSystem : MonoBehaviour
         WormHole01.SetActive(false);
         WormHole02.SetActive(false);
 
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(BossPatternTime);
         bossSystem.BossRandomPattern();
     }
 
@@ -142,6 +144,8 @@ public class BossPatternSystem : MonoBehaviour
         {
             obj.SetActive(false);
         }
+        yield return new WaitForSeconds(BossPatternTime);
+        bossSystem.BossRandomPattern();
     }
 }
 
