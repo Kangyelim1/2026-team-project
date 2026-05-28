@@ -9,9 +9,6 @@ public class EnemySystem : MonoBehaviour
     public string enemyName;
     public EnemyType enemyType;
 
-    [Header("보스 전용")]
-    public int BossHelth;
-
     public Transform ShootPoint;
     public GameObject BulletPrefab;
     public GameObject BoomEffect;
@@ -27,6 +24,9 @@ public class EnemySystem : MonoBehaviour
     public float bulletSpeed = 8f;
     public float chaseAfterExitTime = 3f;
     public float chaseDistance = 10f;
+
+    [Header("보스 전용")]
+    public int BossHelth;
 
     private bool isAttack;
     private bool isDistonse;

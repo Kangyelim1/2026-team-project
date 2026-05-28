@@ -19,6 +19,8 @@ public class PlayerSystem : MonoBehaviour
 
     public GameManger gameManger;
 
+    public GameObject LockOnImage;
+
     private float moveX;
     private bool isDash;
     private bool isJump;

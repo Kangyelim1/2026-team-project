@@ -14,10 +14,10 @@ public class BossPatternSystem : MonoBehaviour
     public LineRenderer laserLine02;
     public GameObject hitCollider;
 
-    [Header("절류 방출")]
+    [Header("전기 패턴")]
+    public GameObject WormHole01;
+    public GameObject WormHole02;
     public GameObject electricObject;
-    public GameObject fakeElectricObject;
-
 
     public Transform player;
     public Transform laserStart01;
@@ -47,6 +47,14 @@ public class BossPatternSystem : MonoBehaviour
     {
         if (player == null) yield break;
 
+        if(enemyHelthSystem.currentBossHelth >= 150) aimTime = 2.5f;
+        else aimTime = 2f;
+
+        if(playerSystem == null)
+            playerSystem = FindAnyObjectByType<PlayerSystem>();
+
+        playerSystem.LockOnImage.SetActive(true);
+
         laserLine01.enabled = true;
         laserLine02.enabled = true;
 
@@ -72,7 +80,7 @@ public class BossPatternSystem : MonoBehaviour
             timer += Time.deltaTime;
             yield return null;
         }
-
+        playerSystem.LockOnImage.SetActive(false);
         hitCollider.transform.position = targetPos;
         yield return new WaitForSeconds(0.5f);
         hitCollider.SetActive(true);
@@ -90,20 +98,19 @@ public class BossPatternSystem : MonoBehaviour
     public IEnumerator BossPattern02()
     {
         electricObject.SetActive(false);
-        fakeElectricObject.SetActive(false);
+        WormHole01.SetActive(false);
+        WormHole02.SetActive(false);
 
-        for (int i = 0; i < 3; i++)
-        {
-            fakeElectricObject.SetActive(true);
-            yield return new WaitForSeconds(0.2f);
+        WormHole01.SetActive(true);
+        WormHole02.SetActive(true);
 
-            fakeElectricObject.SetActive(false);
-            yield return new WaitForSeconds(0.2f);
-        }
-
+        yield return new WaitForSeconds(1f);
         electricObject.SetActive(true);
-        yield return new WaitForSeconds(0.3f);
+
+        yield return new WaitForSeconds(1.5f);
         electricObject.SetActive(false);
+        WormHole01.SetActive(false);
+        WormHole02.SetActive(false);
 
         yield return new WaitForSeconds(0.1f);
         bossSystem.BossRandomPattern();

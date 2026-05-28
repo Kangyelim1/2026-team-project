@@ -1,7 +1,4 @@
-using Cainos.LucidEditor;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class EnemyHelthSystem : MonoBehaviour
 {
@@ -9,9 +6,8 @@ public class EnemyHelthSystem : MonoBehaviour
 
     [Header("보스 체력")]
     public int maxBossHelth;
-    public int MinBsooHelth;
+    public int MinBossHelth;
     public int currentBossHelth;
-    public Slider bossSlider;
 
     private void Start()
     {
@@ -19,26 +15,8 @@ public class EnemyHelthSystem : MonoBehaviour
 
         if (enemySystem.enemyType == EnemyType.Boss)
         {
-            maxBossHelth = currentBossHelth;
-            SliderUI();
+            currentBossHelth = maxBossHelth;
         }
-    }
-
-    private void Update()
-    {
-        if (enemySystem.enemyType == EnemyType.Boss)
-        {
-            SliderUI();
-        }
-    }
-
-    private void SliderUI()
-    {
-        if (bossSlider == null) return;
-
-        bossSlider.maxValue = maxBossHelth;
-        bossSlider.minValue = 0;
-        bossSlider.value = currentBossHelth;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -62,25 +40,22 @@ public class EnemyHelthSystem : MonoBehaviour
         {
             currentBossHelth -= 5;
             Debug.Log("보스 체력 감소");
-            SliderUI();
 
             if (currentBossHelth <= 0)
             {
                 Die();
             }
         }
-        else Die();
+        else 
+        {
+            Debug.Log("일반로봇 사망");
+            Die();
+        } 
     }
 
     public void Die()
     {
         Debug.Log("몬스터 사망");
-
-        if (bossSlider != null)
-        {
-            bossSlider.gameObject.SetActive(false);
-        }
-
         Destroy(enemySystem.gameObject);
     }
 }
