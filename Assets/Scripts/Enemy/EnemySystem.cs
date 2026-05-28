@@ -152,7 +152,7 @@ public class EnemySystem : MonoBehaviour
         yield return new WaitForSeconds(1f);
         Debug.Log("코루틴 진행1");
 
-        if ( playerHelthSystem != null)
+        if (playerHelthSystem != null && isDistonse)
         {
             playerHelthSystem.Die();
         }
@@ -197,6 +197,8 @@ public class EnemySystem : MonoBehaviour
 
         Debug.Log("폭팔 카운트 시작 3초");
         yield return new WaitForSeconds(3f);
+
+        if (playerSystem == null) yield break;
 
         float distance = Vector2.Distance(transform.position, playerSystem.transform.position);
 

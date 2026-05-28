@@ -500,7 +500,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMoveSystem
   PlayerMoveSpeed: 5
-  PlayerDashDistance: 4
+  PlayerDashDistance: 7
   PlayerDashDuration: 0.15
   JumpForce: 7
   PlayerRigidbody: {fileID: 29133624030335386}
@@ -665,5 +665,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cbcde3e731defe48900a800a79801c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHelthSystem
-  MoveSystem: {fileID: 0}
+  playerSystem: {fileID: 0}
   gameManger: {fileID: 0}

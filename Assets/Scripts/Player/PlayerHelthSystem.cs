@@ -33,6 +33,6 @@ public class PlayerHelthSystem : MonoBehaviour
         if (gameManger == null) return;
         Debug.Log("플레이어 사망");
         gameManger.isDiePlayer = true;
-        Debug.Log("사망 애니매이션");
+        Destroy(playerSystem.gameObject);
     }
 }

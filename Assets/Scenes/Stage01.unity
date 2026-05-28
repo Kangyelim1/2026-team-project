@@ -664,6 +664,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1013455175}
   - component: {fileID: 1013455174}
+  - component: {fileID: 1013455176}
   m_Layer: 0
   m_Name: GameManger
   m_TagString: SavePoint
@@ -702,6 +703,19 @@ Transform:
   - {fileID: 904993202}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1013455176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013455173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec6fa77d053edbb468b5246b93cc4b7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CursorManager
+  cursorTexture: {fileID: 2800000, guid: b9352b4304b2c7c499a17b688484170a, type: 3}
 --- !u!1001 &1061056662
 PrefabInstance:
   m_ObjectHideFlags: 0

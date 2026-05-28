@@ -182,14 +182,14 @@ MonoBehaviour:
   BulletPrefab: {fileID: 5149882320093515215, guid: 785cf17f7de90d44598a7729786e9c5a, type: 3}
   BoomEffect: {fileID: 0}
   bossPattern: {fileID: 0}
-  playerMoveSystem: {fileID: 0}
+  playerSystem: {fileID: 0}
   playerHelthSystem: {fileID: 0}
   moveSpeed: 3
   stopDistance: 2
   shootDelay: 3
   bulletSpeed: 50
   chaseAfterExitTime: 3
-  chaseDistance: 10
+  chaseDistance: 15
 --- !u!58 &7432597354560567054
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -507,7 +507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHelthSystem
   enemySystem: {fileID: 1635546834697167743}
   playerAttackSystem: {fileID: 0}
-  playerMoveSystem: {fileID: 0}
+  playerSystem: {fileID: 0}
 --- !u!1 &8955180800484366012
 GameObject:
   m_ObjectHideFlags: 0
