@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b983b1b932ef75428057804d31f436c, type: 3}
   m_Name: "\uBC29\uD328 \uACF5\uACA9 \uB85C\uBD07"
   m_EditorClassIdentifier: Assembly-CSharp::EnemySO
-  enemyName: "\uB3CC\uC9C4 \uACF5\uACA9 \uB85C\uBD07"
-  enemyType: 4
+  enemyName: "\uBC29\uD328 \uACF5\uACA9 \uB85C\uBD07"
+  enemyType: 5
   BossHelth: 0
