@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator), typeof(CapsuleCollider2D))]
+[RequireComponent(typeof(AudioSource))]
 public class GrapperMovement : MonoBehaviour
 {
     [Header("적 이름")]
@@ -11,16 +12,16 @@ public class GrapperMovement : MonoBehaviour
     public float moveSpeed = 4f;
     public float moveRadius = 3f;
     public float trunDuration = 0.3f;
-    public float fastMoveDuration = 2f;
-    public float fastSpeedMultiplier = 1.5f;
+
+    [Header("랜덤 공격")]
+    public float minAttackInterval = 2f;
+    public float maxAttackInterval = 5f;
+    public float attackDuration = 2f;
 
     [Header("벽 감지")]
     public Transform wallCheckPos;
     public float layerCheckRadius = 0.05f;
-
-    [Header("시야 범위")]
-    public Vector2 viewOffset = new Vector2(0.5f, 0f);
-    public Vector2 viewSize = new Vector2(5f, 3f);
+    public LayerMask obstacleMask;
 
     [Header("공격 판정")]
     public Vector2 hitboxOffset = new Vector2(0.5f, 0f);
@@ -34,18 +35,19 @@ public class GrapperMovement : MonoBehaviour
     public float deathDuration = 1.5f;
     public float fallingOutPower = 12f;
 
-    [Header("레이어")]
+    [Header("사망 후 제외 레이어")]
     public LayerMask afterDeathLayer;
-    public LayerMask obstacleMask;
 
-    public enum State { Move, Turn, Attack, FastMove }
+    public enum State { Move, Turn, Attack }
     private State currentState;
 
     private bool isGoingRight = true;
     private bool isDead = false;
     public bool isAttacking = false;
     private int facingSign = 1;
-    private float fastMoveTimer = 0f;
+
+    private float attackTimer = 0f;
+    private float nextAttackTime = 0f;
 
     private Vector3 movePosRight;
     private Vector3 movePosLeft;
@@ -59,7 +61,6 @@ public class GrapperMovement : MonoBehaviour
     private CapsuleCollider2D capsuleCol;
     private AudioSource audioSource;
 
-    private GameObject playerObject;
     private PlayerHelthSystem playerHelthSystem;
 
     private void Awake()
@@ -75,14 +76,11 @@ public class GrapperMovement : MonoBehaviour
         rb.gravityScale = 0f;
         rb.freezeRotation = true;
 
-        PlayerSystem player = FindAnyObjectByType<PlayerSystem>();
-        if (player != null)
-        {
-            playerObject = player.gameObject;
-            playerHelthSystem = FindAnyObjectByType<PlayerHelthSystem>();
-        }
+        playerHelthSystem = FindAnyObjectByType<PlayerHelthSystem>();
 
         if (moveRadius < 0) moveRadius *= -1f;
+        if (maxAttackInterval < minAttackInterval)
+            maxAttackInterval = minAttackInterval;
 
         movePosRight = movePosLeft = transform.position;
         movePosRight.x += moveRadius;
@@ -91,6 +89,10 @@ public class GrapperMovement : MonoBehaviour
         targetPos = movePosRight;
         isGoingRight = true;
         isDead = false;
+        isAttacking = false;
+
+        attackTimer = 0f;
+        nextAttackTime = GetRandomAttackTime();
 
         SetState(State.Move);
     }
@@ -98,21 +100,20 @@ public class GrapperMovement : MonoBehaviour
     private void Update()
     {
         if (isDead) return;
-        if (playerObject == null) return;
 
         switch (currentState)
         {
             case State.Move:
-                MoveHandler(moveSpeed);
-                CheckPlayerInView();
-                break;
+                attackTimer += Time.deltaTime;
+                MoveHandler();
 
-            case State.FastMove:
-                FastMoveHandler();
+                if (attackTimer >= nextAttackTime)
+                    SetState(State.Attack);
                 break;
         }
 
-        if (isAttacking) AttackCheck();
+        if (isAttacking)
+            AttackCheck();
 
         UpdateAnimation();
     }
@@ -135,19 +136,13 @@ public class GrapperMovement : MonoBehaviour
                 break;
 
             case State.Attack:
-                isAttacking = false;
                 if (attackCoroutine != null) StopCoroutine(attackCoroutine);
                 attackCoroutine = StartCoroutine(AttackStep());
-                break;
-
-            case State.FastMove:
-                isAttacking = false;
-                fastMoveTimer = 0f;
                 break;
         }
     }
 
-    private void MoveHandler(float speed)
+    private void MoveHandler()
     {
         if (wallCheckPos != null)
         {
@@ -159,22 +154,11 @@ public class GrapperMovement : MonoBehaviour
             }
         }
 
-        float step = speed * Time.deltaTime;
+        float step = moveSpeed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, targetPos, step);
 
         if (Vector3.Distance(transform.position, targetPos) < 0.05f)
             SetState(State.Turn);
-    }
-
-    private void FastMoveHandler()
-    {
-        fastMoveTimer += Time.deltaTime;
-        MoveHandler(moveSpeed * fastSpeedMultiplier);
-
-        if (fastMoveTimer >= fastMoveDuration)
-        {
-            SetState(IsPlayerInView() ? State.Attack : State.Move);
-        }
     }
 
     private IEnumerator WaitToTurn()
@@ -192,22 +176,27 @@ public class GrapperMovement : MonoBehaviour
 
     private IEnumerator AttackStep()
     {
-        anim.SetTrigger("startAttack");
+        rb.linearVelocity = Vector2.zero;
         isAttacking = true;
+        attackTimer = 0f;
 
-        yield return new WaitForSeconds(3f);
+        anim.SetTrigger("startAttack");
+
+        yield return new WaitForSeconds(attackDuration);
 
         isAttacking = false;
         anim.SetTrigger("endAttack");
-        attackCoroutine = null;
 
-        SetState(State.FastMove);
+        attackTimer = 0f;
+        nextAttackTime = GetRandomAttackTime();
+
+        attackCoroutine = null;
+        SetState(State.Move);
     }
 
-    private void CheckPlayerInView()
+    private float GetRandomAttackTime()
     {
-        if (IsPlayerInView())
-            SetState(State.Attack);
+        return Random.Range(minAttackInterval, maxAttackInterval);
     }
 
     private void AttackCheck()
@@ -219,6 +208,7 @@ public class GrapperMovement : MonoBehaviour
         foreach (Collider2D col in hits)
         {
             if (!col.CompareTag("Player")) continue;
+
             if (playerHelthSystem != null)
             {
                 playerHelthSystem.Die();
@@ -226,26 +216,40 @@ public class GrapperMovement : MonoBehaviour
             }
         }
     }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (isDead) return;
+
         if (other.CompareTag("Bullet"))
         {
             if (other.TryGetComponent(out BulletSystem bullet))
             {
                 if (bullet.type == BulletType.PlayerBullet)
                 {
+                    Destroy(other.gameObject);
+
                     if (isAttacking)
                     {
                         if (invincibleHitSound != null && audioSource != null)
                             audioSource.PlayOneShot(invincibleHitSound);
-
-                        Destroy(other.gameObject);
                         return;
                     }
-                    Destroy(other.gameObject);
+
                     Die();
                 }
             }
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (isDead) return;
+
+        if (other.CompareTag("Player"))
+        {
+            if (playerHelthSystem != null)
+                playerHelthSystem.Die();
         }
     }
 
@@ -253,6 +257,7 @@ public class GrapperMovement : MonoBehaviour
     {
         if (isDead) return;
         isDead = true;
+        isAttacking = false;
 
         rb.gravityScale = 1f;
         rb.freezeRotation = false;
@@ -279,6 +284,7 @@ public class GrapperMovement : MonoBehaviour
             transform.localScale = Vector3.Lerp(initScale, targetScale, timer / deathDuration);
             yield return null;
         }
+
         Destroy(gameObject);
     }
 
@@ -294,42 +300,14 @@ public class GrapperMovement : MonoBehaviour
 
     private void UpdateAnimation()
     {
-        bool moving = (currentState == State.Move || currentState == State.FastMove);
+        bool moving = (currentState == State.Move);
         anim.SetBool("isMoving", moving);
         anim.SetBool("isAttacking", isAttacking);
-    }
-
-    private bool IsPlayerInView()
-    {
-        if (playerObject == null) return false;
-
-        Vector2 offset = new Vector2(viewOffset.x * facingSign, viewOffset.y);
-        Vector2 worldCenter = (Vector2)transform.position + offset;
-
-        Collider2D[] hits = Physics2D.OverlapBoxAll(worldCenter, viewSize, 0f, playerLayer);
-        bool found = false;
-        foreach (Collider2D col in hits)
-        {
-            if (col.CompareTag("Player")) { found = true; break; }
-        }
-        if (!found) return false;
-
-        Vector2 start = transform.position;
-        Vector2 end = playerObject.transform.position;
-        Vector2 direction = (end - start).normalized;
-        float distance = Vector2.Distance(start, end);
-
-        RaycastHit2D hit = Physics2D.Raycast(start, direction, distance, obstacleMask);
-        return hit.collider == null;
     }
 
     private void OnDrawGizmosSelected()
     {
         int sign = Application.isPlaying ? facingSign : 1;
-
-        Gizmos.color = Color.blue;
-        Vector2 vCenter = (Vector2)transform.position + new Vector2(viewOffset.x * sign, viewOffset.y);
-        Gizmos.DrawWireCube(vCenter, new Vector3(viewSize.x, viewSize.y, 0f));
 
         Gizmos.color = Color.red;
         Vector2 hCenter = (Vector2)transform.position + new Vector2(hitboxOffset.x * sign, hitboxOffset.y);
@@ -344,8 +322,11 @@ public class GrapperMovement : MonoBehaviour
         }
         else
         {
-            Vector3 r = transform.position; r.x += moveRadius;
-            Vector3 l = transform.position; l.x -= moveRadius;
+            Vector3 r = transform.position;
+            Vector3 l = transform.position;
+            r.x += moveRadius;
+            l.x -= moveRadius;
+
             Gizmos.DrawWireSphere(r, 0.2f);
             Gizmos.DrawWireSphere(l, 0.2f);
             Gizmos.DrawLine(r, l);
@@ -355,16 +336,6 @@ public class GrapperMovement : MonoBehaviour
         {
             Gizmos.color = Color.magenta;
             Gizmos.DrawWireSphere(wallCheckPos.position, layerCheckRadius);
-        }
-    }
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        if (isDead) return;
-
-        if (other.CompareTag("Player"))
-        {
-            if (playerHelthSystem != null)
-                playerHelthSystem.Die();
         }
     }
 }

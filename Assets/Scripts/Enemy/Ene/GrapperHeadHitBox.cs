@@ -22,7 +22,6 @@ public class GrapperHeadHitBox : MonoBehaviour
                 {
                     Destroy(other.gameObject);
 
-                    // 무적 상태여도 머리는 무조건 즉사
                     if (grapperMovement != null)
                         grapperMovement.Die();
                 }
