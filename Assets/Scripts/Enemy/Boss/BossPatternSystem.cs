@@ -4,7 +4,10 @@ using UnityEngine;
 public class BossPatternSystem : MonoBehaviour
 {
     public BossSystem bossSystem;
+    public EnemyHelthSystem enemyHelthSystem;
+
     public PlayerHelthSystem playerHelthSystem;
+    public PlayerSystem playerSystem;
 
     [Header("레이져 공격")]
     public LineRenderer laserLine01;
@@ -28,12 +31,16 @@ public class BossPatternSystem : MonoBehaviour
     private void Start()
     {
         bossSystem = FindAnyObjectByType<BossSystem>();
+        enemyHelthSystem = FindAnyObjectByType<EnemyHelthSystem>();
     }
 
     private void Update()
     {
         if (playerHelthSystem == null)
-            playerHelthSystem = FindAnyObjectByType<PlayerHelthSystem>();
+            playerHelthSystem = FindAnyObjectByType<PlayerHelthSystem>();   
+
+        if(playerSystem == null)
+            playerSystem = FindAnyObjectByType<PlayerSystem>();
     }
 
     public IEnumerator LaserAttack()
