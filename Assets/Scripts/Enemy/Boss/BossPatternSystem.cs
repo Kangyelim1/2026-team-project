@@ -11,6 +11,11 @@ public class BossPatternSystem : MonoBehaviour
     public LineRenderer laserLine02;
     public GameObject hitCollider;
 
+    [Header("절류 방출")]
+    public GameObject electricObject;
+    public GameObject fakeElectricObject;
+
+
     public Transform player;
     public Transform laserStart01;
     public Transform laserStart02;
@@ -77,9 +82,23 @@ public class BossPatternSystem : MonoBehaviour
 
     public IEnumerator BossPattern02()
     {
-        Debug.Log("패턴02 실행");
-        yield return new WaitForSeconds(1f);
-        Debug.Log("패턴 종료");
+        electricObject.SetActive(false);
+        fakeElectricObject.SetActive(false);
+
+        for (int i = 0; i < 3; i++)
+        {
+            fakeElectricObject.SetActive(true);
+            yield return new WaitForSeconds(0.2f);
+
+            fakeElectricObject.SetActive(false);
+            yield return new WaitForSeconds(0.2f);
+        }
+
+        electricObject.SetActive(true);
+        yield return new WaitForSeconds(0.3f);
+        electricObject.SetActive(false);
+
+        yield return new WaitForSeconds(0.1f);
         bossSystem.BossRandomPattern();
     }
 }

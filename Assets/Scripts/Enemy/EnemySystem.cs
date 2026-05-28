@@ -77,6 +77,7 @@ public class EnemySystem : MonoBehaviour
 
         if (chaseStopCoroutine != null) StopCoroutine(chaseStopCoroutine);
 
+        if (enemyType == EnemyType.Boss) return;
         chaseStopCoroutine = StartCoroutine(StopChaseAfterDelay());
     }
 
