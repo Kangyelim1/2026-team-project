@@ -52,19 +52,28 @@ public class EnemySystem : MonoBehaviour
 
     private void Update()
     {
-
-        if(playerHelthSystem == null)
+        if (playerHelthSystem == null)
             playerHelthSystem = FindAnyObjectByType<PlayerHelthSystem>();
 
         if (playerSystem == null)
+        {
             playerSystem = FindAnyObjectByType<PlayerSystem>();
-        else FlipToPlayer();
+        }
+        else
+        {
+            if (enemyType != EnemyType.Charge)
+            {
+                FlipToPlayer();
+            }
+        }
 
         if (isAttack)
             StartAttack();
 
-        if (enemyType == EnemyType.Boss && bossPattern == null) { }
+        if (enemyType == EnemyType.Boss && bossPattern == null)
+        {
             bossPattern = FindAnyObjectByType<BossSystem>();
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)

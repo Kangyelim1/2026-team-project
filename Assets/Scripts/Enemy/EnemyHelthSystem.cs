@@ -16,11 +16,7 @@ public class EnemyHelthSystem : MonoBehaviour
     {
         enemySystem = GetComponentInParent<EnemySystem>();
 
-        
-        // 씬에 있는 StageClearManager 찾기
         stageClearManager = FindAnyObjectByType<StageClearManager>();
-
-        // 씬에 있는 BossClearSystem 찾기
         bossClearSystem = FindAnyObjectByType<BossClearSystem>();
 
         if (enemySystem.enemyType == EnemyType.Boss)
@@ -45,6 +41,13 @@ public class EnemyHelthSystem : MonoBehaviour
 
     void Helth()
     {
+        EnemyChargeSystem chargeSystem = GetComponentInParent<EnemyChargeSystem>();
+        if (chargeSystem != null && chargeSystem.isInvincible)
+        {
+            Debug.Log("돌진 중 무적! 피해 무시");
+            return;
+        }
+
         if (enemySystem.enemyType == EnemyType.Boss)
         {
             currentBossHelth -= 8;
@@ -55,11 +58,11 @@ public class EnemyHelthSystem : MonoBehaviour
                 Die();
             }
         }
-        else 
+        else
         {
             Debug.Log("일반로봇 사망");
             Die();
-        } 
+        }
     }
 
     public void Die()
@@ -71,7 +74,6 @@ public class EnemyHelthSystem : MonoBehaviour
             stageClearManager.EnemyDead();
         }
 
-       
         if (enemySystem.enemyType == EnemyType.Boss)
         {
             if (bossClearSystem != null)
@@ -79,6 +81,7 @@ public class EnemyHelthSystem : MonoBehaviour
                 bossClearSystem.GameClear();
             }
         }
+
         Destroy(enemySystem.gameObject);
     }
 }
