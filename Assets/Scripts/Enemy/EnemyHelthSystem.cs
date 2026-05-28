@@ -33,12 +33,11 @@ public class EnemyHelthSystem : MonoBehaviour
         }
     }
 
-
     void Helth()
     {
         if (enemySystem.enemyType == EnemyType.Boss)
         {
-            currentBossHelth -= 5;
+            currentBossHelth -= 8;
             Debug.Log("보스 체력 감소");
 
             if (currentBossHelth <= 0)

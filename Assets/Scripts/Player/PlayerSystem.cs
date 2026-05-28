@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerSystem : MonoBehaviour
@@ -18,7 +19,6 @@ public class PlayerSystem : MonoBehaviour
     public bool isDashAttack;
 
     public GameManger gameManger;
-
     public GameObject LockOnImage;
 
     private float moveX;
@@ -50,12 +50,12 @@ public class PlayerSystem : MonoBehaviour
 
         Flip();
 
-        if (Input.GetMouseButtonDown(1) && !isDash && !isJump)
+        if (Input.GetMouseButtonDown(1) && !isDash)
         {
             StartCoroutine(Dash());
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && !isJump && !isDash)
+        if (Input.GetKeyDown(KeyCode.Space) && !isJump)
         {
             Jump();
         }
@@ -97,6 +97,8 @@ public class PlayerSystem : MonoBehaviour
         }
 
         transform.position = targetPos;
+
+        yield return new WaitForSeconds(1f);
 
         isDash = false;
         isDashAttack = false;

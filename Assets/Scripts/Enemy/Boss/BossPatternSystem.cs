@@ -82,7 +82,7 @@ public class BossPatternSystem : MonoBehaviour
         }
         playerSystem.LockOnImage.SetActive(false);
         hitCollider.transform.position = targetPos;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         hitCollider.SetActive(true);
 
         yield return new WaitForSeconds(0.2f);
@@ -104,10 +104,10 @@ public class BossPatternSystem : MonoBehaviour
         WormHole01.SetActive(true);
         WormHole02.SetActive(true);
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         electricObject.SetActive(true);
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.5f);
         electricObject.SetActive(false);
         WormHole01.SetActive(false);
         WormHole02.SetActive(false);

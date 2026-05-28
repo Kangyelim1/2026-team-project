@@ -564,7 +564,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 10
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 1
@@ -594,7 +594,8 @@ MonoBehaviour:
   PlayerMoveSpeed: 5
   PlayerDashDistance: 7
   PlayerDashDuration: 0.15
-  JumpForce: 7
+  JumpForce: 9
+  cd: {fileID: 6174804858258139836}
   PlayerRigidbody: {fileID: 29133624030335386}
   PlayerSpriteRenderer: {fileID: 5987773170861498406}
   enemyHelthSystem: {fileID: 0}
