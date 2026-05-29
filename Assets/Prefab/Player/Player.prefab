@@ -564,10 +564,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 10
+  m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 3
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -595,13 +595,17 @@ MonoBehaviour:
   PlayerDashDistance: 7
   PlayerDashDuration: 0.15
   JumpForce: 9
-  cd: {fileID: 6174804858258139836}
+  JumpColliderOffTime: 5
+  FallGravityScale: 5
+  NormalGravityScale: 2
   PlayerRigidbody: {fileID: 29133624030335386}
   PlayerSpriteRenderer: {fileID: 5987773170861498406}
+  PlayerCollider: {fileID: 6174804858258139836}
   enemyHelthSystem: {fileID: 0}
   isDashAttack: 0
   gameManger: {fileID: 0}
   LockOnImage: {fileID: 4316983164781992076}
+  isGround: 1
 --- !u!114 &3518923766797674692
 MonoBehaviour:
   m_ObjectHideFlags: 0

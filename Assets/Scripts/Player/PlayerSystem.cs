@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerSystem : MonoBehaviour
@@ -10,10 +9,14 @@ public class PlayerSystem : MonoBehaviour
     public float PlayerDashDistance = 4f;
     public float PlayerDashDuration = 0.15f;
 
+    [Header("점프")]
     public float JumpForce = 7f;
+    public float FallGravityScale = 4f;
+    public float NormalGravityScale = 2f;
 
     public Rigidbody2D PlayerRigidbody;
     public SpriteRenderer PlayerSpriteRenderer;
+    public Collider2D PlayerCollider;
 
     public EnemyHelthSystem enemyHelthSystem;
     public bool isDashAttack;
@@ -23,8 +26,7 @@ public class PlayerSystem : MonoBehaviour
 
     private float moveX;
     private bool isDash;
-    private bool isJump;
-
+    public bool isGround;
 
     private Camera mainCamera;
 
@@ -35,11 +37,9 @@ public class PlayerSystem : MonoBehaviour
 
     private void Awake()
     {
-        if (PlayerRigidbody == null)
-            PlayerRigidbody = GetComponent<Rigidbody2D>();
-
-        if (PlayerSpriteRenderer == null)
-            PlayerSpriteRenderer = GetComponent<SpriteRenderer>();
+        if (PlayerRigidbody == null) PlayerRigidbody = GetComponent<Rigidbody2D>();
+        if (PlayerSpriteRenderer == null) PlayerSpriteRenderer = GetComponent<SpriteRenderer>();
+        if (PlayerCollider == null) PlayerCollider = GetComponent<Collider2D>();
 
         mainCamera = Camera.main;
     }
@@ -50,35 +50,44 @@ public class PlayerSystem : MonoBehaviour
 
         Flip();
 
-        if (Input.GetMouseButtonDown(1) && !isDash)
+        if (PlayerRigidbody.linearVelocity.y < 0)
         {
-            StartCoroutine(Dash());
+            PlayerRigidbody.gravityScale = FallGravityScale;
+        }
+        else
+        {
+            PlayerRigidbody.gravityScale = NormalGravityScale;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && !isJump)
+        if (Input.GetKeyDown(KeyCode.Space) && isGround && !isDash)
         {
             Jump();
         }
+
+        if (Input.GetMouseButtonDown(1) && !isDash)
+        {
+            StartCoroutine(Dash());
+        } 
     }
 
     private void FixedUpdate()
-    {               
-        if (!isDash && !isJump)
-        {   
+    {
+        if (!isDash)
+        {
             Move();
         }
     }
 
     private void Move()
     {
-        Vector2 moveVector = new Vector2(moveX * PlayerMoveSpeed * Time.fixedDeltaTime, 0f);
-
-        PlayerRigidbody.MovePosition(PlayerRigidbody.position + moveVector);
+        float targetVelocityX = moveX * PlayerMoveSpeed;
+        PlayerRigidbody.linearVelocity = new Vector2(targetVelocityX, PlayerRigidbody.linearVelocity.y);
     }
 
     private IEnumerator Dash()
     {
         Debug.Log("구르기");
+
         isDash = true;
         isDashAttack = true;
 
@@ -108,17 +117,41 @@ public class PlayerSystem : MonoBehaviour
     {
         Debug.Log("점프");
 
-        isJump = true;
+        isGround = false;
 
         PlayerRigidbody.linearVelocity = new Vector2(PlayerRigidbody.linearVelocity.x, 0f);
         PlayerRigidbody.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
+
+        StartCoroutine(JumpColliderOff());
+    }
+
+    private IEnumerator JumpColliderOff()
+    {
+        if (PlayerCollider != null)
+        {
+            PlayerCollider.enabled = false;
+            Debug.Log("콜라이더 OFF");
+        }
+
+        yield return new WaitForSeconds(1f);
+
+        if (PlayerCollider != null)
+        {
+            PlayerCollider.enabled = true;
+            Debug.Log("콜라이더 ON");
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            isJump = false;
+            isGround = true;
+        }
+
+        if (collision.contacts.Length > 0 && collision.contacts[0].normal.y < -0.5f)
+        {
+            PlayerRigidbody.linearVelocity = new Vector2(PlayerRigidbody.linearVelocity.x, 0f);
         }
     }
 
