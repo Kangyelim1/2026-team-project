@@ -1,4 +1,4 @@
-  using System.Collections;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerSystem : MonoBehaviour
@@ -29,6 +29,7 @@ public class PlayerSystem : MonoBehaviour
     private float moveX;
     private bool isDash;
     public bool isGround;
+    public bool IsDash => isDash;
 
     private Camera mainCamera;
 
@@ -53,23 +54,19 @@ public class PlayerSystem : MonoBehaviour
         Flip();
 
         if (PlayerRigidbody.linearVelocity.y < 0)
-        {
             PlayerRigidbody.gravityScale = FallGravityScale;
-        }
         else
-        {
             PlayerRigidbody.gravityScale = NormalGravityScale;
-        }
 
         if (Input.GetKeyDown(KeyCode.Space) && isGround && !isDash && !isNotJump)
         {
             Jump();
         }
 
-        if (Input.GetMouseButtonDown(1) && !isDash && !isNotDash)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !isDash && !isNotDash)
         {
             StartCoroutine(Dash());
-        } 
+        }
     }
 
     private void FixedUpdate()
@@ -88,8 +85,6 @@ public class PlayerSystem : MonoBehaviour
 
     private IEnumerator Dash()
     {
-        Debug.Log("구르기");
-
         isDash = true;
         isDashAttack = true;
 
@@ -117,12 +112,22 @@ public class PlayerSystem : MonoBehaviour
 
     private void Jump()
     {
-        Debug.Log("점프");
-
         isGround = false;
 
         PlayerRigidbody.linearVelocity = new Vector2(PlayerRigidbody.linearVelocity.x, 0f);
         PlayerRigidbody.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
+
+        StartCoroutine(JumpColliderOff());
+    }
+
+    public void HighJump(float multiplier)
+    {
+        if (!isGround || isDash || isNotJump) return;
+
+        isGround = false;
+
+        PlayerRigidbody.linearVelocity = new Vector2(PlayerRigidbody.linearVelocity.x, 0f);
+        PlayerRigidbody.AddForce(Vector2.up * JumpForce * multiplier, ForceMode2D.Impulse);
 
         StartCoroutine(JumpColliderOff());
     }
@@ -132,7 +137,6 @@ public class PlayerSystem : MonoBehaviour
         if (PlayerCollider != null)
         {
             PlayerCollider.enabled = false;
-            Debug.Log("콜라이더 OFF");
         }
 
         yield return new WaitForSeconds(0.8f);
@@ -140,7 +144,6 @@ public class PlayerSystem : MonoBehaviour
         if (PlayerCollider != null)
         {
             PlayerCollider.enabled = true;
-            Debug.Log("콜라이더 ON");
         }
     }
 
@@ -164,7 +167,6 @@ public class PlayerSystem : MonoBehaviour
             isNotJump = true;
             isNotDash = true;
         }
-
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -178,6 +180,8 @@ public class PlayerSystem : MonoBehaviour
 
     private void Flip()
     {
+        if (mainCamera == null) return;
+
         Vector3 mouseWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
 
         if (mouseWorldPos.x > transform.position.x)

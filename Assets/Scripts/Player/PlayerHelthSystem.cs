@@ -4,17 +4,32 @@ public class PlayerHelthSystem : MonoBehaviour
 {
     public PlayerSystem playerSystem;
     public GameManger gameManger;
+    public PlayerAttackSystem playerAttackSystem;
 
     private void Update()
     {
-        if(playerSystem == null)
+        if (playerSystem == null)
             playerSystem = FindAnyObjectByType<PlayerSystem>();
 
-        if(gameManger == null)
+        if (gameManger == null)
             gameManger = FindAnyObjectByType<GameManger>();
+
+        if (playerAttackSystem == null)
+            playerAttackSystem = FindAnyObjectByType<PlayerAttackSystem>();
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (playerAttackSystem != null && playerAttackSystem.IsInvincible)
+        {
+            bool parrySuccess = playerAttackSystem.TryParryCounter(collision);
+
+            if (parrySuccess)
+                Debug.Log("패링 성공 / 적에게 6 데미지");
+
+            return;
+        }
+
         if (collision.gameObject.CompareTag("Bullet"))
         {
             if (collision.gameObject.TryGetComponent(out BulletSystem bullet))
@@ -40,7 +55,10 @@ public class PlayerHelthSystem : MonoBehaviour
     public void Die()
     {
         Debug.Log("Die 함수 호출 확인");
-        if (gameManger == null) return;
+
+        if (gameManger == null || playerSystem == null)
+            return;
+
         Debug.Log("플레이어 사망");
         gameManger.isDiePlayer = true;
         Destroy(playerSystem.gameObject);
