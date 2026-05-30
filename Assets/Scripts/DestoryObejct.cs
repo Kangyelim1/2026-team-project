@@ -4,6 +4,7 @@ using UnityEngine;
 public class DestoryObejct : MonoBehaviour
 {
     public EnemyHelthSystem enemyHelthSystem;
+    public BossPatternSystem bossPatternSystem;
 
     public int cuttentHelth = 50;
     public int DownForce;
@@ -18,6 +19,9 @@ public class DestoryObejct : MonoBehaviour
     {
         if(enemyHelthSystem == null)
             enemyHelthSystem = Object.FindAnyObjectByType<EnemyHelthSystem>();
+
+        if(bossPatternSystem == null)
+            bossPatternSystem = Object.FindAnyObjectByType<BossPatternSystem>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -32,6 +36,7 @@ public class DestoryObejct : MonoBehaviour
 
                     if(cuttentHelth <= 0)
                     {
+                        bossPatternSystem.isDestoryObject = true;
                         Destroy(gameObject);
                     }
                 }
