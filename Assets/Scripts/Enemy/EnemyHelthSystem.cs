@@ -6,7 +6,7 @@ public class EnemyHelthSystem : MonoBehaviour
 
     [Header("보스 체력")]
     public int maxBossHelth;
-    public int MinBossHelth;
+    public int minBossHelth;
     public int currentBossHelth;
 
     private StageClearManager stageClearManager;

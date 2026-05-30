@@ -22,6 +22,8 @@ public class DestoryObejct : MonoBehaviour
 
         if(bossPatternSystem == null)
             bossPatternSystem = Object.FindAnyObjectByType<BossPatternSystem>();
+
+        cuttentHelth = enemyHelthSystem.currentBossHelth <= enemyHelthSystem.minBossHelth ? 65 : 50;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

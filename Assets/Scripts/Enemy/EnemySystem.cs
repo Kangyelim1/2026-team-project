@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemySystem : MonoBehaviour
 {
     public EnemySO enemySO;
+    public EnemyHelthSystem enemyhelthSystem;
 
     public string enemyName;
     public EnemyType enemyType;
@@ -54,6 +55,9 @@ public class EnemySystem : MonoBehaviour
     {
         if (playerHelthSystem == null)
             playerHelthSystem = FindAnyObjectByType<PlayerHelthSystem>();
+
+        if (enemyhelthSystem == null)
+            enemyhelthSystem = FindAnyObjectByType<EnemyHelthSystem>();
 
         if (playerSystem == null)
         {
@@ -127,6 +131,12 @@ public class EnemySystem : MonoBehaviour
                 if (IsPlayerInAttackRange())
                     StartCoroutine(Boom());
                 break;
+            case EnemyType.Boss:
+                if(enemyhelthSystem.currentBossHelth <= enemyhelthSystem.minBossHelth)
+                {
+                    MoveToPlayer();
+                }
+                break;
             default:
                 break;
         }
@@ -158,7 +168,7 @@ public class EnemySystem : MonoBehaviour
                 {
                     if (!isBoom) StartCoroutine(Boom());
                 }
-                else
+                else if (enemyType == EnemyType.Shortdistance)
                 {
                     if (!isShortAttack) StartCoroutine(ShortdistanceAttack());
                 }
