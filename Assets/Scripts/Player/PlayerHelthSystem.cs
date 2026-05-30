@@ -30,6 +30,11 @@ public class PlayerHelthSystem : MonoBehaviour
         {
             Die();
         }
+
+        if (collision.gameObject.CompareTag("DestoryAttackObject"))
+        {
+            Die();
+        }
     }
 
     public void Die()

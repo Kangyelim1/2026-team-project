@@ -25,6 +25,10 @@ public class BossPatternSystem : MonoBehaviour
     [Header("검은 물체 생성 패턴")]
     public List<GameObject> objectList = new List<GameObject>();
 
+    [Header("오브젝트 파괴 패턴")]
+    public GameObject destoryObject;
+    public bool isDestoryObject;
+
     public Transform player;
     public Transform laserStart01;
     public Transform laserStart02;
@@ -146,6 +150,34 @@ public class BossPatternSystem : MonoBehaviour
         }
         yield return new WaitForSeconds(BossPatternTime);
         bossSystem.BossRandomPattern();
+    }
+
+    public IEnumerator DestoryObjectPattern()
+    {
+        if (playerSystem == null)
+            playerSystem = FindAnyObjectByType<PlayerSystem>();
+
+        Vector3 spawnPos = new Vector3(playerSystem.gameObject.transform.position.x, playerSystem.transform.position.y + 12f, 0f);
+        Instantiate(destoryObject, spawnPos, Quaternion.identity);
+        
+
+        yield return new WaitForSeconds(0.5f);
+        Debug.Log("7초 카운트 시작");
+
+        yield return new WaitForSeconds(7f);
+
+        if (isDestoryObject)
+        {
+            Debug.Log("오브젝트 제거 성공");
+            isDestoryObject = false;
+            yield return new WaitForSeconds(BossPatternTime);
+            bossSystem.BossRandomPattern();
+        }
+        else
+        {
+            Debug.Log("오브젝트 제거 실패");
+            playerHelthSystem.Die();
+        }
     }
 }
 

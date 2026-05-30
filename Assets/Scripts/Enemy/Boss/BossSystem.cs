@@ -1,10 +1,12 @@
 
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BossSystem : MonoBehaviour
 {
     public EnemySystem enemySystem;
+    public EnemyHelthSystem enemyHelthSystem;
     public BossPatternSystem bossPatternSystem;
 
     public List<string> PatternList = new List<string>();
@@ -14,6 +16,12 @@ public class BossSystem : MonoBehaviour
         enemySystem = FindAnyObjectByType<EnemySystem>();
         bossPatternSystem = FindAnyObjectByType<BossPatternSystem>();
 
+        StartCoroutine(BossRandomPatternTime());
+    }
+
+    IEnumerator BossRandomPatternTime()
+    {
+        yield return new WaitForSeconds(3f);
         BossRandomPattern();
     }
 
@@ -39,6 +47,9 @@ public class BossSystem : MonoBehaviour
                 break;
             case "보스" when Pattern == "검은 물체":
                 StartCoroutine(bossPatternSystem.CreateObjectPattern());
+                break;
+            case "보스" when Pattern == "오브젝트 파괴":
+                StartCoroutine(bossPatternSystem.DestoryObjectPattern());
                 break;
             default:
                 break;

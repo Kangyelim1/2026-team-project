@@ -1,4 +1,4 @@
-using System.Collections;
+  using System.Collections;
 using UnityEngine;
 
 public class PlayerSystem : MonoBehaviour
@@ -107,7 +107,7 @@ public class PlayerSystem : MonoBehaviour
 
         transform.position = targetPos;
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
 
         isDash = false;
         isDashAttack = false;
@@ -133,7 +133,7 @@ public class PlayerSystem : MonoBehaviour
             Debug.Log("콜라이더 OFF");
         }
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.8f);
 
         if (PlayerCollider != null)
         {
