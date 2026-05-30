@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class BossPatternSystem : MonoBehaviour
@@ -9,6 +10,8 @@ public class BossPatternSystem : MonoBehaviour
 
     public PlayerHelthSystem playerHelthSystem;
     public PlayerSystem playerSystem;
+
+    public CinemachineCamera playerCamera;
 
     public float BossPatternTime;
 
@@ -21,6 +24,8 @@ public class BossPatternSystem : MonoBehaviour
     public GameObject WormHole01;
     public GameObject WormHole02;
     public GameObject electricObject;
+    public CinemachineCamera wormHoleCamera;
+    public float showTime = 1.5f;
 
     [Header("검은 물체 생성 패턴")]
     public List<GameObject> objectList = new List<GameObject>();
@@ -113,8 +118,21 @@ public class BossPatternSystem : MonoBehaviour
 
         WormHole01.SetActive(true);
         WormHole02.SetActive(true);
+        wormHoleCamera.gameObject.SetActive(true);
 
-        yield return new WaitForSeconds(2f);
+        playerCamera.Priority = 10;
+        wormHoleCamera.Priority = 20;
+        wormHoleCamera.Follow = WormHole01.transform;
+        yield return new WaitForSeconds(showTime);
+
+        wormHoleCamera.Follow = WormHole02.transform;
+        yield return new WaitForSeconds(showTime);
+
+        wormHoleCamera.Priority = 0;
+        playerCamera.Priority = 10;
+        wormHoleCamera.gameObject.SetActive(false);
+
+        yield return new WaitForSeconds(4f);
         electricObject.SetActive(true);
 
         yield return new WaitForSeconds(0.5f);
