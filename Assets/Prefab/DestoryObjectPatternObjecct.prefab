@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1818378942413772216}
   - component: {fileID: 6204028985616223615}
-  - component: {fileID: 1104975884383342513}
   - component: {fileID: 9013684477190519470}
   - component: {fileID: 2800864640662085536}
+  - component: {fileID: 1104975884383342513}
   m_Layer: 0
   m_Name: DestoryObjectPatternObjecct
   m_TagString: Untagged
@@ -34,6 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2692251558992815891}
+  - {fileID: 6627982885330303569}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6204028985616223615
@@ -95,6 +96,47 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!50 &9013684477190519470
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2895248945749315052}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 5
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 5
+--- !u!114 &2800864640662085536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2895248945749315052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e0fcb2cbf558c54c90b31a4cfadbb26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestoryObejct
+  DownForce: 100
+  rb: {fileID: 9013684477190519470}
 --- !u!61 &1104975884383342513
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -141,22 +183,49 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!50 &9013684477190519470
-Rigidbody2D:
-  serializedVersion: 5
+--- !u!1 &6138376163093356652
+GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2895248945749315052}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 5
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6627982885330303569}
+  - component: {fileID: 5996752067263566141}
+  - component: {fileID: 201264625238113403}
+  m_Layer: 0
+  m_Name: HitCollider
+  m_TagString: DestoryObject
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6627982885330303569
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6138376163093356652}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1818378942413772216}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &5996752067263566141
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6138376163093356652}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -164,26 +233,51 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
---- !u!114 &2800864640662085536
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1.2, y: 1}
+  m_EdgeRadius: 0
+--- !u!114 &201264625238113403
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2895248945749315052}
+  m_GameObject: {fileID: 6138376163093356652}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e0fcb2cbf558c54c90b31a4cfadbb26, type: 3}
+  m_Script: {fileID: 11500000, guid: e19eab933c142194d89fc91722f57668, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DestoryObejct
+  m_EditorClassIdentifier: Assembly-CSharp::DestoryObjectHitPoint
+  currentHelth: 50
+  DestoryObejct: {fileID: 2800864640662085536}
   enemyHelthSystem: {fileID: 0}
-  cuttentHelth: 50
-  DownForce: 100
-  rb: {fileID: 9013684477190519470}
+  bossPatternSystem: {fileID: 0}
 --- !u!1 &6277422561413137160
 GameObject:
   m_ObjectHideFlags: 0
@@ -196,7 +290,7 @@ GameObject:
   - component: {fileID: 7202310779028923851}
   - component: {fileID: 4217522676689265787}
   - component: {fileID: 1063321529309811554}
-  - component: {fileID: 1386401608470255306}
+  - component: {fileID: 6067931872817693325}
   m_Layer: 0
   m_Name: AttackObject
   m_TagString: DestoryAttackObject
@@ -336,7 +430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea80694b4fc2f1f4582c28da2e0b3b67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DestoryObejctSystem
---- !u!61 &1386401608470255306
+--- !u!61 &6067931872817693325
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

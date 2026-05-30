@@ -240,9 +240,9 @@ public class EnemySystem : MonoBehaviour
             playerHelthSystem.Die();
         }
         else Debug.Log("플레이어가 폭팔 범위에서 벗어남");
-            
 
-        Destroy(gameObject);
+
+        enemyhelthSystem.Die();
     }
 
     private bool IsPlayerInAttackRange()

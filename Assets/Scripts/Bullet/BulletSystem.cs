@@ -45,5 +45,11 @@ public class BulletSystem : MonoBehaviour
             Debug.Log("플레이어 명중");
             Destroy(gameObject);
         }
+
+        if(collision.CompareTag("DestoryObject") && type == BulletType.PlayerBullet)
+        {
+            Debug.Log("삭제 오브젝트 명중");
+            Destroy(gameObject);
+        }
     }
 }

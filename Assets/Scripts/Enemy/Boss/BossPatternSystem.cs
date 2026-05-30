@@ -25,7 +25,7 @@ public class BossPatternSystem : MonoBehaviour
     public GameObject WormHole02;
     public GameObject electricObject;
     public CinemachineCamera wormHoleCamera;
-    public float showTime = 1.5f;
+    public float showTime = 2f;
 
     [Header("검은 물체 생성 패턴")]
     public List<GameObject> objectList = new List<GameObject>();
@@ -42,6 +42,8 @@ public class BossPatternSystem : MonoBehaviour
     public float laserLength = 20f;
 
     private Vector3 targetPos;
+
+    public bool isPattern;
 
     private void Start()
     {
@@ -61,8 +63,9 @@ public class BossPatternSystem : MonoBehaviour
     public IEnumerator LaserAttack()
     {
         if (player == null) yield break;
+        isPattern = true;
 
-        if(enemyHelthSystem.currentBossHelth >= 150) aimTime = 2.5f;
+        if (enemyHelthSystem.currentBossHelth >= 150) aimTime = 2.5f;
         else aimTime = 2f;
 
         if(playerSystem == null)
@@ -107,11 +110,14 @@ public class BossPatternSystem : MonoBehaviour
         laserLine02.enabled = false;
 
         yield return new WaitForSeconds(BossPatternTime);
+        isPattern = false;
         bossSystem.BossRandomPattern();
     }
 
     public IEnumerator BossPattern02()
     {
+        isPattern = true;
+
         electricObject.SetActive(false);
         WormHole01.SetActive(false);
         WormHole02.SetActive(false);
@@ -132,7 +138,7 @@ public class BossPatternSystem : MonoBehaviour
         playerCamera.Priority = 10;
         wormHoleCamera.gameObject.SetActive(false);
 
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(3f);
         electricObject.SetActive(true);
 
         yield return new WaitForSeconds(0.5f);
@@ -141,11 +147,13 @@ public class BossPatternSystem : MonoBehaviour
         WormHole02.SetActive(false);
 
         yield return new WaitForSeconds(BossPatternTime);
+        isPattern = false;
         bossSystem.BossRandomPattern();
     }
 
     public IEnumerator CreateObjectPattern()
     {
+        isPattern = true;
         List<GameObject> randomObjects = new List<GameObject>();
 
         while (randomObjects.Count < 3)
@@ -167,6 +175,7 @@ public class BossPatternSystem : MonoBehaviour
             obj.SetActive(false);
         }
         yield return new WaitForSeconds(BossPatternTime);
+        isPattern = false;
         bossSystem.BossRandomPattern();
     }
 
@@ -174,6 +183,8 @@ public class BossPatternSystem : MonoBehaviour
     {
         if (playerSystem == null)
             playerSystem = FindAnyObjectByType<PlayerSystem>();
+
+        isPattern = true;
 
         Vector3 spawnPos = new Vector3(playerSystem.gameObject.transform.position.x, playerSystem.transform.position.y + 12f, 0f);
         Instantiate(destoryObject, spawnPos, Quaternion.identity);
@@ -189,6 +200,7 @@ public class BossPatternSystem : MonoBehaviour
             Debug.Log("오브젝트 제거 성공");
             isDestoryObject = false;
             yield return new WaitForSeconds(BossPatternTime);
+            isPattern = false;
             bossSystem.BossRandomPattern();
         }
         else
@@ -196,6 +208,14 @@ public class BossPatternSystem : MonoBehaviour
             Debug.Log("오브젝트 제거 실패");
             playerHelthSystem.Die();
         }
+    }
+
+    public IEnumerator Missile()
+    {
+
+        yield return new WaitForSeconds(BossPatternTime);
+        isPattern = false;
+        bossSystem.BossRandomPattern();
     }
 }
 

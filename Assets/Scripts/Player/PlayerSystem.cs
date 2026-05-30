@@ -8,11 +8,13 @@ public class PlayerSystem : MonoBehaviour
     [Header("대시")]
     public float PlayerDashDistance = 4f;
     public float PlayerDashDuration = 0.15f;
+    private bool isNotDash;
 
     [Header("점프")]
     public float JumpForce = 7f;
     public float FallGravityScale = 4f;
     public float NormalGravityScale = 2f;
+    private bool isNotJump;
 
     public Rigidbody2D PlayerRigidbody;
     public SpriteRenderer PlayerSpriteRenderer;
@@ -59,12 +61,12 @@ public class PlayerSystem : MonoBehaviour
             PlayerRigidbody.gravityScale = NormalGravityScale;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && isGround && !isDash)
+        if (Input.GetKeyDown(KeyCode.Space) && isGround && !isDash && !isNotJump)
         {
             Jump();
         }
 
-        if (Input.GetMouseButtonDown(1) && !isDash)
+        if (Input.GetMouseButtonDown(1) && !isDash && !isNotDash)
         {
             StartCoroutine(Dash());
         } 
@@ -152,6 +154,25 @@ public class PlayerSystem : MonoBehaviour
         if (collision.contacts.Length > 0 && collision.contacts[0].normal.y < -0.5f)
         {
             PlayerRigidbody.linearVelocity = new Vector2(PlayerRigidbody.linearVelocity.x, 0f);
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("NotJump"))
+        {
+            isNotJump = true;
+            isNotDash = true;
+        }
+
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("NotJump"))
+        {
+            isNotJump = false;
+            isNotDash = false;
         }
     }
 
