@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class EnemyHelthSystem : MonoBehaviour
@@ -9,8 +10,18 @@ public class EnemyHelthSystem : MonoBehaviour
     public int minBossHelth;
     public int currentBossHelth;
 
+    [Header("죽음 연출")]
+    public float deathDelay = 0.8f;
+    public float deathUpForce = 4f;
+    public float deathSideForceMin = -2f;
+    public float deathSideForceMax = 2f;
+    public float deathTorqueMin = -120f;
+    public float deathTorqueMax = 120f;
+
     private StageClearManager stageClearManager;
     private BossClearSystem bossClearSystem;
+
+    private bool isDead = false;
 
     private void Start()
     {
@@ -19,7 +30,7 @@ public class EnemyHelthSystem : MonoBehaviour
         stageClearManager = FindAnyObjectByType<StageClearManager>();
         bossClearSystem = FindAnyObjectByType<BossClearSystem>();
 
-        if (enemySystem.enemyType == EnemyType.Boss)
+        if (enemySystem != null && enemySystem.enemyType == EnemyType.Boss)
         {
             currentBossHelth = maxBossHelth;
         }
@@ -27,6 +38,8 @@ public class EnemyHelthSystem : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (isDead) return;
+
         if (collision.gameObject.CompareTag("Bullet"))
         {
             if (collision.gameObject.TryGetComponent(out BulletSystem bullet))
@@ -41,6 +54,8 @@ public class EnemyHelthSystem : MonoBehaviour
 
     void Helth(Vector2 hitPos)
     {
+        if (isDead) return;
+
         EnemyChargeSystem chargeSystem = GetComponentInParent<EnemyChargeSystem>();
         if (chargeSystem != null && chargeSystem.isInvincible)
         {
@@ -55,11 +70,15 @@ public class EnemyHelthSystem : MonoBehaviour
             if (!canDamage) return;
         }
 
-        if (enemySystem.enemyType == EnemyType.Boss)
+        if (enemySystem != null && enemySystem.enemyType == EnemyType.Boss)
         {
             currentBossHelth -= 8;
             Debug.Log("보스 체력 감소");
-            if (currentBossHelth <= 0) Die();
+
+            if (currentBossHelth <= 0)
+            {
+                Die();
+            }
         }
         else
         {
@@ -70,6 +89,9 @@ public class EnemyHelthSystem : MonoBehaviour
 
     public void Die()
     {
+        if (isDead) return;
+        isDead = true;
+
         Debug.Log("몬스터 사망");
 
         if (stageClearManager != null)
@@ -77,13 +99,83 @@ public class EnemyHelthSystem : MonoBehaviour
             stageClearManager.EnemyDead();
         }
 
-        if (enemySystem.enemyType == EnemyType.Boss)
+        if (enemySystem != null && enemySystem.enemyType == EnemyType.Boss)
         {
             if (bossClearSystem != null)
             {
                 bossClearSystem.GameClear();
             }
         }
+
+        StartCoroutine(DieRoutine());
+    }
+
+    private IEnumerator DieRoutine()
+    {
+        if (enemySystem == null)
+        {
+            Destroy(gameObject);
+            yield break;
+        }
+
+        Animator anim = enemySystem.GetComponent<Animator>();
+        Rigidbody2D rb = enemySystem.GetComponent<Rigidbody2D>();
+
+        Collider2D[] allCols = enemySystem.GetComponentsInChildren<Collider2D>(true);
+        SpriteRenderer[] allSprites = enemySystem.GetComponentsInChildren<SpriteRenderer>(true);
+
+        EnemyChargeSystem chargeSystem = enemySystem.GetComponent<EnemyChargeSystem>();
+        EnemyShieldSystem shieldSystem = enemySystem.GetComponent<EnemyShieldSystem>();
+        EnemySystem normalEnemySystem = enemySystem.GetComponent<EnemySystem>();
+
+        if (chargeSystem != null)
+            chargeSystem.enabled = false;
+
+        if (shieldSystem != null)
+            shieldSystem.enabled = false;
+
+        if (normalEnemySystem != null)
+            normalEnemySystem.enabled = false;
+
+        if (anim != null)
+            anim.SetTrigger("Die");
+
+        foreach (Collider2D col in allCols)
+        {
+            col.enabled = false;
+        }
+
+        if (enemySystem.BoomEffect != null)
+        {
+            Instantiate(enemySystem.BoomEffect, enemySystem.transform.position, Quaternion.identity);
+        }
+
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+            rb.freezeRotation = false;
+
+            float randomSideForce = Random.Range(deathSideForceMin, deathSideForceMax);
+            rb.AddForce(new Vector2(randomSideForce, deathUpForce), ForceMode2D.Impulse);
+
+            float randomTorque = Random.Range(deathTorqueMin, deathTorqueMax);
+            rb.AddTorque(randomTorque);
+        }
+
+        for (int i = 0; i < allSprites.Length; i++)
+        {
+            if (allSprites[i] != null)
+            {
+                Color color = allSprites[i].color;
+                color.r = 1f;
+                color.g = 0.5f;
+                color.b = 0.5f;
+                allSprites[i].color = color;
+            }
+        }
+
+        yield return new WaitForSeconds(deathDelay);
 
         Destroy(enemySystem.gameObject);
     }

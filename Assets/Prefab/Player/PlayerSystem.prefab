@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &147736371427934022
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2223306637777905595}
+  m_Layer: 7
+  m_Name: TrapPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2223306637777905595
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 147736371427934022}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4039176365007753985}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &349955802513076474
 GameObject:
   m_ObjectHideFlags: 0
@@ -9,9 +40,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3245972517377431472}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PlayerSystem
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25,7 +56,7 @@ Transform:
   m_GameObject: {fileID: 349955802513076474}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.941, z: 0}
+  m_LocalPosition: {x: -59.85, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -47,7 +78,7 @@ GameObject:
   - component: {fileID: 4053066439632908204}
   - component: {fileID: 6507602493309271540}
   - component: {fileID: 7695224979339469219}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -63,7 +94,7 @@ Transform:
   m_GameObject: {fileID: 645358835775684957}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.00000047683716, y: 0.10000014, z: -1}
+  m_LocalPosition: {x: 10.0049515, y: 0.09717318, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -214,7 +245,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5999352772468536792}
   - component: {fileID: 8532017672869841295}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Lockon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -305,7 +336,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8340946736528875136}
   - component: {fileID: 4765556362483986156}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -386,6 +417,37 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &4820920780381989607
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2385111649244472280}
+  m_Layer: 7
+  m_Name: 'MeleePoint '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2385111649244472280
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4820920780381989607}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.8, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4039176365007753985}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7124772043384714740
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,7 +463,7 @@ GameObject:
   - component: {fileID: 1715830847698490614}
   - component: {fileID: 1706713151893354326}
   - component: {fileID: 8591882791217171781}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -424,6 +486,9 @@ Transform:
   - {fileID: 8340946736528875136}
   - {fileID: 7918747549168431018}
   - {fileID: 5999352772468536792}
+  - {fileID: 9165465362846799844}
+  - {fileID: 2385111649244472280}
+  - {fileID: 2223306637777905595}
   m_Father: {fileID: 3245972517377431472}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8386296162103132084
@@ -564,12 +629,12 @@ MonoBehaviour:
   PlayerMoveSpeed: 5
   PlayerDashDistance: 7
   PlayerDashDuration: 0.15
-  JumpForce: 10
+  JumpForce: 15
   FallGravityScale: 4
   NormalGravityScale: 2
   PlayerRigidbody: {fileID: 2818493553882795528}
   PlayerSpriteRenderer: {fileID: 8386296162103132084}
-  PlayerCollider: {fileID: 0}
+  PlayerCollider: {fileID: 8271877049655080238}
   enemyHelthSystem: {fileID: 0}
   isDashAttack: 0
   gameManger: {fileID: 0}
@@ -587,9 +652,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d43746da92fec340b27dbc58c529505, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttackSystem
-  bulletPrefab: {fileID: 5149882320093515215, guid: 2890a21f19944814aa34cfbbd1b106c9, type: 3}
+  playerSystem: {fileID: 1715830847698490614}
+  mainCamera: {fileID: 2037310616033549002}
+  bulletPrefab: {fileID: 5149882320093515215, guid: 5d438a9e37c99c0468e808cde9835042, type: 3}
   firePoint: {fileID: 8340946736528875136}
   bulletSpeed: 30
+  attackCooldown: 2
+  comboShotDelay: 0.3
+  comboDamage: 16
+  multiAttackDuration: 1
+  multiAttackCooldown: 15
+  throwWeaponPrefab: {fileID: 5149882320093515215, guid: 2890a21f19944814aa34cfbbd1b106c9, type: 3}
+  throwPoint: {fileID: 9165465362846799844}
+  throwSpeed: 12
+  throwCooldown: 60
+  meleePoint: {fileID: 2385111649244472280}
+  meleeRange: 1.2
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  parryDuration: 0.1
+  parryCooldown: 2
+  parryDamage: 6
+  ultimateCastTime: 2
+  ultimateCooldown: 100
+  ultimateRange: 8
+  ultimateDamage: 30
+  trapPrefab: {fileID: 8988195363350849083, guid: 5477931a99ac0d34aa48f0e019caa81f, type: 3}
+  trapPoint: {fileID: 2223306637777905595}
+  trapCooldown: 90
+  interactHoldTime: 1.5
 --- !u!70 &8591882791217171781
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -627,6 +719,37 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1, y: 2}
   m_Direction: 0
+--- !u!1 &7430527588876371238
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9165465362846799844}
+  m_Layer: 7
+  m_Name: ThrowPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9165465362846799844
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7430527588876371238}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.7, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4039176365007753985}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7765761193469468963
 GameObject:
   m_ObjectHideFlags: 0
@@ -639,7 +762,7 @@ GameObject:
   - component: {fileID: 8699803295430033465}
   - component: {fileID: 7539751885244776987}
   - component: {fileID: 4021637409852454750}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PlayerHitPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -769,8 +892,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cbcde3e731defe48900a800a79801c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHelthSystem
-  playerSystem: {fileID: 0}
+  playerSystem: {fileID: 1715830847698490614}
   gameManger: {fileID: 0}
+  playerAttackSystem: {fileID: 1706713151893354326}
 --- !u!1 &8584079955524715961
 GameObject:
   m_ObjectHideFlags: 0
@@ -782,7 +906,8 @@ GameObject:
   - component: {fileID: 5443809838102976029}
   - component: {fileID: 8759414495720297558}
   - component: {fileID: 4077120730980411845}
-  m_Layer: 0
+  - component: {fileID: 7535766087244534542}
+  m_Layer: 7
   m_Name: CinemachineCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -878,3 +1003,23 @@ MonoBehaviour:
     Time: 0
     Smoothing: 0
     IgnoreY: 0
+--- !u!114 &7535766087244534542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8584079955524715961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f453f694addf4275988fac205bc91968, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineConfiner2D
+  BoundingShape2D: {fileID: 0}
+  Damping: 0.5
+  SlowingDistance: 5
+  OversizeWindow:
+    Enabled: 0
+    MaxWindowSize: 0
+    Padding: 0
+  m_LegacyMaxWindowSize: -2
