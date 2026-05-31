@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BossPattern
   m_EditorClassIdentifier: Assembly-CSharp::BossPatternSO
   bossPatternDataList:
-  - BossPatternName: "\uB808\uC774\uC838"
+  - BossPatternName: "\uB808\uC774\uC800"
     BossName: "\uBCF4\uC2A4"
     currentPage: 2
   - BossPatternName: "\uC804\uAE30"
@@ -25,3 +25,6 @@ MonoBehaviour:
   - BossPatternName: "\uC624\uBE0C\uC81D\uD2B8 \uD30C\uAD34"
     BossName: "\uBCF4\uC2A4"
     currentPage: 2
+  - BossPatternName: "\uBBF8\uC0AC\uC77C"
+    BossName: "\uBCF4\uC2A4"
+    currentPage: 1

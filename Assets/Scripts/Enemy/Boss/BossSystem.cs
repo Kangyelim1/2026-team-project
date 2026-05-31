@@ -32,19 +32,29 @@ public class BossSystem : MonoBehaviour
         int randomIndex = Random.Range(0, bossPatternData.bossPatternDataList.Count);
         BossPatternData currentPattern = bossPatternData.bossPatternDataList[randomIndex];
 
-        if(enemyHelthSystem.currentBossHelth <= enemyHelthSystem.minBossHelth)
+        if (enemyHelthSystem.currentBossHelth <= enemyHelthSystem.minBossHelth)
         {
-            while (true)
+            if (currentPattern.currentPage == PatternPage.Page02 || currentPattern.currentPage == PatternPage.EveryPage)
             {
-                if (currentPattern.currentPage == PatternPage.Page02 || currentPattern.currentPage == PatternPage.EveryPage)
-                    break;
-
-                return;
+                Debug.Log(currentPattern.BossPatternName);
+                SelectSkill(enemySystem.enemyName, currentPattern.BossPatternName, currentPattern.currentPage);
+            }
+            else
+            {
+                BossRandomPattern();
             }
         }
         else
         {
-            SelectSkill(enemySystem.enemyName, currentPattern.BossPatternName, currentPattern.currentPage);
+            if (currentPattern.currentPage == PatternPage.Page01 || currentPattern.currentPage == PatternPage.EveryPage)
+            {
+                Debug.Log(currentPattern.BossPatternName);
+                SelectSkill(enemySystem.enemyName, currentPattern.BossPatternName, currentPattern.currentPage);
+            }
+            else
+            {
+                BossRandomPattern();
+            }
         }
     }
 
@@ -53,17 +63,26 @@ public class BossSystem : MonoBehaviour
         switch(BossName, Pattern, page)
         {
             case ("보스", "레이저", PatternPage.EveryPage):
+                Debug.Log("레이저 패턴");
                 StartCoroutine(bossPatternSystem.LaserAttack());
                 break;
             case ("보스", "전기", PatternPage.Page01):
+                Debug.Log("전기 패턴");
                 StartCoroutine(bossPatternSystem.BossPattern02());
                 break;
             case ("보스", "검은 물체", PatternPage.Page01):
+                Debug.Log("검은 물체 패턴");
                 StartCoroutine(bossPatternSystem.CreateObjectPattern());
                 break;
             case ("보스", "오브젝트 파괴", PatternPage.EveryPage):
+                Debug.Log("오브젝트 파괴 패턴");
                 StartCoroutine(bossPatternSystem.DestoryObjectPattern());
                 break;
+            case ("보스", "미사일", PatternPage.Page02):
+                Debug.Log("미사일 패턴");
+                StartCoroutine(bossPatternSystem.Missile());
+                break;
+
             default:
                 break;
         }
