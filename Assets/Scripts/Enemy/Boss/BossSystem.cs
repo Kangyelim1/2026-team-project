@@ -8,12 +8,12 @@ public class BossSystem : MonoBehaviour
     public EnemySystem enemySystem;
     public EnemyHelthSystem enemyHelthSystem;
     public BossPatternSystem bossPatternSystem;
-
-    public List<string> PatternList = new List<string>();
+    public BossPatternSO bossPatternData;
 
     private void Start()
     {
         enemySystem = FindAnyObjectByType<EnemySystem>();
+        enemyHelthSystem = FindAnyObjectByType<EnemyHelthSystem>();
         bossPatternSystem = FindAnyObjectByType<BossPatternSystem>();
 
         StartCoroutine(BossRandomPatternTime());
@@ -27,28 +27,41 @@ public class BossSystem : MonoBehaviour
 
     public void BossRandomPattern()
     {
-        Debug.Log("패턴 뽑기");
+        Debug.Log("보스 패턴 뽑기");
 
-        int randomIndex = Random.Range(0, PatternList.Count);
-        string currentPattern = PatternList[randomIndex];
+        int randomIndex = Random.Range(0, bossPatternData.bossPatternDataList.Count);
+        BossPatternData currentPattern = bossPatternData.bossPatternDataList[randomIndex];
 
-        SelectSkill(enemySystem.enemyName, currentPattern);
+        if(enemyHelthSystem.currentBossHelth <= enemyHelthSystem.minBossHelth)
+        {
+            while (true)
+            {
+                if (currentPattern.currentPage == PatternPage.Page02 || currentPattern.currentPage == PatternPage.EveryPage)
+                    break;
+
+                return;
+            }
+        }
+        else
+        {
+            SelectSkill(enemySystem.enemyName, currentPattern.BossPatternName, currentPattern.currentPage);
+        }
     }
 
-    void SelectSkill(string BossName, string Pattern)
+    void SelectSkill(string BossName, string Pattern, PatternPage page)
     {
-        switch(BossName)
+        switch(BossName, Pattern, page)
         {
-            case "보스" when Pattern == "레이져":
+            case ("보스", "레이저", PatternPage.EveryPage):
                 StartCoroutine(bossPatternSystem.LaserAttack());
                 break;
-            case "보스" when Pattern == "전기":
+            case ("보스", "전기", PatternPage.Page01):
                 StartCoroutine(bossPatternSystem.BossPattern02());
                 break;
-            case "보스" when Pattern == "검은 물체":
+            case ("보스", "검은 물체", PatternPage.Page01):
                 StartCoroutine(bossPatternSystem.CreateObjectPattern());
                 break;
-            case "보스" when Pattern == "오브젝트 파괴":
+            case ("보스", "오브젝트 파괴", PatternPage.EveryPage):
                 StartCoroutine(bossPatternSystem.DestoryObjectPattern());
                 break;
             default:

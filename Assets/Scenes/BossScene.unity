@@ -3409,8 +3409,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -3603097062710773006, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
+      propertyPath: bossPatternData
+      value: 
+      objectReference: {fileID: 11400000, guid: e809cf2a9a3ceff4abe3cf7782341b7e, type: 2}
+    - target: {fileID: -3603097062710773006, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
       propertyPath: PatternList.Array.size
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -3603097062710773006, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
       propertyPath: 'PatternList.Array.data[0]'
@@ -3427,6 +3431,38 @@ PrefabInstance:
     - target: {fileID: -3603097062710773006, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
       propertyPath: 'PatternList.Array.data[3]'
       value: "\uC624\uBE0C\uC81D\uD2B8 \uD30C\uAD34"
+      objectReference: {fileID: 0}
+    - target: {fileID: -3603097062710773006, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
+      propertyPath: PatternList.Array.data[0].BossName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -3603097062710773006, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
+      propertyPath: PatternList.Array.data[1].BossName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -3603097062710773006, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
+      propertyPath: PatternList.Array.data[2].BossName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -3603097062710773006, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
+      propertyPath: PatternList.Array.data[3].BossName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -3603097062710773006, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
+      propertyPath: PatternList.Array.data[0].BossPatternName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -3603097062710773006, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
+      propertyPath: PatternList.Array.data[1].BossPatternName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -3603097062710773006, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
+      propertyPath: PatternList.Array.data[2].BossPatternName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -3603097062710773006, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
+      propertyPath: PatternList.Array.data[3].BossPatternName
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2011524338714188303, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
       propertyPath: m_Name

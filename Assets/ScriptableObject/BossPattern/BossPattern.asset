@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 363f1eafeacf2c9478acc01818cec944, type: 3}
+  m_Name: BossPattern
+  m_EditorClassIdentifier: Assembly-CSharp::BossPatternSO
+  bossPatternDataList:
+  - BossPatternName: "\uB808\uC774\uC838"
+    BossName: "\uBCF4\uC2A4"
+    currentPage: 2
+  - BossPatternName: "\uC804\uAE30"
+    BossName: "\uBCF4\uC2A4"
+    currentPage: 0
+  - BossPatternName: "\uAC80\uC740 \uBB3C\uCCB4"
+    BossName: "\uBCF4\uC2A4"
+    currentPage: 0
+  - BossPatternName: "\uC624\uBE0C\uC81D\uD2B8 \uD30C\uAD34"
+    BossName: "\uBCF4\uC2A4"
+    currentPage: 2
