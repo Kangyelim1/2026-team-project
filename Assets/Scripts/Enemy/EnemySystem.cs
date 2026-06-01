@@ -38,6 +38,10 @@ public class EnemySystem : MonoBehaviour
     
     private Coroutine chaseStopCoroutine;
 
+    [Header("드론")]
+    public float droneMoveSpeed = 4f;
+    public float droneDetectDistance = 20f;
+
     private void Awake()
     {
         enemyName = enemySO.enemyName;
@@ -79,6 +83,13 @@ public class EnemySystem : MonoBehaviour
         {
             bossPattern = FindAnyObjectByType<BossSystem>();
         }
+
+        if (enemyType == EnemyType.DroneGun)
+        {
+            isAttack = true;
+        }
+        if (isAttack)
+            StartAttack();
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -137,6 +148,9 @@ public class EnemySystem : MonoBehaviour
                 {
                     MoveToPlayer();
                 }
+                break;
+            case EnemyType.DroneGun:
+                DroneGunAttack();
                 break;
             default:
                 break;
@@ -263,5 +277,28 @@ public class EnemySystem : MonoBehaviour
             transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         else if (playerSystem.transform.position.x > transform.position.x)
             transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+    }
+
+    private void DroneGunAttack()
+    {
+        if (playerSystem == null)
+            return;
+
+        float distance = Vector2.Distance(
+            transform.position,
+            playerSystem.transform.position);
+
+        // 플레이어를 찾았을 때
+        if (distance <= droneDetectDistance)
+        {
+            Vector2 direction =
+                (playerSystem.transform.position - transform.position).normalized;
+
+            transform.position +=
+                (Vector3)(direction * droneMoveSpeed * Time.deltaTime);
+
+            // 기존 원거리 공격 사용
+            LongDistanceAttack();
+        }
     }
 }
