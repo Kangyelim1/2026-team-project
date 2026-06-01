@@ -62,7 +62,7 @@ public class EnemyChargeSystem : MonoBehaviour
             return;
         }
 
-        if (enemySystem.enemyType != EnemyType.Charge)
+        if (enemySystem.enemyType != EnemyType.Charge && enemySystem.enemyType != EnemyType.Boss)
         {
             Debug.LogError("EnemyType이 Charge가 아닙니다! 현재: " + enemySystem.enemyType);
             return;
@@ -83,6 +83,8 @@ public class EnemyChargeSystem : MonoBehaviour
 
     void Patrol()
     {
+        if (enemySystem.enemyType == EnemyType.Boss) return;
+
         rb.linearVelocity = new Vector2(moveDir * patrolSpeed, rb.linearVelocity.y);
 
         if (transform.position.x >= startPos.x + patrolDistance && moveDir == 1)
@@ -129,7 +131,7 @@ public class EnemyChargeSystem : MonoBehaviour
         }
     }
 
-    IEnumerator ChargeSequence()
+    public IEnumerator ChargeSequence()
     {
         isCoroutineRunning = true;
 
