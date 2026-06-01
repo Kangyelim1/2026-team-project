@@ -28,13 +28,14 @@ public class EnemySystem : MonoBehaviour
 
     [Header("보스 전용")]
     public int BossHelth;
+    public bool isPattern;
 
     private bool isAttack;
     private bool isDistonse;
     private bool isShoot;
     private bool isShortAttack;
     private bool isBoom;
-
+    
     private Coroutine chaseStopCoroutine;
 
     private void Awake()
@@ -170,7 +171,7 @@ public class EnemySystem : MonoBehaviour
                 }
                 else if (enemyType == EnemyType.Shortdistance)
                 {
-                    if (!isShortAttack) StartCoroutine(ShortdistanceAttack());
+                    if (!isShortAttack || !isPattern) StartCoroutine(ShortdistanceAttack());
                 }
             }
         }

@@ -3557,6 +3557,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 63408633}
     - target: {fileID: 7014246280253384298, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
+      propertyPath: bossCamera
+      value: 
+      objectReference: {fileID: 334278488}
+    - target: {fileID: 7014246280253384298, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
       propertyPath: hitCollider
       value: 
       objectReference: {fileID: 53819753}
@@ -3589,6 +3593,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2895248945749315052, guid: 6add739cbc7972246b6d2410ccfa5649, type: 3}
     - target: {fileID: 7014246280253384298, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
+      propertyPath: missilePrefab
+      value: 
+      objectReference: {fileID: 5149882320093515215, guid: 785cf17f7de90d44598a7729786e9c5a, type: 3}
+    - target: {fileID: 7014246280253384298, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
+      propertyPath: warningPrefab
+      value: 
+      objectReference: {fileID: 7744681412001507111, guid: 472325c69d6eb034eadf42a6f8875674, type: 3}
+    - target: {fileID: 7014246280253384298, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
       propertyPath: electricObject
       value: 
       objectReference: {fileID: 1047105772}
@@ -3601,8 +3613,16 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7014246280253384298, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
+      propertyPath: missileFirePoint
+      value: 
+      objectReference: {fileID: 1874837825}
+    - target: {fileID: 7014246280253384298, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
       propertyPath: fakeElectricObject
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7014246280253384298, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
+      propertyPath: dropPoints.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7014246280253384298, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
       propertyPath: objectList.Array.size
@@ -3648,6 +3668,11 @@ PrefabInstance:
       addedObject: {fileID: 334278485}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
+--- !u!4 &1874837825 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4358743506519599011, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
+  m_PrefabInstance: {fileID: 1874837824}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1876915648
 GameObject:
   m_ObjectHideFlags: 0

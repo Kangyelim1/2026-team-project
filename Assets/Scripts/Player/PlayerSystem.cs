@@ -29,6 +29,7 @@ public class PlayerSystem : MonoBehaviour
     private float moveX;
     private bool isDash;
     public bool isGround;
+    public bool isPattern;
     public bool IsDash => isDash;
 
     private Camera mainCamera;

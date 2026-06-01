@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
+using DG.Tweening;
 
 public class BossPatternSystem : MonoBehaviour
 {
     public BossSystem bossSystem;
     public EnemyHelthSystem enemyHelthSystem;
+    public EnemySystem enemySystem;
 
     public PlayerHelthSystem playerHelthSystem;
     public PlayerSystem playerSystem;
@@ -34,6 +36,25 @@ public class BossPatternSystem : MonoBehaviour
     public GameObject destoryObject;
     public bool isDestoryObject;
 
+    [Header("미사일 패턴")]
+    public CinemachineCamera bossCamera;
+    public GameObject missilePrefab;
+    public GameObject warningPrefab;
+    public Transform missileFirePoint;
+    public Transform[] dropPoints;
+
+    public float dropNearRangeX = 4f;
+    public float dropNearRangeY = 1f;
+    public float minDropDistance = 1f;
+
+    public float missileShootDelay = 0.3f;
+    public float cameraShakePower = 0.3f;
+    public float cameraShakeTime = 0.2f;
+    public float warningTime = 1f;
+
+    public float warningRange = 4f;
+    public int warningCount = 3;
+
     public Transform player;
     public Transform laserStart01;
     public Transform laserStart02;
@@ -49,6 +70,7 @@ public class BossPatternSystem : MonoBehaviour
     {
         bossSystem = FindAnyObjectByType<BossSystem>();
         enemyHelthSystem = FindAnyObjectByType<EnemyHelthSystem>();
+        enemySystem = FindAnyObjectByType<EnemySystem>();
     }
 
     private void Update()
@@ -138,7 +160,7 @@ public class BossPatternSystem : MonoBehaviour
         playerCamera.Priority = 10;
         wormHoleCamera.gameObject.SetActive(false);
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         electricObject.SetActive(true);
 
         yield return new WaitForSeconds(0.5f);
@@ -185,6 +207,7 @@ public class BossPatternSystem : MonoBehaviour
             playerSystem = FindAnyObjectByType<PlayerSystem>();
 
         isPattern = true;
+        enemySystem.isPattern = true;
 
         Vector3 spawnPos = new Vector3(playerSystem.gameObject.transform.position.x, playerSystem.transform.position.y + 12f, 0f);
         Instantiate(destoryObject, spawnPos, Quaternion.identity);
@@ -201,6 +224,7 @@ public class BossPatternSystem : MonoBehaviour
             isDestoryObject = false;
             yield return new WaitForSeconds(BossPatternTime);
             isPattern = false;
+            enemySystem.isPattern = false;
             bossSystem.BossRandomPattern();
         }
         else
@@ -212,9 +236,76 @@ public class BossPatternSystem : MonoBehaviour
 
     public IEnumerator Missile()
     {
+        if (playerSystem == null)
+            playerSystem = FindAnyObjectByType<PlayerSystem>();
+
+        isPattern = true;
+        enemySystem.isPattern = true;
+
+        bossCamera.gameObject.SetActive(true);
+        playerCamera.Priority = 10;
+        bossCamera.Priority = 20;
+
+        yield return new WaitForSeconds(1f);
+
+        for (int i = 0; i < 3; i++)
+        {
+            GameObject missile = Instantiate(missilePrefab, missileFirePoint.position, Quaternion.identity);
+
+            if (missile.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
+                rb.AddForce(Vector2.up * 100f, ForceMode2D.Impulse);
+
+            bossCamera.transform.DOShakePosition(cameraShakeTime, cameraShakePower);
+
+            yield return new WaitForSeconds(missileShootDelay);
+        }
+
+        bossCamera.Priority = 0;
+        playerCamera.Priority = 10;
+        bossCamera.gameObject.SetActive(false);
+
+        List<float> usedX = new List<float>();
+
+        for (int i = 0; i < warningCount; i++)
+        {
+            float randomX;
+
+            if (i == 0)
+            {
+                randomX = playerSystem.transform.position.x;
+            }
+            else
+            {
+                do
+                {
+                    randomX = playerSystem.transform.position.x + Random.Range(-warningRange, warningRange);
+                }
+                while (usedX.Exists(x => Mathf.Abs(x - randomX) < 1.5f));
+            }
+
+            usedX.Add(randomX);
+
+            Vector3 warningPos = new Vector3(randomX, playerSystem.transform.position.y, 0f);
+
+            GameObject warning = Instantiate(warningPrefab, warningPos, Quaternion.identity);
+            yield return new WaitForSeconds(0.5f);
+            Destroy(warning, warningTime);
+
+            Vector3 spawnPos = warningPos + Vector3.up * 15f;
+
+            GameObject bullet = Instantiate(missilePrefab, spawnPos, Quaternion.identity);
+
+            if (bullet.TryGetComponent(out Rigidbody2D rb))
+            {
+                rb.linearVelocity = Vector2.down * 15f;
+            }
+        }
+
+        yield return new WaitForSeconds(warningTime);
 
         yield return new WaitForSeconds(BossPatternTime);
         isPattern = false;
+        enemySystem.isPattern = false;
         bossSystem.BossRandomPattern();
     }
 }
