@@ -313,7 +313,7 @@ public class BossPatternSystem : MonoBehaviour
 
     public IEnumerator Rush()
     {
-        enemyChargeSystem.ChargeSequence();
+        StartCoroutine(enemyChargeSystem.ChargeSequence());
         yield return new WaitForSeconds(BossPatternTime);
         isPattern = false;
         bossSystem.BossRandomPattern();
