@@ -82,8 +82,16 @@ public class BossSystem : MonoBehaviour
                 Debug.Log("미사일 패턴");
                 StartCoroutine(bossPatternSystem.Missile());
                 break;
-
+            case ("보스", "돌진", PatternPage.Page02):
+                StartCoroutine(bossPatternSystem.Rush());
+                Debug.Log("돌진 패턴");
+                break;
+            case ("보스", "자폭드론 소환", PatternPage.Page02):
+                StartCoroutine(bossPatternSystem.SuicideDrone());
+                Debug.Log("자폭드론 소환 패턴");
+                break;
             default:
+                BossRandomPattern();
                 break;
         }
     }

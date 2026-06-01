@@ -1,8 +1,9 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
-using DG.Tweening;
+using static EnemyChargeSystem;
 
 public class BossPatternSystem : MonoBehaviour
 {
@@ -21,6 +22,15 @@ public class BossPatternSystem : MonoBehaviour
     public LineRenderer laserLine01;
     public LineRenderer laserLine02;
     public GameObject hitCollider;
+
+    public Transform player;
+    public Transform laserStart01;
+    public Transform laserStart02;
+
+    public float aimTime = 2f;
+    public float laserLength = 20f;
+
+    private Vector3 targetPos;
 
     [Header("전기 패턴")]
     public GameObject WormHole01;
@@ -43,6 +53,22 @@ public class BossPatternSystem : MonoBehaviour
     public Transform missileFirePoint;
     public Transform[] dropPoints;
 
+    [Header("돌진")]
+    public float chargeReadyTime = 0.5f;
+    public float chargeDistance = 7f;
+    public float chargeSpeed = 22f;
+    private Vector2 startPos;
+    private int moveDir = 1;
+    private bool isCoroutineRunning = false;
+    public enum ChargeState { Patrol, Ready, Charge, Stun, Return }
+    public ChargeState currentState = ChargeState.Patrol;
+
+    [Header("스턴 설정")]
+    public float stunTime = 1f;
+
+    [Header("상태 확인")]
+    public bool isInvincible = false;
+
     public float dropNearRangeX = 4f;
     public float dropNearRangeY = 1f;
     public float minDropDistance = 1f;
@@ -55,14 +81,9 @@ public class BossPatternSystem : MonoBehaviour
     public float warningRange = 4f;
     public int warningCount = 3;
 
-    public Transform player;
-    public Transform laserStart01;
-    public Transform laserStart02;
+    public Rigidbody2D rb;
 
-    public float aimTime = 2f;
-    public float laserLength = 20f;
-
-    private Vector3 targetPos;
+    
 
     public bool isPattern;
 
@@ -308,6 +329,98 @@ public class BossPatternSystem : MonoBehaviour
         yield return new WaitForSeconds(BossPatternTime);
         isPattern = false;
         enemySystem.isPattern = false;
+        bossSystem.BossRandomPattern();
+    }
+
+    public IEnumerator Rush()
+    {
+        StartCoroutine(ChargeSequence());
+        yield return new WaitForSeconds(BossPatternTime);
+        isPattern = false;
+        bossSystem.BossRandomPattern();
+    }
+
+    IEnumerator ChargeSequence()
+    {
+        isCoroutineRunning = true;
+
+        currentState = ChargeState.Ready;
+        rb.linearVelocity = Vector2.zero;
+        Debug.Log("차징 시작! 0.5초 후 돌진");
+
+        yield return new WaitForSeconds(chargeReadyTime);
+
+        currentState = ChargeState.Charge;
+        isInvincible = true;
+        Debug.Log("돌진 시작! 무적 ON");
+
+        float targetX = transform.position.x + (moveDir * chargeDistance);
+
+        while (true)
+        {
+            rb.linearVelocity = new Vector2(moveDir * chargeSpeed, rb.linearVelocity.y);
+
+            bool reachedTarget = (moveDir == 1 && transform.position.x >= targetX)
+                              || (moveDir == -1 && transform.position.x <= targetX);
+
+            if (reachedTarget)
+            {
+                Debug.Log("목표 지점 도달 → 스턴");
+                break;
+            }
+
+            yield return null;
+        }
+
+        yield return StartCoroutine(StunSequence());
+    }
+
+    IEnumerator StunSequence()
+    {
+        currentState = ChargeState.Stun;
+        isInvincible = false;
+        rb.linearVelocity = Vector2.zero;
+        Debug.Log("스턴! 무적 OFF. " + stunTime + "초 후 귀환");
+
+        yield return new WaitForSeconds(stunTime);
+
+        currentState = ChargeState.Return;
+        isCoroutineRunning = false;
+        Debug.Log("귀환 시작");
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (currentState != ChargeState.Charge) return;
+
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("플레이어 명중!");
+
+            PlayerHelthSystem playerHelth =
+                collision.gameObject.GetComponent<PlayerHelthSystem>();
+
+            if (playerHelth == null)
+                playerHelth = collision.gameObject.GetComponentInChildren<PlayerHelthSystem>();
+
+            if (playerHelth != null)
+                playerHelth.Die();
+
+            StopAllCoroutines();
+            StartCoroutine(StunSequence());
+        }
+        else if (!collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("벽 충돌! 스턴");
+            StopAllCoroutines();
+            StartCoroutine(StunSequence());
+        }
+    }
+
+    public IEnumerator SuicideDrone()
+    {
+        yield return new WaitForSeconds(BossPatternTime);
+        isPattern = false;
         bossSystem.BossRandomPattern();
     }
 }

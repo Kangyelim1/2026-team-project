@@ -3321,6 +3321,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4189645221569157837, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
   m_PrefabInstance: {fileID: 1874837824}
   m_PrefabAsset: {fileID: 0}
+--- !u!50 &1759720363 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 5913606708751784088, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
+  m_PrefabInstance: {fileID: 1874837824}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1845163133
 GameObject:
   m_ObjectHideFlags: 0
@@ -3537,6 +3542,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7014246280253384298, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 1759720363}
+    - target: {fileID: 7014246280253384298, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 1178306913}
@@ -3604,6 +3613,10 @@ PrefabInstance:
       propertyPath: warningPrefab
       value: 
       objectReference: {fileID: 7744681412001507111, guid: 472325c69d6eb034eadf42a6f8875674, type: 3}
+    - target: {fileID: 7014246280253384298, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
+      propertyPath: chargeDistance
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7014246280253384298, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
       propertyPath: electricObject
       value: 
