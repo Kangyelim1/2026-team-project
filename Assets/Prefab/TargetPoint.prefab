@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8182444319667081734}
   - component: {fileID: 2484364286742848976}
   m_Layer: 0
-  m_Name: DropPoint
+  m_Name: TargetPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

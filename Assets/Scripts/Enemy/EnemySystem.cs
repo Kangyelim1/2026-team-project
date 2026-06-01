@@ -145,7 +145,7 @@ public class EnemySystem : MonoBehaviour
 
     private void MoveToPlayer()
     {
-        if (playerSystem == null) return;
+        if (playerSystem == null || isPattern) return;
 
         float distance = Vector2.Distance(transform.position, playerSystem.transform.position);
 
@@ -171,7 +171,7 @@ public class EnemySystem : MonoBehaviour
                 }
                 else if (enemyType == EnemyType.Shortdistance)
                 {
-                    if (!isShortAttack || !isPattern) StartCoroutine(ShortdistanceAttack());
+                    if (!isShortAttack) StartCoroutine(ShortdistanceAttack());
                 }
             }
         }

@@ -3561,6 +3561,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 334278488}
     - target: {fileID: 7014246280253384298, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
+      propertyPath: TargetPoint
+      value: 
+      objectReference: {fileID: 7744681412001507111, guid: 472325c69d6eb034eadf42a6f8875674, type: 3}
+    - target: {fileID: 7014246280253384298, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
       propertyPath: hitCollider
       value: 
       objectReference: {fileID: 53819753}
@@ -3654,7 +3658,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8383991254347880133, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
       propertyPath: maxBossHelth
-      value: 300
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8383991254347880133, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
       propertyPath: minBossHelth

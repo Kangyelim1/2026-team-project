@@ -39,7 +39,7 @@ public class BossPatternSystem : MonoBehaviour
     [Header("미사일 패턴")]
     public CinemachineCamera bossCamera;
     public GameObject missilePrefab;
-    public GameObject warningPrefab;
+    public GameObject TargetPoint;
     public Transform missileFirePoint;
     public Transform[] dropPoints;
 
@@ -246,7 +246,7 @@ public class BossPatternSystem : MonoBehaviour
         playerCamera.Priority = 10;
         bossCamera.Priority = 20;
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
 
         for (int i = 0; i < 3; i++)
         {
@@ -263,6 +263,8 @@ public class BossPatternSystem : MonoBehaviour
         bossCamera.Priority = 0;
         playerCamera.Priority = 10;
         bossCamera.gameObject.SetActive(false);
+
+        yield return new WaitForSeconds(2f);
 
         List<float> usedX = new List<float>();
 
@@ -287,17 +289,17 @@ public class BossPatternSystem : MonoBehaviour
 
             Vector3 warningPos = new Vector3(randomX, playerSystem.transform.position.y, 0f);
 
-            GameObject warning = Instantiate(warningPrefab, warningPos, Quaternion.identity);
-            yield return new WaitForSeconds(0.5f);
+            GameObject warning = Instantiate(TargetPoint, warningPos, Quaternion.identity);
+            yield return new WaitForSeconds(0.1f);
             Destroy(warning, warningTime);
 
-            Vector3 spawnPos = warningPos + Vector3.up * 15f;
+            Vector3 spawnPos = warningPos + Vector3.up * 100f;
 
             GameObject bullet = Instantiate(missilePrefab, spawnPos, Quaternion.identity);
 
             if (bullet.TryGetComponent(out Rigidbody2D rb))
             {
-                rb.linearVelocity = Vector2.down * 15f;
+                rb.linearVelocity = Vector2.down * 100;
             }
         }
 
