@@ -213,9 +213,9 @@ public class BossPatternSystem : MonoBehaviour
         isPattern = true;
         enemySystem.isPattern = true;
 
+        if (playerSystem == null) yield break;
         Vector3 spawnPos = new Vector3(playerSystem.gameObject.transform.position.x, playerSystem.transform.position.y + 12f, 0f);
         Instantiate(destoryObject, spawnPos, Quaternion.identity);
-        
 
         yield return new WaitForSeconds(0.5f);
         Debug.Log("7초 카운트 시작");
@@ -327,14 +327,9 @@ public class BossPatternSystem : MonoBehaviour
     {
         isPattern = true;
 
-        for(int i = 0; i < 5; i++)
-        {
-            Instantiate(gunDronePrefab, droneSpawnPoint.position, Quaternion.identity);
-            Debug.Log("사격 드론 생성");
+        Instantiate(gunDronePrefab, droneSpawnPoint.position, Quaternion.identity);
+        Debug.Log("사격 드론 생성");
 
-            yield return null;
-        }
-       
         yield return new WaitForSeconds(BossPatternTime);
 
         isPattern = false;
