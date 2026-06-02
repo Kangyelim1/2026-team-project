@@ -151,8 +151,8 @@ public class EnemyChargeSystem : MonoBehaviour
         {
             rb.linearVelocity = new Vector2(moveDir * chargeSpeed, rb.linearVelocity.y);
 
-            bool reachedTarget = (moveDir == 1 && transform.position.x >= targetX)
-                              || (moveDir == -1 && transform.position.x <= targetX);
+            bool reachedTarget = (moveDir == 1 && transform.position.x >= targetX) || (moveDir == -1 && transform.position.x <= targetX);
+
 
             if (reachedTarget)
             {

@@ -147,7 +147,7 @@ MonoBehaviour:
   moveSpeed: 3
   stopDistance: 1.2
   shootDelay: 0.5
-  bulletSpeed: 10
+  bulletSpeed: 50
   chaseAfterExitTime: 3
   chaseDistance: 10
   BossHelth: 0

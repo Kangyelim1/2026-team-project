@@ -323,29 +323,18 @@ public class BossPatternSystem : MonoBehaviour
         bossSystem.BossRandomPattern();
     }
 
-
-
-    /* public IEnumerator SuicideDrone()
-     {
-         if (enemyChargeSystem == null) yield break;
-
-
-         yield return new WaitForSeconds(BossPatternTime);
-         isPattern = false;
-         bossSystem.BossRandomPattern();
-     }*/
     public IEnumerator SuicideDrone()
     {
         isPattern = true;
 
-        // 사격 드론 생성
-        Instantiate(
-            gunDronePrefab,
-            droneSpawnPoint.position,
-            Quaternion.identity);
+        for(int i = 0; i < 5; i++)
+        {
+            Instantiate(gunDronePrefab, droneSpawnPoint.position, Quaternion.identity);
+            Debug.Log("사격 드론 생성");
 
-        Debug.Log("사격 드론 생성");
-
+            yield return null;
+        }
+       
         yield return new WaitForSeconds(BossPatternTime);
 
         isPattern = false;
