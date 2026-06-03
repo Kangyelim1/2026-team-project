@@ -3997,7 +3997,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8383991254347880133, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
       propertyPath: maxBossHelth
-      value: 300
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8383991254347880133, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
       propertyPath: minBossHelth
