@@ -150,17 +150,21 @@ public class PlayerAttackSystem : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            BasicAttack();
+            StartCoroutine(BasicAttack());
         }
     }
 
-    private void BasicAttack()
+    IEnumerator BasicAttack()
     {
         if (!multiAttackMode && Time.time < lastAttackTime + attackCooldown)
-            return;
+           yield break;
 
         lastAttackTime = Time.time;
+        playerSystem.playerAnimator.SetBool("isGun", true);
         ShootProjectile(bulletPrefab, firePoint, bulletSpeed);
+        
+        yield return new WaitForSeconds(0.3f);
+        playerSystem.playerAnimator.SetBool("isGun", false);
     }
 
     private IEnumerator ComboShot()

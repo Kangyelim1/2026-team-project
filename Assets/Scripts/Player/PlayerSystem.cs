@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerSystem : MonoBehaviour
 {
     public float PlayerMoveSpeed = 5f;
+    public Animator playerAnimator;
 
     [Header("대시")]
     public float PlayerDashDistance = 4f;
@@ -37,6 +38,7 @@ public class PlayerSystem : MonoBehaviour
     private void Start()
     {
         gameManger = FindAnyObjectByType<GameManger>();
+        playerAnimator = GetComponentInChildren<Animator>();
     }
 
     private void Awake()
@@ -82,6 +84,15 @@ public class PlayerSystem : MonoBehaviour
     {
         float targetVelocityX = moveX * PlayerMoveSpeed;
         PlayerRigidbody.linearVelocity = new Vector2(targetVelocityX, PlayerRigidbody.linearVelocity.y);
+
+        if(PlayerRigidbody.linearVelocity != Vector2.zero)
+        {
+            playerAnimator.SetBool("isRun", true);
+        }
+        else
+        {
+            playerAnimator.SetBool("isRun", false);
+        }
     }
 
     private IEnumerator Dash()
@@ -95,7 +106,9 @@ public class PlayerSystem : MonoBehaviour
         Vector3 targetPos = startPos + new Vector3(direction * PlayerDashDistance, 0f, 0f);
 
         float time = 0f;
+        playerAnimator.SetBool("isRolling", true);
 
+        yield return new WaitForSeconds(0.1f);
         while (time < PlayerDashDuration)
         {
             time += Time.deltaTime;
@@ -106,6 +119,7 @@ public class PlayerSystem : MonoBehaviour
         transform.position = targetPos;
 
         yield return new WaitForSeconds(0.5f);
+        playerAnimator.SetBool("isRolling", false);
 
         isDash = false;
         isDashAttack = false;
