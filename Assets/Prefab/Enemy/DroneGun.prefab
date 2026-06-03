@@ -147,7 +147,7 @@ MonoBehaviour:
   playerHelthSystem: {fileID: 0}
   moveSpeed: 3
   stopDistance: 1.2
-  shootDelay: 0.5
+  shootDelay: 1.5
   bulletSpeed: 15
   chaseAfterExitTime: 3
   chaseDistance: 10
@@ -155,6 +155,7 @@ MonoBehaviour:
   isPattern: 0
   droneMoveSpeed: 4
   droneDetectDistance: 20
+  droneBoomDistance: 0
 --- !u!114 &5188339778995615798
 MonoBehaviour:
   m_ObjectHideFlags: 0

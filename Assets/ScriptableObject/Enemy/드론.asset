@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b983b1b932ef75428057804d31f436c, type: 3}
-  m_Name: "\uB530\uB77C\uAC00\uB294 \uB4DC\uB860"
+  m_Name: "\uB4DC\uB860"
   m_EditorClassIdentifier: Assembly-CSharp::EnemySO
-  enemyName: "\uB530\uB77C\uAC00\uB294 \uB4DC\uB860"
+  enemyName: "\uB4DC\uB860"
   enemyType: 6
   BossHelth: 0

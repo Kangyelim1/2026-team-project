@@ -8,7 +8,7 @@ public enum EnemyType
     Boss,
     Charge,
     Shield,
-    DroneGun
+    Drone
         
 }
 

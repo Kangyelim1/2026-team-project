@@ -41,6 +41,7 @@ public class EnemySystem : MonoBehaviour
     [Header("드론")]
     public float droneMoveSpeed = 4f;
     public float droneDetectDistance = 20f;
+    public float droneBoomDistance;
 
     private void Awake()
     {
@@ -84,7 +85,7 @@ public class EnemySystem : MonoBehaviour
             bossPattern = FindAnyObjectByType<BossSystem>();
         }
 
-        if (enemyType == EnemyType.DroneGun)
+        if (enemyType == EnemyType.Drone)
         {
             isAttack = true;
         }
@@ -110,7 +111,7 @@ public class EnemySystem : MonoBehaviour
     {
         if (!collision.CompareTag("Player")) return;
 
-        if (enemyType == EnemyType.Shortdistance || enemyType == EnemyType.Boom) return;
+        if (enemyType == EnemyType.Shortdistance || enemyType == EnemyType.Drone) return;
 
         if (chaseStopCoroutine != null) StopCoroutine(chaseStopCoroutine);
 
@@ -137,20 +138,20 @@ public class EnemySystem : MonoBehaviour
                 LongDistanceAttack();
                 break;
 
-            case EnemyType.Boom:
+            /*case EnemyType.Boom:
                 if (isBoom) return;
                 MoveToPlayer();
                 if (IsPlayerInAttackRange())
                     StartCoroutine(Boom());
-                break;
+                break;*/
             case EnemyType.Boss:
                 if(enemyhelthSystem.currentBossHelth <= enemyhelthSystem.minBossHelth)
                 {
                     MoveToPlayer();
                 }
                 break;
-            case EnemyType.DroneGun:
-                DroneGunAttack();
+            case EnemyType.Drone:
+                DroneAttack();
                 break;
             default:
                 break;
@@ -179,7 +180,7 @@ public class EnemySystem : MonoBehaviour
             {
                 isDistonse = true;
 
-                if (enemyType == EnemyType.Boom)
+                if (enemyType == EnemyType.Drone)
                 {
                     if (!isBoom) StartCoroutine(Boom());
                 }
@@ -279,26 +280,32 @@ public class EnemySystem : MonoBehaviour
             transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
     }
 
-    private void DroneGunAttack()
+  private void DroneAttack()
     {
         if (playerSystem == null)
             return;
 
-        float distance = Vector2.Distance(
-            transform.position,
-            playerSystem.transform.position);
+        float distance =
+            Vector2.Distance(
+                transform.position,
+                playerSystem.transform.position);
 
-        // 플레이어를 찾았을 때
         if (distance <= droneDetectDistance)
         {
+            
             Vector2 direction =
                 (playerSystem.transform.position - transform.position).normalized;
 
             transform.position +=
                 (Vector3)(direction * droneMoveSpeed * Time.deltaTime);
 
-            // 기존 원거리 공격 사용
             LongDistanceAttack();
+
+            if (distance <= droneBoomDistance)
+            {
+                if (!isBoom)
+                    StartCoroutine(Boom());
+            }
         }
     }
 }
