@@ -164,7 +164,7 @@ public class BossPatternSystem : MonoBehaviour
         playerCamera.Priority = 10;
         wormHoleCamera.gameObject.SetActive(false);
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
         electricObject.SetActive(true);
 
         yield return new WaitForSeconds(0.5f);
