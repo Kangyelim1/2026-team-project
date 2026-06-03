@@ -2131,6 +2131,10 @@ PrefabInstance:
       propertyPath: JumpForce
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 1753487945557967964, guid: 86aec5b01224593408d7902cd37129db, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -9025246451835624311, guid: 220960ee755cf524e8764e8a2ccc51a0, type: 3}
     - target: {fileID: 2037310616033549002, guid: 86aec5b01224593408d7902cd37129db, type: 3}
       propertyPath: orthographic size
       value: 7
