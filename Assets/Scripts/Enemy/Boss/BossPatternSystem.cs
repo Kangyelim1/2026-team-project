@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
-using static EnemyChargeSystem;
 
 public class BossPatternSystem : MonoBehaviour
 {
@@ -129,7 +128,7 @@ public class BossPatternSystem : MonoBehaviour
         yield return new WaitForSeconds(1f);
         hitCollider.SetActive(true);
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.3f);
         hitCollider.SetActive(false);
 
         laserLine01.enabled = false;
@@ -303,7 +302,7 @@ public class BossPatternSystem : MonoBehaviour
 
             if (bullet.TryGetComponent(out Rigidbody2D rb))
             {
-                rb.linearVelocity = Vector2.down * 100;
+                rb.linearVelocity = Vector2.down * 60;
             }
         }
 

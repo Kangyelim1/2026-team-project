@@ -1,3 +1,4 @@
+using Cainos.LucidEditor;
 using JetBrains.Annotations;
 using System.Collections;
 using UnityEngine;
@@ -8,6 +9,9 @@ public class BulletSystem : MonoBehaviour
     public float lifeTime;
     public BulletType type;
 
+    [Header("미사일 전용")]
+    public GameObject missileVFX;
+
     private void Awake()
     {
         lifeTime = bulletSO.bulletRifeTime;
@@ -17,6 +21,7 @@ public class BulletSystem : MonoBehaviour
     private void Start()
     {
         StartCoroutine(DestroyBullet());
+        if (missileVFX != null) missileVFX.gameObject.SetActive(false);
     }
 
 
@@ -34,6 +39,20 @@ public class BulletSystem : MonoBehaviour
             Destroy(gameObject);
         }
 
+        if (collision.CompareTag("Ground"))
+        {
+            if(type == BulletType.Missile)
+            {
+                missileVFX.gameObject.SetActive(true);
+                Destroy(gameObject, 0.8f);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+            
+        }
+
         if (collision.CompareTag("EnemyHitPoint") && type == BulletType.PlayerBullet)
         {
             Debug.Log("몬스터 명중");
@@ -46,7 +65,13 @@ public class BulletSystem : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if(collision.CompareTag("DestoryObject") && type == BulletType.PlayerBullet)
+        if (collision.CompareTag("PlayerHitPoint") && type == BulletType.Missile)
+        {
+            Debug.Log("미사일 플레이어 명중");
+            Destroy(gameObject);
+        }
+
+        if (collision.CompareTag("DestoryObject") && type == BulletType.PlayerBullet)
         {
             Debug.Log("삭제 오브젝트 명중");
             Destroy(gameObject);

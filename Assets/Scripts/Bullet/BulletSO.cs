@@ -2,7 +2,8 @@ using UnityEngine;
 public enum BulletType
 {
     PlayerBullet,
-    EnemyBullet
+    EnemyBullet,
+    Missile
 }
 
 [CreateAssetMenu(fileName = "BulletSO", menuName = "ScriptableObject/Bullet")]
