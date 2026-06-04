@@ -52,7 +52,6 @@ public class PlayerSystem : MonoBehaviour
 
     private void Update()
     {
-        moveX = Input.GetAxisRaw("Horizontal");
 
         Flip();
 
@@ -82,10 +81,14 @@ public class PlayerSystem : MonoBehaviour
 
     private void Move()
     {
-        float targetVelocityX = moveX * PlayerMoveSpeed;
-        PlayerRigidbody.linearVelocity = new Vector2(targetVelocityX, PlayerRigidbody.linearVelocity.y);
+        moveX = Input.GetAxisRaw("Horizontal");
 
-        if(PlayerRigidbody.linearVelocity != Vector2.zero)
+        Vector3 Derection = new Vector3(moveX, 0, 0).normalized;
+        Vector3 targetVelocityX = Derection * PlayerMoveSpeed * Time.deltaTime;
+
+        transform.position += targetVelocityX;
+
+        if(Derection != Vector3.zero)
         {
             playerAnimator.SetBool("isRun", true);
         }
