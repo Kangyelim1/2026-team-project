@@ -133,7 +133,6 @@ public class PlayerSystem : MonoBehaviour
     private void Jump()
     {
         isGround = false;
-        gameSoundManager.OnFindPlayerSound("점프");
         PlayerRigidbody.linearVelocity = new Vector2(PlayerRigidbody.linearVelocity.x, 0f);
         PlayerRigidbody.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
 
@@ -145,7 +144,6 @@ public class PlayerSystem : MonoBehaviour
         if (!isGround || isDash || isNotJump) return;
 
         isGround = false;
-        gameSoundManager.OnFindPlayerSound("점프");
         PlayerRigidbody.linearVelocity = new Vector2(PlayerRigidbody.linearVelocity.x, 0f);
         PlayerRigidbody.AddForce(Vector2.up * JumpForce * multiplier, ForceMode2D.Impulse);
 
