@@ -15,7 +15,7 @@ public class EnemyShieldSystem : MonoBehaviour
 
     [Header("추적 설정")]
     public float trackSpeed = 3.5f;
-    public float stopDistance = 1.2f; 
+    public float stopDistance = 1.2f;
 
     [Header("시야 설정 (씬 뷰 파란색 박스)")]
     public Vector2 viewOffset = new Vector2(2f, 0f);
@@ -25,8 +25,8 @@ public class EnemyShieldSystem : MonoBehaviour
     [Header("공격 설정 (씬 뷰 빨간색 박스)")]
     public Vector2 attackOffset = new Vector2(0.8f, 0f);
     public Vector2 attackSize = new Vector2(1.2f, 1.5f);
-    public float attackDelay = 0.4f;    
-    public float attackCooldown = 1.0f; 
+    public float attackDelay = 0.4f;
+    public float attackCooldown = 1.0f;
 
     [Header("방패 무적 설정 (씬 뷰 노란색 박스)")]
     public Vector2 shieldOffset = new Vector2(0.6f, 0f);
@@ -40,8 +40,10 @@ public class EnemyShieldSystem : MonoBehaviour
     public float stunTime = 0.5f;
 
     private Rigidbody2D rb;
+    private SpriteRenderer spriteRenderer;  // ← 추가
     private Vector2 startPos;
     private int moveDir = 1;
+    public int MoveDir => moveDir;
     private bool isAttacking = false;
     private bool isCoroutineRunning = false;
 
@@ -55,8 +57,14 @@ public class EnemyShieldSystem : MonoBehaviour
         if (enemySystem == null)
             enemySystem = GetComponent<EnemySystem>();
 
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer == null)
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
         startPos = transform.position;
         moveDir = transform.localScale.x >= 0 ? 1 : -1;
+
+        ApplyFlip();
     }
 
     void Update()
@@ -81,6 +89,7 @@ public class EnemyShieldSystem : MonoBehaviour
                 break;
         }
     }
+
     void Patrol()
     {
         rb.linearVelocity = new Vector2(moveDir * patrolSpeed, rb.linearVelocity.y);
@@ -177,9 +186,18 @@ public class EnemyShieldSystem : MonoBehaviour
     void Flip()
     {
         moveDir *= -1;
+
         Vector3 scale = transform.localScale;
         scale.x = Mathf.Abs(scale.x) * moveDir;
         transform.localScale = scale;
+
+        ApplyFlip();
+    }
+
+    void ApplyFlip()
+    {
+        if (spriteRenderer != null)
+            spriteRenderer.flipX = (moveDir == -1);
     }
 
     public bool TryTakeDamage(Vector2 bulletHitPos)
@@ -191,7 +209,7 @@ public class EnemyShieldSystem : MonoBehaviour
         if (hitHead)
         {
             Debug.Log("방패병: 머리 피격! 사망");
-            return true; 
+            return true;
         }
 
         Vector2 shieldCenter = (Vector2)transform.position
@@ -201,12 +219,12 @@ public class EnemyShieldSystem : MonoBehaviour
         if (hitShield)
         {
             Debug.Log("방패병: 방패 막기! 무적");
-            StartCoroutine(ShieldBlockStun()); 
+            StartCoroutine(ShieldBlockStun());
             return false;
         }
 
         Debug.Log("방패병: 뒤쪽/몸통 피격! 사망");
-        return true; 
+        return true;
     }
 
     IEnumerator ShieldBlockStun()
