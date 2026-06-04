@@ -29,12 +29,20 @@ public class StageClearManager : MonoBehaviour
 
         Debug.Log("남은 적 수 : " + enemyCount);
 
-
         // 적 전부 죽으면 문 활성화
         if (enemyCount <= 0)
         {
             Debug.Log("스테이지 클리어");
 
+            // 타이머 정지
+            StageTimer stageTimer = FindAnyObjectByType<StageTimer>();
+
+            if (stageTimer != null)
+            {
+                stageTimer.StopTimer();
+            }
+
+            // 문 활성화
             doorObject.SetActive(true);
         }
     }

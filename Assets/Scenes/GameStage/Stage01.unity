@@ -312,7 +312,9 @@ MonoBehaviour:
   missionCanvas: {fileID: 1963632600}
   slider: {fileID: 1891546501}
   targetPoint: {fileID: 943827511}
-  nextSceneName: BossScene
+  minX: -250
+  maxX: 250
+  nextSceneName: Stage02
   successRange: 20
 --- !u!1 &329191566
 GameObject:
@@ -872,7 +874,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &532060265
 Transform:
   m_ObjectHideFlags: 0
@@ -1115,6 +1117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StageTimer
   limitTime: 30
   timerText: {fileID: 1530810778}
+  isTimerStop: 0
 --- !u!4 &691277650
 Transform:
   m_ObjectHideFlags: 0
@@ -3657,7 +3660,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1963632601
 RectTransform:
   m_ObjectHideFlags: 0
