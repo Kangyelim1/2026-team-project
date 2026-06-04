@@ -163,7 +163,7 @@ public class PlayerAttackSystem : MonoBehaviour
         playerSystem.playerAnimator.SetBool("isGun", true);
         ShootProjectile(bulletPrefab, firePoint, bulletSpeed);
         
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.6f);
         playerSystem.playerAnimator.SetBool("isGun", false);
     }
 
