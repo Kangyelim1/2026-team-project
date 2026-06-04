@@ -13,7 +13,20 @@ public class BombTrap : MonoBehaviour
     [Header("ÀÌÆåÆ®")]
     public GameObject explosionEffectPrefab;
 
+    [Header("±ôºýÀÓ ¼³Á¤")]
+    public float blinkSpeed = 0.15f; 
+
     private bool isTriggered = false;
+    private SpriteRenderer spriteRenderer;
+    private Color originalColor;
+
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (spriteRenderer != null)
+            originalColor = spriteRenderer.color;
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -25,7 +38,7 @@ public class BombTrap : MonoBehaviour
 
             if (bullet != null && bullet.type == BulletType.PlayerBullet)
             {
-                Destroy(collision.gameObject); 
+                Destroy(collision.gameObject);
                 Activate();
                 return;
             }
@@ -47,12 +60,40 @@ public class BombTrap : MonoBehaviour
     private IEnumerator FuseRoutine()
     {
         Debug.Log("ÆøÅº ±âÆø ½ÃÀÛ!");
+
+        StartCoroutine(BlinkRed());
+
         yield return new WaitForSeconds(fuseTime);
         Explode();
     }
 
+    private IEnumerator BlinkRed()
+    {
+        float elapsed = 0f;
+        float currentBlinkSpeed = blinkSpeed;
+        bool isRed = false;
+
+        while (isTriggered)
+        {
+            isRed = !isRed;
+
+            if (spriteRenderer != null)
+                spriteRenderer.color = isRed ? Color.red : originalColor;
+
+            elapsed += currentBlinkSpeed;
+            currentBlinkSpeed = Mathf.Max(0.05f, blinkSpeed - (elapsed * 0.01f));
+
+            yield return new WaitForSeconds(currentBlinkSpeed);
+        }
+
+        if (spriteRenderer != null)
+            spriteRenderer.color = Color.red;
+    }
+
     private void Explode()
     {
+        isTriggered = false; 
+
         Debug.Log("Æø¹ß!");
 
         if (explosionEffectPrefab != null)
@@ -81,7 +122,6 @@ public class BombTrap : MonoBehaviour
                 continue;
             }
 
-            // Àû Ã³¸®
             if (hit.CompareTag("Enemy") || hit.CompareTag("EnemyHitPoint"))
             {
                 EnemyHelthSystem enemyHealth =
@@ -97,7 +137,7 @@ public class BombTrap : MonoBehaviour
             }
         }
 
-        Destroy(gameObject, 0.1f);
+        Destroy(gameObject, 0.05f);
     }
 
     private void OnDrawGizmosSelected()
