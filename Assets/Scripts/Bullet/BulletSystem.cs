@@ -64,7 +64,7 @@ public class BulletSystem : MonoBehaviour
         {
             Debug.Log("몬스터 명중");
             hitVFX.gameObject.SetActive(true);
-            Destroy(gameObject, 0.2f);
+            Destroy(gameObject, 0.06f);
         }
 
         if (collision.CompareTag("PlayerHitPoint") && type == BulletType.EnemyBullet)
@@ -83,7 +83,7 @@ public class BulletSystem : MonoBehaviour
         {
             Debug.Log("삭제 오브젝트 명중");
             hitVFX.gameObject.SetActive(true);
-            Destroy(gameObject, 0.2f);
+            Destroy(gameObject, 0.06f);
         }
     }
 }
