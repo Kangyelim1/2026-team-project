@@ -67,12 +67,15 @@ public class BossPatternSystem : MonoBehaviour
     public GameObject gunDronePrefab;
     public Transform droneSpawnPoint;
 
+    public GameSoundManager gameSoundManager;
+
     private void Start()
     {
         bossSystem = FindAnyObjectByType<BossSystem>();
         enemyHelthSystem = FindAnyObjectByType<EnemyHelthSystem>();
         enemySystem = FindAnyObjectByType<EnemySystem>();
         enemyChargeSystem = FindAnyObjectByType<EnemyChargeSystem>();
+        gameSoundManager = FindAnyObjectByType<GameSoundManager>();
     }
 
     private void Update()
@@ -127,7 +130,7 @@ public class BossPatternSystem : MonoBehaviour
         hitCollider.transform.position = targetPos;
         yield return new WaitForSeconds(1f);
         hitCollider.SetActive(true);
-
+        gameSoundManager.OnFindEnemySound("보스","레이저 패턴");
         yield return new WaitForSeconds(0.3f);
         hitCollider.SetActive(false);
 
@@ -253,6 +256,7 @@ public class BossPatternSystem : MonoBehaviour
 
         for (int i = 0; i < 3; i++)
         {
+            gameSoundManager.OnFindEnemySound("보스","미사일 발사");
             GameObject missile = Instantiate(missilePrefab, missileFirePoint.position, Quaternion.identity);
 
             if (missile.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))

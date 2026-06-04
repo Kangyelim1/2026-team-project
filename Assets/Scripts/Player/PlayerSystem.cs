@@ -26,6 +26,7 @@ public class PlayerSystem : MonoBehaviour
 
     public GameManger gameManger;
     public GameObject LockOnImage;
+    public GameSoundManager gameSoundManager;
 
     private float moveX;
     private bool isDash;
@@ -39,6 +40,7 @@ public class PlayerSystem : MonoBehaviour
     {
         gameManger = FindAnyObjectByType<GameManger>();
         playerAnimator = GetComponentInChildren<Animator>();
+        gameSoundManager = FindAnyObjectByType<GameSoundManager>();
     }
 
     private void Awake()
@@ -131,7 +133,7 @@ public class PlayerSystem : MonoBehaviour
     private void Jump()
     {
         isGround = false;
-
+        gameSoundManager.OnFindPlayerSound("점프");
         PlayerRigidbody.linearVelocity = new Vector2(PlayerRigidbody.linearVelocity.x, 0f);
         PlayerRigidbody.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
 
@@ -143,7 +145,7 @@ public class PlayerSystem : MonoBehaviour
         if (!isGround || isDash || isNotJump) return;
 
         isGround = false;
-
+        gameSoundManager.OnFindPlayerSound("점프");
         PlayerRigidbody.linearVelocity = new Vector2(PlayerRigidbody.linearVelocity.x, 0f);
         PlayerRigidbody.AddForce(Vector2.up * JumpForce * multiplier, ForceMode2D.Impulse);
 

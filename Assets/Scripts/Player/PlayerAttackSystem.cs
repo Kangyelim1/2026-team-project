@@ -5,6 +5,7 @@ public class PlayerAttackSystem : MonoBehaviour
 {
     [Header("참조")]
     public PlayerSystem playerSystem;
+    public GameSoundManager gameSoundManager;
     public Camera mainCamera;
 
     [Header("기본공격")]
@@ -70,6 +71,7 @@ public class PlayerAttackSystem : MonoBehaviour
     {
         if (playerSystem == null) playerSystem = GetComponent<PlayerSystem>();
         if (mainCamera == null) mainCamera = Camera.main;
+        gameSoundManager = FindAnyObjectByType<GameSoundManager>();
     }
 
     private void Update()
@@ -161,16 +163,26 @@ public class PlayerAttackSystem : MonoBehaviour
 
         lastAttackTime = Time.time;
         playerSystem.playerAnimator.SetBool("isGun", true);
+
+        yield return new WaitForSeconds(0.2f);
+        gameSoundManager.OnFindPlayerSound("플레이어 기본공격");
         ShootProjectile(bulletPrefab, firePoint, bulletSpeed);
         
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(0.1f);
         playerSystem.playerAnimator.SetBool("isGun", false);
     }
 
     private IEnumerator ComboShot()
     {
         yield return new WaitForSeconds(comboShotDelay);
+        playerSystem.playerAnimator.SetBool("isGun", true);
+
+        yield return new WaitForSeconds(0.2f);
+        gameSoundManager.OnFindPlayerSound("플레이어 기본공격");
         ShootProjectile(bulletPrefab, firePoint, bulletSpeed);
+
+        yield return new WaitForSeconds(0.1f);
+        playerSystem.playerAnimator.SetBool("isGun", false);
         Debug.Log("콤보탄 발사 / 데미지 16");
     }
 
@@ -257,7 +269,7 @@ public class PlayerAttackSystem : MonoBehaviour
         lastParryTime = Time.time;
         isParryWindow = true;
         Debug.Log("패링 시작");
-
+        gameSoundManager.OnFindPlayerSound("패링");
         yield return new WaitForSeconds(parryDuration);
 
         isParryWindow = false;
@@ -307,6 +319,7 @@ public class PlayerAttackSystem : MonoBehaviour
             return;
 
         lastTrapTime = Time.time;
+        gameSoundManager.OnFindPlayerSound("덫 설치");
         Instantiate(trapPrefab, trapPoint.position, Quaternion.identity);
         Debug.Log("덫 설치 / 데미지 22");
     }

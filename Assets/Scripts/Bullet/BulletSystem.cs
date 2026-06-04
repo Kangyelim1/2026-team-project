@@ -11,11 +11,13 @@ public class BulletSystem : MonoBehaviour
 
     [Header("미사일 전용")]
     public GameObject missileVFX;
-
+    public GameSoundManager gameSoundManager;
     private void Awake()
     {
         lifeTime = bulletSO.bulletRifeTime;
         type = bulletSO.bulletType;
+
+        gameSoundManager = FindAnyObjectByType<GameSoundManager>();
     }
 
     private void Start()
@@ -44,6 +46,7 @@ public class BulletSystem : MonoBehaviour
             if(type == BulletType.Missile)
             {
                 missileVFX.gameObject.SetActive(true);
+                gameSoundManager.OnFindEnemySound("보스","미사일 폭발");
                 Destroy(gameObject, 0.8f);
             }
             else
