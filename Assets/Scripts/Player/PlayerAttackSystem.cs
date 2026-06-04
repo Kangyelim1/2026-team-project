@@ -167,6 +167,8 @@ public class PlayerAttackSystem : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         gameSoundManager.OnFindPlayerSound("플레이어 기본공격");
         ShootProjectile(bulletPrefab, firePoint, bulletSpeed);
+        yield return new WaitForSeconds(0.1f);
+        
         
         yield return new WaitForSeconds(0.1f);
         playerSystem.playerAnimator.SetBool("isGun", false);

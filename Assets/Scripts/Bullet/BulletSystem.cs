@@ -9,6 +9,9 @@ public class BulletSystem : MonoBehaviour
     public float lifeTime;
     public BulletType type;
 
+    [Header("VFX")]
+    public GameObject hitVFX;
+
     [Header("미사일 전용")]
     public GameObject missileVFX;
     public GameSoundManager gameSoundManager;
@@ -24,6 +27,7 @@ public class BulletSystem : MonoBehaviour
     {
         StartCoroutine(DestroyBullet());
         if (missileVFX != null) missileVFX.gameObject.SetActive(false);
+        if(hitVFX != null) hitVFX.gameObject.SetActive(false);
     }
 
 
@@ -59,7 +63,8 @@ public class BulletSystem : MonoBehaviour
         if (collision.CompareTag("EnemyHitPoint") && type == BulletType.PlayerBullet)
         {
             Debug.Log("몬스터 명중");
-            Destroy(gameObject);
+            hitVFX.gameObject.SetActive(true);
+            Destroy(gameObject, 0.2f);
         }
 
         if (collision.CompareTag("PlayerHitPoint") && type == BulletType.EnemyBullet)
@@ -77,7 +82,8 @@ public class BulletSystem : MonoBehaviour
         if (collision.CompareTag("DestoryObject") && type == BulletType.PlayerBullet)
         {
             Debug.Log("삭제 오브젝트 명중");
-            Destroy(gameObject);
+            hitVFX.gameObject.SetActive(true);
+            Destroy(gameObject, 0.2f);
         }
     }
 }
