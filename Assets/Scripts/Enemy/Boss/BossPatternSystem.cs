@@ -35,8 +35,8 @@ public class BossPatternSystem : MonoBehaviour
     public GameObject WormHole01;
     public GameObject WormHole02;
     public GameObject electricObject;
-    public CinemachineCamera wormHoleCamera;
-    public float showTime = 2f;
+    public GameObject fakeObject;
+
 
     [Header("검은 물체 생성 패턴")]
     public List<GameObject> objectList = new List<GameObject>();
@@ -128,7 +128,7 @@ public class BossPatternSystem : MonoBehaviour
         }
         playerSystem.LockOnImage.SetActive(false);
         hitCollider.transform.position = targetPos;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         hitCollider.SetActive(true);
         gameSoundManager.OnFindEnemySound("보스","레이저 패턴");
         yield return new WaitForSeconds(0.3f);
@@ -152,21 +152,17 @@ public class BossPatternSystem : MonoBehaviour
 
         WormHole01.SetActive(true);
         WormHole02.SetActive(true);
-        wormHoleCamera.gameObject.SetActive(true);
 
-        playerCamera.Priority = 10;
-        wormHoleCamera.Priority = 20;
-        wormHoleCamera.Follow = WormHole01.transform;
-        yield return new WaitForSeconds(showTime);
+        for (int i = 0; i < 3; i++)
+        {
+            fakeObject.SetActive(true);
+            yield return new WaitForSeconds(0.5f);
 
-        wormHoleCamera.Follow = WormHole02.transform;
-        yield return new WaitForSeconds(showTime);
+            fakeObject.SetActive(false);
+            yield return new WaitForSeconds(0.15f);
+        }
 
-        wormHoleCamera.Priority = 0;
-        playerCamera.Priority = 10;
-        wormHoleCamera.gameObject.SetActive(false);
-
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(0.2f);
         electricObject.SetActive(true);
 
         yield return new WaitForSeconds(0.5f);
