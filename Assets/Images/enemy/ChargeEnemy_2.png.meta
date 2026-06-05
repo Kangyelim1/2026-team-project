@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: e59372c23c877b84d9c80604cd61b0a6
+guid: f749b42b65d7a164fb055be834e6882f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6755309690450703846
-    second: Ranged_Combat_Robot_0
+      213: -6615583174405945246
+    second: generated-image__8_-removebg-preview_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 50
+  spritePixelsToUnits: 200
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Ranged_Combat_Robot_0
+      name: generated-image__8_-removebg-preview_0
       rect:
         serializedVersion: 2
         x: 33
-        y: 8
-        width: 51
-        height: 117
+        y: 75
+        width: 450
+        height: 316
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a1a8ee0b0a15042a0800000000000000
-      internalID: -6755309690450703846
+      spriteID: 2688b7b572ab034a0800000000000000
+      internalID: -6615583174405945246
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Ranged_Combat_Robot_0: -6755309690450703846
+      generated-image__8_-removebg-preview_0: -6615583174405945246
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
