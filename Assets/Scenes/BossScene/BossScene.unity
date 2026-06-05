@@ -2749,11 +2749,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 82925702540452956, guid: 86aec5b01224593408d7902cd37129db, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -24.55552
+      value: -26.59
       objectReference: {fileID: 0}
     - target: {fileID: 82925702540452956, guid: 86aec5b01224593408d7902cd37129db, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.09996998
+      value: 0.10000014
       objectReference: {fileID: 0}
     - target: {fileID: 82925702540452956, guid: 86aec5b01224593408d7902cd37129db, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2777,7 +2777,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3245972517377431472, guid: 86aec5b01224593408d7902cd37129db, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 19.15897
+      value: 29.15897
       objectReference: {fileID: 0}
     - target: {fileID: 3245972517377431472, guid: 86aec5b01224593408d7902cd37129db, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2819,9 +2819,25 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: -26.59
       objectReference: {fileID: 0}
+    - target: {fileID: 4077120730980411845, guid: 86aec5b01224593408d7902cd37129db, type: 3}
+      propertyPath: TargetOffset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4077120730980411845, guid: 86aec5b01224593408d7902cd37129db, type: 3}
+      propertyPath: Composition.DeadZone.Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4077120730980411845, guid: 86aec5b01224593408d7902cd37129db, type: 3}
+      propertyPath: Composition.HardLimits.Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5443809838102976029, guid: 86aec5b01224593408d7902cd37129db, type: 3}
       propertyPath: m_LocalPosition.x
       value: -26.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 5443809838102976029, guid: 86aec5b01224593408d7902cd37129db, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.10000014
       objectReference: {fileID: 0}
     - target: {fileID: 7535766087244534542, guid: 86aec5b01224593408d7902cd37129db, type: 3}
       propertyPath: BoundingShape2D

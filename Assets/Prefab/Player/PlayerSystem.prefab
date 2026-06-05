@@ -94,7 +94,7 @@ Transform:
   m_GameObject: {fileID: 645358835775684957}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 33.26, y: 1.0410001, z: -1}
+  m_LocalPosition: {x: 0, y: 0.10000014, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -755,6 +755,7 @@ MonoBehaviour:
   isDashAttack: 0
   gameManger: {fileID: 0}
   LockOnImage: {fileID: 2059215149828179742}
+  gameSoundManager: {fileID: 0}
   isGround: 0
   isPattern: 0
 --- !u!114 &1706713151893354326
@@ -770,6 +771,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttackSystem
   playerSystem: {fileID: 1715830847698490614}
+  gameSoundManager: {fileID: 0}
   mainCamera: {fileID: 2037310616033549002}
   bulletPrefab: {fileID: 5149882320093515215, guid: 5d438a9e37c99c0468e808cde9835042, type: 3}
   firePoint: {fileID: 8340946736528875136}
@@ -1106,7 +1108,7 @@ MonoBehaviour:
   Composition:
     ScreenPosition: {x: 0, y: 0}
     DeadZone:
-      Enabled: 1
+      Enabled: 0
       Size: {x: 0.2, y: 0.2}
     HardLimits:
       Enabled: 0
