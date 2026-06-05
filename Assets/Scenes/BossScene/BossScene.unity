@@ -4174,6 +4174,14 @@ PrefabInstance:
       propertyPath: PatternList.Array.data[3].BossPatternName
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1634630000721641122, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 1.94
+      objectReference: {fileID: 0}
+    - target: {fileID: 1634630000721641122, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 1.764
+      objectReference: {fileID: 0}
     - target: {fileID: 2011524338714188303, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
       propertyPath: m_Name
       value: BossRobot
@@ -4234,6 +4242,22 @@ PrefabInstance:
       propertyPath: m_Offset.y
       value: -0.4
       objectReference: {fileID: 0}
+    - target: {fileID: 4715083581712032632, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 1.94
+      objectReference: {fileID: 0}
+    - target: {fileID: 4715083581712032632, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 1.764
+      objectReference: {fileID: 0}
+    - target: {fileID: 6295003308817284142, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
+      propertyPath: m_FlipX
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6295003308817284142, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -7666398142461921154, guid: 4953251441f227c4b8a51e2a1e950eff, type: 3}
     - target: {fileID: 6295003308817284142, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -4384,7 +4408,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8383991254347880133, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
       propertyPath: maxBossHelth
-      value: 300
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8383991254347880133, guid: 0ea595daf43fe5345ba4b1f4bb08d875, type: 3}
       propertyPath: minBossHelth
