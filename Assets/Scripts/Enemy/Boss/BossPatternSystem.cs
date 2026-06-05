@@ -128,7 +128,7 @@ public class BossPatternSystem : MonoBehaviour
         }
         playerSystem.LockOnImage.SetActive(false);
         hitCollider.transform.position = targetPos;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
         hitCollider.SetActive(true);
         gameSoundManager.OnFindEnemySound("보스","레이저 패턴");
         yield return new WaitForSeconds(0.3f);
@@ -212,6 +212,7 @@ public class BossPatternSystem : MonoBehaviour
         enemySystem.isPattern = true;
 
         if (playerSystem == null) yield break;
+
         Vector3 spawnPos = new Vector3(playerSystem.gameObject.transform.position.x, playerSystem.transform.position.y + 12f, 0f);
         Instantiate(destoryObject, spawnPos, Quaternion.identity);
 
