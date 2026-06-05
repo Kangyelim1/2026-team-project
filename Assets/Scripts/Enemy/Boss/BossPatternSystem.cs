@@ -128,7 +128,7 @@ public class BossPatternSystem : MonoBehaviour
         }
         playerSystem.LockOnImage.SetActive(false);
         hitCollider.transform.position = targetPos;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         hitCollider.SetActive(true);
         gameSoundManager.OnFindEnemySound("보스","레이저 패턴");
         yield return new WaitForSeconds(0.3f);
