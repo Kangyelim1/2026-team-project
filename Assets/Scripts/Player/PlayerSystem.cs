@@ -12,11 +12,16 @@ public class PlayerSystem : MonoBehaviour
     private bool isNotDash;
 
     [Header("점프")]
-    public float JumpForce = 7f;
+    public float JumpForce = 4.5f;          // 낮춰진 기본 점프력
     public float colliderOffTime = 0.5f;
     public float FallGravityScale = 4f;
     public float NormalGravityScale = 2f;
     private bool isNotJump;
+
+    [Header("더블 점프")]
+    public float doubleJumpMultiplier = 1.5f;   // 하이점프 배율
+    private bool canDoubleJump = false;          // 2단 점프 가능 여부
+    private bool hasDoubleJumped = false;        // 2단 점프 사용 여부
 
     public Rigidbody2D PlayerRigidbody;
     public SpriteRenderer PlayerSpriteRenderer;
@@ -55,7 +60,6 @@ public class PlayerSystem : MonoBehaviour
 
     private void Update()
     {
-
         Flip();
 
         if (PlayerRigidbody.linearVelocity.y < 0)
@@ -63,9 +67,20 @@ public class PlayerSystem : MonoBehaviour
         else
             PlayerRigidbody.gravityScale = NormalGravityScale;
 
-        if (Input.GetKeyDown(KeyCode.Space) && isGround && !isDash && !isNotJump)
+        if (Input.GetKeyDown(KeyCode.Space) && !isDash && !isNotJump)
         {
-            Jump();
+            if (isGround)
+            {
+                // 1단 점프
+                Jump();
+                canDoubleJump = true;
+                hasDoubleJumped = false;
+            }
+            else if (canDoubleJump && !hasDoubleJumped)
+            {
+                // 2단 점프 (하이점프)
+                DoubleJump();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && !isDash && !isNotDash)
@@ -86,19 +101,15 @@ public class PlayerSystem : MonoBehaviour
     {
         moveX = Input.GetAxisRaw("Horizontal");
 
-        Vector3 Derection = new Vector3(moveX, 0, 0).normalized;
-        Vector3 targetVelocityX = Derection * PlayerMoveSpeed * Time.deltaTime;
+        Vector3 direction = new Vector3(moveX, 0, 0).normalized;
+        Vector3 targetVelocityX = direction * PlayerMoveSpeed * Time.deltaTime;
 
         transform.position += targetVelocityX;
 
-        if(Derection != Vector3.zero)
-        {
+        if (direction != Vector3.zero)
             playerAnimator.SetBool("isRun", true);
-        }
         else
-        {
             playerAnimator.SetBool("isRun", false);
-        }
     }
 
     private IEnumerator Dash()
@@ -140,6 +151,16 @@ public class PlayerSystem : MonoBehaviour
         StartCoroutine(JumpColliderOff());
     }
 
+    private void DoubleJump()
+    {
+        hasDoubleJumped = true;
+        canDoubleJump = false;
+
+        PlayerRigidbody.linearVelocity = new Vector2(PlayerRigidbody.linearVelocity.x, 0f);
+        PlayerRigidbody.AddForce(Vector2.up * JumpForce * doubleJumpMultiplier, ForceMode2D.Impulse);
+    }
+
+    // 외부 호출용 (필요시 유지)
     public void HighJump(float multiplier)
     {
         if (!isGround || isDash || isNotJump) return;
@@ -154,16 +175,12 @@ public class PlayerSystem : MonoBehaviour
     private IEnumerator JumpColliderOff()
     {
         if (PlayerCollider != null)
-        {
             PlayerCollider.enabled = false;
-        }
 
         yield return new WaitForSeconds(colliderOffTime);
 
         if (PlayerCollider != null)
-        {
             PlayerCollider.enabled = true;
-        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -171,6 +188,8 @@ public class PlayerSystem : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGround = true;
+            canDoubleJump = false;
+            hasDoubleJumped = false;
         }
 
         if (collision.contacts.Length > 0 && collision.contacts[0].normal.y < -0.5f)
@@ -204,12 +223,8 @@ public class PlayerSystem : MonoBehaviour
         Vector3 mouseWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
 
         if (mouseWorldPos.x > transform.position.x)
-        {
             transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-        }
         else
-        {
             transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-        }
     }
 }
