@@ -13,6 +13,7 @@ public class PlayerSystem : MonoBehaviour
 
     [Header("점프")]
     public float JumpForce = 7f;
+    public float colliderOffTime = 0.5f;
     public float FallGravityScale = 4f;
     public float NormalGravityScale = 2f;
     private bool isNotJump;
@@ -157,7 +158,7 @@ public class PlayerSystem : MonoBehaviour
             PlayerCollider.enabled = false;
         }
 
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(colliderOffTime);
 
         if (PlayerCollider != null)
         {

@@ -223,7 +223,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 25
+  m_SortingOrder: 24
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -413,7 +413,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19eab933c142194d89fc91722f57668, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DestoryObjectHitPoint
-  currentHelth: 50
+  currentHelth: 20
   DestoryObejct: {fileID: 2800864640662085536}
   enemyHelthSystem: {fileID: 0}
   bossPatternSystem: {fileID: 0}
@@ -499,7 +499,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 26
+  m_SortingOrder: 25
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 0.75686276}
@@ -569,6 +569,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea80694b4fc2f1f4582c28da2e0b3b67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DestoryObejctSystem
+  gameSoundManager: {fileID: 0}
 --- !u!61 &6067931872817693325
 BoxCollider2D:
   m_ObjectHideFlags: 0
