@@ -12,16 +12,16 @@ public class PlayerSystem : MonoBehaviour
     private bool isNotDash;
 
     [Header("점프")]
-    public float JumpForce = 4.5f;         
+    public float JumpForce = 4.5f;
     public float colliderOffTime = 0.5f;
     public float FallGravityScale = 4f;
     public float NormalGravityScale = 2f;
     private bool isNotJump;
 
     [Header("더블 점프")]
-    public float doubleJumpMultiplier = 1.5f;  
-    private bool canDoubleJump = false;          
-    private bool hasDoubleJumped = false;       
+    public float doubleJumpMultiplier = 1.2f;
+    private bool canDoubleJump = false;
+    private bool hasDoubleJumped = false;
 
     public Rigidbody2D PlayerRigidbody;
     public SpriteRenderer PlayerSpriteRenderer;
@@ -90,9 +90,7 @@ public class PlayerSystem : MonoBehaviour
     private void FixedUpdate()
     {
         if (!isDash)
-        {
             Move();
-        }
     }
 
     private void Move()
@@ -122,6 +120,8 @@ public class PlayerSystem : MonoBehaviour
 
         float time = 0f;
         playerAnimator.SetBool("isRolling", true);
+
+        SkillHUDManager.Instance?.TriggerCooldown(SkillType.Dash, PlayerDashDuration + 0.5f);
 
         yield return new WaitForSeconds(0.1f);
         while (time < PlayerDashDuration)

@@ -12,14 +12,15 @@ public class PlayerAttackSystem : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform firePoint;
     public float bulletSpeed = 10f;
-    public float bulletLifetime = 0.4f;    
-    public float attackCooldown = 1.0f;  
+    public float bulletLifetime = 0.4f;
+    public float attackCooldown = 1.0f;
 
     [Header("탄창")]
     public int maxAmmo = 6;
     public float reloadTime = 1.5f;
     private int currentAmmo;
     private bool isReloading = false;
+    private bool isShootingLocked = false;
 
     [Header("콤보 탄환 (우클릭 + 좌클릭)")]
     public float comboShotDelay = 0.3f;
@@ -31,12 +32,13 @@ public class PlayerAttackSystem : MonoBehaviour
     public float throwSpeed = 12f;
     public float throwCooldown = 60f;
 
-    [Header("근접공격 (우클릭 + F)")]
+    [Header("근접공격 (G)")]
     public Transform meleePoint;
     public float meleeRange = 1.2f;
+    public float meleeCooldown = 1.0f;
     public LayerMask enemyLayer;
 
-    [Header("패링 (우클릭 + F)")]
+    [Header("패링 (우클릭 + G)")]
     public float parryDuration = 0.1f;
     public float parryCooldown = 2f;
     public int parryDamage = 6;
@@ -45,13 +47,13 @@ public class PlayerAttackSystem : MonoBehaviour
     public float interactHoldTime = 1.5f;
 
     private float lastAttackTime = -999f;
+    private float lastMeleeTime = -999f;
     private float lastThrowTime = -999f;
     private float lastParryTime = -999f;
 
     private bool isParryWindow;
-    private float fHoldTimer;
-
     private bool isComboShotRunning = false;
+    private float fHoldTimer;
 
     public bool IsInvincible => isParryWindow || (playerSystem != null && playerSystem.IsDash);
     public bool IsParryWindow => isParryWindow;
@@ -92,7 +94,7 @@ public class PlayerAttackSystem : MonoBehaviour
 
     private void HandleAttackInput()
     {
-        bool comboHeld = Input.GetMouseButton(1); 
+        bool comboHeld = Input.GetMouseButton(1);
 
         if (comboHeld && Input.GetMouseButtonDown(0))
         {
@@ -125,22 +127,23 @@ public class PlayerAttackSystem : MonoBehaviour
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && !isReloading)
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            StartCoroutine(Reload());
+            if (!isReloading && currentAmmo < maxAmmo)
+                StartCoroutine(Reload());
         }
     }
 
     private bool CanShoot()
     {
+        if (isShootingLocked)
+        {
+            Debug.Log("탄창 소진! R키로 재장전하세요.");
+            return false;
+        }
         if (isReloading)
         {
             Debug.Log("재장전 중...");
-            return false;
-        }
-        if (currentAmmo <= 0)
-        {
-            Debug.Log("탄창 없음! R키로 재장전하세요.");
             return false;
         }
         return true;
@@ -155,6 +158,15 @@ public class PlayerAttackSystem : MonoBehaviour
         currentAmmo--;
         Debug.Log($"발사 | 남은 탄환: {currentAmmo}/{maxAmmo}");
 
+        if (currentAmmo <= 0)
+        {
+            currentAmmo = 0;
+            isShootingLocked = true;
+            Debug.Log("탄창 소진! R키로 재장전하세요.");
+        }
+
+        SkillHUDManager.Instance?.TriggerCooldown(SkillType.BasicAttack, attackCooldown);
+
         playerSystem.playerAnimator.SetBool("isGun", true);
         yield return new WaitForSeconds(0.2f);
 
@@ -167,15 +179,16 @@ public class PlayerAttackSystem : MonoBehaviour
 
     IEnumerator Reload()
     {
-        if (isReloading || currentAmmo == maxAmmo) yield break;
-
         isReloading = true;
         Debug.Log($"재장전 중... ({reloadTime}초)");
+
+        SkillHUDManager.Instance?.TriggerCooldown(SkillType.Reload, reloadTime);
 
         yield return new WaitForSeconds(reloadTime);
 
         currentAmmo = maxAmmo;
         isReloading = false;
+        isShootingLocked = false;
         Debug.Log($"재장전 완료! 탄환: {currentAmmo}/{maxAmmo}");
     }
 
@@ -188,6 +201,15 @@ public class PlayerAttackSystem : MonoBehaviour
         lastAttackTime = Time.time;
         currentAmmo--;
         Debug.Log($"콤보 발사 | 남은 탄환: {currentAmmo}/{maxAmmo}");
+
+        if (currentAmmo <= 0)
+        {
+            currentAmmo = 0;
+            isShootingLocked = true;
+            Debug.Log("탄창 소진! R키로 재장전하세요.");
+        }
+
+        SkillHUDManager.Instance?.TriggerCooldown(SkillType.BasicAttack, attackCooldown);
 
         yield return new WaitForSeconds(comboShotDelay);
         playerSystem.playerAnimator.SetBool("isGun", true);
@@ -213,7 +235,6 @@ public class PlayerAttackSystem : MonoBehaviour
         Vector2 dir = (mousePos - spawnPoint.position).normalized;
 
         GameObject bullet = Instantiate(prefab, spawnPoint.position, Quaternion.identity);
-
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         if (rb != null) rb.linearVelocity = dir * speed;
 
@@ -227,12 +248,18 @@ public class PlayerAttackSystem : MonoBehaviour
 
         lastThrowTime = Time.time;
         ShootProjectile(throwWeaponPrefab, throwPoint, throwSpeed);
+
+        // 투척 쿨타임 HUD
+        SkillHUDManager.Instance?.TriggerCooldown(SkillType.Throw, throwCooldown);
         Debug.Log("투척무기 사용 / 데미지 22");
     }
 
     private void MeleeAttack(int damage)
     {
+        if (Time.time < lastMeleeTime + meleeCooldown) return;
         if (meleePoint == null) return;
+
+        lastMeleeTime = Time.time;
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(meleePoint.position, meleeRange, enemyLayer);
         foreach (Collider2D hit in hits)
@@ -242,6 +269,8 @@ public class PlayerAttackSystem : MonoBehaviour
             if (enemy != null)
                 ApplyDamage(enemy, damage);
         }
+
+        SkillHUDManager.Instance?.TriggerCooldown(SkillType.Melee, meleeCooldown);
         Debug.Log("근접공격 / 데미지 10");
     }
 
@@ -257,6 +286,8 @@ public class PlayerAttackSystem : MonoBehaviour
         isParryWindow = true;
         Debug.Log("패링 시작");
         gameSoundManager.OnFindPlayerSound("패링");
+
+        SkillHUDManager.Instance?.TriggerCooldown(SkillType.Parry, parryCooldown);
 
         yield return new WaitForSeconds(parryDuration);
 
