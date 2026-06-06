@@ -13,7 +13,7 @@ public class DestoryObejctSystem : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            gameSoundManager.OnFindEnemySound("보스", "오브젝트 추락");
+            gameSoundManager.OnFindEnemySound("오브젝트 추락");
             Destroy(gameObject, 1);
         }
     }

@@ -745,7 +745,7 @@ MonoBehaviour:
   playerAnimator: {fileID: 7975023084102622890}
   PlayerDashDistance: 7
   PlayerDashDuration: 0.15
-  JumpForce: 15
+  JumpForce: 7
   FallGravityScale: 4
   NormalGravityScale: 2
   PlayerRigidbody: {fileID: 2818493553882795528}

@@ -9,6 +9,7 @@ public class EnemyHelthSystem : MonoBehaviour
     public int maxBossHelth;
     public int minBossHelth;
     public int currentBossHelth;
+    public bool isInvincibility;
 
     [Header("죽음 연출")]
     public float deathDelay = 0.8f;
@@ -72,13 +73,18 @@ public class EnemyHelthSystem : MonoBehaviour
 
         if (enemySystem != null && enemySystem.enemyType == EnemyType.Boss)
         {
-            currentBossHelth -= 8;
-            Debug.Log("보스 체력 감소");
-
-            if (currentBossHelth <= 0)
+            if (!isInvincibility)
             {
-                Die();
+                currentBossHelth -= 8;
+                Debug.Log("보스 체력 감소");
+
+                if (currentBossHelth <= 0)
+                {
+                    Die();
+                }
             }
+            else return;
+           
         }
         else
         {

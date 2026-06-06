@@ -27,6 +27,7 @@ public class BossSystem : MonoBehaviour
 
     public void BossRandomPattern()
     {
+        if (enemySystem.playerSystem == null) return;
         Debug.Log("보스 패턴 뽑기");
 
         int randomIndex = Random.Range(0, bossPatternData.bossPatternDataList.Count);

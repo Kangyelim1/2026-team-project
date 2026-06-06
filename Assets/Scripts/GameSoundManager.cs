@@ -19,7 +19,7 @@ public class GameSoundManager : MonoBehaviour
         }
     }
 
-    public void OnFindEnemySound(string enemyName, string soundName)
+    public void OnFindEnemySound(string soundName)
     {
         AudioClip enemySoundClip = enemySoundList.Find(es => es.name == soundName);
 

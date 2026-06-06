@@ -50,7 +50,7 @@ public class BulletSystem : MonoBehaviour
             if(type == BulletType.Missile)
             {
                 missileVFX.gameObject.SetActive(true);
-                gameSoundManager.OnFindEnemySound("보스","미사일 폭발");
+                gameSoundManager.OnFindEnemySound("미사일 폭발");
                 Destroy(gameObject, 0.06f);
             }
             else
