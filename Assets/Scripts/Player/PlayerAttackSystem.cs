@@ -8,70 +8,65 @@ public class PlayerAttackSystem : MonoBehaviour
     public GameSoundManager gameSoundManager;
     public Camera mainCamera;
 
-    [Header("기본공격")]
+    [Header("기본 공격")]
     public GameObject bulletPrefab;
     public Transform firePoint;
     public float bulletSpeed = 10f;
-    public float attackCooldown = 2f;
+    public float bulletLifetime = 0.4f;    
+    public float attackCooldown = 1.0f;  
 
-    [Header("콤보 탄환")]
+    [Header("탄창")]
+    public int maxAmmo = 6;
+    public float reloadTime = 1.5f;
+    private int currentAmmo;
+    private bool isReloading = false;
+
+    [Header("콤보 탄환 (우클릭 + 좌클릭)")]
     public float comboShotDelay = 0.3f;
     public int comboDamage = 16;
 
-    [Header("다중공격")]
-    public float multiAttackDuration = 1f;
-    public float multiAttackCooldown = 15f;
-
-    [Header("투척무기")]
+    [Header("투척무기 (E)")]
     public GameObject throwWeaponPrefab;
     public Transform throwPoint;
     public float throwSpeed = 12f;
     public float throwCooldown = 60f;
 
-    [Header("근접공격")]
+    [Header("근접공격 (우클릭 + F)")]
     public Transform meleePoint;
     public float meleeRange = 1.2f;
     public LayerMask enemyLayer;
 
-    [Header("패링")]
+    [Header("패링 (우클릭 + F)")]
     public float parryDuration = 0.1f;
     public float parryCooldown = 2f;
     public int parryDamage = 6;
-
-    [Header("궁극기")]
-    public float ultimateCastTime = 2f;
-    public float ultimateCooldown = 100f;
-    public float ultimateRange = 8f;
-    public int ultimateDamage = 30;
-
-    [Header("덫")]
-    public GameObject trapPrefab;
-    public Transform trapPoint;
-    public float trapCooldown = 90f;
 
     [Header("상호작용")]
     public float interactHoldTime = 1.5f;
 
     private float lastAttackTime = -999f;
-    private float lastMultiAttackTime = -999f;
     private float lastThrowTime = -999f;
     private float lastParryTime = -999f;
-    private float lastUltimateTime = -999f;
-    private float lastTrapTime = -999f;
 
-    private bool multiAttackMode;
     private bool isParryWindow;
-    private bool isUltimateCasting;
     private float fHoldTimer;
 
-    public bool IsInvincible => isParryWindow || isUltimateCasting || (playerSystem != null && playerSystem.IsDash);
+    private bool isComboShotRunning = false;
+
+    public bool IsInvincible => isParryWindow || (playerSystem != null && playerSystem.IsDash);
     public bool IsParryWindow => isParryWindow;
+
+    public int CurrentAmmo => currentAmmo;
+    public int MaxAmmo => maxAmmo;
+    public bool IsReloading => isReloading;
 
     private void Awake()
     {
         if (playerSystem == null) playerSystem = GetComponent<PlayerSystem>();
         if (mainCamera == null) mainCamera = Camera.main;
         gameSoundManager = FindAnyObjectByType<GameSoundManager>();
+
+        currentAmmo = maxAmmo;
     }
 
     private void Update()
@@ -85,97 +80,115 @@ public class PlayerAttackSystem : MonoBehaviour
         if (Input.GetKey(KeyCode.F) && !Input.GetMouseButton(1))
         {
             fHoldTimer += Time.deltaTime;
-
             if (fHoldTimer >= interactHoldTime)
             {
                 Debug.Log("상호작용 실행");
                 fHoldTimer = -999f;
             }
         }
-
         if (Input.GetKeyUp(KeyCode.F))
-        {
             fHoldTimer = 0f;
-        }
     }
 
     private void HandleAttackInput()
     {
-        bool comboHeld = Input.GetMouseButton(1);
+        bool comboHeld = Input.GetMouseButton(1); 
 
         if (comboHeld && Input.GetMouseButtonDown(0))
         {
-            StartCoroutine(ComboShot());
+            if (!isComboShotRunning)
+                StartCoroutine(ComboShot());
             return;
         }
 
-        if (comboHeld && Input.GetKeyDown(KeyCode.Space))
-        {
-            if (playerSystem != null)
-                playerSystem.HighJump(1.5f);
-            return;
-        }
-
-        if (comboHeld && Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            MeleeAttack(10);
-            return;
-        }
-
-        if (comboHeld && Input.GetKeyDown(KeyCode.F))
+        if (comboHeld && Input.GetKeyDown(KeyCode.G))
         {
             TryParry();
             return;
         }
 
-        if (comboHeld && Input.GetKeyDown(KeyCode.LeftControl))
+        if (Input.GetKeyDown(KeyCode.G))
         {
-            StartCoroutine(UltimateRoutine());
+            MeleeAttack(10);
             return;
-        }
-
-        if (comboHeld && Input.GetKeyDown(KeyCode.E))
-        {
-            InstallTrap();
-            return;
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            TryMultiAttackMode();
         }
 
         if (Input.GetKeyDown(KeyCode.E))
         {
             ThrowWeapon();
+            return;
         }
 
         if (Input.GetMouseButtonDown(0))
         {
             StartCoroutine(BasicAttack());
+            return;
         }
+
+        if (Input.GetKeyDown(KeyCode.R) && !isReloading)
+        {
+            StartCoroutine(Reload());
+        }
+    }
+
+    private bool CanShoot()
+    {
+        if (isReloading)
+        {
+            Debug.Log("재장전 중...");
+            return false;
+        }
+        if (currentAmmo <= 0)
+        {
+            Debug.Log("탄창 없음! R키로 재장전하세요.");
+            return false;
+        }
+        return true;
     }
 
     IEnumerator BasicAttack()
     {
-        if (!multiAttackMode && Time.time < lastAttackTime + attackCooldown)
-           yield break;
+        if (!CanShoot()) yield break;
+        if (Time.time < lastAttackTime + attackCooldown) yield break;
 
         lastAttackTime = Time.time;
-        playerSystem.playerAnimator.SetBool("isGun", true);
+        currentAmmo--;
+        Debug.Log($"발사 | 남은 탄환: {currentAmmo}/{maxAmmo}");
 
+        playerSystem.playerAnimator.SetBool("isGun", true);
         yield return new WaitForSeconds(0.2f);
+
         gameSoundManager.OnFindPlayerSound("플레이어 기본공격");
         ShootProjectile(bulletPrefab, firePoint, bulletSpeed);
-        yield return new WaitForSeconds(0.1f);
-        
-        
+
         yield return new WaitForSeconds(0.1f);
         playerSystem.playerAnimator.SetBool("isGun", false);
     }
 
+    IEnumerator Reload()
+    {
+        if (isReloading || currentAmmo == maxAmmo) yield break;
+
+        isReloading = true;
+        Debug.Log($"재장전 중... ({reloadTime}초)");
+
+        yield return new WaitForSeconds(reloadTime);
+
+        currentAmmo = maxAmmo;
+        isReloading = false;
+        Debug.Log($"재장전 완료! 탄환: {currentAmmo}/{maxAmmo}");
+    }
+
     private IEnumerator ComboShot()
     {
+        if (!CanShoot()) yield break;
+        if (Time.time < lastAttackTime + attackCooldown) yield break;
+
+        isComboShotRunning = true;
+        lastAttackTime = Time.time;
+        currentAmmo--;
+        Debug.Log($"콤보 발사 | 남은 탄환: {currentAmmo}/{maxAmmo}");
+
         yield return new WaitForSeconds(comboShotDelay);
         playerSystem.playerAnimator.SetBool("isGun", true);
 
@@ -185,13 +198,14 @@ public class PlayerAttackSystem : MonoBehaviour
 
         yield return new WaitForSeconds(0.1f);
         playerSystem.playerAnimator.SetBool("isGun", false);
-        Debug.Log("콤보탄 발사 / 데미지 16");
+        Debug.Log($"콤보탄 발사 / 데미지 {comboDamage}");
+
+        isComboShotRunning = false;
     }
 
     private void ShootProjectile(GameObject prefab, Transform spawnPoint, float speed)
     {
-        if (prefab == null || spawnPoint == null || mainCamera == null)
-            return;
+        if (prefab == null || spawnPoint == null || mainCamera == null) return;
 
         Vector3 mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0f;
@@ -201,37 +215,15 @@ public class PlayerAttackSystem : MonoBehaviour
         GameObject bullet = Instantiate(prefab, spawnPoint.position, Quaternion.identity);
 
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-        if (rb != null)
-            rb.linearVelocity = dir * speed;
-    }
+        if (rb != null) rb.linearVelocity = dir * speed;
 
-    private void TryMultiAttackMode()
-    {
-        if (Time.time < lastMultiAttackTime + multiAttackCooldown)
-            return;
-
-        StartCoroutine(MultiAttackRoutine());
-    }
-
-    private IEnumerator MultiAttackRoutine()
-    {
-        lastMultiAttackTime = Time.time;
-        multiAttackMode = true;
-        Debug.Log("다중공격 ON");
-
-        yield return new WaitForSeconds(multiAttackDuration);
-
-        multiAttackMode = false;
-        Debug.Log("다중공격 OFF");
+        Destroy(bullet, bulletLifetime);
     }
 
     private void ThrowWeapon()
     {
-        if (Time.time < lastThrowTime + throwCooldown)
-            return;
-
-        if (throwWeaponPrefab == null || throwPoint == null || mainCamera == null)
-            return;
+        if (Time.time < lastThrowTime + throwCooldown) return;
+        if (throwWeaponPrefab == null || throwPoint == null || mainCamera == null) return;
 
         lastThrowTime = Time.time;
         ShootProjectile(throwWeaponPrefab, throwPoint, throwSpeed);
@@ -243,26 +235,19 @@ public class PlayerAttackSystem : MonoBehaviour
         if (meleePoint == null) return;
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(meleePoint.position, meleeRange, enemyLayer);
-
         foreach (Collider2D hit in hits)
         {
             EnemyHelthSystem enemy = hit.GetComponent<EnemyHelthSystem>();
             if (enemy == null) enemy = hit.GetComponentInParent<EnemyHelthSystem>();
-
             if (enemy != null)
-            {
                 ApplyDamage(enemy, damage);
-            }
         }
-
         Debug.Log("근접공격 / 데미지 10");
     }
 
     private void TryParry()
     {
-        if (Time.time < lastParryTime + parryCooldown)
-            return;
-
+        if (Time.time < lastParryTime + parryCooldown) return;
         StartCoroutine(ParryRoutine());
     }
 
@@ -272,58 +257,11 @@ public class PlayerAttackSystem : MonoBehaviour
         isParryWindow = true;
         Debug.Log("패링 시작");
         gameSoundManager.OnFindPlayerSound("패링");
+
         yield return new WaitForSeconds(parryDuration);
 
         isParryWindow = false;
         Debug.Log("패링 종료");
-    }
-
-    private IEnumerator UltimateRoutine()
-    {
-        if (Time.time < lastUltimateTime + ultimateCooldown)
-            yield break;
-
-        lastUltimateTime = Time.time;
-        isUltimateCasting = true;
-
-        if (playerSystem != null && playerSystem.LockOnImage != null)
-            playerSystem.LockOnImage.SetActive(true);
-
-        Debug.Log("궁극기 선딜 시작");
-        yield return new WaitForSeconds(ultimateCastTime);
-
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, ultimateRange, enemyLayer);
-
-        foreach (Collider2D hit in hits)
-        {
-            EnemyHelthSystem enemy = hit.GetComponent<EnemyHelthSystem>();
-            if (enemy == null) enemy = hit.GetComponentInParent<EnemyHelthSystem>();
-
-            if (enemy != null)
-            {
-                ApplyDamage(enemy, ultimateDamage);
-            }
-        }
-
-        if (playerSystem != null && playerSystem.LockOnImage != null)
-            playerSystem.LockOnImage.SetActive(false);
-
-        isUltimateCasting = false;
-        Debug.Log("궁극기 발동 / 데미지 30");
-    }
-
-    private void InstallTrap()
-    {
-        if (Time.time < lastTrapTime + trapCooldown)
-            return;
-
-        if (trapPrefab == null || trapPoint == null)
-            return;
-
-        lastTrapTime = Time.time;
-        gameSoundManager.OnFindPlayerSound("덫 설치");
-        Instantiate(trapPrefab, trapPoint.position, Quaternion.identity);
-        Debug.Log("덫 설치 / 데미지 22");
     }
 
     private void ApplyDamage(EnemyHelthSystem enemy, int damage)
@@ -346,11 +284,8 @@ public class PlayerAttackSystem : MonoBehaviour
 
         EnemyHelthSystem enemy = collision.GetComponent<EnemyHelthSystem>();
         if (enemy == null) enemy = collision.GetComponentInParent<EnemyHelthSystem>();
-
         if (enemy != null)
-        {
             ApplyDamage(enemy, parryDamage);
-        }
 
         return true;
     }
@@ -362,8 +297,5 @@ public class PlayerAttackSystem : MonoBehaviour
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(meleePoint.position, meleeRange);
         }
-
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, ultimateRange);
     }
 }

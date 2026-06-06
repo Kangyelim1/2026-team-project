@@ -12,16 +12,16 @@ public class PlayerSystem : MonoBehaviour
     private bool isNotDash;
 
     [Header("점프")]
-    public float JumpForce = 4.5f;          // 낮춰진 기본 점프력
+    public float JumpForce = 4.5f;         
     public float colliderOffTime = 0.5f;
     public float FallGravityScale = 4f;
     public float NormalGravityScale = 2f;
     private bool isNotJump;
 
     [Header("더블 점프")]
-    public float doubleJumpMultiplier = 1.5f;   // 하이점프 배율
-    private bool canDoubleJump = false;          // 2단 점프 가능 여부
-    private bool hasDoubleJumped = false;        // 2단 점프 사용 여부
+    public float doubleJumpMultiplier = 1.5f;  
+    private bool canDoubleJump = false;          
+    private bool hasDoubleJumped = false;       
 
     public Rigidbody2D PlayerRigidbody;
     public SpriteRenderer PlayerSpriteRenderer;
@@ -71,14 +71,12 @@ public class PlayerSystem : MonoBehaviour
         {
             if (isGround)
             {
-                // 1단 점프
                 Jump();
                 canDoubleJump = true;
                 hasDoubleJumped = false;
             }
             else if (canDoubleJump && !hasDoubleJumped)
             {
-                // 2단 점프 (하이점프)
                 DoubleJump();
             }
         }
@@ -160,7 +158,6 @@ public class PlayerSystem : MonoBehaviour
         PlayerRigidbody.AddForce(Vector2.up * JumpForce * doubleJumpMultiplier, ForceMode2D.Impulse);
     }
 
-    // 외부 호출용 (필요시 유지)
     public void HighJump(float multiplier)
     {
         if (!isGround || isDash || isNotJump) return;
