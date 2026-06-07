@@ -171,6 +171,7 @@ public class PlayerSystem : MonoBehaviour
 
     private IEnumerator JumpColliderOff()
     {
+        playerAnimator.SetBool("isJump", true);
         if (PlayerCollider != null)
             PlayerCollider.enabled = false;
 
@@ -178,6 +179,7 @@ public class PlayerSystem : MonoBehaviour
 
         if (PlayerCollider != null)
             PlayerCollider.enabled = true;
+        playerAnimator.SetBool("isJump", false);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
