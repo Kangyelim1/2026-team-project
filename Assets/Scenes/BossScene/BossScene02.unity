@@ -640,6 +640,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1157492548}
     m_Modifications:
+    - target: {fileID: 1635546834697167743, guid: 0888dd5c3bae9fa4086038f55cbb688d, type: 3}
+      propertyPath: enemySO
+      value: 
+      objectReference: {fileID: 11400000, guid: 22b1f7e4c5419d345a5eac941d7664d4, type: 2}
+    - target: {fileID: 1635546834697167743, guid: 0888dd5c3bae9fa4086038f55cbb688d, type: 3}
+      propertyPath: enemyName
+      value: "\uD398\uC774\uC9C0"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1635546834697167743, guid: 0888dd5c3bae9fa4086038f55cbb688d, type: 3}
+      propertyPath: enemyhelthSystem
+      value: 
+      objectReference: {fileID: 223166874}
     - target: {fileID: 2011524338714188303, guid: 0888dd5c3bae9fa4086038f55cbb688d, type: 3}
       propertyPath: m_Name
       value: 'Fage '
@@ -782,14 +794,17 @@ MonoBehaviour:
   enemySystem: {fileID: 223166875}
   enemyHelthSystem: {fileID: 223166874}
   bossPatternSystem: {fileID: 0}
-  bossPatternData: {fileID: 0}
+  bossPatternData: {fileID: 11400000, guid: 19d1cca2d706b3945aafb333911c6c97, type: 2}
   patternCount: 0
   changeFageCount: 5
   isDreamFage: 0
-  RealityBackGround: {fileID: 0}
-  RealityGround: {fileID: 0}
-  DreamBackGround: {fileID: 0}
-  DreamGround: {fileID: 0}
+  RealityBackGround: {fileID: 410769961}
+  RealityGround: {fileID: 1679123805}
+  DreamBackGround: {fileID: 481333636}
+  DreamGround: {fileID: 1762884919}
+  videoImage: {fileID: 1207021370}
+  videoPlayer: {fileID: 538629188}
+  OpningVideoClip: {fileID: 32900000, guid: 5daf25ae36299c042aba2f2344d3eefc, type: 3}
 --- !u!1 &271082607
 GameObject:
   m_ObjectHideFlags: 0
@@ -1039,7 +1054,7 @@ GameObject:
   - component: {fileID: 481333637}
   - component: {fileID: 481333638}
   m_Layer: 0
-  m_Name: DreamBakGround
+  m_Name: DreamBackGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1165,7 +1180,7 @@ GameObject:
   - component: {fileID: 538629189}
   - component: {fileID: 538629188}
   m_Layer: 5
-  m_Name: Vidio
+  m_Name: Video
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1178,12 +1193,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 538629186}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1346911184}
+  m_Father: {fileID: 1207021371}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2003,12 +2018,12 @@ GameObject:
   - component: {fileID: 1207021373}
   - component: {fileID: 1207021372}
   m_Layer: 5
-  m_Name: VidioBackGround
+  m_Name: VideoBackGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1207021371
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2020,7 +2035,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 538629187}
   m_Father: {fileID: 1346911184}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -2538,7 +2554,7 @@ GameObject:
   - component: {fileID: 1346911186}
   - component: {fileID: 1346911185}
   m_Layer: 5
-  m_Name: VidioCanvas
+  m_Name: VideoCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2557,7 +2573,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1207021371}
-  - {fileID: 538629187}
   m_Father: {fileID: 271082608}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

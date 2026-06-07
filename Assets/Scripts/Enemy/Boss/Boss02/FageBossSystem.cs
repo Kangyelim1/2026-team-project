@@ -1,7 +1,7 @@
-using Cainos.LucidEditor;
 using System.Collections;
-using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class FageBossSystem : MonoBehaviour
 {
@@ -23,18 +23,40 @@ public class FageBossSystem : MonoBehaviour
     public GameObject DreamBackGround;
     public GameObject DreamGround;
 
+    [Header("비디오")]
+    public GameObject videoImage;
+    public VideoPlayer videoPlayer;
+    public VideoClip OpningVideoClip;
+
+
     private void Start()
     {
         enemySystem = FindAnyObjectByType<EnemySystem>();
         enemyHelthSystem = FindAnyObjectByType<EnemyHelthSystem>();
         bossPatternSystem = FindAnyObjectByType<BossPatternSystem>();
 
-        SetFage(false);
         StartCoroutine(Opening());
+        SetFage(true); 
     }
     IEnumerator Opening()
     {
+        videoImage.SetActive(true);
+        Debug.Log("코루틴 실행");
+        videoPlayer.clip = OpningVideoClip;
+        yield return new WaitForSeconds(0.1f);
+        videoPlayer.time = 0;
+        videoPlayer.Play();
+
+        while (videoPlayer.isPlaying)
+        {
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(0.1f);
+        videoImage.SetActive(false);
+
         yield return new WaitForSeconds(1.5f);
+        
         BossRandomPattern();
     }
 
@@ -54,7 +76,12 @@ public class FageBossSystem : MonoBehaviour
     {
         switch (BossName, Pattern, page)
         {
-
+            case ("페이지", "페이지 패턴01", PatternPage.EveryPage):
+                Debug.Log("패이지 패턴01");
+                break;
+            case ("페이지", "페이지 패턴02", PatternPage.EveryPage):
+                Debug.Log("패이지 패턴02");
+                break;
             default:
                 BossRandomPattern();
                 break;
@@ -98,7 +125,4 @@ public class FageBossSystem : MonoBehaviour
         DreamBackGround.SetActive(dream);
         DreamGround.SetActive(dream);
     }
-
-
-
 }
