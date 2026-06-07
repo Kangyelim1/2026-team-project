@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
@@ -38,6 +39,14 @@ public class Boss02System : MonoBehaviour
         StartCoroutine(Opening());
         SetFage(true); 
     }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            ChangeFage();
+        }
+    }
     IEnumerator Opening()
     {
         videoImage.SetActive(true);
@@ -54,6 +63,7 @@ public class Boss02System : MonoBehaviour
 
         yield return new WaitForSeconds(0.1f);
         videoPlayer.Stop();
+        videoPlayer.clip = null;
         videoImage.SetActive(false);
 
         yield return new WaitForSeconds(1.5f);
