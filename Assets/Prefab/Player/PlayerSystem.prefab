@@ -93,8 +93,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 645358835775684957}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.10000014, z: -1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.099999905, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -745,10 +745,11 @@ MonoBehaviour:
   playerAnimator: {fileID: 7975023084102622890}
   PlayerDashDistance: 7
   PlayerDashDuration: 0.15
-  JumpForce: 13
+  JumpForce: 8
   colliderOffTime: 0.5
   FallGravityScale: 4
   NormalGravityScale: 2
+  doubleJumpMultiplier: 1.2
   PlayerRigidbody: {fileID: 2818493553882795528}
   PlayerSpriteRenderer: {fileID: 8386296162103132084}
   PlayerCollider: {fileID: 8271877049655080238}
@@ -777,30 +778,25 @@ MonoBehaviour:
   bulletPrefab: {fileID: 5149882320093515215, guid: 5d438a9e37c99c0468e808cde9835042, type: 3}
   firePoint: {fileID: 8340946736528875136}
   bulletSpeed: 30
+  bulletLifetime: 0.4
   attackCooldown: 2
+  maxAmmo: 6
+  reloadTime: 1.5
   comboShotDelay: 0.3
   comboDamage: 16
-  multiAttackDuration: 1
-  multiAttackCooldown: 15
   throwWeaponPrefab: {fileID: 5149882320093515215, guid: 2890a21f19944814aa34cfbbd1b106c9, type: 3}
   throwPoint: {fileID: 9165465362846799844}
   throwSpeed: 12
   throwCooldown: 60
   meleePoint: {fileID: 2385111649244472280}
   meleeRange: 1.2
+  meleeCooldown: 1
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
   parryDuration: 0.1
   parryCooldown: 2
   parryDamage: 6
-  ultimateCastTime: 2
-  ultimateCooldown: 100
-  ultimateRange: 8
-  ultimateDamage: 30
-  trapPrefab: {fileID: 8988195363350849083, guid: 5477931a99ac0d34aa48f0e019caa81f, type: 3}
-  trapPoint: {fileID: 2223306637777905595}
-  trapCooldown: 90
   interactHoldTime: 1.5
 --- !u!70 &8591882791217171781
 CapsuleCollider2D:
@@ -1043,7 +1039,7 @@ Transform:
   m_GameObject: {fileID: 8584079955524715961}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.00000047683716, y: 0.10000014, z: -1}
+  m_LocalPosition: {x: 0, y: 0.099999905, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

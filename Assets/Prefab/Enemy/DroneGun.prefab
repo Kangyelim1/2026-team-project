@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1420692054142716417}
   m_Layer: 0
   m_Name: DroneGun
-  m_TagString: Untagged
+  m_TagString: EnemyHitPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -172,6 +172,7 @@ MonoBehaviour:
   maxBossHelth: 0
   minBossHelth: 0
   currentBossHelth: 0
+  isInvincibility: 0
   deathDelay: 0.8
   deathUpForce: 4
   deathSideForceMin: -2

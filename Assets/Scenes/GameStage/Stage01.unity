@@ -2793,6 +2793,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 75a7b1d410ae8474ea460ffcb8593e9e, type: 3}
   - {fileID: 8300000, guid: f48dc19a08793544087fcee0bf10117d, type: 3}
   - {fileID: 8300000, guid: 113d39a84770c744e9ced5a7043a811e, type: 3}
+  - {fileID: 8300000, guid: f06d32e63fa803a48b66596ae7b9be4a, type: 3}
   enemySoundList:
   - {fileID: 8300000, guid: d10683ec36be03f48b02ae0f086dc7eb, type: 3}
   - {fileID: 8300000, guid: 19e53589064162946869ce3b0b821dc9, type: 3}
