@@ -138,12 +138,6 @@ public class EnemySystem : MonoBehaviour
                 LongDistanceAttack();
                 break;
 
-            /*case EnemyType.Boom:
-                if (isBoom) return;
-                MoveToPlayer();
-                if (IsPlayerInAttackRange())
-                    StartCoroutine(Boom());
-                break;*/
             case EnemyType.Boss:
                 if(enemyhelthSystem.currentBossHelth <= enemyhelthSystem.minBossHelth)
                 {
@@ -184,7 +178,7 @@ public class EnemySystem : MonoBehaviour
                 {
                     if (!isBoom) StartCoroutine(Boom());
                 }
-                else if (enemyType == EnemyType.Shortdistance)
+                else if (enemyType == EnemyType.Shortdistance || enemyType == EnemyType.Boss)
                 {
                     if (!isShortAttack) StartCoroutine(ShortdistanceAttack());
                 }

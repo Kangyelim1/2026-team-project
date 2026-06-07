@@ -3,11 +3,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
-public class FageBossSystem : MonoBehaviour
+public class Boss02System : MonoBehaviour
 {
     public EnemySystem enemySystem;
     public EnemyHelthSystem enemyHelthSystem;
-    public BossPatternSystem bossPatternSystem;
+    public Boss02PatternData bossPatternSystem;
     public BossPatternSO bossPatternData;
 
     [Header("현실과 꿈 전환 관련")]
@@ -33,7 +33,7 @@ public class FageBossSystem : MonoBehaviour
     {
         enemySystem = FindAnyObjectByType<EnemySystem>();
         enemyHelthSystem = FindAnyObjectByType<EnemyHelthSystem>();
-        bossPatternSystem = FindAnyObjectByType<BossPatternSystem>();
+        bossPatternSystem = FindAnyObjectByType<Boss02PatternData>();
 
         StartCoroutine(Opening());
         SetFage(true); 
@@ -53,6 +53,7 @@ public class FageBossSystem : MonoBehaviour
         }
 
         yield return new WaitForSeconds(0.1f);
+        videoPlayer.Stop();
         videoImage.SetActive(false);
 
         yield return new WaitForSeconds(1.5f);
