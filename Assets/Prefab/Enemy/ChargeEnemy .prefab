@@ -86,7 +86,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
+  m_Sprite: {fileID: -5025480206924863915, guid: eb0b36bb58b144f479731f0786c8e1fd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -157,8 +157,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 2}
+  m_Offset: {x: -0.7, y: 0}
+  m_Size: {x: 1.5, y: 3.5}
   m_Direction: 0
 --- !u!114 &1333821489257270307
 MonoBehaviour:
@@ -173,6 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySystem
   enemySO: {fileID: 11400000, guid: d06b08a4e7b5dfb448e1f7a776d32158, type: 2}
+  enemyhelthSystem: {fileID: 0}
   enemyName: 
   enemyType: 4
   ShootPoint: {fileID: 0}
@@ -188,6 +189,10 @@ MonoBehaviour:
   chaseAfterExitTime: 3
   chaseDistance: 10
   BossHelth: 0
+  isPattern: 0
+  droneMoveSpeed: 4
+  droneDetectDistance: 20
+  droneBoomDistance: 0
 --- !u!114 &3855456677575544836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,13 +210,13 @@ MonoBehaviour:
   currentState: 0
   patrolDistance: 5
   patrolSpeed: 2
-  viewOffset: {x: 3, y: 0}
-  viewSize: {x: 8, y: 2}
+  viewOffset: {x: 5.2, y: 0}
+  viewSize: {x: 14, y: 3}
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
-  chargeReadyTime: 0.5
-  chargeDistance: 7
+  chargeReadyTime: 1
+  chargeDistance: 8
   chargeSpeed: 22
   stunTime: 1
   isInvincible: 0
@@ -224,8 +229,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 529571356118243016}
-  - component: {fileID: 5689632435368770786}
   - component: {fileID: 6374255871477938721}
+  - component: {fileID: 1705679041656297926}
   m_Layer: 0
   m_Name: EnemyHitPoint
   m_TagString: EnemyHitPoint
@@ -248,7 +253,30 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7607899541969053164}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &5689632435368770786
+--- !u!114 &6374255871477938721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6248044752144190008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85a12f0d0cde91a4ea2c0be679a40605, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHelthSystem
+  enemySystem: {fileID: 1333821489257270307}
+  maxBossHelth: 0
+  minBossHelth: 0
+  currentBossHelth: 0
+  isInvincibility: 0
+  deathDelay: 0.8
+  deathUpForce: 4
+  deathSideForceMin: -2
+  deathSideForceMax: 2
+  deathTorqueMin: -120
+  deathTorqueMax: 120
+--- !u!61 &1705679041656297926
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -278,11 +306,11 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.7, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -292,21 +320,5 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.5, y: 2}
   m_EdgeRadius: 0
---- !u!114 &6374255871477938721
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6248044752144190008}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85a12f0d0cde91a4ea2c0be679a40605, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyHelthSystem
-  enemySystem: {fileID: 1333821489257270307}
-  maxBossHelth: 0
-  MinBossHelth: 0
-  currentBossHelth: 0
