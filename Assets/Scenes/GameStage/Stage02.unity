@@ -3022,7 +3022,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63e272453eb45c3498bb561587e1bcfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageTimer
-  limitTime: 30
+  limitTime: 60
   timerText: {fileID: 1206365810}
   isTimerStop: 0
 --- !u!1 &355784680
@@ -8214,11 +8214,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1634630000721641122, guid: 2df7eef7589e11f46a4d687b8358b931, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 0.74
+      value: 1.0571429
       objectReference: {fileID: 0}
     - target: {fileID: 1634630000721641122, guid: 2df7eef7589e11f46a4d687b8358b931, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 1.14
+      value: 1.6285714
       objectReference: {fileID: 0}
     - target: {fileID: 2011524338714188303, guid: 2df7eef7589e11f46a4d687b8358b931, type: 3}
       propertyPath: m_Name
@@ -9172,6 +9172,34 @@ PrefabInstance:
     - target: {fileID: 349955802513076474, guid: 86aec5b01224593408d7902cd37129db, type: 3}
       propertyPath: m_Name
       value: PlayerSystem
+      objectReference: {fileID: 0}
+    - target: {fileID: 1706713151893354326, guid: 86aec5b01224593408d7902cd37129db, type: 3}
+      propertyPath: throwSpeed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1706713151893354326, guid: 86aec5b01224593408d7902cd37129db, type: 3}
+      propertyPath: parryCooldown
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1706713151893354326, guid: 86aec5b01224593408d7902cd37129db, type: 3}
+      propertyPath: parryDuration
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1706713151893354326, guid: 86aec5b01224593408d7902cd37129db, type: 3}
+      propertyPath: interactHoldTime
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1715830847698490614, guid: 86aec5b01224593408d7902cd37129db, type: 3}
+      propertyPath: JumpForce
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1715830847698490614, guid: 86aec5b01224593408d7902cd37129db, type: 3}
+      propertyPath: doubleJumpWindow
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1715830847698490614, guid: 86aec5b01224593408d7902cd37129db, type: 3}
+      propertyPath: doubleJumpMultiplier
+      value: 1.3
       objectReference: {fileID: 0}
     - target: {fileID: 3245972517377431472, guid: 86aec5b01224593408d7902cd37129db, type: 3}
       propertyPath: m_LocalPosition.x

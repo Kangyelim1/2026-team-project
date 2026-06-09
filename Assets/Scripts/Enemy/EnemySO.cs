@@ -6,6 +6,7 @@ public enum EnemyType
     LongDistanc,
     Boom,
     Boss,
+    Grapper,
     Charge,
     Shield,
     Drone

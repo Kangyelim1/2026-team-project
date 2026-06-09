@@ -39,7 +39,7 @@ public class PlayerAttackSystem : MonoBehaviour
     public LayerMask enemyLayer;
 
     [Header("패링 (우클릭 + G)")]
-    public float parryDuration = 0.1f;
+    public float parryDuration = 1.0f;
     public float parryCooldown = 2f;
     public int parryDamage = 6;
 

@@ -20,8 +20,10 @@ public class PlayerSystem : MonoBehaviour
 
     [Header("더블 점프")]
     public float doubleJumpMultiplier = 1.2f;
+    public float doubleJumpWindow = 0.5f;
     private bool canDoubleJump = false;
     private bool hasDoubleJumped = false;
+    private float jumpPressTime = -999f; 
 
     public Rigidbody2D PlayerRigidbody;
     public SpriteRenderer PlayerSpriteRenderer;
@@ -72,12 +74,29 @@ public class PlayerSystem : MonoBehaviour
             if (isGround)
             {
                 Jump();
+                jumpPressTime = Time.time;
                 canDoubleJump = true;
                 hasDoubleJumped = false;
             }
             else if (canDoubleJump && !hasDoubleJumped)
             {
-                DoubleJump();
+                if (Time.time - jumpPressTime <= doubleJumpWindow)
+                {
+                    DoubleJump();
+                }
+                else
+                {
+                    Debug.Log("더블점프 시간창 초과 — 불가");
+                }
+            }
+        }
+
+        if (canDoubleJump && !hasDoubleJumped)
+        {
+            if (Time.time - jumpPressTime > doubleJumpWindow)
+            {
+                canDoubleJump = false;
+                Debug.Log("더블점프 시간창 만료");
             }
         }
 

@@ -745,11 +745,12 @@ MonoBehaviour:
   playerAnimator: {fileID: 7975023084102622890}
   PlayerDashDistance: 7
   PlayerDashDuration: 0.15
-  JumpForce: 8
+  JumpForce: 10
   colliderOffTime: 0.5
   FallGravityScale: 4
   NormalGravityScale: 2
-  doubleJumpMultiplier: 1.2
+  doubleJumpMultiplier: 1.3
+  doubleJumpWindow: 0.3
   PlayerRigidbody: {fileID: 2818493553882795528}
   PlayerSpriteRenderer: {fileID: 8386296162103132084}
   PlayerCollider: {fileID: 8271877049655080238}
@@ -794,7 +795,7 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
-  parryDuration: 0.1
+  parryDuration: 1
   parryCooldown: 2
   parryDamage: 6
   interactHoldTime: 1.5
