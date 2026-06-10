@@ -226,7 +226,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 43.12, y: -2.4900002, z: 0}
-  m_LocalScale: {x: 1.5, y: 3, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 202830268244294342}
@@ -281,8 +281,8 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 10
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.6698113, g: 0.37399155, b: 0.26223743, a: 1}
+  m_Sprite: {fileID: 8889855797733342904, guid: a5cecd5a2224fd04e9a2c011a18bc1b7, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -303,8 +303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abb0f2765eb41fd4186a9d669d712a4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorSystem
-  radioMission: {fileID: 0}
-  interactionText: {fileID: 4976881902267635278}
+  nextSceneName: 
 --- !u!61 &6416673548057222125
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -343,11 +342,11 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 3.82, y: 8.14}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 3.697516, y: 8.173437}
   m_EdgeRadius: 0
