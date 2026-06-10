@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class PlayerAttackSystem : MonoBehaviour
 {
-    [Header("ÂüÁ¶")]
+    [Header("ï¿½ï¿½ï¿½ï¿½")]
     public PlayerSystem playerSystem;
     public GameSoundManager gameSoundManager;
     public Camera mainCamera;
 
-    [Header("±âº» °ø°Ý")]
+    [Header("ï¿½âº» ï¿½ï¿½ï¿½ï¿½")]
     public GameObject bulletPrefab;
     public Transform firePoint;
     public float bulletSpeed = 10f;
@@ -18,32 +18,33 @@ public class PlayerAttackSystem : MonoBehaviour
     [Header("ÅºÃ¢")]
     public int maxAmmo = 6;
     public float reloadTime = 1.5f;
-    private int currentAmmo;
     private bool isReloading = false;
-    private bool isShootingLocked = false;
+    
+    public bool isShootingLocked = false;
+    public int currentAmmo;
 
-    [Header("ÄÞº¸ ÅºÈ¯ (¿ìÅ¬¸¯ + ÁÂÅ¬¸¯)")]
+    [Header("ï¿½Þºï¿½ ÅºÈ¯ (ï¿½ï¿½Å¬ï¿½ï¿½ + ï¿½ï¿½Å¬ï¿½ï¿½)")]
     public float comboShotDelay = 0.3f;
     public int comboDamage = 16;
 
-    [Header("ÅõÃ´¹«±â (E)")]
+    [Header("ï¿½ï¿½Ã´ï¿½ï¿½ï¿½ï¿½ (E)")]
     public GameObject throwWeaponPrefab;
     public Transform throwPoint;
     public float throwSpeed = 12f;
     public float throwCooldown = 60f;
 
-    [Header("±ÙÁ¢°ø°Ý (G)")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (G)")]
     public Transform meleePoint;
     public float meleeRange = 1.2f;
     public float meleeCooldown = 1.0f;
     public LayerMask enemyLayer;
 
-    [Header("ÆÐ¸µ (¿ìÅ¬¸¯ + G)")]
+    [Header("ï¿½Ð¸ï¿½ (ï¿½ï¿½Å¬ï¿½ï¿½ + G)")]
     public float parryDuration = 1.0f;
     public float parryCooldown = 2f;
     public int parryDamage = 6;
 
-    [Header("»óÈ£ÀÛ¿ë")]
+    [Header("ï¿½ï¿½È£ï¿½Û¿ï¿½")]
     public float interactHoldTime = 1.5f;
 
     private float lastAttackTime = -999f;
@@ -84,7 +85,7 @@ public class PlayerAttackSystem : MonoBehaviour
             fHoldTimer += Time.deltaTime;
             if (fHoldTimer >= interactHoldTime)
             {
-                Debug.Log("»óÈ£ÀÛ¿ë ½ÇÇà");
+                Debug.Log("ï¿½ï¿½È£ï¿½Û¿ï¿½ ï¿½ï¿½ï¿½ï¿½");
                 fHoldTimer = -999f;
             }
         }
@@ -138,12 +139,12 @@ public class PlayerAttackSystem : MonoBehaviour
     {
         if (isShootingLocked)
         {
-            Debug.Log("ÅºÃ¢ ¼ÒÁø! RÅ°·Î ÀçÀåÀüÇÏ¼¼¿ä.");
+            Debug.Log("ÅºÃ¢ ï¿½ï¿½ï¿½ï¿½! RÅ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
             return false;
         }
         if (isReloading)
         {
-            Debug.Log("ÀçÀåÀü Áß...");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½...");
             return false;
         }
         return true;
@@ -156,13 +157,13 @@ public class PlayerAttackSystem : MonoBehaviour
 
         lastAttackTime = Time.time;
         currentAmmo--;
-        Debug.Log($"¹ß»ç | ³²Àº ÅºÈ¯: {currentAmmo}/{maxAmmo}");
+        Debug.Log($"ï¿½ß»ï¿½ | ï¿½ï¿½ï¿½ï¿½ ÅºÈ¯: {currentAmmo}/{maxAmmo}");
 
         if (currentAmmo <= 0)
         {
             currentAmmo = 0;
             isShootingLocked = true;
-            Debug.Log("ÅºÃ¢ ¼ÒÁø! RÅ°·Î ÀçÀåÀüÇÏ¼¼¿ä.");
+            Debug.Log("ÅºÃ¢ ï¿½ï¿½ï¿½ï¿½! RÅ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
         }
 
         SkillHUDManager.Instance?.TriggerCooldown(SkillType.BasicAttack, attackCooldown);
@@ -170,7 +171,7 @@ public class PlayerAttackSystem : MonoBehaviour
         playerSystem.playerAnimator.SetBool("isGun", true);
         yield return new WaitForSeconds(0.2f);
 
-        gameSoundManager.OnFindPlayerSound("ÇÃ·¹ÀÌ¾î ±âº»°ø°Ý");
+        gameSoundManager.OnFindPlayerSound("ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½âº»ï¿½ï¿½ï¿½ï¿½");
         ShootProjectile(bulletPrefab, firePoint, bulletSpeed);
 
         yield return new WaitForSeconds(0.1f);
@@ -180,7 +181,7 @@ public class PlayerAttackSystem : MonoBehaviour
     IEnumerator Reload()
     {
         isReloading = true;
-        Debug.Log($"ÀçÀåÀü Áß... ({reloadTime}ÃÊ)");
+        Debug.Log($"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½... ({reloadTime}ï¿½ï¿½)");
 
         SkillHUDManager.Instance?.TriggerCooldown(SkillType.Reload, reloadTime);
 
@@ -189,7 +190,7 @@ public class PlayerAttackSystem : MonoBehaviour
         currentAmmo = maxAmmo;
         isReloading = false;
         isShootingLocked = false;
-        Debug.Log($"ÀçÀåÀü ¿Ï·á! ÅºÈ¯: {currentAmmo}/{maxAmmo}");
+        Debug.Log($"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½! ÅºÈ¯: {currentAmmo}/{maxAmmo}");
     }
 
     private IEnumerator ComboShot()
@@ -200,13 +201,13 @@ public class PlayerAttackSystem : MonoBehaviour
         isComboShotRunning = true;
         lastAttackTime = Time.time;
         currentAmmo--;
-        Debug.Log($"ÄÞº¸ ¹ß»ç | ³²Àº ÅºÈ¯: {currentAmmo}/{maxAmmo}");
+        Debug.Log($"ï¿½Þºï¿½ ï¿½ß»ï¿½ | ï¿½ï¿½ï¿½ï¿½ ÅºÈ¯: {currentAmmo}/{maxAmmo}");
 
         if (currentAmmo <= 0)
         {
             currentAmmo = 0;
             isShootingLocked = true;
-            Debug.Log("ÅºÃ¢ ¼ÒÁø! RÅ°·Î ÀçÀåÀüÇÏ¼¼¿ä.");
+            Debug.Log("ÅºÃ¢ ï¿½ï¿½ï¿½ï¿½! RÅ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
         }
 
         SkillHUDManager.Instance?.TriggerCooldown(SkillType.BasicAttack, attackCooldown);
@@ -215,12 +216,12 @@ public class PlayerAttackSystem : MonoBehaviour
         playerSystem.playerAnimator.SetBool("isGun", true);
 
         yield return new WaitForSeconds(0.2f);
-        gameSoundManager.OnFindPlayerSound("ÇÃ·¹ÀÌ¾î ±âº»°ø°Ý");
+        gameSoundManager.OnFindPlayerSound("ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½âº»ï¿½ï¿½ï¿½ï¿½");
         ShootProjectile(bulletPrefab, firePoint, bulletSpeed);
 
         yield return new WaitForSeconds(0.1f);
         playerSystem.playerAnimator.SetBool("isGun", false);
-        Debug.Log($"ÄÞº¸Åº ¹ß»ç / µ¥¹ÌÁö {comboDamage}");
+        Debug.Log($"ï¿½Þºï¿½Åº ï¿½ß»ï¿½ / ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ {comboDamage}");
 
         isComboShotRunning = false;
     }
@@ -249,9 +250,9 @@ public class PlayerAttackSystem : MonoBehaviour
         lastThrowTime = Time.time;
         ShootProjectile(throwWeaponPrefab, throwPoint, throwSpeed);
 
-        // ÅõÃ´ ÄðÅ¸ÀÓ HUD
+        // ï¿½ï¿½Ã´ ï¿½ï¿½Å¸ï¿½ï¿½ HUD
         SkillHUDManager.Instance?.TriggerCooldown(SkillType.Throw, throwCooldown);
-        Debug.Log("ÅõÃ´¹«±â »ç¿ë / µ¥¹ÌÁö 22");
+        Debug.Log("ï¿½ï¿½Ã´ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ / ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 22");
     }
 
     private void MeleeAttack(int damage)
@@ -271,7 +272,7 @@ public class PlayerAttackSystem : MonoBehaviour
         }
 
         SkillHUDManager.Instance?.TriggerCooldown(SkillType.Melee, meleeCooldown);
-        Debug.Log("±ÙÁ¢°ø°Ý / µ¥¹ÌÁö 10");
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ / ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 10");
     }
 
     private void TryParry()
@@ -284,15 +285,15 @@ public class PlayerAttackSystem : MonoBehaviour
     {
         lastParryTime = Time.time;
         isParryWindow = true;
-        Debug.Log("ÆÐ¸µ ½ÃÀÛ");
-        gameSoundManager.OnFindPlayerSound("ÆÐ¸µ");
+        Debug.Log("ï¿½Ð¸ï¿½ ï¿½ï¿½ï¿½ï¿½");
+        gameSoundManager.OnFindPlayerSound("ï¿½Ð¸ï¿½");
 
         SkillHUDManager.Instance?.TriggerCooldown(SkillType.Parry, parryCooldown);
 
         yield return new WaitForSeconds(parryDuration);
 
         isParryWindow = false;
-        Debug.Log("ÆÐ¸µ Á¾·á");
+        Debug.Log("ï¿½Ð¸ï¿½ ï¿½ï¿½ï¿½ï¿½");
     }
 
     private void ApplyDamage(EnemyHelthSystem enemy, int damage)

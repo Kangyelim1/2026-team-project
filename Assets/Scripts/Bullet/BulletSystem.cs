@@ -8,6 +8,7 @@ public class BulletSystem : MonoBehaviour
     public BulletSO bulletSO;
     public float lifeTime;
     public BulletType type;
+    public int damage = 1;
 
     [Header("VFX")]
     public GameObject hitVFX;
