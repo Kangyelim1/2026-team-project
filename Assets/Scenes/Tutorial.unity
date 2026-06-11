@@ -1405,7 +1405,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3050794202430280394, guid: 75af6e60ee2200c40acd90a3bd20f7cb, type: 3}
       propertyPath: nextSceneName
-      value: Stage01
+      value: MainMenu
       objectReference: {fileID: 0}
     - target: {fileID: 4976881902267635278, guid: 75af6e60ee2200c40acd90a3bd20f7cb, type: 3}
       propertyPath: m_IsActive

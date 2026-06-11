@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameSoundManager : MonoBehaviour
 {
@@ -9,6 +10,17 @@ public class GameSoundManager : MonoBehaviour
     public List<AudioClip> playerSoundList = new List<AudioClip>();
     public List<AudioClip> enemySoundList = new List<AudioClip>();
 
+    private bool isMute = false;
+
+
+
+    private void Start()
+    {
+        float volume = PlayerPrefs.GetFloat("MasterVolume", 1f);
+
+        playerSound.volume = volume;
+        enemySound.volume = volume;
+    }
     public void OnFindPlayerSound(string soundName)
     {
         AudioClip playerSoundClip = playerSoundList.Find(ps => ps.name == soundName);
@@ -36,6 +48,22 @@ public class GameSoundManager : MonoBehaviour
         audio.time = 0;
         audio.clip = audioClip;
         audio.Play();
+    }
+
+    public void SetMasterVolume(float value)
+    {
+        playerSound.volume = value;
+        enemySound.volume = value;
+
+        PlayerPrefs.SetFloat("MasterVolume", value);
+    }
+
+    public void ToggleMute()
+    {
+        isMute = !isMute;
+
+        playerSound.mute = isMute;
+        enemySound.mute = isMute;
     }
 }
 
