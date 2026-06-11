@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 8353914159701562617}
   - component: {fileID: 5188339778995615798}
   - component: {fileID: 1420692054142716417}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DroneGun
-  m_TagString: EnemyHitPoint
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -138,7 +138,7 @@ MonoBehaviour:
   enemySO: {fileID: 11400000, guid: 1bdad7a7f24e43c43a200dfefcfcef1c, type: 2}
   enemyhelthSystem: {fileID: 0}
   enemyName: 
-  enemyType: 0
+  enemyType: 7
   ShootPoint: {fileID: 6792333817380055592}
   BulletPrefab: {fileID: 5149882320093515215, guid: 785cf17f7de90d44598a7729786e9c5a, type: 3}
   BoomEffect: {fileID: 0}
@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85a12f0d0cde91a4ea2c0be679a40605, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHelthSystem
-  enemySystem: {fileID: 0}
+  enemySystem: {fileID: 8353914159701562617}
   maxBossHelth: 0
   minBossHelth: 0
   currentBossHelth: 0
@@ -179,6 +179,7 @@ MonoBehaviour:
   deathSideForceMax: 2
   deathTorqueMin: -120
   deathTorqueMax: 120
+  isDead: 0
 --- !u!58 &1420692054142716417
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -224,7 +225,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6792333817380055592}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ShootPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

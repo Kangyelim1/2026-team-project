@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 3395860513054745047}
   - component: {fileID: 5942641699557820549}
   - component: {fileID: 4806450484428822887}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ShieldEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -84,7 +84,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_MaskInteraction: 0
   m_Sprite: {fileID: 1749703511040458711, guid: 45844ee436f900844ac1d44e01fbd9ca, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -207,7 +207,7 @@ MonoBehaviour:
   enemySO: {fileID: 11400000, guid: 27a2587103461b847b9681180514fca7, type: 2}
   enemyhelthSystem: {fileID: 0}
   enemyName: 
-  enemyType: 5
+  enemyType: 6
   ShootPoint: {fileID: 0}
   BulletPrefab: {fileID: 0}
   BoomEffect: {fileID: 0}
@@ -236,7 +236,7 @@ GameObject:
   - component: {fileID: 5968435146332137080}
   - component: {fileID: 8873681286111595435}
   - component: {fileID: 2283455979905868853}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: 'EnemyHitPoint '
   m_TagString: EnemyHitPoint
   m_Icon: {fileID: 0}
@@ -327,3 +327,4 @@ MonoBehaviour:
   deathSideForceMax: 2
   deathTorqueMin: -120
   deathTorqueMax: 120
+  isDead: 0

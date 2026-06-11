@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: "\uBC29\uD328 \uACF5\uACA9 \uB85C\uBD07"
   m_EditorClassIdentifier: Assembly-CSharp::EnemySO
   enemyName: "\uBC29\uD328 \uACF5\uACA9 \uB85C\uBD07"
-  enemyType: 5
+  enemyType: 6
   BossHelth: 0

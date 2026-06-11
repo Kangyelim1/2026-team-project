@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 1152020223784256117}
   - component: {fileID: 1333821489257270307}
   - component: {fileID: 3855456677575544836}
-  m_Layer: 0
-  m_Name: 'ChargeEnemy '
-  m_TagString: Untagged
+  m_Layer: 6
+  m_Name: ChargeEnemy
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -84,7 +84,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: -5025480206924863915, guid: eb0b36bb58b144f479731f0786c8e1fd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -231,7 +231,7 @@ GameObject:
   - component: {fileID: 529571356118243016}
   - component: {fileID: 6374255871477938721}
   - component: {fileID: 1705679041656297926}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EnemyHitPoint
   m_TagString: EnemyHitPoint
   m_Icon: {fileID: 0}
@@ -276,6 +276,7 @@ MonoBehaviour:
   deathSideForceMax: 2
   deathTorqueMin: -120
   deathTorqueMax: 120
+  isDead: 0
 --- !u!61 &1705679041656297926
 BoxCollider2D:
   m_ObjectHideFlags: 0

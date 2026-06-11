@@ -60,16 +60,10 @@ public class EnemyChargeSystem : MonoBehaviour
         if (isDead) return;
 
         if (enemySystem == null)
-        {
-            Debug.LogError("EnemySystem is missing!");
-            return;
-        }
+            return; 
 
         if (enemySystem.enemyType != EnemyType.Charge && enemySystem.enemyType != EnemyType.Boss)
-        {
-            Debug.LogError("EnemyType is not Charge! Current: " + enemySystem.enemyType);
-            return;
-        }
+            return; 
 
         switch (currentState)
         {

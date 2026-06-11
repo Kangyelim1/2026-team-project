@@ -77,6 +77,13 @@ public class EnemySystem : MonoBehaviour
         if (enemyType == EnemyType.Drone)
             isAttack = true;
 
+        if (!isAttack && playerSystem != null && enemyType != EnemyType.Charge)
+        {
+            float dist = Vector2.Distance(transform.position, playerSystem.transform.position);
+            if (dist <= chaseDistance)
+                isAttack = true;
+        }
+
         if (isAttack)
             StartAttack();
     }
@@ -203,7 +210,7 @@ public class EnemySystem : MonoBehaviour
     {
         isShortAttack = true;
 
-        Debug.Log("적 일반 공격 애니메이션 실행");
+        Debug.Log("Enemy attack animation");
         yield return new WaitForSeconds(1f);
 
         if (isDead)
@@ -212,8 +219,19 @@ public class EnemySystem : MonoBehaviour
             yield break;
         }
 
-        if (playerHelthSystem != null && isDistonse)
-            playerHelthSystem.Die();
+        if (playerSystem != null)
+        {
+            float dist = Vector2.Distance(transform.position, playerSystem.transform.position);
+            if (dist <= stopDistance)
+            {
+                PlayerHelthSystem ph = playerSystem.GetComponent<PlayerHelthSystem>();
+                if (ph == null) ph = playerSystem.GetComponentInParent<PlayerHelthSystem>();
+                if (ph == null) ph = FindAnyObjectByType<PlayerHelthSystem>();
+
+                if (ph != null)
+                    ph.Die();
+            }
+        }
 
         yield return new WaitForSeconds(1f);
 

@@ -186,11 +186,16 @@ public class EnemyShieldSystem : MonoBehaviour
                                + new Vector2(attackOffset.x * moveDir, attackOffset.y);
         Collider2D hit = Physics2D.OverlapBox(attackCenter, attackSize, 0f, playerLayer);
 
-        if (hit != null && hit.CompareTag("Player"))
+        if (hit != null)
         {
-            Debug.Log("Shield: Player hit!");
-            if (playerHelthSystem != null)
-                playerHelthSystem.Die();
+            PlayerHelthSystem ph = hit.GetComponent<PlayerHelthSystem>();
+            if (ph == null) ph = hit.GetComponentInParent<PlayerHelthSystem>();
+
+            if (ph != null)
+            {
+                Debug.Log("Shield: Player hit!");
+                ph.Die();
+            }
         }
 
         yield return new WaitForSeconds(attackCooldown);
