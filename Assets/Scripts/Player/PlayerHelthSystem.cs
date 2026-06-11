@@ -62,6 +62,10 @@ public class PlayerHelthSystem : MonoBehaviour
             return;
 
         if (gameManger.isDiePlayer) return;
+
+        if (CameraShake.Instance != null)
+            CameraShake.Instance.Shake(1.5f);
+
         gameManger.isDiePlayer = true;
 
         Debug.Log("Die 함수 호출 확인");

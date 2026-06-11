@@ -52,6 +52,10 @@ public class EnemyHelthSystem : MonoBehaviour
     {
         if (isDead) return;
 
+        // ★ 카메라 흔들림 추가
+        if (CameraShake.Instance != null)
+            CameraShake.Instance.Shake(0.5f);
+
         EnemyChargeSystem chargeSystem = GetComponentInParent<EnemyChargeSystem>();
         if (chargeSystem != null && chargeSystem.isInvincible)
         {
@@ -138,7 +142,9 @@ public class EnemyHelthSystem : MonoBehaviour
             rb.linearVelocity = Vector2.zero;
             rb.angularVelocity = 0f;
             rb.freezeRotation = false;
-            rb.AddForce(new Vector2(Random.Range(deathSideForceMin, deathSideForceMax), deathUpForce), ForceMode2D.Impulse);
+            rb.AddForce(new Vector2(
+                Random.Range(deathSideForceMin, deathSideForceMax), deathUpForce),
+                ForceMode2D.Impulse);
             rb.AddTorque(Random.Range(deathTorqueMin, deathTorqueMax));
         }
 
