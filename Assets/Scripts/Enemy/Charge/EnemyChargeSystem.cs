@@ -3,37 +3,38 @@ using System.Collections;
 
 public class EnemyChargeSystem : MonoBehaviour
 {
-    [Header("필수 연결")]
+    [Header("Required References")]
     public EnemySystem enemySystem;
     public EnemyHelthSystem enemyHelth;
 
-    public enum ChargeState { Patrol, Ready, Charge, Stun, Return }
+    public enum ChargeState { Patrol, Ready, Charge, Stun, Return, Dead }
     public ChargeState currentState = ChargeState.Patrol;
 
-    [Header("순찰 설정 (씬 뷰 초록색 선)")]
+    [Header("Patrol Settings")]
     public float patrolDistance = 5f;
     public float patrolSpeed = 2f;
 
-    [Header("시야 설정 (씬 뷰 빨간색 박스)")]
+    [Header("Detection Settings")]
     public Vector2 viewOffset = new Vector2(2f, 0f);
     public Vector2 viewSize = new Vector2(5f, 2f);
     public LayerMask playerLayer;
 
-    [Header("돌진 설정 (씬 뷰 파란색 선)")]
+    [Header("Charge Settings")]
     public float chargeReadyTime = 0.5f;
     public float chargeDistance = 7f;
     public float chargeSpeed = 22f;
 
-    [Header("스턴 설정")]
+    [Header("Stun Settings")]
     public float stunTime = 1f;
 
-    [Header("상태 확인")]
+    [Header("State Check")]
     public bool isInvincible = false;
 
     private Rigidbody2D rb;
     private Vector2 startPos;
     private int moveDir = 1;
     private bool isCoroutineRunning = false;
+    private bool isDead = false;
 
     void Start()
     {
@@ -48,25 +49,21 @@ public class EnemyChargeSystem : MonoBehaviour
         startPos = transform.position;
         moveDir = transform.localScale.x >= 0 ? 1 : -1;
 
-        Debug.Log("=== ChargeEnemy 초기화 ===");
-        Debug.Log("EnemySystem 연결: " + (enemySystem != null ? "OK" : "없음!"));
-        Debug.Log("EnemyType: " + (enemySystem != null ? enemySystem.enemyType.ToString() : "없음!"));
-        Debug.Log("PlayerLayer 값: " + playerLayer.value);
+        Debug.Log("=== ChargeEnemy Init ===");
+        Debug.Log("EnemySystem: " + (enemySystem != null ? "OK" : "Missing!"));
+        Debug.Log("EnemyType: " + (enemySystem != null ? enemySystem.enemyType.ToString() : "Missing!"));
+        Debug.Log("PlayerLayer: " + playerLayer.value);
     }
 
     void Update()
     {
+        if (isDead) return;
+
         if (enemySystem == null)
-        {
-            Debug.LogError("EnemySystem이 없습니다!");
-            return;
-        }
+            return; 
 
         if (enemySystem.enemyType != EnemyType.Charge && enemySystem.enemyType != EnemyType.Boss)
-        {
-            Debug.LogError("EnemyType이 Charge가 아닙니다! 현재: " + enemySystem.enemyType);
-            return;
-        }
+            return; 
 
         switch (currentState)
         {
@@ -81,8 +78,25 @@ public class EnemyChargeSystem : MonoBehaviour
         }
     }
 
+    public void OnDead()
+    {
+        if (isDead) return;
+        isDead = true;
+
+        currentState = ChargeState.Dead;
+        StopAllCoroutines();
+
+        if (rb != null) rb.linearVelocity = Vector2.zero;
+
+        isInvincible = false;
+        isCoroutineRunning = false;
+
+        Debug.Log("EnemyChargeSystem: Dead - all actions stopped");
+    }
+
     void Patrol()
     {
+        if (isDead) return;
         if (enemySystem.enemyType == EnemyType.Boss) return;
 
         rb.linearVelocity = new Vector2(moveDir * patrolSpeed, rb.linearVelocity.y);
@@ -95,6 +109,8 @@ public class EnemyChargeSystem : MonoBehaviour
 
     void ReturnToStart()
     {
+        if (isDead) return;
+
         float dist = startPos.x - transform.position.x;
 
         if (Mathf.Abs(dist) <= 0.15f)
@@ -112,7 +128,7 @@ public class EnemyChargeSystem : MonoBehaviour
 
     void LookForPlayer()
     {
-        if (isCoroutineRunning) return;
+        if (isDead || isCoroutineRunning) return;
 
         Vector2 boxCenter = (Vector2)transform.position
                             + new Vector2(viewOffset.x * moveDir, viewOffset.y);
@@ -121,42 +137,49 @@ public class EnemyChargeSystem : MonoBehaviour
 
         if (hit != null)
         {
-            Debug.Log("플레이어 발견! 돌진 시작: " + hit.gameObject.name);
+            Debug.Log("Player detected! Start charge: " + hit.gameObject.name);
             StartCoroutine(ChargeSequence());
         }
         else
         {
             if (Time.frameCount % 300 == 0)
-                Debug.Log("시야 안에 아무도 없음 (PlayerLayer=" + playerLayer.value + ")");
+                Debug.Log("No player in range (PlayerLayer=" + playerLayer.value + ")");
         }
     }
 
     public IEnumerator ChargeSequence()
     {
         isCoroutineRunning = true;
-
         currentState = ChargeState.Ready;
         rb.linearVelocity = Vector2.zero;
-        Debug.Log("차징 시작! 0.5초 후 돌진");
+        Debug.Log("Charge ready! Charging after " + chargeReadyTime + "s");
 
         yield return new WaitForSeconds(chargeReadyTime);
 
+        if (isDead)
+        {
+            isCoroutineRunning = false;
+            yield break;
+        }
+
         currentState = ChargeState.Charge;
         isInvincible = true;
-        Debug.Log("돌진 시작! 무적 ON");
+        Debug.Log("Charge start! Invincible ON");
 
         float targetX = transform.position.x + (moveDir * chargeDistance);
 
         while (true)
         {
+            if (isDead) yield break;
+
             rb.linearVelocity = new Vector2(moveDir * chargeSpeed, rb.linearVelocity.y);
 
-            bool reachedTarget = (moveDir == 1 && transform.position.x >= targetX) || (moveDir == -1 && transform.position.x <= targetX);
-
+            bool reachedTarget = (moveDir == 1 && transform.position.x >= targetX)
+                              || (moveDir == -1 && transform.position.x <= targetX);
 
             if (reachedTarget)
             {
-                Debug.Log("목표 지점 도달 → 스턴");
+                Debug.Log("Reached target -> Stun");
                 break;
             }
 
@@ -165,32 +188,34 @@ public class EnemyChargeSystem : MonoBehaviour
 
         yield return StartCoroutine(StunSequence());
     }
-
+    //어떤 겜을 만들어야 하누 답이 없구만
     IEnumerator StunSequence()
     {
         currentState = ChargeState.Stun;
         isInvincible = false;
         rb.linearVelocity = Vector2.zero;
-        Debug.Log("스턴! 무적 OFF. " + stunTime + "초 후 귀환");
+        Debug.Log("Stun! Invincible OFF. Return after " + stunTime + "s");
 
         yield return new WaitForSeconds(stunTime);
 
-        currentState = ChargeState.Return;
-        isCoroutineRunning = false;
-        Debug.Log("귀환 시작");
+        if (!isDead)
+        {
+            currentState = ChargeState.Return;
+            isCoroutineRunning = false;
+            Debug.Log("Return start");
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (isDead) return;
         if (currentState != ChargeState.Charge) return;
 
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("플레이어 명중!");
+            Debug.Log("Player hit!");
 
-            PlayerHelthSystem playerHelth =
-                collision.gameObject.GetComponent<PlayerHelthSystem>();
-
+            PlayerHelthSystem playerHelth = collision.gameObject.GetComponent<PlayerHelthSystem>();
             if (playerHelth == null)
                 playerHelth = collision.gameObject.GetComponentInChildren<PlayerHelthSystem>();
 
@@ -200,9 +225,9 @@ public class EnemyChargeSystem : MonoBehaviour
             StopAllCoroutines();
             StartCoroutine(StunSequence());
         }
-        else if (!collision.gameObject.CompareTag("Player"))
+        else
         {
-            Debug.Log("벽 충돌! 스턴");
+            Debug.Log("Wall collision! Stun");
             StopAllCoroutines();
             StartCoroutine(StunSequence());
         }
@@ -222,10 +247,8 @@ public class EnemyChargeSystem : MonoBehaviour
         float dir = transform.localScale.x >= 0 ? 1 : -1;
 
         Gizmos.color = Color.green;
-        Gizmos.DrawLine(
-            origin + Vector2.left * patrolDistance,
-            origin + Vector2.right * patrolDistance
-        );
+        Gizmos.DrawLine(origin + Vector2.left * patrolDistance,
+                        origin + Vector2.right * patrolDistance);
 
         Vector2 boxCenter = (Vector2)transform.position
                             + new Vector2(viewOffset.x * dir, viewOffset.y);
@@ -235,9 +258,7 @@ public class EnemyChargeSystem : MonoBehaviour
         Gizmos.DrawWireCube(boxCenter, viewSize);
 
         Gizmos.color = Color.cyan;
-        Gizmos.DrawLine(
-            (Vector2)transform.position,
-            (Vector2)transform.position + new Vector2(dir * chargeDistance, 0f)
-        );
+        Gizmos.DrawLine((Vector2)transform.position,
+                        (Vector2)transform.position + new Vector2(dir * chargeDistance, 0f));
     }
 }

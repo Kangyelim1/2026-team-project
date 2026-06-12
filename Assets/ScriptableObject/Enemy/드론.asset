@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: "\uB4DC\uB860"
   m_EditorClassIdentifier: Assembly-CSharp::EnemySO
   enemyName: "\uB4DC\uB860"
-  enemyType: 6
+  enemyType: 7
   BossHelth: 0

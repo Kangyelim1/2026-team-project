@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7293183043664591393}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WallCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,9 +45,9 @@ GameObject:
   - component: {fileID: 9148428393777533821}
   - component: {fileID: 9045369884199176396}
   - component: {fileID: 7668157206817442961}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Grapper
-  m_TagString: Untagged
+  m_TagString: EnemyHitPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -127,7 +127,7 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -269,12 +269,14 @@ MonoBehaviour:
   moveSpeed: 4
   moveRadius: 3
   trunDuration: 0.3
-  fastMoveDuration: 2
-  fastSpeedMultiplier: 1.5
+  minAttackInterval: 2
+  maxAttackInterval: 5
+  attackDuration: 2
   wallCheckPos: {fileID: 7293183043664591393}
   layerCheckRadius: 0.05
-  viewOffset: {x: 0.5, y: 0}
-  viewSize: {x: 5, y: 3}
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 768
   hitboxOffset: {x: 0.5, y: 0}
   hitboxSize: {x: 1, y: 1}
   playerLayer:
@@ -286,9 +288,6 @@ MonoBehaviour:
   afterDeathLayer:
     serializedVersion: 2
     m_Bits: 64
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 768
   isAttacking: 1
 --- !u!1 &3623366496313503972
 GameObject:
@@ -300,7 +299,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6200554467741414717}
   - component: {fileID: 5208958166902239335}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: 'Sprite '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -369,9 +368,9 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 12
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 2998802586346461226, guid: 993db2afb41259a45bfdfeb5a24c63d2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -392,7 +391,7 @@ GameObject:
   - component: {fileID: 8374788299735659396}
   - component: {fileID: 8984287231458298258}
   - component: {fileID: 7128686289004800739}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Head
   m_TagString: EnemyHitPoint
   m_Icon: {fileID: 0}

@@ -21,12 +21,13 @@ public class BossSystem : MonoBehaviour
 
     IEnumerator BossRandomPatternTime()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1.5f);
         BossRandomPattern();
     }
 
     public void BossRandomPattern()
     {
+        if (enemySystem.playerSystem == null) return;
         Debug.Log("보스 패턴 뽑기");
 
         int randomIndex = Random.Range(0, bossPatternData.bossPatternDataList.Count);

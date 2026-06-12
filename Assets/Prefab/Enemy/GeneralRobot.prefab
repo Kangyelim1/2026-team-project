@@ -88,8 +88,8 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 10
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
-  m_Color: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 1}
+  m_Sprite: {fileID: 6181843744637478005, guid: 9f8b6bb36ece96c43aedc3382d243a2e, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -191,6 +191,10 @@ MonoBehaviour:
   chaseAfterExitTime: 3
   chaseDistance: 15
   BossHelth: 0
+  isPattern: 0
+  droneMoveSpeed: 4
+  droneDetectDistance: 20
+  droneBoomDistance: 0
 --- !u!58 &7432597354560567054
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -264,8 +268,8 @@ BoxCollider2D:
   m_Offset: {x: 0, y: -1}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 2}
+    pivot: {x: 0.69346386, y: 0.4834749}
+    oldSize: {x: 1.3454546, y: 2.0727272}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -419,6 +423,14 @@ MonoBehaviour:
   maxBossHelth: 0
   minBossHelth: 0
   currentBossHelth: 0
+  isInvincibility: 0
+  deathDelay: 0.8
+  deathUpForce: 4
+  deathSideForceMin: -2
+  deathSideForceMax: 2
+  deathTorqueMin: -120
+  deathTorqueMax: 120
+  isDead: 0
 --- !u!1 &8955180800484366012
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,75 +3,73 @@ using UnityEngine;
 
 public class PlayerAttackSystem : MonoBehaviour
 {
-    [Header("¬¸¡∂")]
+    [Header("Ï∞∏Ï°∞")]
     public PlayerSystem playerSystem;
     public GameSoundManager gameSoundManager;
     public Camera mainCamera;
 
-    [Header("±‚∫ª∞¯∞›")]
+    [Header("Í∏∞Î≥∏ Í≥µÍ≤©")]
     public GameObject bulletPrefab;
     public Transform firePoint;
     public float bulletSpeed = 10f;
-    public float attackCooldown = 2f;
+    public float bulletLifetime = 0.4f;
+    public float attackCooldown = 1.0f;
 
-    [Header("ƒﬁ∫∏ ≈∫»Ø")]
+    [Header("ÌÉÑÏ∞Ω")]
+    public int maxAmmo = 6;
+    public float reloadTime = 1.5f;
+    private bool isReloading = false;
+
+    public bool isShootingLocked = false;
+    public int currentAmmo;
+
+    [Header("ÏΩ§Î≥¥ ÌÉÑÌôò (Ïö∞ÌÅ¥Î¶≠ + Ï¢åÌÅ¥Î¶≠)")]
     public float comboShotDelay = 0.3f;
     public int comboDamage = 16;
 
-    [Header("¥Ÿ¡ﬂ∞¯∞›")]
-    public float multiAttackDuration = 1f;
-    public float multiAttackCooldown = 15f;
-
-    [Header("≈ı√¥π´±‚")]
+    [Header("Ìà¨Ï≤ôÎ¨¥Í∏∞ (E)")]
     public GameObject throwWeaponPrefab;
     public Transform throwPoint;
     public float throwSpeed = 12f;
     public float throwCooldown = 60f;
 
-    [Header("±Ÿ¡¢∞¯∞›")]
+    [Header("Í∑ºÏ†ëÍ≥µÍ≤© (G)")]
     public Transform meleePoint;
     public float meleeRange = 1.2f;
+    public float meleeCooldown = 1.0f;
     public LayerMask enemyLayer;
 
-    [Header("∆–∏µ")]
-    public float parryDuration = 0.1f;
+    [Header("Ìå®Î¶¨ (Ïö∞ÌÅ¥Î¶≠ + G)")]
+    public float parryDuration = 1.0f;
     public float parryCooldown = 2f;
     public int parryDamage = 6;
 
-    [Header("±√±ÿ±‚")]
-    public float ultimateCastTime = 2f;
-    public float ultimateCooldown = 100f;
-    public float ultimateRange = 8f;
-    public int ultimateDamage = 30;
-
-    [Header("µ£")]
-    public GameObject trapPrefab;
-    public Transform trapPoint;
-    public float trapCooldown = 90f;
-
-    [Header("ªÛ»£¿€øÎ")]
+    [Header("ÏÉÅÌò∏ÏûëÏö©")]
     public float interactHoldTime = 1.5f;
 
     private float lastAttackTime = -999f;
-    private float lastMultiAttackTime = -999f;
+    private float lastMeleeTime = -999f;
     private float lastThrowTime = -999f;
     private float lastParryTime = -999f;
-    private float lastUltimateTime = -999f;
-    private float lastTrapTime = -999f;
 
-    private bool multiAttackMode;
     private bool isParryWindow;
-    private bool isUltimateCasting;
+    private bool isComboShotRunning = false;
     private float fHoldTimer;
 
-    public bool IsInvincible => isParryWindow || isUltimateCasting || (playerSystem != null && playerSystem.IsDash);
+    public bool IsInvincible => isParryWindow || (playerSystem != null && playerSystem.IsDash);
     public bool IsParryWindow => isParryWindow;
+
+    public int CurrentAmmo => currentAmmo;
+    public int MaxAmmo => maxAmmo;
+    public bool IsReloading => isReloading;
 
     private void Awake()
     {
         if (playerSystem == null) playerSystem = GetComponent<PlayerSystem>();
         if (mainCamera == null) mainCamera = Camera.main;
         gameSoundManager = FindAnyObjectByType<GameSoundManager>();
+
+        currentAmmo = maxAmmo;
     }
 
     private void Update()
@@ -85,18 +83,14 @@ public class PlayerAttackSystem : MonoBehaviour
         if (Input.GetKey(KeyCode.F) && !Input.GetMouseButton(1))
         {
             fHoldTimer += Time.deltaTime;
-
             if (fHoldTimer >= interactHoldTime)
             {
-                Debug.Log("ªÛ»£¿€øÎ Ω««‡");
+                Debug.Log("ÏÉÅÌò∏ÏûëÏö© Ïã§Ìñâ");
                 fHoldTimer = -999f;
             }
         }
-
         if (Input.GetKeyUp(KeyCode.F))
-        {
             fHoldTimer = 0f;
-        }
     }
 
     private void HandleAttackInput()
@@ -105,93 +99,136 @@ public class PlayerAttackSystem : MonoBehaviour
 
         if (comboHeld && Input.GetMouseButtonDown(0))
         {
-            StartCoroutine(ComboShot());
+            if (!isComboShotRunning)
+                StartCoroutine(ComboShot());
             return;
         }
 
-        if (comboHeld && Input.GetKeyDown(KeyCode.Space))
-        {
-            if (playerSystem != null)
-                playerSystem.HighJump(1.5f);
-            return;
-        }
-
-        if (comboHeld && Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            MeleeAttack(10);
-            return;
-        }
-
-        if (comboHeld && Input.GetKeyDown(KeyCode.F))
+        if (comboHeld && Input.GetKeyDown(KeyCode.G))
         {
             TryParry();
             return;
         }
 
-        if (comboHeld && Input.GetKeyDown(KeyCode.LeftControl))
+        if (Input.GetKeyDown(KeyCode.G))
         {
-            StartCoroutine(UltimateRoutine());
+            MeleeAttack(10);
             return;
-        }
-
-        if (comboHeld && Input.GetKeyDown(KeyCode.E))
-        {
-            InstallTrap();
-            return;
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            TryMultiAttackMode();
         }
 
         if (Input.GetKeyDown(KeyCode.E))
         {
             ThrowWeapon();
+            return;
         }
 
         if (Input.GetMouseButtonDown(0))
         {
             StartCoroutine(BasicAttack());
+            return;
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (!isReloading && currentAmmo < maxAmmo)
+                StartCoroutine(Reload());
+        }
+    }
+
+    private bool CanShoot()
+    {
+        if (isShootingLocked)
+        {
+            Debug.Log("ÌÉÑÏ∞Ω ÎπÑÏñ¥ÏûàÏùå! RÌÇ§Î•º ÎàåÎü¨ Ïû¨Ïû•Ï†ÑÌïòÏÑ∏Ïöî.");
+            return false;
+        }
+        if (isReloading)
+        {
+            Debug.Log("Ïû¨Ïû•Ï†Ñ Ï§ë...");
+            return false;
+        }
+        return true;
     }
 
     IEnumerator BasicAttack()
     {
-        if (!multiAttackMode && Time.time < lastAttackTime + attackCooldown)
-           yield break;
+        if (!CanShoot()) yield break;
+        if (Time.time < lastAttackTime + attackCooldown) yield break;
 
         lastAttackTime = Time.time;
-        playerSystem.playerAnimator.SetBool("isGun", true);
+        currentAmmo--;
+        Debug.Log($"Î∞úÏÇ¨ | ÎÇ®ÏùÄ ÌÉÑÌôò: {currentAmmo}/{maxAmmo}");
 
+        if (currentAmmo <= 0)
+        {
+            currentAmmo = 0;
+            isShootingLocked = true;
+            Debug.Log("ÌÉÑÏ∞Ω ÎπÑÏñ¥ÏûàÏùå! RÌÇ§Î•º ÎàåÎü¨ Ïû¨Ïû•Ï†ÑÌïòÏÑ∏Ïöî.");
+        }
+
+        SkillHUDManager.Instance?.TriggerCooldown(SkillType.BasicAttack, attackCooldown);
+
+        playerSystem.playerAnimator.SetBool("isGun", true);
         yield return new WaitForSeconds(0.2f);
-        gameSoundManager.OnFindPlayerSound("«√∑π¿ÃæÓ ±‚∫ª∞¯∞›");
+
+        gameSoundManager.OnFindPlayerSound("ÌîåÎ†àÏù¥Ïñ¥ Í∏∞Î≥∏Í≥µÍ≤©");
         ShootProjectile(bulletPrefab, firePoint, bulletSpeed);
-        yield return new WaitForSeconds(0.1f);
-        
-        
+
         yield return new WaitForSeconds(0.1f);
         playerSystem.playerAnimator.SetBool("isGun", false);
+    }
+
+    IEnumerator Reload()
+    {
+        isReloading = true;
+        Debug.Log($"Ïû¨Ïû•Ï†Ñ Ï§ë... ({reloadTime}Ï¥à)");
+
+        SkillHUDManager.Instance?.TriggerCooldown(SkillType.Reload, reloadTime);
+
+        yield return new WaitForSeconds(reloadTime);
+
+        currentAmmo = maxAmmo;
+        isReloading = false;
+        isShootingLocked = false;
+        Debug.Log($"Ïû¨Ïû•Ï†Ñ ÏôÑÎ£å! ÌÉÑÌôò: {currentAmmo}/{maxAmmo}");
     }
 
     private IEnumerator ComboShot()
     {
+        if (!CanShoot()) yield break;
+        if (Time.time < lastAttackTime + attackCooldown) yield break;
+
+        isComboShotRunning = true;
+        lastAttackTime = Time.time;
+        currentAmmo--;
+        Debug.Log($"ÏΩ§Î≥¥ Î∞úÏÇ¨ | ÎÇ®ÏùÄ ÌÉÑÌôò: {currentAmmo}/{maxAmmo}");
+
+        if (currentAmmo <= 0)
+        {
+            currentAmmo = 0;
+            isShootingLocked = true;
+            Debug.Log("ÌÉÑÏ∞Ω ÎπÑÏñ¥ÏûàÏùå! RÌÇ§Î•º ÎàåÎü¨ Ïû¨Ïû•Ï†ÑÌïòÏÑ∏Ïöî.");
+        }
+
+        SkillHUDManager.Instance?.TriggerCooldown(SkillType.BasicAttack, attackCooldown);
+
         yield return new WaitForSeconds(comboShotDelay);
         playerSystem.playerAnimator.SetBool("isGun", true);
 
         yield return new WaitForSeconds(0.2f);
-        gameSoundManager.OnFindPlayerSound("«√∑π¿ÃæÓ ±‚∫ª∞¯∞›");
+        gameSoundManager.OnFindPlayerSound("ÌîåÎ†àÏù¥Ïñ¥ Í∏∞Î≥∏Í≥µÍ≤©");
         ShootProjectile(bulletPrefab, firePoint, bulletSpeed);
 
         yield return new WaitForSeconds(0.1f);
         playerSystem.playerAnimator.SetBool("isGun", false);
-        Debug.Log("ƒﬁ∫∏≈∫ πﬂªÁ / µ•πÃ¡ˆ 16");
+        Debug.Log($"ÏΩ§Î≥¥ÌÉÑ Î∞úÏÇ¨ / Îç∞ÎØ∏ÏßÄ {comboDamage}");
+
+        isComboShotRunning = false;
     }
 
     private void ShootProjectile(GameObject prefab, Transform spawnPoint, float speed)
     {
-        if (prefab == null || spawnPoint == null || mainCamera == null)
-            return;
+        if (prefab == null || spawnPoint == null || mainCamera == null) return;
 
         Vector3 mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0f;
@@ -199,70 +236,47 @@ public class PlayerAttackSystem : MonoBehaviour
         Vector2 dir = (mousePos - spawnPoint.position).normalized;
 
         GameObject bullet = Instantiate(prefab, spawnPoint.position, Quaternion.identity);
-
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-        if (rb != null)
-            rb.linearVelocity = dir * speed;
-    }
+        if (rb != null) rb.linearVelocity = dir * speed;
 
-    private void TryMultiAttackMode()
-    {
-        if (Time.time < lastMultiAttackTime + multiAttackCooldown)
-            return;
-
-        StartCoroutine(MultiAttackRoutine());
-    }
-
-    private IEnumerator MultiAttackRoutine()
-    {
-        lastMultiAttackTime = Time.time;
-        multiAttackMode = true;
-        Debug.Log("¥Ÿ¡ﬂ∞¯∞› ON");
-
-        yield return new WaitForSeconds(multiAttackDuration);
-
-        multiAttackMode = false;
-        Debug.Log("¥Ÿ¡ﬂ∞¯∞› OFF");
+        Destroy(bullet, bulletLifetime);
     }
 
     private void ThrowWeapon()
     {
-        if (Time.time < lastThrowTime + throwCooldown)
-            return;
-
-        if (throwWeaponPrefab == null || throwPoint == null || mainCamera == null)
-            return;
+        if (Time.time < lastThrowTime + throwCooldown) return;
+        if (throwWeaponPrefab == null || throwPoint == null || mainCamera == null) return;
 
         lastThrowTime = Time.time;
         ShootProjectile(throwWeaponPrefab, throwPoint, throwSpeed);
-        Debug.Log("≈ı√¥π´±‚ ªÁøÎ / µ•πÃ¡ˆ 22");
+
+        SkillHUDManager.Instance?.TriggerCooldown(SkillType.Throw, throwCooldown);
+        Debug.Log("Ìà¨Ï≤ôÎ¨¥Í∏∞ Î∞úÏÇ¨ / Îç∞ÎØ∏ÏßÄ 22");
     }
 
     private void MeleeAttack(int damage)
     {
+        if (Time.time < lastMeleeTime + meleeCooldown) return;
         if (meleePoint == null) return;
 
-        Collider2D[] hits = Physics2D.OverlapCircleAll(meleePoint.position, meleeRange, enemyLayer);
+        lastMeleeTime = Time.time;
 
+        Collider2D[] hits = Physics2D.OverlapCircleAll(meleePoint.position, meleeRange, enemyLayer);
         foreach (Collider2D hit in hits)
         {
             EnemyHelthSystem enemy = hit.GetComponent<EnemyHelthSystem>();
             if (enemy == null) enemy = hit.GetComponentInParent<EnemyHelthSystem>();
-
             if (enemy != null)
-            {
                 ApplyDamage(enemy, damage);
-            }
         }
 
-        Debug.Log("±Ÿ¡¢∞¯∞› / µ•πÃ¡ˆ 10");
+        SkillHUDManager.Instance?.TriggerCooldown(SkillType.Melee, meleeCooldown);
+        Debug.Log("Í∑ºÏ†ëÍ≥µÍ≤© / Îç∞ÎØ∏ÏßÄ 10");
     }
 
     private void TryParry()
     {
-        if (Time.time < lastParryTime + parryCooldown)
-            return;
-
+        if (Time.time < lastParryTime + parryCooldown) return;
         StartCoroutine(ParryRoutine());
     }
 
@@ -270,60 +284,15 @@ public class PlayerAttackSystem : MonoBehaviour
     {
         lastParryTime = Time.time;
         isParryWindow = true;
-        Debug.Log("∆–∏µ Ω√¿€");
-        gameSoundManager.OnFindPlayerSound("∆–∏µ");
+        Debug.Log("Ìå®Î¶¨ ÏãúÏûë");
+        gameSoundManager.OnFindPlayerSound("Ìå®Î¶¨");
+
+        SkillHUDManager.Instance?.TriggerCooldown(SkillType.Parry, parryCooldown);
+
         yield return new WaitForSeconds(parryDuration);
 
         isParryWindow = false;
-        Debug.Log("∆–∏µ ¡æ∑·");
-    }
-
-    private IEnumerator UltimateRoutine()
-    {
-        if (Time.time < lastUltimateTime + ultimateCooldown)
-            yield break;
-
-        lastUltimateTime = Time.time;
-        isUltimateCasting = true;
-
-        if (playerSystem != null && playerSystem.LockOnImage != null)
-            playerSystem.LockOnImage.SetActive(true);
-
-        Debug.Log("±√±ÿ±‚ º±µÙ Ω√¿€");
-        yield return new WaitForSeconds(ultimateCastTime);
-
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, ultimateRange, enemyLayer);
-
-        foreach (Collider2D hit in hits)
-        {
-            EnemyHelthSystem enemy = hit.GetComponent<EnemyHelthSystem>();
-            if (enemy == null) enemy = hit.GetComponentInParent<EnemyHelthSystem>();
-
-            if (enemy != null)
-            {
-                ApplyDamage(enemy, ultimateDamage);
-            }
-        }
-
-        if (playerSystem != null && playerSystem.LockOnImage != null)
-            playerSystem.LockOnImage.SetActive(false);
-
-        isUltimateCasting = false;
-        Debug.Log("±√±ÿ±‚ πﬂµø / µ•πÃ¡ˆ 30");
-    }
-
-    private void InstallTrap()
-    {
-        if (Time.time < lastTrapTime + trapCooldown)
-            return;
-
-        if (trapPrefab == null || trapPoint == null)
-            return;
-
-        lastTrapTime = Time.time;
-        gameSoundManager.OnFindPlayerSound("µ£ º≥ƒ°");
-        Instantiate(trapPrefab, trapPoint.position, Quaternion.identity);
-        Debug.Log("µ£ º≥ƒ° / µ•πÃ¡ˆ 22");
+        Debug.Log("Ìå®Î¶¨ Ï¢ÖÎ£å");
     }
 
     private void ApplyDamage(EnemyHelthSystem enemy, int damage)
@@ -346,11 +315,8 @@ public class PlayerAttackSystem : MonoBehaviour
 
         EnemyHelthSystem enemy = collision.GetComponent<EnemyHelthSystem>();
         if (enemy == null) enemy = collision.GetComponentInParent<EnemyHelthSystem>();
-
         if (enemy != null)
-        {
             ApplyDamage(enemy, parryDamage);
-        }
 
         return true;
     }
@@ -362,8 +328,5 @@ public class PlayerAttackSystem : MonoBehaviour
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(meleePoint.position, meleeRange);
         }
-
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, ultimateRange);
     }
 }

@@ -12,10 +12,18 @@ public class PlayerSystem : MonoBehaviour
     private bool isNotDash;
 
     [Header("점프")]
-    public float JumpForce = 7f;
+    public float JumpForce = 4.5f;
+    public float colliderOffTime = 0.5f;
     public float FallGravityScale = 4f;
     public float NormalGravityScale = 2f;
     private bool isNotJump;
+
+    [Header("더블 점프")]
+    public float doubleJumpMultiplier = 1.2f;
+    public float doubleJumpWindow = 0.5f;
+    private bool canDoubleJump = false;
+    private bool hasDoubleJumped = false;
+    private float jumpPressTime = -999f; 
 
     public Rigidbody2D PlayerRigidbody;
     public SpriteRenderer PlayerSpriteRenderer;
@@ -54,7 +62,6 @@ public class PlayerSystem : MonoBehaviour
 
     private void Update()
     {
-
         Flip();
 
         if (PlayerRigidbody.linearVelocity.y < 0)
@@ -62,9 +69,35 @@ public class PlayerSystem : MonoBehaviour
         else
             PlayerRigidbody.gravityScale = NormalGravityScale;
 
-        if (Input.GetKeyDown(KeyCode.Space) && isGround && !isDash && !isNotJump)
+        if (Input.GetKeyDown(KeyCode.Space) && !isDash && !isNotJump)
         {
-            Jump();
+            if (isGround)
+            {
+                Jump();
+                jumpPressTime = Time.time;
+                canDoubleJump = true;
+                hasDoubleJumped = false;
+            }
+            else if (canDoubleJump && !hasDoubleJumped)
+            {
+                if (Time.time - jumpPressTime <= doubleJumpWindow)
+                {
+                    DoubleJump();
+                }
+                else
+                {
+                    Debug.Log("더블점프 시간창 초과 — 불가");
+                }
+            }
+        }
+
+        if (canDoubleJump && !hasDoubleJumped)
+        {
+            if (Time.time - jumpPressTime > doubleJumpWindow)
+            {
+                canDoubleJump = false;
+                Debug.Log("더블점프 시간창 만료");
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && !isDash && !isNotDash)
@@ -76,28 +109,22 @@ public class PlayerSystem : MonoBehaviour
     private void FixedUpdate()
     {
         if (!isDash)
-        {
             Move();
-        }
     }
 
     private void Move()
     {
         moveX = Input.GetAxisRaw("Horizontal");
 
-        Vector3 Derection = new Vector3(moveX, 0, 0).normalized;
-        Vector3 targetVelocityX = Derection * PlayerMoveSpeed * Time.deltaTime;
+        Vector3 direction = new Vector3(moveX, 0, 0).normalized;
+        Vector3 targetVelocityX = direction * PlayerMoveSpeed * Time.deltaTime;
 
         transform.position += targetVelocityX;
 
-        if(Derection != Vector3.zero)
-        {
+        if (direction != Vector3.zero)
             playerAnimator.SetBool("isRun", true);
-        }
         else
-        {
             playerAnimator.SetBool("isRun", false);
-        }
     }
 
     private IEnumerator Dash()
@@ -112,6 +139,8 @@ public class PlayerSystem : MonoBehaviour
 
         float time = 0f;
         playerAnimator.SetBool("isRolling", true);
+
+        SkillHUDManager.Instance?.TriggerCooldown(SkillType.Dash, PlayerDashDuration + 0.5f);
 
         yield return new WaitForSeconds(0.1f);
         while (time < PlayerDashDuration)
@@ -139,6 +168,15 @@ public class PlayerSystem : MonoBehaviour
         StartCoroutine(JumpColliderOff());
     }
 
+    private void DoubleJump()
+    {
+        hasDoubleJumped = true;
+        canDoubleJump = false;
+
+        PlayerRigidbody.linearVelocity = new Vector2(PlayerRigidbody.linearVelocity.x, 0f);
+        PlayerRigidbody.AddForce(Vector2.up * JumpForce * doubleJumpMultiplier, ForceMode2D.Impulse);
+    }
+
     public void HighJump(float multiplier)
     {
         if (!isGround || isDash || isNotJump) return;
@@ -152,17 +190,15 @@ public class PlayerSystem : MonoBehaviour
 
     private IEnumerator JumpColliderOff()
     {
+        playerAnimator.SetBool("isJump", true);
         if (PlayerCollider != null)
-        {
             PlayerCollider.enabled = false;
-        }
 
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(colliderOffTime);
 
         if (PlayerCollider != null)
-        {
             PlayerCollider.enabled = true;
-        }
+        playerAnimator.SetBool("isJump", false);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -170,6 +206,8 @@ public class PlayerSystem : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGround = true;
+            canDoubleJump = false;
+            hasDoubleJumped = false;
         }
 
         if (collision.contacts.Length > 0 && collision.contacts[0].normal.y < -0.5f)
@@ -203,12 +241,8 @@ public class PlayerSystem : MonoBehaviour
         Vector3 mouseWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
 
         if (mouseWorldPos.x > transform.position.x)
-        {
             transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-        }
         else
-        {
             transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-        }
     }
 }

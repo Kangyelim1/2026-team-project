@@ -1,31 +1,29 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DoorSystem : MonoBehaviour
 {
-    [Header("주파수 미션")]
-    public RadioMission radioMission;
+    [Header("이동할 다음 씬 이름")]
+    public string nextSceneName;
 
-    [Header("키패드 미션")]
-    public KeypadMission keypadMission;
+    [Header("상호작용 UI")]
+    public GameObject interactionText; 
 
-    private bool canInteract;
-    public GameObject interactionText;
+    private bool canInteract; 
+
+    private void Start()
+    {
+        // 시작 시 텍스트 숨김
+        if (interactionText != null)
+            interactionText.SetActive(false);
+    }
 
     private void Update()
     {
+        // 문 근처에서 F 누르면 씬 이동
         if (canInteract && Input.GetKeyDown(KeyCode.F))
         {
-            // 주파수 미션이 연결되어 있으면 실행
-            if (radioMission != null)
-            {
-                radioMission.StartMission();
-            }
-
-            // 키패드 미션이 연결되어 있으면 실행
-            if (keypadMission != null)
-            {
-                keypadMission.StartMission();
-            }
+            SceneManager.LoadScene(nextSceneName);
         }
     }
 

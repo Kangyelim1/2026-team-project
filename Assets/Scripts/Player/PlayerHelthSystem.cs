@@ -54,6 +54,20 @@ public class PlayerHelthSystem : MonoBehaviour
 
     public void Die()
     {
+        PlayerItemSystem itemSystem = GetComponentInParent<PlayerItemSystem>();
+        if (itemSystem == null)
+            itemSystem = GetComponent<PlayerItemSystem>();
+
+        if (itemSystem != null && itemSystem.TryBlockHit())
+            return;
+
+        if (gameManger.isDiePlayer) return;
+
+        if (CameraShake.Instance != null)
+            CameraShake.Instance.Shake(1.5f);
+
+        gameManger.isDiePlayer = true;
+
         Debug.Log("Die 함수 호출 확인");
 
         if (gameManger == null || playerSystem == null)

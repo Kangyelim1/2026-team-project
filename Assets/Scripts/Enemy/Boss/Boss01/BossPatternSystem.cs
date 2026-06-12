@@ -35,8 +35,8 @@ public class BossPatternSystem : MonoBehaviour
     public GameObject WormHole01;
     public GameObject WormHole02;
     public GameObject electricObject;
-    public CinemachineCamera wormHoleCamera;
-    public float showTime = 2f;
+    public GameObject fakeObject;
+
 
     [Header("검은 물체 생성 패턴")]
     public List<GameObject> objectList = new List<GameObject>();
@@ -93,13 +93,14 @@ public class BossPatternSystem : MonoBehaviour
         if (player == null) yield break;
         isPattern = true;
 
-        if (enemyHelthSystem.currentBossHelth >= 150) aimTime = 2.5f;
-        else aimTime = 2f;
+        if (enemyHelthSystem.currentBossHelth >= 150) aimTime = 2f;
+        else aimTime = 1.5f;
 
         if(playerSystem == null)
             playerSystem = FindAnyObjectByType<PlayerSystem>();
 
         playerSystem.LockOnImage.SetActive(true);
+        gameSoundManager.OnFindEnemySound("조준 패턴");
 
         laserLine01.enabled = true;
         laserLine02.enabled = true;
@@ -128,9 +129,9 @@ public class BossPatternSystem : MonoBehaviour
         }
         playerSystem.LockOnImage.SetActive(false);
         hitCollider.transform.position = targetPos;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.3f);
         hitCollider.SetActive(true);
-        gameSoundManager.OnFindEnemySound("보스","레이저 패턴");
+        gameSoundManager.OnFindEnemySound("레이저 패턴");
         yield return new WaitForSeconds(0.3f);
         hitCollider.SetActive(false);
 
@@ -152,23 +153,20 @@ public class BossPatternSystem : MonoBehaviour
 
         WormHole01.SetActive(true);
         WormHole02.SetActive(true);
-        wormHoleCamera.gameObject.SetActive(true);
+        gameSoundManager.OnFindEnemySound("레이저 시작 사운드");
 
-        playerCamera.Priority = 10;
-        wormHoleCamera.Priority = 20;
-        wormHoleCamera.Follow = WormHole01.transform;
-        yield return new WaitForSeconds(showTime);
+        for (int i = 0; i < 3; i++)
+        {
+            fakeObject.SetActive(true);
+            yield return new WaitForSeconds(0.5f);
 
-        wormHoleCamera.Follow = WormHole02.transform;
-        yield return new WaitForSeconds(showTime);
+            fakeObject.SetActive(false);
+            yield return new WaitForSeconds(0.5f);
+        }
 
-        wormHoleCamera.Priority = 0;
-        playerCamera.Priority = 10;
-        wormHoleCamera.gameObject.SetActive(false);
-
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(0.2f);
         electricObject.SetActive(true);
-
+        gameSoundManager.OnFindEnemySound("레이저 패턴");
         yield return new WaitForSeconds(0.5f);
         electricObject.SetActive(false);
         WormHole01.SetActive(false);
@@ -196,7 +194,7 @@ public class BossPatternSystem : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
 
         foreach (GameObject obj in randomObjects)
         {
@@ -214,30 +212,43 @@ public class BossPatternSystem : MonoBehaviour
 
         isPattern = true;
         enemySystem.isPattern = true;
+        enemyHelthSystem.isInvincibility = true;
 
         if (playerSystem == null) yield break;
+
         Vector3 spawnPos = new Vector3(playerSystem.gameObject.transform.position.x, playerSystem.transform.position.y + 12f, 0f);
         Instantiate(destoryObject, spawnPos, Quaternion.identity);
 
         yield return new WaitForSeconds(0.5f);
         Debug.Log("7초 카운트 시작");
 
-        yield return new WaitForSeconds(7f);
+        float timer = 0f;
 
-        if (isDestoryObject)
+        while (timer < 7f)
         {
-            Debug.Log("오브젝트 제거 성공");
-            isDestoryObject = false;
-            yield return new WaitForSeconds(BossPatternTime);
-            isPattern = false;
-            enemySystem.isPattern = false;
-            bossSystem.BossRandomPattern();
+            if (isDestoryObject)
+            {
+                Debug.Log("오브젝트 제거 성공");
+                gameSoundManager.OnFindEnemySound("오브젝트 파괴 소리");
+
+                isDestoryObject = false;
+
+                yield return new WaitForSeconds(BossPatternTime);
+
+                isPattern = false;
+                enemySystem.isPattern = false;
+                enemyHelthSystem.isInvincibility = false;
+
+                bossSystem.BossRandomPattern();
+                yield break;
+            }
+
+            timer += Time.deltaTime;
+            yield return null;
         }
-        else
-        {
-            Debug.Log("오브젝트 제거 실패");
-            playerHelthSystem.Die();
-        }
+
+        Debug.Log("오브젝트 제거 실패");
+        playerHelthSystem.Die();
     }
 
     public IEnumerator Missile()
@@ -256,7 +267,7 @@ public class BossPatternSystem : MonoBehaviour
 
         for (int i = 0; i < 3; i++)
         {
-            gameSoundManager.OnFindEnemySound("보스","미사일 발사");
+            gameSoundManager.OnFindEnemySound("미사일 발사");
             GameObject missile = Instantiate(missilePrefab, missileFirePoint.position, Quaternion.identity);
 
             if (missile.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
