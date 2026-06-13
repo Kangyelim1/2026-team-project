@@ -182,7 +182,7 @@ public class BossPatternSystem : MonoBehaviour
         isPattern = true;
         List<GameObject> randomObjects = new List<GameObject>();
 
-        while (randomObjects.Count < 3)
+        while (randomObjects.Count < 10)
         {
             int randomIndex = Random.Range(0, objectList.Count);
             GameObject randomObj = objectList[randomIndex];
@@ -191,9 +191,12 @@ public class BossPatternSystem : MonoBehaviour
             {
                 randomObjects.Add(randomObj);
                 randomObj.SetActive(true);
+                gameSoundManager.OnFindEnemySound("타겟 지정");
+                yield return new WaitForSeconds(0.1f);
             }
+            yield return null;
         }
-
+        
         yield return new WaitForSeconds(1f);
 
         foreach (GameObject obj in randomObjects)
@@ -265,9 +268,10 @@ public class BossPatternSystem : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < warningCount; i++)
         {
             gameSoundManager.OnFindEnemySound("미사일 발사");
+
             GameObject missile = Instantiate(missilePrefab, missileFirePoint.position, Quaternion.identity);
 
             if (missile.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
@@ -288,7 +292,7 @@ public class BossPatternSystem : MonoBehaviour
 
         for (int i = 0; i < warningCount; i++)
         {
-            float randomX;
+            float randomX = playerSystem.transform.position.x;
 
             if (i == 0)
             {
@@ -296,11 +300,15 @@ public class BossPatternSystem : MonoBehaviour
             }
             else
             {
+                int tryCount = 0;
+                int maxTryCount = 50;
+
                 do
                 {
                     randomX = playerSystem.transform.position.x + Random.Range(-warningRange, warningRange);
+                    tryCount++;
                 }
-                while (usedX.Exists(x => Mathf.Abs(x - randomX) < 1.5f));
+                while (usedX.Exists(x => Mathf.Abs(x - randomX) < 1.5f) && tryCount < maxTryCount);
             }
 
             usedX.Add(randomX);
@@ -308,24 +316,27 @@ public class BossPatternSystem : MonoBehaviour
             Vector3 warningPos = new Vector3(randomX, playerSystem.transform.position.y, 0f);
 
             GameObject warning = Instantiate(TargetPoint, warningPos, Quaternion.identity);
-            yield return new WaitForSeconds(0.1f);
+            gameSoundManager.OnFindEnemySound("타겟 지정");
+
             Destroy(warning, warningTime);
 
             Vector3 spawnPos = warningPos + Vector3.up * 100f;
 
             GameObject bullet = Instantiate(missilePrefab, spawnPos, Quaternion.identity);
 
-            if (bullet.TryGetComponent(out Rigidbody2D rb))
-            {
+            if (bullet.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
                 rb.linearVelocity = Vector2.down * 60;
-            }
+
+            yield return new WaitForSeconds(0.1f);
         }
 
         yield return new WaitForSeconds(warningTime);
 
         yield return new WaitForSeconds(BossPatternTime);
+
         isPattern = false;
         enemySystem.isPattern = false;
+
         bossSystem.BossRandomPattern();
     }
 

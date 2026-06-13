@@ -25,7 +25,7 @@ public class DestoryObjectHitPoint : MonoBehaviour
 
         if (enemyHelthSystem != null && !isInitialized)
         {
-            currentHelth = enemyHelthSystem.currentBossHelth <= enemyHelthSystem.minBossHelth ? 65 : 50;
+            currentHelth = enemyHelthSystem.currentBossHelth <= enemyHelthSystem.minBossHelth ? 25 : 20;
             isInitialized = true; 
         }
     }
@@ -35,7 +35,7 @@ public class DestoryObjectHitPoint : MonoBehaviour
         if (collision.gameObject.CompareTag("Bullet"))
         {
             Debug.Log("충돌");
-            currentHelth -= 5;
+            currentHelth -= 10;
 
             if (currentHelth <= 0)
             {

@@ -249,7 +249,10 @@ MonoBehaviour:
   bulletSO: {fileID: 11400000, guid: d8535865ac729af4990f7a956e416079, type: 2}
   lifeTime: 0.01
   type: 2
+  damage: 1
+  hitVFX: {fileID: 0}
   missileVFX: {fileID: 3252106733065157832}
+  gameSoundManager: {fileID: 0}
 --- !u!58 &8996354636734520928
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -285,7 +288,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_Radius: 0.6
 --- !u!50 &6767019586524878648
 Rigidbody2D:
   serializedVersion: 5

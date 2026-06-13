@@ -6323,6 +6323,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 18933c3ecc878294d916b94cc56afd03, type: 3}
   - {fileID: 8300000, guid: 28a7e791968eb284aaa4316bed1d7782, type: 3}
   - {fileID: 8300000, guid: c0d63dfcecc0fcf41905fbc44a2618ad, type: 3}
+  - {fileID: 8300000, guid: e5c90866b0e45204090494a28a6462db, type: 3}
 --- !u!1 &1010444135
 GameObject:
   m_ObjectHideFlags: 0
@@ -7186,6 +7187,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1010444136}
     m_Modifications:
+    - target: {fileID: 82925702540452956, guid: 86aec5b01224593408d7902cd37129db, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.46672058
+      objectReference: {fileID: 0}
+    - target: {fileID: 82925702540452956, guid: 86aec5b01224593408d7902cd37129db, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.099793434
+      objectReference: {fileID: 0}
     - target: {fileID: 349955802513076474, guid: 86aec5b01224593408d7902cd37129db, type: 3}
       propertyPath: m_Name
       value: PlayerSystem

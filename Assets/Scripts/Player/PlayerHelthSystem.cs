@@ -34,7 +34,7 @@ public class PlayerHelthSystem : MonoBehaviour
         {
             if (collision.gameObject.TryGetComponent(out BulletSystem bullet))
             {
-                if (bullet.type == BulletType.EnemyBullet)
+                if (bullet.type == BulletType.EnemyBullet && bullet.type == BulletType.Missile)
                 {
                     Die();
                 }
