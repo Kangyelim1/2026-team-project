@@ -197,11 +197,12 @@ public class BossPatternSystem : MonoBehaviour
             yield return null;
         }
         
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.55f);
 
         foreach (GameObject obj in randomObjects)
         {
             obj.SetActive(false);
+            yield return new WaitForSeconds(0.1f);
         }
         yield return new WaitForSeconds(BossPatternTime);
         isPattern = false;
