@@ -53,8 +53,9 @@ public class PlayerItemSystem : MonoBehaviour
     {
         hasRapidGun = true;
         currentRapidAmmo = rapidGunMaxAmmo;
-
         attackSystem.isShootingLocked = true;
+
+        AmmoEvents.Notify(currentRapidAmmo, rapidGunMaxAmmo, false);
 
         Debug.Log("Item: Rapid Gun activated! Ammo: " + currentRapidAmmo);
     }
@@ -70,6 +71,9 @@ public class PlayerItemSystem : MonoBehaviour
         }
 
         currentRapidAmmo--;
+
+        AmmoEvents.Notify(currentRapidAmmo, rapidGunMaxAmmo, false);
+
         Debug.Log("Rapid Gun ammo: " + currentRapidAmmo + " / " + rapidGunMaxAmmo);
 
         if (attackSystem.firePoint != null && attackSystem.bulletPrefab != null)
@@ -109,11 +113,12 @@ public class PlayerItemSystem : MonoBehaviour
         hasRapidGun = false;
         currentRapidAmmo = 0;
         isRapidFiring = false;
-
         attackSystem.isShootingLocked = false;
         attackSystem.currentAmmo = attackSystem.maxAmmo;
 
-        Debug.Log("Item: Rapid Gun expired. Back to default weapon. Ammo refilled.");
+        AmmoEvents.Notify(attackSystem.currentAmmo, attackSystem.maxAmmo, false);
+
+        Debug.Log("Item: Rapid Gun expired. Back to default weapon.");
     }
 
     private void ActivateShieldCharm()
@@ -123,15 +128,13 @@ public class PlayerItemSystem : MonoBehaviour
             Debug.Log("Item: Shield Charm already active!");
             return;
         }
-
         hasShieldCharm = true;
-        Debug.Log("Item: Shield Charm activated! Next hit will be blocked.");
+        Debug.Log("Item: Shield Charm activated!");
     }
 
     public bool TryBlockHit()
     {
         if (!hasShieldCharm) return false;
-
         hasShieldCharm = false;
         Debug.Log("Item: Shield Charm blocked 1 hit!");
         return true;
