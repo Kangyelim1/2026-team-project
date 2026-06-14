@@ -40,13 +40,13 @@ public class EnemyShieldSystem : MonoBehaviour
     public float stunTime = 0.5f;
 
     private Rigidbody2D rb;
-    private SpriteRenderer spriteRenderer;
     private Vector2 startPos;
     private int moveDir = 1;
     public int MoveDir => moveDir;
     private bool isAttacking = false;
     private bool isCoroutineRunning = false;
     private bool isDead = false;
+    private bool playerDetected = false;
 
     private PlayerSystem playerSystem;
     private PlayerHelthSystem playerHelthSystem;
@@ -54,17 +54,11 @@ public class EnemyShieldSystem : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-
-        if (enemySystem == null)
-            enemySystem = GetComponent<EnemySystem>();
-
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        if (spriteRenderer == null)
-            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        if (enemySystem == null) enemySystem = GetComponent<EnemySystem>();
 
         startPos = transform.position;
-        moveDir = transform.localScale.x >= 0 ? 1 : -1;
 
+        moveDir = transform.localScale.x >= 0 ? 1 : -1;
         ApplyFlip();
     }
 
@@ -72,28 +66,18 @@ public class EnemyShieldSystem : MonoBehaviour
     {
         if (isDead) return;
         isDead = true;
-
         currentState = ShieldState.Dead;
         StopAllCoroutines();
-
         if (rb != null) rb.linearVelocity = Vector2.zero;
-
         isAttacking = false;
         isCoroutineRunning = false;
-
-        Debug.Log("EnemyShieldSystem: Dead - all actions stopped");
     }
 
     void Update()
     {
-        if (isDead) return;     
-
-        if (playerSystem == null)
-            playerSystem = FindAnyObjectByType<PlayerSystem>();
-
-        if (playerHelthSystem == null)
-            playerHelthSystem = FindAnyObjectByType<PlayerHelthSystem>();
-
+        if (isDead) return;
+        if (playerSystem == null) playerSystem = FindAnyObjectByType<PlayerSystem>();
+        if (playerHelthSystem == null) playerHelthSystem = FindAnyObjectByType<PlayerHelthSystem>();
         if (enemySystem == null || enemySystem.enemyType != EnemyType.Shield) return;
 
         switch (currentState)
@@ -102,7 +86,6 @@ public class EnemyShieldSystem : MonoBehaviour
                 Patrol();
                 LookForPlayer();
                 break;
-
             case ShieldState.Track:
                 TrackPlayer();
                 break;
@@ -115,23 +98,37 @@ public class EnemyShieldSystem : MonoBehaviour
 
         rb.linearVelocity = new Vector2(moveDir * patrolSpeed, rb.linearVelocity.y);
 
-        if (transform.position.x >= startPos.x + patrolDistance && moveDir == 1)
-            Flip();
-        else if (transform.position.x <= startPos.x - patrolDistance && moveDir == -1)
-            Flip();
+        if (transform.position.x >= startPos.x + patrolDistance)
+        {
+            moveDir = -1;
+            ApplyFlip();
+        }
+        else if (transform.position.x <= startPos.x - patrolDistance)
+        {
+            moveDir = 1;
+            ApplyFlip();
+        }
     }
 
     void LookForPlayer()
     {
-        if (isDead || isCoroutineRunning) return;
+        if (isDead || isCoroutineRunning || playerDetected) return;
 
-        Vector2 center = (Vector2)transform.position
-                         + new Vector2(viewOffset.x * moveDir, viewOffset.y);
+        Vector2 center = (Vector2)transform.position + new Vector2(viewOffset.x * moveDir, viewOffset.y);
         Collider2D hit = Physics2D.OverlapBox(center, viewSize, 0f, playerLayer);
 
         if (hit != null)
         {
-            Debug.Log("Shield: Player detected! Start tracking");
+            playerDetected = true;
+
+            float dirToPlayer = hit.transform.position.x - transform.position.x;
+            int newDir = dirToPlayer >= 0 ? 1 : -1;
+            if (newDir != moveDir)
+            {
+                moveDir = newDir;
+                ApplyFlip();
+            }
+
             currentState = ShieldState.Track;
         }
     }
@@ -147,19 +144,16 @@ public class EnemyShieldSystem : MonoBehaviour
         if (dist <= stopDistance)
         {
             rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
-            if (!isCoroutineRunning)
-                StartCoroutine(AttackRoutine());
+            if (!isCoroutineRunning) StartCoroutine(AttackRoutine());
             return;
         }
 
-        Vector2 center = (Vector2)transform.position
-                         + new Vector2(viewOffset.x * moveDir, viewOffset.y);
+        Vector2 center = (Vector2)transform.position + new Vector2(viewOffset.x * moveDir, viewOffset.y);
         Collider2D hit = Physics2D.OverlapBox(center, viewSize, 0f, playerLayer);
-
         if (hit == null)
         {
-            Debug.Log("Shield: Lost player. Return to patrol");
             rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+            playerDetected = false;
             currentState = ShieldState.Patrol;
             return;
         }
@@ -172,34 +166,19 @@ public class EnemyShieldSystem : MonoBehaviour
         isCoroutineRunning = true;
         isAttacking = true;
 
-        Debug.Log("Shield: Attack start");
         yield return new WaitForSeconds(attackDelay);
+        if (isDead) { isAttacking = false; isCoroutineRunning = false; yield break; }
 
-        if (isDead)
-        {
-            isAttacking = false;
-            isCoroutineRunning = false;
-            yield break;
-        }
-
-        Vector2 attackCenter = (Vector2)transform.position
-                               + new Vector2(attackOffset.x * moveDir, attackOffset.y);
+        Vector2 attackCenter = (Vector2)transform.position + new Vector2(attackOffset.x * moveDir, attackOffset.y);
         Collider2D hit = Physics2D.OverlapBox(attackCenter, attackSize, 0f, playerLayer);
-
         if (hit != null)
         {
             PlayerHelthSystem ph = hit.GetComponent<PlayerHelthSystem>();
             if (ph == null) ph = hit.GetComponentInParent<PlayerHelthSystem>();
-
-            if (ph != null)
-            {
-                Debug.Log("Shield: Player hit!");
-                ph.Die();
-            }
+            if (ph != null) ph.Die();
         }
 
         yield return new WaitForSeconds(attackCooldown);
-
         isAttacking = false;
         isCoroutineRunning = false;
     }
@@ -209,53 +188,41 @@ public class EnemyShieldSystem : MonoBehaviour
         if (isDead || playerSystem == null) return;
 
         float dirX = playerSystem.transform.position.x - transform.position.x;
-        int newDir = dirX > 0 ? 1 : -1;
-
+        int newDir = dirX >= 0 ? 1 : -1;
         if (newDir != moveDir)
-            Flip();
-    }
-
-    void Flip()
-    {
-        moveDir *= -1;
-        Vector3 scale = transform.localScale;
-        scale.x = Mathf.Abs(scale.x) * moveDir;
-        transform.localScale = scale;
-        ApplyFlip();
+        {
+            moveDir = newDir;
+            ApplyFlip();
+        }
     }
 
     void ApplyFlip()
     {
-        if (spriteRenderer != null)
-            spriteRenderer.flipX = (moveDir == -1);
+        Vector3 scale = transform.localScale;
+        scale.x = Mathf.Abs(scale.x) * moveDir;
+        transform.localScale = scale;
     }
 
     public bool TryTakeDamage(Vector2 bulletHitPos)
     {
         if (isDead) return false;
 
-        Vector2 headCenter = (Vector2)transform.position
-                             + new Vector2(headOffset.x * moveDir, headOffset.y);
-        bool hitHead = IsInsideBox(bulletHitPos, headCenter, headSize);
-
-        if (hitHead)
+        Vector2 headCenter = (Vector2)transform.position + new Vector2(headOffset.x * moveDir, headOffset.y);
+        if (IsInsideBox(bulletHitPos, headCenter, headSize))
         {
-            Debug.Log("Shield: Head hit! Dead");
+            Debug.Log("Shield: Head hit!");
             return true;
         }
 
-        Vector2 shieldCenter = (Vector2)transform.position
-                               + new Vector2(shieldOffset.x * moveDir, shieldOffset.y);
-        bool hitShield = IsInsideBox(bulletHitPos, shieldCenter, shieldSize);
-
-        if (hitShield)
+        Vector2 shieldCenter = (Vector2)transform.position + new Vector2(shieldOffset.x * moveDir, shieldOffset.y);
+        if (IsInsideBox(bulletHitPos, shieldCenter, shieldSize))
         {
-            Debug.Log("Shield: Blocked by shield! Invincible");
+            Debug.Log("Shield: Blocked!");
             StartCoroutine(ShieldBlockStun());
             return false;
         }
 
-        Debug.Log("Shield: Back/body hit! Dead");
+        Debug.Log("Shield: Back hit!");
         return true;
     }
 
@@ -263,20 +230,16 @@ public class EnemyShieldSystem : MonoBehaviour
     {
         currentState = ShieldState.Stun;
         rb.linearVelocity = Vector2.zero;
-        Debug.Log("Shield: Block success! Brief stagger");
-
         yield return new WaitForSeconds(stunTime);
-
-        if (!isDead)
-            currentState = ShieldState.Track;
+        if (!isDead) currentState = ShieldState.Track;
     }
 
     bool IsInsideBox(Vector2 point, Vector2 boxCenter, Vector2 boxSize)
     {
-        return point.x >= boxCenter.x - boxSize.x / 2f &&
-               point.x <= boxCenter.x + boxSize.x / 2f &&
-               point.y >= boxCenter.y - boxSize.y / 2f &&
-               point.y <= boxCenter.y + boxSize.y / 2f;
+        return point.x > boxCenter.x - boxSize.x / 2f &&
+               point.x < boxCenter.x + boxSize.x / 2f &&
+               point.y > boxCenter.y - boxSize.y / 2f &&
+               point.y < boxCenter.y + boxSize.y / 2f;
     }
 
     private void OnDrawGizmos()
@@ -285,28 +248,33 @@ public class EnemyShieldSystem : MonoBehaviour
         Vector2 pos = transform.position;
         Vector2 sPos = Application.isPlaying ? startPos : pos;
 
+        // 순찰 범위
         Gizmos.color = Color.green;
         Gizmos.DrawLine(sPos + Vector2.left * patrolDistance,
                         sPos + Vector2.right * patrolDistance);
 
+        // 시야 박스
         Vector2 viewCenter = pos + new Vector2(viewOffset.x * dir, viewOffset.y);
         Gizmos.color = new Color(0f, 0.5f, 1f, 0.2f);
         Gizmos.DrawCube(viewCenter, viewSize);
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(viewCenter, viewSize);
 
+        // 공격 범위
         Vector2 attackCenter = pos + new Vector2(attackOffset.x * dir, attackOffset.y);
         Gizmos.color = new Color(1f, 0f, 0f, 0.2f);
         Gizmos.DrawCube(attackCenter, attackSize);
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(attackCenter, attackSize);
 
+        // 방패 범위
         Vector2 shieldCenter = pos + new Vector2(shieldOffset.x * dir, shieldOffset.y);
         Gizmos.color = new Color(1f, 1f, 0f, 0.3f);
         Gizmos.DrawCube(shieldCenter, shieldSize);
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube(shieldCenter, shieldSize);
 
+        // 머리 범위
         Vector2 headCenter = pos + new Vector2(headOffset.x * dir, headOffset.y);
         Gizmos.color = new Color(0.8f, 0f, 1f, 0.3f);
         Gizmos.DrawCube(headCenter, headSize);

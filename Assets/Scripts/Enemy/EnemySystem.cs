@@ -6,19 +6,14 @@ public class EnemySystem : MonoBehaviour
 {
     public EnemySO enemySO;
     public EnemyHelthSystem enemyhelthSystem;
-
     public string enemyName;
     public EnemyType enemyType;
-
     public Transform ShootPoint;
     public GameObject BulletPrefab;
     public GameObject BoomEffect;
-
     public BossSystem bossPattern;
-
     public PlayerSystem playerSystem;
     public PlayerHelthSystem playerHelthSystem;
-
     public float moveSpeed = 3f;
     public float stopDistance = 1.2f;
     public float shootDelay = 1f;
@@ -26,7 +21,7 @@ public class EnemySystem : MonoBehaviour
     public float chaseAfterExitTime = 3f;
     public float chaseDistance = 10f;
 
-    [Header("보스 전용")]
+    [Header("보스")]
     public int BossHelth;
     public bool isPattern;
 
@@ -41,7 +36,6 @@ public class EnemySystem : MonoBehaviour
     private bool isShortAttack;
     private bool isBoom;
     private bool isDead = false;
-
     private Coroutine chaseStopCoroutine;
 
     private void Awake()
@@ -62,37 +56,40 @@ public class EnemySystem : MonoBehaviour
 
         if (playerHelthSystem == null)
             playerHelthSystem = FindAnyObjectByType<PlayerHelthSystem>();
-
         if (enemyhelthSystem == null)
             enemyhelthSystem = FindAnyObjectByType<EnemyHelthSystem>();
-
         if (playerSystem == null)
             playerSystem = FindAnyObjectByType<PlayerSystem>();
-        else if (enemyType != EnemyType.Charge)
-            FlipToPlayer();
-
-        if (enemyType == EnemyType.Boss && bossPattern == null)
-            bossPattern = FindAnyObjectByType<BossSystem>();
-
-        if (enemyType == EnemyType.Drone)
-            isAttack = true;
-
-        if (!isAttack && playerSystem != null && enemyType != EnemyType.Charge)
+        else
         {
-            float dist = Vector2.Distance(transform.position, playerSystem.transform.position);
-            if (dist <= chaseDistance)
-                isAttack = true;
-        }
+            if (enemyType != EnemyType.Charge)
+                FlipToPlayer();
 
-        if (isAttack)
-            StartAttack();
+            if (enemyType == EnemyType.Boss)
+            {
+                if (bossPattern == null)
+                    bossPattern = FindAnyObjectByType<BossSystem>();
+            }
+
+            if (enemyType == EnemyType.Drone)
+                isAttack = true;
+
+            if (!isAttack && playerSystem != null && enemyType != EnemyType.Charge)
+            {
+                float dist = Vector2.Distance(transform.position, playerSystem.transform.position);
+                if (dist < chaseDistance)
+                    isAttack = true;
+            }
+
+            if (isAttack)
+                StartAttack();
+        }
     }
 
     public void OnDead()
     {
         if (isDead) return;
         isDead = true;
-
         StopAllCoroutines();
 
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
@@ -104,25 +101,20 @@ public class EnemySystem : MonoBehaviour
         isBoom = false;
 
         if (chaseStopCoroutine != null)
-        {
             StopCoroutine(chaseStopCoroutine);
-            chaseStopCoroutine = null;
-        }
+        chaseStopCoroutine = null;
 
-        Debug.Log("EnemySystem: 사망 — 모든 행동 중단");
+        Debug.Log("EnemySystem OnDead");
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (isDead) return;
-
         if (collision.gameObject.CompareTag("Player"))
         {
             if (chaseStopCoroutine != null)
-            {
                 StopCoroutine(chaseStopCoroutine);
-                chaseStopCoroutine = null;
-            }
+            chaseStopCoroutine = null;
             isAttack = true;
         }
     }
@@ -132,10 +124,9 @@ public class EnemySystem : MonoBehaviour
         if (isDead) return;
         if (!collision.CompareTag("Player")) return;
         if (enemyType == EnemyType.Shortdistance || enemyType == EnemyType.Drone) return;
-
-        if (chaseStopCoroutine != null) StopCoroutine(chaseStopCoroutine);
+        if (chaseStopCoroutine != null)
+            StopCoroutine(chaseStopCoroutine);
         if (enemyType == EnemyType.Boss) return;
-
         chaseStopCoroutine = StartCoroutine(StopChaseAfterDelay());
     }
 
@@ -149,22 +140,18 @@ public class EnemySystem : MonoBehaviour
     private void StartAttack()
     {
         if (isDead) return;
-
         switch (enemyType)
         {
             case EnemyType.Shortdistance:
                 MoveToPlayer();
                 break;
-
             case EnemyType.LongDistanc:
                 LongDistanceAttack();
                 break;
-
             case EnemyType.Boss:
-                if (enemyhelthSystem.currentBossHelth <= enemyhelthSystem.minBossHelth)
+                if (enemyhelthSystem.currentBossHelth < enemyhelthSystem.minBossHelth)
                     MoveToPlayer();
                 break;
-
             case EnemyType.Drone:
                 DroneAttack();
                 break;
@@ -176,8 +163,7 @@ public class EnemySystem : MonoBehaviour
         if (isDead || playerSystem == null || isPattern) return;
 
         float distance = Vector2.Distance(transform.position, playerSystem.transform.position);
-
-        if (distance <= chaseDistance)
+        if (distance < chaseDistance)
         {
             if (distance > stopDistance)
             {
@@ -185,7 +171,6 @@ public class EnemySystem : MonoBehaviour
                     playerSystem.transform.position.x,
                     transform.position.y,
                     transform.position.z);
-
                 Vector2 direction = (targetPos - transform.position).normalized;
                 transform.position += (Vector3)(direction * moveSpeed * Time.deltaTime);
                 isDistonse = false;
@@ -193,7 +178,6 @@ public class EnemySystem : MonoBehaviour
             else
             {
                 isDistonse = true;
-
                 if (enemyType == EnemyType.Drone)
                 {
                     if (!isBoom) StartCoroutine(Boom());
@@ -209,15 +193,8 @@ public class EnemySystem : MonoBehaviour
     private IEnumerator ShortdistanceAttack()
     {
         isShortAttack = true;
-
-        Debug.Log("Enemy attack animation");
         yield return new WaitForSeconds(1f);
-
-        if (isDead)
-        {
-            isShortAttack = false;
-            yield break;
-        }
+        if (isDead) { isShortAttack = false; yield break; }
 
         if (playerSystem != null)
         {
@@ -227,20 +204,12 @@ public class EnemySystem : MonoBehaviour
                 PlayerHelthSystem ph = playerSystem.GetComponent<PlayerHelthSystem>();
                 if (ph == null) ph = playerSystem.GetComponentInParent<PlayerHelthSystem>();
                 if (ph == null) ph = FindAnyObjectByType<PlayerHelthSystem>();
-
-                if (ph != null)
-                    ph.Die();
+                if (ph != null) ph.Die();
             }
         }
 
         yield return new WaitForSeconds(1f);
-
-        if (isDead)
-        {
-            isShortAttack = false;
-            yield break;
-        }
-
+        if (isDead) { isShortAttack = false; yield break; }
         isShortAttack = false;
     }
 
@@ -253,27 +222,19 @@ public class EnemySystem : MonoBehaviour
     private IEnumerator ShootBullet()
     {
         isShoot = true;
-
         yield return new WaitForSeconds(shootDelay);
-
-        if (isDead)
-        {
-            isShoot = false;
-            yield break;
-        }
+        if (isDead) { isShoot = false; yield break; }
 
         if (BulletPrefab != null && ShootPoint != null && playerSystem != null)
         {
             GameObject bullet = Instantiate(BulletPrefab, ShootPoint.position, Quaternion.identity);
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-
             if (rb != null)
             {
                 Vector2 direction = (playerSystem.transform.position - ShootPoint.position).normalized;
                 rb.linearVelocity = direction * bulletSpeed;
             }
         }
-
         isShoot = false;
     }
 
@@ -281,24 +242,15 @@ public class EnemySystem : MonoBehaviour
     {
         isBoom = true;
         isAttack = false;
-
-        Debug.Log("폭발 카운트 시작 3초");
         yield return new WaitForSeconds(3f);
-
         if (isDead) yield break;
-
         if (playerSystem == null) yield break;
 
         float distance = Vector2.Distance(transform.position, playerSystem.transform.position);
-
         if (distance <= stopDistance && playerHelthSystem != null)
-        {
-            Debug.Log("플레이어가 폭발 범위 안에 있음");
             playerHelthSystem.Die();
-        }
-        else Debug.Log("플레이어가 폭발 범위에서 벗어남");
-
-        enemyhelthSystem.Die();
+        else
+            enemyhelthSystem.Die();
     }
 
     private void DroneAttack()
@@ -306,18 +258,15 @@ public class EnemySystem : MonoBehaviour
         if (isDead || playerSystem == null) return;
 
         float distance = Vector2.Distance(transform.position, playerSystem.transform.position);
-
-        if (distance <= droneDetectDistance)
+        if (distance < droneDetectDistance)
         {
             Vector2 direction = (playerSystem.transform.position - transform.position).normalized;
             transform.position += (Vector3)(direction * droneMoveSpeed * Time.deltaTime);
-
             LongDistanceAttack();
-
-            if (distance <= droneBoomDistance)
-            {
-                if (!isBoom) StartCoroutine(Boom());
-            }
+        }
+        if (distance < droneBoomDistance)
+        {
+            if (!isBoom) StartCoroutine(Boom());
         }
     }
 
@@ -326,8 +275,18 @@ public class EnemySystem : MonoBehaviour
         if (playerSystem == null) return;
 
         if (playerSystem.transform.position.x < transform.position.x)
-            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        {
+            transform.localScale = new Vector3(
+                Mathf.Abs(transform.localScale.x),
+                transform.localScale.y,
+                transform.localScale.z);
+        }
         else
-            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        {
+            transform.localScale = new Vector3(
+                -Mathf.Abs(transform.localScale.x),
+                transform.localScale.y,
+                transform.localScale.z);
+        }
     }
 }

@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
 public class EnemyChargeSystem : MonoBehaviour
 {
@@ -39,31 +39,19 @@ public class EnemyChargeSystem : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-
-        if (enemySystem == null)
-            enemySystem = GetComponent<EnemySystem>();
-
-        if (enemyHelth == null)
-            enemyHelth = GetComponentInChildren<EnemyHelthSystem>();
+        if (enemySystem == null) enemySystem = GetComponent<EnemySystem>();
+        if (enemyHelth == null) enemyHelth = GetComponentInChildren<EnemyHelthSystem>();
 
         startPos = transform.position;
-        moveDir = transform.localScale.x >= 0 ? 1 : -1;
 
-        Debug.Log("=== ChargeEnemy Init ===");
-        Debug.Log("EnemySystem: " + (enemySystem != null ? "OK" : "Missing!"));
-        Debug.Log("EnemyType: " + (enemySystem != null ? enemySystem.enemyType.ToString() : "Missing!"));
-        Debug.Log("PlayerLayer: " + playerLayer.value);
+        moveDir = transform.localScale.x >= 0 ? 1 : -1;
     }
 
     void Update()
     {
         if (isDead) return;
-
-        if (enemySystem == null)
-            return; 
-
-        if (enemySystem.enemyType != EnemyType.Charge && enemySystem.enemyType != EnemyType.Boss)
-            return; 
+        if (enemySystem == null) return;
+        if (enemySystem.enemyType != EnemyType.Charge && enemySystem.enemyType != EnemyType.Boss) return;
 
         switch (currentState)
         {
@@ -82,16 +70,11 @@ public class EnemyChargeSystem : MonoBehaviour
     {
         if (isDead) return;
         isDead = true;
-
         currentState = ChargeState.Dead;
         StopAllCoroutines();
-
         if (rb != null) rb.linearVelocity = Vector2.zero;
-
         isInvincible = false;
         isCoroutineRunning = false;
-
-        Debug.Log("EnemyChargeSystem: Dead - all actions stopped");
     }
 
     void Patrol()
@@ -101,10 +84,16 @@ public class EnemyChargeSystem : MonoBehaviour
 
         rb.linearVelocity = new Vector2(moveDir * patrolSpeed, rb.linearVelocity.y);
 
-        if (transform.position.x >= startPos.x + patrolDistance && moveDir == 1)
-            Flip();
-        else if (transform.position.x <= startPos.x - patrolDistance && moveDir == -1)
-            Flip();
+        if (transform.position.x >= startPos.x + patrolDistance)
+        {
+            moveDir = -1;
+            ApplyFlip();
+        }
+        else if (transform.position.x <= startPos.x - patrolDistance)
+        {
+            moveDir = 1;
+            ApplyFlip();
+        }
     }
 
     void ReturnToStart()
@@ -112,8 +101,7 @@ public class EnemyChargeSystem : MonoBehaviour
         if (isDead) return;
 
         float dist = startPos.x - transform.position.x;
-
-        if (Mathf.Abs(dist) <= 0.15f)
+        if (Mathf.Abs(dist) < 0.15f)
         {
             rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
             currentState = ChargeState.Patrol;
@@ -121,8 +109,11 @@ public class EnemyChargeSystem : MonoBehaviour
         }
 
         int dirToStart = dist > 0 ? 1 : -1;
-        if (moveDir != dirToStart) Flip();
-
+        if (dirToStart != moveDir)
+        {
+            moveDir = dirToStart;
+            ApplyFlip();
+        }
         rb.linearVelocity = new Vector2(moveDir * patrolSpeed, rb.linearVelocity.y);
     }
 
@@ -130,20 +121,19 @@ public class EnemyChargeSystem : MonoBehaviour
     {
         if (isDead || isCoroutineRunning) return;
 
-        Vector2 boxCenter = (Vector2)transform.position
-                            + new Vector2(viewOffset.x * moveDir, viewOffset.y);
-
+        Vector2 boxCenter = (Vector2)transform.position + new Vector2(viewOffset.x * moveDir, viewOffset.y);
         Collider2D hit = Physics2D.OverlapBox(boxCenter, viewSize, 0f, playerLayer);
 
         if (hit != null)
         {
-            Debug.Log("Player detected! Start charge: " + hit.gameObject.name);
+            float dirToPlayer = hit.transform.position.x - transform.position.x;
+            int newDir = dirToPlayer >= 0 ? 1 : -1;
+            if (newDir != moveDir)
+            {
+                moveDir = newDir;
+                ApplyFlip();
+            }
             StartCoroutine(ChargeSequence());
-        }
-        else
-        {
-            if (Time.frameCount % 300 == 0)
-                Debug.Log("No player in range (PlayerLayer=" + playerLayer.value + ")");
         }
     }
 
@@ -152,49 +142,36 @@ public class EnemyChargeSystem : MonoBehaviour
         isCoroutineRunning = true;
         currentState = ChargeState.Ready;
         rb.linearVelocity = Vector2.zero;
-        Debug.Log("Charge ready! Charging after " + chargeReadyTime + "s");
 
         yield return new WaitForSeconds(chargeReadyTime);
-
-        if (isDead)
-        {
-            isCoroutineRunning = false;
-            yield break;
-        }
+        if (isDead) { isCoroutineRunning = false; yield break; }
 
         currentState = ChargeState.Charge;
         isInvincible = true;
-        Debug.Log("Charge start! Invincible ON");
 
-        float targetX = transform.position.x + (moveDir * chargeDistance);
+        float targetX = transform.position.x + moveDir * chargeDistance;
 
         while (true)
         {
             if (isDead) yield break;
-
             rb.linearVelocity = new Vector2(moveDir * chargeSpeed, rb.linearVelocity.y);
 
-            bool reachedTarget = (moveDir == 1 && transform.position.x >= targetX)
-                              || (moveDir == -1 && transform.position.x <= targetX);
+            bool reachedTarget = moveDir == 1
+                ? transform.position.x >= targetX
+                : transform.position.x <= targetX;
 
-            if (reachedTarget)
-            {
-                Debug.Log("Reached target -> Stun");
-                break;
-            }
-
+            if (reachedTarget) break;
             yield return null;
         }
 
         yield return StartCoroutine(StunSequence());
     }
-    //어떤 겜을 만들어야 하누 답이 없구만
+
     IEnumerator StunSequence()
     {
         currentState = ChargeState.Stun;
         isInvincible = false;
         rb.linearVelocity = Vector2.zero;
-        Debug.Log("Stun! Invincible OFF. Return after " + stunTime + "s");
 
         yield return new WaitForSeconds(stunTime);
 
@@ -202,40 +179,36 @@ public class EnemyChargeSystem : MonoBehaviour
         {
             currentState = ChargeState.Return;
             isCoroutineRunning = false;
-            Debug.Log("Return start");
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (isDead) return;
         if (currentState != ChargeState.Charge) return;
 
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Player hit!");
-
             PlayerHelthSystem playerHelth = collision.gameObject.GetComponent<PlayerHelthSystem>();
             if (playerHelth == null)
                 playerHelth = collision.gameObject.GetComponentInChildren<PlayerHelthSystem>();
+            if (playerHelth == null)
+                playerHelth = collision.gameObject.GetComponentInParent<PlayerHelthSystem>();
 
-            if (playerHelth != null)
-                playerHelth.Die();
+            if (playerHelth != null) playerHelth.Die();
 
             StopAllCoroutines();
             StartCoroutine(StunSequence());
         }
-        else
+        else if (!collision.isTrigger) // 벽 충돌
         {
-            Debug.Log("Wall collision! Stun");
             StopAllCoroutines();
             StartCoroutine(StunSequence());
         }
     }
 
-    void Flip()
+    void ApplyFlip()
     {
-        moveDir *= -1;
         Vector3 scale = transform.localScale;
         scale.x = Mathf.Abs(scale.x) * moveDir;
         transform.localScale = scale;
@@ -244,14 +217,13 @@ public class EnemyChargeSystem : MonoBehaviour
     private void OnDrawGizmos()
     {
         Vector2 origin = Application.isPlaying ? startPos : (Vector2)transform.position;
-        float dir = transform.localScale.x >= 0 ? 1 : -1;
+        float dir = Application.isPlaying ? moveDir : (transform.localScale.x >= 0 ? 1 : -1);
 
         Gizmos.color = Color.green;
         Gizmos.DrawLine(origin + Vector2.left * patrolDistance,
                         origin + Vector2.right * patrolDistance);
 
-        Vector2 boxCenter = (Vector2)transform.position
-                            + new Vector2(viewOffset.x * dir, viewOffset.y);
+        Vector2 boxCenter = (Vector2)transform.position + new Vector2(viewOffset.x * dir, viewOffset.y);
         Gizmos.color = new Color(1f, 0f, 0f, 0.25f);
         Gizmos.DrawCube(boxCenter, viewSize);
         Gizmos.color = Color.red;
@@ -259,6 +231,6 @@ public class EnemyChargeSystem : MonoBehaviour
 
         Gizmos.color = Color.cyan;
         Gizmos.DrawLine((Vector2)transform.position,
-                        (Vector2)transform.position + new Vector2(dir * chargeDistance, 0f));
+            (Vector2)transform.position + new Vector2(dir * chargeDistance, 0f));
     }
 }
