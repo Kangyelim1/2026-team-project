@@ -72,6 +72,11 @@ public class PlayerAttackSystem : MonoBehaviour
         currentAmmo = maxAmmo;
     }
 
+    private void Start()
+    {
+        AmmoEvents.Notify(currentAmmo, maxAmmo, false);
+    }
+
     private void Update()
     {
         HandleInteraction();
@@ -157,6 +162,9 @@ public class PlayerAttackSystem : MonoBehaviour
 
         lastAttackTime = Time.time;
         currentAmmo--;
+
+        AmmoEvents.Notify(currentAmmo, maxAmmo, false);
+
         Debug.Log($"발사 | 남은 탄환: {currentAmmo}/{maxAmmo}");
 
         if (currentAmmo <= 0)
@@ -183,6 +191,8 @@ public class PlayerAttackSystem : MonoBehaviour
         isReloading = true;
         Debug.Log($"재장전 중... ({reloadTime}초)");
 
+        AmmoEvents.Notify(currentAmmo, maxAmmo, true);
+
         SkillHUDManager.Instance?.TriggerCooldown(SkillType.Reload, reloadTime);
 
         yield return new WaitForSeconds(reloadTime);
@@ -191,6 +201,8 @@ public class PlayerAttackSystem : MonoBehaviour
         isReloading = false;
         isShootingLocked = false;
         Debug.Log($"재장전 완료! 탄환: {currentAmmo}/{maxAmmo}");
+
+        AmmoEvents.Notify(currentAmmo, maxAmmo, false);
     }
 
     private IEnumerator ComboShot()
@@ -201,6 +213,9 @@ public class PlayerAttackSystem : MonoBehaviour
         isComboShotRunning = true;
         lastAttackTime = Time.time;
         currentAmmo--;
+
+        AmmoEvents.Notify(currentAmmo, maxAmmo, false);
+
         Debug.Log($"콤보 발사 | 남은 탄환: {currentAmmo}/{maxAmmo}");
 
         if (currentAmmo <= 0)
