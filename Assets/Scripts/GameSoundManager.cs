@@ -55,6 +55,14 @@ public class GameSoundManager : MonoBehaviour
         playerSound.volume = value;
         enemySound.volume = value;
 
+        if (value > 0)
+        {
+            isMute = false;
+
+            playerSound.mute = false;
+            enemySound.mute = false;
+        }
+
         PlayerPrefs.SetFloat("MasterVolume", value);
     }
 

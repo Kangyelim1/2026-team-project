@@ -19,6 +19,13 @@ public class SettingSystem : MonoBehaviour
     [Header("해상도")]
     public TMP_Dropdown resolutionDropdown;
 
+    [Header("볼륨 슬라이더")]
+    public Slider volumeSlider;
+
+    private float lastVolume = 1f;
+
+    private bool isChangingByMuteButton = false;
+
     Resolution[] resolutions;
 
     private void Start()
@@ -68,12 +75,29 @@ public class SettingSystem : MonoBehaviour
 
     public void ToggleSound()
     {
-        isMute = !isMute;
+        Debug.Log("음소거 버튼 클릭");
 
-        AudioListener.volume = isMute ? 0f : 1f;
+        isChangingByMuteButton = true;
+
+        isMute = !isMute;
 
         soundButtonImage.sprite =
             isMute ? soundOffSprite : soundOnSprite;
+
+        if (isMute)
+        {
+            lastVolume = volumeSlider.value;
+
+            volumeSlider.value = 0f;
+
+            AudioListener.volume = 0f;
+        }
+        else
+        {
+            volumeSlider.value = lastVolume;
+
+            AudioListener.volume = lastVolume;
+        }
 
         PlayerPrefs.SetInt("Mute", isMute ? 1 : 0);
     }
@@ -92,5 +116,23 @@ public class SettingSystem : MonoBehaviour
     public void GoTutorial()
     {
         SceneManager.LoadScene("Tutorial");
+    }
+
+    public void SetVolume(float value)
+    {
+        gameSoundManager.SetMasterVolume(value);
+
+        if (isChangingByMuteButton)
+            return;
+
+        // 음소거 상태였다면 해제
+        if (value > 0)
+        {
+            isMute = false;
+
+            soundButtonImage.sprite = soundOnSprite;
+
+            PlayerPrefs.SetInt("Mute", 0);
+        }
     }
 }
