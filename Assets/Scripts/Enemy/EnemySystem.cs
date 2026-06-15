@@ -30,6 +30,11 @@ public class EnemySystem : MonoBehaviour
     public float droneDetectDistance = 20f;
     public float droneBoomDistance;
 
+    [Header("근접 공격 애니메이션")]
+    public float attackRange = 1.5f;
+    public float attackCooldown = 1.2f;
+    public LayerMask playerLayer;
+
     private bool isAttack;
     private bool isDistonse;
     private bool isShoot;
@@ -37,6 +42,10 @@ public class EnemySystem : MonoBehaviour
     private bool isBoom;
     private bool isDead = false;
     private Coroutine chaseStopCoroutine;
+
+    private Animator animator;
+    private bool isAttacking = false;
+    private float lastAttackTime = -999f;
 
     private void Awake()
     {
@@ -48,6 +57,8 @@ public class EnemySystem : MonoBehaviour
     {
         if (enemyType == EnemyType.Boss)
             BossHelth = enemySO.BossHelth;
+
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -83,6 +94,20 @@ public class EnemySystem : MonoBehaviour
 
             if (isAttack)
                 StartAttack();
+
+            if (enemyType == EnemyType.Shortdistance && playerSystem != null)
+            {
+                float dist = Vector2.Distance(transform.position, playerSystem.transform.position);
+
+                if (dist <= attackRange)
+                {
+                    if (!isAttacking && Time.time >= lastAttackTime + attackCooldown)
+                        StartCoroutine(MeleeAttackRoutine());
+                }
+
+                if (animator != null)
+                    animator.SetBool("isAttacking", isAttacking);
+            }
         }
     }
 
@@ -99,6 +124,10 @@ public class EnemySystem : MonoBehaviour
         isShortAttack = false;
         isShoot = false;
         isBoom = false;
+        isAttacking = false;
+
+        if (animator != null)
+            animator.SetBool("isAttacking", false);
 
         if (chaseStopCoroutine != null)
             StopCoroutine(chaseStopCoroutine);
@@ -167,6 +196,8 @@ public class EnemySystem : MonoBehaviour
         {
             if (distance > stopDistance)
             {
+                if (isAttacking) return;
+
                 Vector3 targetPos = new Vector3(
                     playerSystem.transform.position.x,
                     transform.position.y,
@@ -211,6 +242,31 @@ public class EnemySystem : MonoBehaviour
         yield return new WaitForSeconds(1f);
         if (isDead) { isShortAttack = false; yield break; }
         isShortAttack = false;
+    }
+
+    private IEnumerator MeleeAttackRoutine()
+    {
+        isAttacking = true;
+        lastAttackTime = Time.time;
+
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null) rb.linearVelocity = Vector2.zero;
+
+        yield return new WaitForSeconds(0.4f); 
+        if (!isDead && playerSystem != null)
+        {
+            float dist = Vector2.Distance(transform.position, playerSystem.transform.position);
+            if (dist <= attackRange)
+            {
+                PlayerHelthSystem ph = playerSystem.GetComponent<PlayerHelthSystem>();
+                if (ph == null) ph = playerSystem.GetComponentInParent<PlayerHelthSystem>();
+                if (ph == null) ph = FindAnyObjectByType<PlayerHelthSystem>();
+                if (ph != null) ph.Die();
+            }
+        }
+
+        yield return new WaitForSeconds(0.5f); 
+        isAttacking = false;
     }
 
     private void LongDistanceAttack()
