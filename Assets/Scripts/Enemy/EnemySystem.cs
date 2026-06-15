@@ -46,6 +46,7 @@ public class EnemySystem : MonoBehaviour
     private Animator animator;
     private bool isAttacking = false;
     private float lastAttackTime = -999f;
+    private bool isShooting = false;
 
     private void Awake()
     {
@@ -53,20 +54,30 @@ public class EnemySystem : MonoBehaviour
         enemyType = enemySO.enemyType;
     }
 
+    private SpriteRenderer spriteRenderer;
+    
     private void Start()
     {
         if (enemyType == EnemyType.Boss)
             BossHelth = enemySO.BossHelth;
 
         animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
     {
         if (isDead) return;
 
+        if (spriteRenderer != null)
+        {
+            Color c = spriteRenderer.color;
+            c.a = 1f;
+            spriteRenderer.color = c;
+        }
+
         if (playerHelthSystem == null)
-            playerHelthSystem = FindAnyObjectByType<PlayerHelthSystem>();
+                playerHelthSystem = FindAnyObjectByType<PlayerHelthSystem>();
         if (enemyhelthSystem == null)
             enemyhelthSystem = FindAnyObjectByType<EnemyHelthSystem>();
         if (playerSystem == null)
@@ -98,15 +109,11 @@ public class EnemySystem : MonoBehaviour
             if (enemyType == EnemyType.Shortdistance && playerSystem != null)
             {
                 float dist = Vector2.Distance(transform.position, playerSystem.transform.position);
-
                 if (dist <= attackRange)
                 {
                     if (!isAttacking && Time.time >= lastAttackTime + attackCooldown)
                         StartCoroutine(MeleeAttackRoutine());
                 }
-
-                if (animator != null)
-                    animator.SetBool("isAttacking", isAttacking);
             }
         }
     }
@@ -125,9 +132,13 @@ public class EnemySystem : MonoBehaviour
         isShoot = false;
         isBoom = false;
         isAttacking = false;
+        isShooting = false;
 
         if (animator != null)
+        {
             animator.SetBool("isAttacking", false);
+            animator.SetBool("isShooting", false);
+        }
 
         if (chaseStopCoroutine != null)
             StopCoroutine(chaseStopCoroutine);
@@ -247,12 +258,14 @@ public class EnemySystem : MonoBehaviour
     private IEnumerator MeleeAttackRoutine()
     {
         isAttacking = true;
+        if (animator != null) animator.SetBool("isAttacking", true);
         lastAttackTime = Time.time;
 
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null) rb.linearVelocity = Vector2.zero;
 
-        yield return new WaitForSeconds(0.4f); 
+        yield return new WaitForSeconds(0.4f);
+
         if (!isDead && playerSystem != null)
         {
             float dist = Vector2.Distance(transform.position, playerSystem.transform.position);
@@ -265,8 +278,9 @@ public class EnemySystem : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(0.5f); 
+        yield return new WaitForSeconds(0.5f);
         isAttacking = false;
+        if (animator != null) animator.SetBool("isAttacking", false);
     }
 
     private void LongDistanceAttack()
@@ -278,8 +292,17 @@ public class EnemySystem : MonoBehaviour
     private IEnumerator ShootBullet()
     {
         isShoot = true;
+        isShooting = true;
+        if (animator != null) animator.SetBool("isShooting", true);
+
         yield return new WaitForSeconds(shootDelay);
-        if (isDead) { isShoot = false; yield break; }
+        if (isDead)
+        {
+            isShoot = false;
+            isShooting = false;
+            if (animator != null) animator.SetBool("isShooting", false);
+            yield break;
+        }
 
         if (BulletPrefab != null && ShootPoint != null && playerSystem != null)
         {
@@ -291,7 +314,11 @@ public class EnemySystem : MonoBehaviour
                 rb.linearVelocity = direction * bulletSpeed;
             }
         }
+
+        yield return new WaitForSeconds(0.5f);
         isShoot = false;
+        isShooting = false;
+        if (animator != null) animator.SetBool("isShooting", false);
     }
 
     private IEnumerator Boom()
