@@ -1,19 +1,10 @@
 fileFormatVersion: 2
-guid: b5d71c264adc2434c8b4fc9a07498f7e
+guid: ed4cbb4a145985a4a9b4e8910a01da5d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4405020740323518258
-    second: Heavy_Robot_walk_0
-  - first:
-      213: -7123402556517401808
-    second: Heavy_Robot_walk_1
-  - first:
-      213: -507487414977181795
-    second: Heavy_Robot_walk_2
-  - first:
-      213: -5491671001130048396
-    second: Heavy_Robot_walk_3
+      213: 5225545696984898611
+    second: "\uD134\uB118\uAE30\uAE30 \uC544\uC774\uCF58_0"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -60,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 300
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -109,89 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Heavy_Robot_walk_0
+      name: "\uD134\uB118\uAE30\uAE30 \uC544\uC774\uCF58_0"
       rect:
         serializedVersion: 2
-        x: 227
-        y: 117
-        width: 374
-        height: 841
+        x: 0
+        y: 0
+        width: 1526
+        height: 1024
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ec8d9c8b9f83ed2c0800000000000000
-      internalID: -4405020740323518258
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Heavy_Robot_walk_1
-      rect:
-        serializedVersion: 2
-        x: 747
-        y: 657
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 03bbba2cd17942d90800000000000000
-      internalID: -7123402556517401808
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Heavy_Robot_walk_2
-      rect:
-        serializedVersion: 2
-        x: 1089
-        y: 116
-        width: 418
-        height: 832
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d97cd4682ea05f8f0800000000000000
-      internalID: -507487414977181795
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Heavy_Robot_walk_3
-      rect:
-        serializedVersion: 2
-        x: 1639
-        y: 647
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 4746452125aa9c3b0800000000000000
-      internalID: -5491671001130048396
+      spriteID: 33c1b52102ed48840800000000000000
+      internalID: 5225545696984898611
       vertices: []
       indices: 
       edges: []
@@ -200,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: b9d94f8d23d4cd548ba2abac8cfb9d86
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -208,14 +133,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries:
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+      entries: []
     nameFileIdTable:
-      Heavy_Robot_walk_0: -4405020740323518258
-      Heavy_Robot_walk_1: -7123402556517401808
-      Heavy_Robot_walk_2: -507487414977181795
-      Heavy_Robot_walk_3: -5491671001130048396
+      "\uD134\uB118\uAE30\uAE30 \uC544\uC774\uCF58_0": 5225545696984898611
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

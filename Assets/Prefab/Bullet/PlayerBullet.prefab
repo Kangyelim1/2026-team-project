@@ -85,8 +85,8 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 10
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.9921569, g: 0.9568628, b: 0.69803923, a: 1}
+  m_Sprite: {fileID: -959829630997152127, guid: 13eb3a8c3470c53469eff6b5807878e0, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -110,6 +110,7 @@ MonoBehaviour:
   bulletSO: {fileID: 11400000, guid: 89f33289c4f1bf64dbc3c3011cb56c2a, type: 2}
   lifeTime: 0.01
   type: 0
+  damage: 1
   hitVFX: {fileID: 2858313408973963967}
   missileVFX: {fileID: 0}
   gameSoundManager: {fileID: 0}

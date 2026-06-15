@@ -2215,11 +2215,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 82925702540452956, guid: 86aec5b01224593408d7902cd37129db, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.765427
+      value: 8.665752
       objectReference: {fileID: 0}
     - target: {fileID: 82925702540452956, guid: 86aec5b01224593408d7902cd37129db, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.09666157
+      value: 0.09616995
       objectReference: {fileID: 0}
     - target: {fileID: 349955802513076474, guid: 86aec5b01224593408d7902cd37129db, type: 3}
       propertyPath: m_Name
@@ -7576,6 +7576,10 @@ PrefabInstance:
     - target: {fileID: 2570646459328936403, guid: c0dd861fabbcd65458d8eef199e6e601, type: 3}
       propertyPath: m_Name
       value: WarningCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 9187719522835174917, guid: c0dd861fabbcd65458d8eef199e6e601, type: 3}
+      propertyPath: m_text
+      value: Get rid of all enemies and escape
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
