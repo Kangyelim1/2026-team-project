@@ -2127,7 +2127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63e272453eb45c3498bb561587e1bcfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageTimer
-  limitTime: 30
+  limitTime: 40
   warningUI: {fileID: 907474443}
   canvasGroup: {fileID: 814090426}
   warningText: {fileID: 311912700}
@@ -2215,11 +2215,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 82925702540452956, guid: 86aec5b01224593408d7902cd37129db, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.665752
+      value: 11.610992
       objectReference: {fileID: 0}
     - target: {fileID: 82925702540452956, guid: 86aec5b01224593408d7902cd37129db, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.09616995
+      value: 0.09664154
       objectReference: {fileID: 0}
     - target: {fileID: 349955802513076474, guid: 86aec5b01224593408d7902cd37129db, type: 3}
       propertyPath: m_Name
@@ -2285,6 +2285,10 @@ PrefabInstance:
       propertyPath: BoundingShape2D
       value: 
       objectReference: {fileID: 1500972264}
+    - target: {fileID: 7975023084102622890, guid: 86aec5b01224593408d7902cd37129db, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 1cb318342b678cd4799f72bc7e66dad1, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -2364,7 +2364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63e272453eb45c3498bb561587e1bcfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageTimer
-  limitTime: 60
+  limitTime: 70
   warningUI: {fileID: 716529903}
   canvasGroup: {fileID: 716529902}
   warningText: {fileID: 716529901}
@@ -6837,7 +6837,7 @@ PrefabInstance:
       objectReference: {fileID: 115915449}
     - target: {fileID: 3050794202430280394, guid: 75af6e60ee2200c40acd90a3bd20f7cb, type: 3}
       propertyPath: nextSceneName
-      value: Stage03
+      value: BossScene
       objectReference: {fileID: 0}
     - target: {fileID: 4976881902267635278, guid: 75af6e60ee2200c40acd90a3bd20f7cb, type: 3}
       propertyPath: m_IsActive
