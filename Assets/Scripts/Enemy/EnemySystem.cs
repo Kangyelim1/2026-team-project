@@ -48,6 +48,8 @@ public class EnemySystem : MonoBehaviour
     private float lastAttackTime = -999f;
     private bool isShooting = false;
 
+    private Rigidbody2D rb;
+
     private void Awake()
     {
         enemyName = enemySO.enemyName;
@@ -55,7 +57,7 @@ public class EnemySystem : MonoBehaviour
     }
 
     private SpriteRenderer spriteRenderer;
-    
+
     private void Start()
     {
         if (enemyType == EnemyType.Boss)
@@ -63,6 +65,7 @@ public class EnemySystem : MonoBehaviour
 
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
@@ -77,7 +80,7 @@ public class EnemySystem : MonoBehaviour
         }
 
         if (playerHelthSystem == null)
-                playerHelthSystem = FindAnyObjectByType<PlayerHelthSystem>();
+            playerHelthSystem = FindAnyObjectByType<PlayerHelthSystem>();
         if (enemyhelthSystem == null)
             enemyhelthSystem = FindAnyObjectByType<EnemyHelthSystem>();
         if (playerSystem == null)
@@ -124,7 +127,6 @@ public class EnemySystem : MonoBehaviour
         isDead = true;
         StopAllCoroutines();
 
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null) rb.linearVelocity = Vector2.zero;
 
         isAttack = false;
@@ -214,12 +216,19 @@ public class EnemySystem : MonoBehaviour
                     transform.position.y,
                     transform.position.z);
                 Vector2 direction = (targetPos - transform.position).normalized;
-                transform.position += (Vector3)(direction * moveSpeed * Time.deltaTime);
+
+                if (rb != null)
+                    rb.linearVelocity = new Vector2(direction.x * moveSpeed, rb.linearVelocity.y);
+
                 isDistonse = false;
             }
             else
             {
+                if (rb != null)
+                    rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+
                 isDistonse = true;
+
                 if (enemyType == EnemyType.Drone)
                 {
                     if (!isBoom) StartCoroutine(Boom());
@@ -229,6 +238,11 @@ public class EnemySystem : MonoBehaviour
                     if (!isShortAttack) StartCoroutine(ShortdistanceAttack());
                 }
             }
+        }
+        else
+        {
+            if (rb != null)
+                rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
         }
     }
 
@@ -261,7 +275,6 @@ public class EnemySystem : MonoBehaviour
         if (animator != null) animator.SetBool("isAttacking", true);
         lastAttackTime = Time.time;
 
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null) rb.linearVelocity = Vector2.zero;
 
         yield return new WaitForSeconds(0.4f);
@@ -307,11 +320,11 @@ public class EnemySystem : MonoBehaviour
         if (BulletPrefab != null && ShootPoint != null && playerSystem != null)
         {
             GameObject bullet = Instantiate(BulletPrefab, ShootPoint.position, Quaternion.identity);
-            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-            if (rb != null)
+            Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
+            if (bulletRb != null)
             {
                 Vector2 direction = (playerSystem.transform.position - ShootPoint.position).normalized;
-                rb.linearVelocity = direction * bulletSpeed;
+                bulletRb.linearVelocity = direction * bulletSpeed;
             }
         }
 
@@ -344,7 +357,10 @@ public class EnemySystem : MonoBehaviour
         if (distance < droneDetectDistance)
         {
             Vector2 direction = (playerSystem.transform.position - transform.position).normalized;
-            transform.position += (Vector3)(direction * droneMoveSpeed * Time.deltaTime);
+
+            if (rb != null)
+                rb.linearVelocity = direction * droneMoveSpeed;
+
             LongDistanceAttack();
         }
         if (distance < droneBoomDistance)

@@ -12,32 +12,9 @@ public class BreakableBox : MonoBehaviour
 
     private bool isBroken = false;
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (isBroken) return;
-
-        if (collision.CompareTag("Bullet"))
-        {
-            if (collision.TryGetComponent(out BulletSystem bullet))
-            {
-                if (bullet.type == BulletType.PlayerBullet)
-                {
-                    Destroy(collision.gameObject);
-                    TakeDamage();
-                }
-            }
-        }
-    }
-
-    private void TakeDamage()
-    {
-        hp--;
-        if (hp <= 0)
-            Break();
-    }
-
     private void Break()
     {
+        if (isBroken) return;
         isBroken = true;
 
         if (breakEffect != null)
@@ -47,9 +24,17 @@ public class BreakableBox : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public void TakeDamage()
+    {
+        if (isBroken) return;
+        hp--;
+        if (hp <= 0)
+            Break();
+    }
+
     private void TryDropItem()
     {
-        float dropRoll = Random.value;  // 0.0 ~ 1.0
+        float dropRoll = Random.value;
         if (dropRoll > 0.2f)
         {
             Debug.Log("Box: No drop (" + (dropRoll * 100f).ToString("F0") + "%)");
