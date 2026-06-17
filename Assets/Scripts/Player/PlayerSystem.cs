@@ -34,6 +34,7 @@ public class PlayerSystem : MonoBehaviour
 
     public GameManger gameManger;
     public GameObject LockOnImage;
+    public GameObject FakeDestoryObject;
     public GameSoundManager gameSoundManager;
 
     private float moveX;
