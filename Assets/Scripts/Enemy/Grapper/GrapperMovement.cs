@@ -59,6 +59,8 @@ public class GrapperMovement : MonoBehaviour
     private AudioSource audioSource;
     private PlayerHelthSystem playerHelthSystem;
 
+    private SpriteRenderer[] allSprites;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -72,6 +74,8 @@ public class GrapperMovement : MonoBehaviour
         rb.gravityScale = 0f;
         rb.freezeRotation = true;
         playerHelthSystem = FindAnyObjectByType<PlayerHelthSystem>();
+
+        allSprites = GetComponentsInChildren<SpriteRenderer>();
 
         if (moveRadius <= 0) moveRadius = -1f;
         if (maxAttackInterval < minAttackInterval) maxAttackInterval = minAttackInterval;
@@ -218,6 +222,19 @@ public class GrapperMovement : MonoBehaviour
         if (isDead) return;
         isDead = true;
         isAttacking = false;
+        foreach (SpriteRenderer sprite in allSprites)
+        {
+            if (sprite == null)
+                continue;
+
+            Color color = sprite.color;
+
+            color.r = 1f;
+            color.g = 0.5f;
+            color.b = 0.5f;
+
+            sprite.color = color;
+        }
         rb.gravityScale = 1f;
         rb.freezeRotation = false;
         rb.linearVelocity = Vector2.zero;
@@ -243,7 +260,7 @@ public class GrapperMovement : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // ★ 수정된 Flip
+    //  수정된 Flip
     private void Flip()
     {
         facingSign = isGoingRight ? 1 : -1;
