@@ -52,7 +52,6 @@ public class EnemyHelthSystem : MonoBehaviour
     {
         if (isDead) return;
 
-        // ★ 카메라 흔들림 추가
         if (CameraShake.Instance != null)
             CameraShake.Instance.Shake(0.5f);
 
@@ -72,6 +71,8 @@ public class EnemyHelthSystem : MonoBehaviour
 
         if (enemySystem != null && enemySystem.enemyType == EnemyType.Boss)
         {
+            GameSoundManager.Instance?.PlaySFX(GameSoundManager.Instance.bossHitSound);
+
             if (!isInvincibility)
             {
                 currentBossHelth -= 8;
@@ -83,6 +84,7 @@ public class EnemyHelthSystem : MonoBehaviour
         }
         else
         {
+            GameSoundManager.Instance?.PlaySFX(GameSoundManager.Instance.enemyHitSound);
             Debug.Log("일반로봇 사망");
             Die();
         }
@@ -92,6 +94,11 @@ public class EnemyHelthSystem : MonoBehaviour
     {
         if (isDead) return;
         isDead = true;
+
+        if (enemySystem != null && enemySystem.enemyType == EnemyType.Boss)
+            GameSoundManager.Instance?.PlaySFX(GameSoundManager.Instance.bossDeathSound);
+        else
+            GameSoundManager.Instance?.PlaySFX(GameSoundManager.Instance.enemyDeathSound);
 
         Debug.Log("몬스터 사망");
 
@@ -135,7 +142,10 @@ public class EnemyHelthSystem : MonoBehaviour
             col.enabled = false;
 
         if (enemySystem.BoomEffect != null)
+        {
             Instantiate(enemySystem.BoomEffect, enemySystem.transform.position, Quaternion.identity);
+            GameSoundManager.Instance?.PlaySFX(GameSoundManager.Instance.explodeSound);
+        }
 
         if (rb != null)
         {

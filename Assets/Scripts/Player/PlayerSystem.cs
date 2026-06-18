@@ -82,13 +82,9 @@ public class PlayerSystem : MonoBehaviour
             else if (canDoubleJump && !hasDoubleJumped)
             {
                 if (Time.time - jumpPressTime <= doubleJumpWindow)
-                {
                     DoubleJump();
-                }
                 else
-                {
                     Debug.Log("더블점프 시간창 초과 — 불가");
-                }
             }
         }
 
@@ -102,9 +98,7 @@ public class PlayerSystem : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && !isDash && !isNotDash)
-        {
             StartCoroutine(Dash());
-        }
     }
 
     private void FixedUpdate()
@@ -132,6 +126,8 @@ public class PlayerSystem : MonoBehaviour
     {
         isDash = true;
         isDashAttack = true;
+
+        GameSoundManager.Instance?.PlaySFX(GameSoundManager.Instance.playerDashSound);
 
         float direction = transform.localScale.x < 0 ? -1f : 1f;
         float dashSpeed = PlayerDashDistance / PlayerDashDuration;
@@ -164,6 +160,8 @@ public class PlayerSystem : MonoBehaviour
 
     private void Jump()
     {
+        GameSoundManager.Instance?.PlaySFX(GameSoundManager.Instance.playerJumpSound);
+
         isGround = false;
         PlayerRigidbody.linearVelocity = new Vector2(PlayerRigidbody.linearVelocity.x, 0f);
         PlayerRigidbody.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
@@ -173,6 +171,8 @@ public class PlayerSystem : MonoBehaviour
 
     private void DoubleJump()
     {
+        GameSoundManager.Instance?.PlaySFX(GameSoundManager.Instance.playerDoubleJumpSound);
+
         hasDoubleJumped = true;
         canDoubleJump = false;
 
@@ -212,6 +212,8 @@ public class PlayerSystem : MonoBehaviour
             {
                 if (contact.normal.y > 0.5f)
                 {
+                    GameSoundManager.Instance?.PlaySFX(GameSoundManager.Instance.playerLandSound);
+
                     isGround = true;
                     canDoubleJump = false;
                     hasDoubleJumped = false;
@@ -221,17 +223,13 @@ public class PlayerSystem : MonoBehaviour
         }
 
         if (collision.contacts.Length > 0 && collision.contacts[0].normal.y < -0.5f)
-        {
             PlayerRigidbody.linearVelocity = new Vector2(PlayerRigidbody.linearVelocity.x, 0f);
-        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Box"))
-        {
             isGround = false;
-        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)

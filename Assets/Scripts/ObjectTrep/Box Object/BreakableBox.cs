@@ -17,6 +17,8 @@ public class BreakableBox : MonoBehaviour
         if (isBroken) return;
         isBroken = true;
 
+        GameSoundManager.Instance?.PlaySFX(GameSoundManager.Instance.boxBreakSound);
+
         if (breakEffect != null)
             Instantiate(breakEffect, transform.position, Quaternion.identity);
 
@@ -48,6 +50,7 @@ public class BreakableBox : MonoBehaviour
             if (rapidGunItemPrefab != null)
             {
                 Instantiate(rapidGunItemPrefab, transform.position, Quaternion.identity);
+                GameSoundManager.Instance?.PlaySFX(GameSoundManager.Instance.itemPickupSound);
                 Debug.Log("Box Drop: Rapid Gun!");
             }
         }
@@ -56,6 +59,7 @@ public class BreakableBox : MonoBehaviour
             if (shieldCharmItemPrefab != null)
             {
                 Instantiate(shieldCharmItemPrefab, transform.position, Quaternion.identity);
+                GameSoundManager.Instance?.PlaySFX(GameSoundManager.Instance.itemPickupSound);
                 Debug.Log("Box Drop: Shield Charm!");
             }
         }
