@@ -320,13 +320,14 @@ public class BossPatternSystem : MonoBehaviour
             Vector3 warningPos = new Vector3(randomX, playerSystem.transform.position.y, 0f);
 
             GameObject warning = Instantiate(TargetPoint, warningPos, Quaternion.identity);
+
             gameSoundManager.OnFindEnemySound("타겟 지정");
 
             Destroy(warning, warningTime);
 
             Vector3 spawnPos = warningPos + Vector3.up * 100f;
 
-            GameObject bullet = Instantiate(missilePrefab, spawnPos, Quaternion.identity);
+            GameObject bullet = Instantiate(missilePrefab, spawnPos, Quaternion.Euler(0, 0, 180));
 
             if (bullet.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
                 rb.linearVelocity = Vector2.down * 60;
