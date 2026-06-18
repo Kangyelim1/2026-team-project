@@ -41,11 +41,13 @@ public class StageTimer : MonoBehaviour
     IEnumerator StartGame()
     {
         Debug.Log("게임 준비");
-        yield return new WaitForSeconds(4.5f);
-        StartCoroutine(WarningMessage("GameStart"));
 
-        yield return new WaitForSeconds(0.5f);
+        // 시작하자마자 문구 출력
+        yield return StartCoroutine(WarningMessage("Get rid of all enemies and escape"));
+
+        // 문구가 끝나면 타이머 표시
         timerText.gameObject.SetActive(true);
+
         isStartGame = true;
     }
 

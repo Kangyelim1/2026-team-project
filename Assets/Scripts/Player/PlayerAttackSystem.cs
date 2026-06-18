@@ -72,6 +72,11 @@ public class PlayerAttackSystem : MonoBehaviour
         currentAmmo = maxAmmo;
     }
 
+    private void Start()
+    {
+        AmmoEvents.Notify(currentAmmo, maxAmmo, false);
+    }
+
     private void Update()
     {
         HandleInteraction();
@@ -157,6 +162,9 @@ public class PlayerAttackSystem : MonoBehaviour
 
         lastAttackTime = Time.time;
         currentAmmo--;
+
+        AmmoEvents.Notify(currentAmmo, maxAmmo, false);
+
         Debug.Log($"발사 | 남은 탄환: {currentAmmo}/{maxAmmo}");
 
         if (currentAmmo <= 0)
@@ -183,6 +191,8 @@ public class PlayerAttackSystem : MonoBehaviour
         isReloading = true;
         Debug.Log($"재장전 중... ({reloadTime}초)");
 
+        AmmoEvents.Notify(currentAmmo, maxAmmo, true);
+
         SkillHUDManager.Instance?.TriggerCooldown(SkillType.Reload, reloadTime);
 
         yield return new WaitForSeconds(reloadTime);
@@ -191,6 +201,8 @@ public class PlayerAttackSystem : MonoBehaviour
         isReloading = false;
         isShootingLocked = false;
         Debug.Log($"재장전 완료! 탄환: {currentAmmo}/{maxAmmo}");
+
+        AmmoEvents.Notify(currentAmmo, maxAmmo, false);
     }
 
     private IEnumerator ComboShot()
@@ -201,6 +213,9 @@ public class PlayerAttackSystem : MonoBehaviour
         isComboShotRunning = true;
         lastAttackTime = Time.time;
         currentAmmo--;
+
+        AmmoEvents.Notify(currentAmmo, maxAmmo, false);
+
         Debug.Log($"콤보 발사 | 남은 탄환: {currentAmmo}/{maxAmmo}");
 
         if (currentAmmo <= 0)
@@ -225,7 +240,6 @@ public class PlayerAttackSystem : MonoBehaviour
 
         isComboShotRunning = false;
     }
-
     private void ShootProjectile(GameObject prefab, Transform spawnPoint, float speed)
     {
         if (prefab == null || spawnPoint == null || mainCamera == null) return;
@@ -261,6 +275,9 @@ public class PlayerAttackSystem : MonoBehaviour
 
         lastMeleeTime = Time.time;
 
+        if (playerSystem != null && playerSystem.playerAnimator != null)
+            StartCoroutine(MeleeAnimationRoutine());
+
         Collider2D[] hits = Physics2D.OverlapCircleAll(meleePoint.position, meleeRange, enemyLayer);
         foreach (Collider2D hit in hits)
         {
@@ -272,6 +289,13 @@ public class PlayerAttackSystem : MonoBehaviour
 
         SkillHUDManager.Instance?.TriggerCooldown(SkillType.Melee, meleeCooldown);
         Debug.Log("근접공격 / 데미지 10");
+    }
+
+    private IEnumerator MeleeAnimationRoutine()
+    {
+        playerSystem.playerAnimator.SetBool("isKnife", true);
+        yield return new WaitForSeconds(0.2f);
+        playerSystem.playerAnimator.SetBool("isKnife", false);
     }
 
     private void TryParry()
@@ -289,7 +313,13 @@ public class PlayerAttackSystem : MonoBehaviour
 
         SkillHUDManager.Instance?.TriggerCooldown(SkillType.Parry, parryCooldown);
 
+        if (playerSystem != null && playerSystem.playerAnimator != null)
+            playerSystem.playerAnimator.SetBool("isKnife", true);
+
         yield return new WaitForSeconds(parryDuration);
+
+        if (playerSystem != null && playerSystem.playerAnimator != null)
+            playerSystem.playerAnimator.SetBool("isKnife", false);
 
         isParryWindow = false;
         Debug.Log("패리 종료");

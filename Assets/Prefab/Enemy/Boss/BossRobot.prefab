@@ -90,7 +90,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 10
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
+  m_Sprite: {fileID: -530266863569521264, guid: 7ed515efa9fcc0b4b94e64d593915a83, type: 3}
   m_Color: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -202,7 +202,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 2}
+    oldSize: {x: 7.27, y: 10.46}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -248,7 +248,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 2}
+    oldSize: {x: 7.27, y: 10.46}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -285,6 +285,15 @@ MonoBehaviour:
   chaseAfterExitTime: 3
   chaseDistance: 10
   BossHelth: 0
+  isPattern: 0
+  droneMoveSpeed: 4
+  droneDetectDistance: 20
+  droneBoomDistance: 0
+  attackRange: 1.5
+  attackCooldown: 1.2
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &-3603097062710773006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,9 +309,7 @@ MonoBehaviour:
   enemySystem: {fileID: 0}
   enemyHelthSystem: {fileID: 0}
   bossPatternSystem: {fileID: 0}
-  PatternList:
-  - "\uD328\uD13401"
-  - "\uD328\uD13402"
+  bossPatternData: {fileID: 0}
 --- !u!114 &7014246280253384298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,6 +324,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BossPatternSystem
   bossSystem: {fileID: 0}
   enemyHelthSystem: {fileID: 0}
+  enemySystem: {fileID: 0}
   playerHelthSystem: {fileID: 0}
   playerSystem: {fileID: 0}
   playerCamera: {fileID: 0}
@@ -324,19 +332,34 @@ MonoBehaviour:
   laserLine01: {fileID: 0}
   laserLine02: {fileID: 0}
   hitCollider: {fileID: 0}
-  WormHole01: {fileID: 0}
-  WormHole02: {fileID: 0}
-  electricObject: {fileID: 0}
-  wormHoleCamera: {fileID: 0}
-  showTime: 1.5
-  objectList: []
-  destoryObject: {fileID: 0}
-  isDestoryObject: 0
   player: {fileID: 0}
   laserStart01: {fileID: 0}
   laserStart02: {fileID: 0}
   aimTime: 2
   laserLength: 20
+  WormHole01: {fileID: 0}
+  WormHole02: {fileID: 0}
+  electricObject: {fileID: 0}
+  fakeObject: {fileID: 0}
+  objectList: []
+  destoryObject: {fileID: 0}
+  isDestoryObject: 0
+  bossCamera: {fileID: 0}
+  missilePrefab: {fileID: 0}
+  TargetPoint: {fileID: 0}
+  missileFirePoint: {fileID: 0}
+  dropPoints: []
+  missileShootDelay: 0.3
+  cameraShakePower: 0.3
+  cameraShakeTime: 0.2
+  warningTime: 1
+  warningRange: 4
+  warningCount: 3
+  enemyChargeSystem: {fileID: 0}
+  isPattern: 0
+  gunDronePrefab: {fileID: 0}
+  droneSpawnPoint: {fileID: 0}
+  gameSoundManager: {fileID: 0}
 --- !u!1 &5603085636515375538
 GameObject:
   m_ObjectHideFlags: 0
@@ -483,6 +506,14 @@ MonoBehaviour:
   maxBossHelth: 0
   minBossHelth: 0
   currentBossHelth: 0
+  isInvincibility: 0
+  deathDelay: 0.8
+  deathUpForce: 4
+  deathSideForceMin: -2
+  deathSideForceMax: 2
+  deathTorqueMin: -120
+  deathTorqueMax: 120
+  isDead: 0
 --- !u!1 &8955180800484366012
 GameObject:
   m_ObjectHideFlags: 0

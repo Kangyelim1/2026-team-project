@@ -17,6 +17,7 @@ TagManager:
   - DestoryObject
   - Undefined
   - DestoryAttackObject
+  - Box
   layers:
   - Default
   - TransparentFX
@@ -28,7 +29,7 @@ TagManager:
   - Player
   - 'Ground '
   - Wall
-  - 
+  - Box
   - 
   - 
   - 

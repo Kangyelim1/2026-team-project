@@ -30,6 +30,11 @@ public class EnemySystem : MonoBehaviour
     public float droneDetectDistance = 20f;
     public float droneBoomDistance;
 
+    [Header("근접 공격 애니메이션")]
+    public float attackRange = 1.5f;
+    public float attackCooldown = 1.2f;
+    public LayerMask playerLayer;
+
     private bool isAttack;
     private bool isDistonse;
     private bool isShoot;
@@ -38,21 +43,41 @@ public class EnemySystem : MonoBehaviour
     private bool isDead = false;
     private Coroutine chaseStopCoroutine;
 
+    private Animator animator;
+    private bool isAttacking = false;
+    private float lastAttackTime = -999f;
+    private bool isShooting = false;
+
+    private Rigidbody2D rb;
+
     private void Awake()
     {
         enemyName = enemySO.enemyName;
         enemyType = enemySO.enemyType;
     }
 
+    private SpriteRenderer spriteRenderer;
+
     private void Start()
     {
         if (enemyType == EnemyType.Boss)
             BossHelth = enemySO.BossHelth;
+
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
     {
         if (isDead) return;
+
+        if (spriteRenderer != null)
+        {
+            Color c = spriteRenderer.color;
+            c.a = 1f;
+            spriteRenderer.color = c;
+        }
 
         if (playerHelthSystem == null)
             playerHelthSystem = FindAnyObjectByType<PlayerHelthSystem>();
@@ -83,6 +108,16 @@ public class EnemySystem : MonoBehaviour
 
             if (isAttack)
                 StartAttack();
+
+            if (enemyType == EnemyType.Shortdistance && playerSystem != null)
+            {
+                float dist = Vector2.Distance(transform.position, playerSystem.transform.position);
+                if (dist <= attackRange)
+                {
+                    if (!isAttacking && Time.time >= lastAttackTime + attackCooldown)
+                        StartCoroutine(MeleeAttackRoutine());
+                }
+            }
         }
     }
 
@@ -92,13 +127,20 @@ public class EnemySystem : MonoBehaviour
         isDead = true;
         StopAllCoroutines();
 
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null) rb.linearVelocity = Vector2.zero;
 
         isAttack = false;
         isShortAttack = false;
         isShoot = false;
         isBoom = false;
+        isAttacking = false;
+        isShooting = false;
+
+        if (animator != null)
+        {
+            animator.SetBool("isAttacking", false);
+            animator.SetBool("isShooting", false);
+        }
 
         if (chaseStopCoroutine != null)
             StopCoroutine(chaseStopCoroutine);
@@ -167,17 +209,26 @@ public class EnemySystem : MonoBehaviour
         {
             if (distance > stopDistance)
             {
+                if (isAttacking) return;
+
                 Vector3 targetPos = new Vector3(
                     playerSystem.transform.position.x,
                     transform.position.y,
                     transform.position.z);
                 Vector2 direction = (targetPos - transform.position).normalized;
-                transform.position += (Vector3)(direction * moveSpeed * Time.deltaTime);
+
+                if (rb != null)
+                    rb.linearVelocity = new Vector2(direction.x * moveSpeed, rb.linearVelocity.y);
+
                 isDistonse = false;
             }
             else
             {
+                if (rb != null)
+                    rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+
                 isDistonse = true;
+
                 if (enemyType == EnemyType.Drone)
                 {
                     if (!isBoom) StartCoroutine(Boom());
@@ -187,6 +238,11 @@ public class EnemySystem : MonoBehaviour
                     if (!isShortAttack) StartCoroutine(ShortdistanceAttack());
                 }
             }
+        }
+        else
+        {
+            if (rb != null)
+                rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
         }
     }
 
@@ -213,6 +269,33 @@ public class EnemySystem : MonoBehaviour
         isShortAttack = false;
     }
 
+    private IEnumerator MeleeAttackRoutine()
+    {
+        isAttacking = true;
+        if (animator != null) animator.SetBool("isAttacking", true);
+        lastAttackTime = Time.time;
+
+        if (rb != null) rb.linearVelocity = Vector2.zero;
+
+        yield return new WaitForSeconds(0.4f);
+
+        if (!isDead && playerSystem != null)
+        {
+            float dist = Vector2.Distance(transform.position, playerSystem.transform.position);
+            if (dist <= attackRange)
+            {
+                PlayerHelthSystem ph = playerSystem.GetComponent<PlayerHelthSystem>();
+                if (ph == null) ph = playerSystem.GetComponentInParent<PlayerHelthSystem>();
+                if (ph == null) ph = FindAnyObjectByType<PlayerHelthSystem>();
+                if (ph != null) ph.Die();
+            }
+        }
+
+        yield return new WaitForSeconds(0.5f);
+        isAttacking = false;
+        if (animator != null) animator.SetBool("isAttacking", false);
+    }
+
     private void LongDistanceAttack()
     {
         if (isDead) return;
@@ -222,20 +305,33 @@ public class EnemySystem : MonoBehaviour
     private IEnumerator ShootBullet()
     {
         isShoot = true;
+        isShooting = true;
+        if (animator != null) animator.SetBool("isShooting", true);
+
         yield return new WaitForSeconds(shootDelay);
-        if (isDead) { isShoot = false; yield break; }
+        if (isDead)
+        {
+            isShoot = false;
+            isShooting = false;
+            if (animator != null) animator.SetBool("isShooting", false);
+            yield break;
+        }
 
         if (BulletPrefab != null && ShootPoint != null && playerSystem != null)
         {
             GameObject bullet = Instantiate(BulletPrefab, ShootPoint.position, Quaternion.identity);
-            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-            if (rb != null)
+            Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
+            if (bulletRb != null)
             {
                 Vector2 direction = (playerSystem.transform.position - ShootPoint.position).normalized;
-                rb.linearVelocity = direction * bulletSpeed;
+                bulletRb.linearVelocity = direction * bulletSpeed;
             }
         }
+
+        yield return new WaitForSeconds(0.5f);
         isShoot = false;
+        isShooting = false;
+        if (animator != null) animator.SetBool("isShooting", false);
     }
 
     private IEnumerator Boom()
@@ -261,7 +357,10 @@ public class EnemySystem : MonoBehaviour
         if (distance < droneDetectDistance)
         {
             Vector2 direction = (playerSystem.transform.position - transform.position).normalized;
-            transform.position += (Vector3)(direction * droneMoveSpeed * Time.deltaTime);
+
+            if (rb != null)
+                rb.linearVelocity = direction * droneMoveSpeed;
+
             LongDistanceAttack();
         }
         if (distance < droneBoomDistance)

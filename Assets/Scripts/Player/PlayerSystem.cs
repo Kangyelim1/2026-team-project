@@ -23,7 +23,7 @@ public class PlayerSystem : MonoBehaviour
     public float doubleJumpWindow = 0.5f;
     private bool canDoubleJump = false;
     private bool hasDoubleJumped = false;
-    private float jumpPressTime = -999f; 
+    private float jumpPressTime = -999f;
 
     public Rigidbody2D PlayerRigidbody;
     public SpriteRenderer PlayerSpriteRenderer;
@@ -34,6 +34,7 @@ public class PlayerSystem : MonoBehaviour
 
     public GameManger gameManger;
     public GameObject LockOnImage;
+    public GameObject FakeDestoryObject;
     public GameSoundManager gameSoundManager;
 
     private float moveX;
@@ -133,24 +134,26 @@ public class PlayerSystem : MonoBehaviour
         isDashAttack = true;
 
         float direction = transform.localScale.x < 0 ? -1f : 1f;
+        float dashSpeed = PlayerDashDistance / PlayerDashDuration;
 
-        Vector3 startPos = transform.position;
-        Vector3 targetPos = startPos + new Vector3(direction * PlayerDashDistance, 0f, 0f);
-
-        float time = 0f;
         playerAnimator.SetBool("isRolling", true);
-
         SkillHUDManager.Instance?.TriggerCooldown(SkillType.Dash, PlayerDashDuration + 0.5f);
 
+        float originalGravity = PlayerRigidbody.gravityScale;
+        PlayerRigidbody.gravityScale = 0f;
+
         yield return new WaitForSeconds(0.1f);
+
+        float time = 0f;
         while (time < PlayerDashDuration)
         {
             time += Time.deltaTime;
-            transform.position = Vector3.Lerp(startPos, targetPos, time / PlayerDashDuration);
+            PlayerRigidbody.linearVelocity = new Vector2(direction * dashSpeed, 0f);
             yield return null;
         }
 
-        transform.position = targetPos;
+        PlayerRigidbody.linearVelocity = Vector2.zero;
+        PlayerRigidbody.gravityScale = originalGravity;
 
         yield return new WaitForSeconds(0.5f);
         playerAnimator.SetBool("isRolling", false);
@@ -203,16 +206,31 @@ public class PlayerSystem : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Box"))
         {
-            isGround = true;
-            canDoubleJump = false;
-            hasDoubleJumped = false;
+            foreach (ContactPoint2D contact in collision.contacts)
+            {
+                if (contact.normal.y > 0.5f)
+                {
+                    isGround = true;
+                    canDoubleJump = false;
+                    hasDoubleJumped = false;
+                    break;
+                }
+            }
         }
 
         if (collision.contacts.Length > 0 && collision.contacts[0].normal.y < -0.5f)
         {
             PlayerRigidbody.linearVelocity = new Vector2(PlayerRigidbody.linearVelocity.x, 0f);
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Box"))
+        {
+            isGround = false;
         }
     }
 

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1635546834697167743}
   - component: {fileID: 7432597354560567054}
   - component: {fileID: 1634630000721641122}
+  - component: {fileID: 8607215160742544012}
   m_Layer: 6
   m_Name: SniperRobot
   m_TagString: Enemy
@@ -195,6 +196,11 @@ MonoBehaviour:
   droneMoveSpeed: 4
   droneDetectDistance: 20
   droneBoomDistance: 0
+  attackRange: 1.5
+  attackCooldown: 1.2
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!58 &7432597354560567054
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -268,7 +274,7 @@ BoxCollider2D:
   m_Offset: {x: 0, y: -1}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5147741, y: 0.4372085}
     oldSize: {x: 1.02, y: 2.34}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
@@ -277,6 +283,28 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 0.01}
   m_EdgeRadius: 0
+--- !u!95 &8607215160742544012
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011524338714188303}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ba71c0f97895cb94d8d2ec4fff843c3e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5603085636515375538
 GameObject:
   m_ObjectHideFlags: 0
@@ -512,7 +540,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: -8304410660752460503, guid: a6d6abe965de34a429374b903c646bbd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

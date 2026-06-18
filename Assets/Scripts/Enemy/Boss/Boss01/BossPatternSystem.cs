@@ -219,13 +219,16 @@ public class BossPatternSystem : MonoBehaviour
         enemyHelthSystem.isInvincibility = true;
 
         if (playerSystem == null) yield break;
+        playerSystem.FakeDestoryObject.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        playerSystem.FakeDestoryObject.SetActive(false);
+        yield return new WaitForSeconds(0.1f);
 
         Vector3 spawnPos = new Vector3(playerSystem.gameObject.transform.position.x, playerSystem.transform.position.y + 12f, 0f);
         Instantiate(destoryObject, spawnPos, Quaternion.identity);
 
         yield return new WaitForSeconds(0.5f);
         Debug.Log("7초 카운트 시작");
-
         float timer = 0f;
 
         while (timer < 7f)
