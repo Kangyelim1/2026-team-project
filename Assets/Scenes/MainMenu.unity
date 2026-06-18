@@ -1346,9 +1346,7 @@ MonoBehaviour:
   itemPickupSound: {fileID: 0}
   stageClearSound: {fileID: 0}
   gameOverSound: {fileID: 0}
-  menuBGM: {fileID: 8300000, guid: 036750589f2559f4e8286068248b07be, type: 3}
-  stageBGM: {fileID: 8300000, guid: 7be4bcd35576300429e60012e3534e83, type: 3}
-  bossBGM: {fileID: 8300000, guid: c4113f675354ebc4b837b5ce0a13ec48, type: 3}
+  bgm: {fileID: 8300000, guid: a141a0c5da9aca3468c18bfd3b8687a0, type: 3}
 --- !u!4 &1379470177
 Transform:
   m_ObjectHideFlags: 0

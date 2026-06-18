@@ -12,7 +12,7 @@ public class GameSoundManager : MonoBehaviour
     public AudioClip playerDoubleJumpSound;
     public AudioClip playerDeathSound;
     public AudioClip playerLandSound;
-    public AudioClip playerParrySound;      // 패리
+    public AudioClip playerParrySound;
 
     [Header("적 사운드")]
     public AudioClip enemyHitSound;
@@ -27,10 +27,10 @@ public class GameSoundManager : MonoBehaviour
     public AudioClip bossDeathSound;
 
     [Header("보스 패턴 사운드")]
-    public AudioClip aimPatternSound;  
-    public AudioClip laserPatternSound; 
-    public AudioClip laserStartSound;  
-    public AudioClip objectDestroySound; 
+    public AudioClip aimPatternSound;
+    public AudioClip laserPatternSound;
+    public AudioClip laserStartSound;
+    public AudioClip objectDestroySound;
     public AudioClip missileLaunchSound;
     public AudioClip targetMarkSound;
 
@@ -41,27 +41,14 @@ public class GameSoundManager : MonoBehaviour
     public AudioClip gameOverSound;
 
     [Header("BGM")]
-    public AudioClip menuBGM;
-    public AudioClip stage01BGM;
-    public AudioClip stage02BGM;
-    public AudioClip stageBGM;
-    public AudioClip bossBGM;
+    public AudioClip bgm; 
 
     private AudioSource sfxSource;
     private AudioSource bgmSource;
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
+        Instance = this;
 
         AudioSource[] sources = GetComponents<AudioSource>();
         sfxSource = sources.Length > 0 ? sources[0] : gameObject.AddComponent<AudioSource>();
@@ -69,6 +56,11 @@ public class GameSoundManager : MonoBehaviour
 
         bgmSource.loop = true;
         bgmSource.volume = 0.5f;
+    }
+
+    private void Start()
+    {
+        PlayBGM(bgm);
     }
 
     public void PlaySFX(AudioClip clip)
@@ -79,7 +71,7 @@ public class GameSoundManager : MonoBehaviour
 
     public void PlayBGM(AudioClip clip)
     {
-        if (clip == null || bgmSource.clip == clip) return;
+        if (clip == null) return;
         bgmSource.Stop();
         bgmSource.clip = clip;
         bgmSource.Play();

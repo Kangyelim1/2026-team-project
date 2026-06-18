@@ -2127,7 +2127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63e272453eb45c3498bb561587e1bcfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageTimer
-  limitTime: 40
+  limitTime: 60
   warningUI: {fileID: 907474443}
   canvasGroup: {fileID: 814090426}
   warningText: {fileID: 311912700}
@@ -2215,11 +2215,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 82925702540452956, guid: 86aec5b01224593408d7902cd37129db, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.610992
+      value: 8.665752
       objectReference: {fileID: 0}
     - target: {fileID: 82925702540452956, guid: 86aec5b01224593408d7902cd37129db, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.09664154
+      value: 0.09616995
       objectReference: {fileID: 0}
     - target: {fileID: 349955802513076474, guid: 86aec5b01224593408d7902cd37129db, type: 3}
       propertyPath: m_Name
@@ -2267,11 +2267,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4077120730980411845, guid: 86aec5b01224593408d7902cd37129db, type: 3}
       propertyPath: Composition.DeadZone.Size.x
-      value: 0
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 4077120730980411845, guid: 86aec5b01224593408d7902cd37129db, type: 3}
       propertyPath: Composition.DeadZone.Size.y
-      value: 0
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 4077120730980411845, guid: 86aec5b01224593408d7902cd37129db, type: 3}
       propertyPath: Composition.DeadZone.Enabled
@@ -2279,7 +2279,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4077120730980411845, guid: 86aec5b01224593408d7902cd37129db, type: 3}
       propertyPath: Composition.HardLimits.Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7535766087244534542, guid: 86aec5b01224593408d7902cd37129db, type: 3}
       propertyPath: BoundingShape2D
@@ -2514,26 +2514,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36bcb4b0637480843a16204ffdc8e952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameSoundManager
-  playerSound: {fileID: 1846680621}
-  enemySound: {fileID: 921147457}
-  playerSoundList:
-  - {fileID: 8300000, guid: 2247ab6f48bacc44db1652f22e673144, type: 3}
-  - {fileID: 8300000, guid: 2892a699fb9a20c418d4f6b927c5bfce, type: 3}
-  - {fileID: 8300000, guid: 2e946f063f8c8704d882c431a1a43e92, type: 3}
-  - {fileID: 8300000, guid: acc6d4ef4f9937f4b93b156dbe483d2f, type: 3}
-  - {fileID: 8300000, guid: 4614da8fb54585649bf3f0e0b97fc2c9, type: 3}
-  - {fileID: 8300000, guid: 75a7b1d410ae8474ea460ffcb8593e9e, type: 3}
-  - {fileID: 8300000, guid: f48dc19a08793544087fcee0bf10117d, type: 3}
-  - {fileID: 8300000, guid: 113d39a84770c744e9ced5a7043a811e, type: 3}
-  - {fileID: 8300000, guid: f06d32e63fa803a48b66596ae7b9be4a, type: 3}
-  enemySoundList:
-  - {fileID: 8300000, guid: d10683ec36be03f48b02ae0f086dc7eb, type: 3}
-  - {fileID: 8300000, guid: 19e53589064162946869ce3b0b821dc9, type: 3}
-  - {fileID: 8300000, guid: 9c00c6847733e6e41b3eee0e7bfcf05f, type: 3}
-  - {fileID: 8300000, guid: 18933c3ecc878294d916b94cc56afd03, type: 3}
-  - {fileID: 8300000, guid: 28a7e791968eb284aaa4316bed1d7782, type: 3}
-  - {fileID: 8300000, guid: c0d63dfcecc0fcf41905fbc44a2618ad, type: 3}
-  - {fileID: 8300000, guid: e5c90866b0e45204090494a28a6462db, type: 3}
+  playerShootSound: {fileID: 0}
+  playerRapidShootSound: {fileID: 0}
+  playerDashSound: {fileID: 0}
+  playerJumpSound: {fileID: 0}
+  playerDoubleJumpSound: {fileID: 0}
+  playerDeathSound: {fileID: 0}
+  playerLandSound: {fileID: 0}
+  playerParrySound: {fileID: 0}
+  enemyHitSound: {fileID: 0}
+  enemyDeathSound: {fileID: 0}
+  enemyShootSound: {fileID: 0}
+  enemyChargeSound: {fileID: 0}
+  explodeSound: {fileID: 0}
+  bossAppearSound: {fileID: 0}
+  bossHitSound: {fileID: 0}
+  bossDeathSound: {fileID: 0}
+  aimPatternSound: {fileID: 0}
+  laserPatternSound: {fileID: 0}
+  laserStartSound: {fileID: 0}
+  objectDestroySound: {fileID: 0}
+  missileLaunchSound: {fileID: 0}
+  targetMarkSound: {fileID: 0}
+  boxBreakSound: {fileID: 0}
+  itemPickupSound: {fileID: 0}
+  stageClearSound: {fileID: 0}
+  gameOverSound: {fileID: 0}
+  bgm: {fileID: 8300000, guid: 7be4bcd35576300429e60012e3534e83, type: 3}
 --- !u!1 &897712647
 GameObject:
   m_ObjectHideFlags: 0

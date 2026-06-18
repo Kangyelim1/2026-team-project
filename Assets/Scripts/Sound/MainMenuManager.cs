@@ -4,6 +4,6 @@ public class MainMenuManager : MonoBehaviour
 {
     private void Start()
     {
-        GameSoundManager.Instance?.PlayBGM(GameSoundManager.Instance.menuBGM);
+        GameSoundManager.Instance?.PlayBGM(GameSoundManager.Instance.bgm);
     }
 }
