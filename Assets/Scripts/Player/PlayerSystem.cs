@@ -39,6 +39,9 @@ public class PlayerSystem : MonoBehaviour
 
     private float moveX;
     private bool isDash;
+    private bool isDashMoving;
+    private int groundContactCount = 0;
+
     public bool isGround;
     public bool isPattern;
     public bool IsDash => isDash;
@@ -70,7 +73,7 @@ public class PlayerSystem : MonoBehaviour
         else
             PlayerRigidbody.gravityScale = NormalGravityScale;
 
-        if (Input.GetKeyDown(KeyCode.Space) && !isDash && !isNotJump)
+        if (Input.GetKeyDown(KeyCode.Space) && !isDashMoving && !isNotJump)
         {
             if (isGround)
             {
@@ -83,18 +86,13 @@ public class PlayerSystem : MonoBehaviour
             {
                 if (Time.time - jumpPressTime <= doubleJumpWindow)
                     DoubleJump();
-                else
-                    Debug.Log("더블점프 시간창 초과 — 불가");
             }
         }
 
         if (canDoubleJump && !hasDoubleJumped)
         {
             if (Time.time - jumpPressTime > doubleJumpWindow)
-            {
                 canDoubleJump = false;
-                Debug.Log("더블점프 시간창 만료");
-            }
         }
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && !isDash && !isNotDash)
@@ -103,7 +101,7 @@ public class PlayerSystem : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!isDash)
+        if (!isDashMoving)
             Move();
     }
 
@@ -125,6 +123,7 @@ public class PlayerSystem : MonoBehaviour
     private IEnumerator Dash()
     {
         isDash = true;
+        isDashMoving = true;
         isDashAttack = true;
 
         GameSoundManager.Instance?.PlaySFX(GameSoundManager.Instance.playerDashSound);
@@ -151,11 +150,13 @@ public class PlayerSystem : MonoBehaviour
         PlayerRigidbody.linearVelocity = Vector2.zero;
         PlayerRigidbody.gravityScale = originalGravity;
 
+        isDashMoving = false;
+        isDashAttack = false;
+
         yield return new WaitForSeconds(0.5f);
         playerAnimator.SetBool("isRolling", false);
 
         isDash = false;
-        isDashAttack = false;
     }
 
     private void Jump()
@@ -182,7 +183,7 @@ public class PlayerSystem : MonoBehaviour
 
     public void HighJump(float multiplier)
     {
-        if (!isGround || isDash || isNotJump) return;
+        if (!isGround || isDashMoving || isNotJump) return;
 
         isGround = false;
         PlayerRigidbody.linearVelocity = new Vector2(PlayerRigidbody.linearVelocity.x, 0f);
@@ -201,6 +202,9 @@ public class PlayerSystem : MonoBehaviour
 
         if (PlayerCollider != null)
             PlayerCollider.enabled = true;
+
+        yield return new WaitForFixedUpdate();
+
         playerAnimator.SetBool("isJump", false);
     }
 
@@ -214,6 +218,7 @@ public class PlayerSystem : MonoBehaviour
                 {
                     GameSoundManager.Instance?.PlaySFX(GameSoundManager.Instance.playerLandSound);
 
+                    groundContactCount++;
                     isGround = true;
                     canDoubleJump = false;
                     hasDoubleJumped = false;
@@ -229,7 +234,14 @@ public class PlayerSystem : MonoBehaviour
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Box"))
-            isGround = false;
+        {
+            groundContactCount--;
+            if (groundContactCount <= 0)
+            {
+                groundContactCount = 0;
+                isGround = false;
+            }
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
