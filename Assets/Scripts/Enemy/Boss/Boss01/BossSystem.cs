@@ -10,12 +10,18 @@ public class BossSystem : MonoBehaviour
     public BossPatternSystem bossPatternSystem;
     public BossPatternSO bossPatternData;
 
+    public GameObject page01Object;
+    public GameObject page02Object;
+    public Animator bossAnimator;
+
+    public bool isPage02;
+
     private void Start()
     {
         enemySystem = FindAnyObjectByType<EnemySystem>();
         enemyHelthSystem = FindAnyObjectByType<EnemyHelthSystem>();
         bossPatternSystem = FindAnyObjectByType<BossPatternSystem>();
-
+        bossAnimator = GetComponentInChildren<Animator>(true);
         StartCoroutine(BossRandomPatternTime());
     }
 
@@ -35,6 +41,7 @@ public class BossSystem : MonoBehaviour
 
         if (enemyHelthSystem.currentBossHelth <= enemyHelthSystem.minBossHelth)
         {
+            ChanagePage();
             if (currentPattern.currentPage == PatternPage.Page02 || currentPattern.currentPage == PatternPage.EveryPage)
             {
                 Debug.Log(currentPattern.BossPatternName);
@@ -95,5 +102,14 @@ public class BossSystem : MonoBehaviour
                 BossRandomPattern();
                 break;
         }
+    }
+
+    void ChanagePage()
+    {
+        if (isPage02) return;
+        page01Object.SetActive(false);
+        page02Object.SetActive(true);
+
+        isPage02 = true;
     }
 }

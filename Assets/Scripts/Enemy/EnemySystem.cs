@@ -205,6 +205,16 @@ public class EnemySystem : MonoBehaviour
         if (isDead || playerSystem == null || isPattern) return;
 
         float distance = Vector2.Distance(transform.position, playerSystem.transform.position);
+
+        if (isPattern)
+        {
+            if (bossPattern != null && enemyType == EnemyType.Boss)
+            {
+                bossPattern.bossAnimator.SetBool("isMoving", false);
+                rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+            }
+        }
+
         if (distance < chaseDistance)
         {
             if (distance > stopDistance)
@@ -219,7 +229,10 @@ public class EnemySystem : MonoBehaviour
 
                 if (rb != null)
                     rb.linearVelocity = new Vector2(direction.x * moveSpeed, rb.linearVelocity.y);
-
+                if (bossPattern != null && enemyType == EnemyType.Boss)
+                {
+                    bossPattern.bossAnimator.SetBool("isMoving", true);
+                }
                 isDistonse = false;
             }
             else
@@ -228,6 +241,12 @@ public class EnemySystem : MonoBehaviour
                     rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
 
                 isDistonse = true;
+
+                if (bossPattern != null && enemyType == EnemyType.Boss)
+                {
+                    bossPattern.bossAnimator.SetBool("isMoving", false);
+                }
+                   
 
                 if (enemyType == EnemyType.Drone)
                 {
