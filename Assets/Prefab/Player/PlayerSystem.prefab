@@ -940,7 +940,7 @@ MonoBehaviour:
   firePoint: {fileID: 8340946736528875136}
   bulletSpeed: 30
   bulletLifetime: 0.4
-  attackCooldown: 2
+  attackCooldown: 1
   maxAmmo: 6
   reloadTime: 1.5
   isShootingLocked: 0

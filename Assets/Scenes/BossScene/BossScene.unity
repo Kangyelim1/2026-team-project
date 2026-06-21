@@ -5450,11 +5450,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 82925702540452956, guid: 86aec5b01224593408d7902cd37129db, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.788021
+      value: 10.88769
       objectReference: {fileID: 0}
     - target: {fileID: 82925702540452956, guid: 86aec5b01224593408d7902cd37129db, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.29986995
+      value: 0.29987997
       objectReference: {fileID: 0}
     - target: {fileID: 349955802513076474, guid: 86aec5b01224593408d7902cd37129db, type: 3}
       propertyPath: m_Name
@@ -6072,19 +6072,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36bcb4b0637480843a16204ffdc8e952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameSoundManager
-  playerShootSound: {fileID: 0}
-  playerRapidShootSound: {fileID: 0}
-  playerDashSound: {fileID: 0}
-  playerJumpSound: {fileID: 0}
-  playerDoubleJumpSound: {fileID: 0}
-  playerDeathSound: {fileID: 0}
-  playerLandSound: {fileID: 0}
-  playerParrySound: {fileID: 0}
-  enemyHitSound: {fileID: 0}
-  enemyDeathSound: {fileID: 0}
-  enemyShootSound: {fileID: 0}
-  enemyChargeSound: {fileID: 0}
-  explodeSound: {fileID: 0}
+  playerShootSound: {fileID: 8300000, guid: 113d39a84770c744e9ced5a7043a811e, type: 3}
+  playerWalkSound: {fileID: 8300000, guid: 2247ab6f48bacc44db1652f22e673144, type: 3}
+  playerJumpSound: {fileID: 8300000, guid: 9365f42b3c845084796e162c40f784e7, type: 3}
+  playerParrySound: {fileID: 8300000, guid: acc6d4ef4f9937f4b93b156dbe483d2f, type: 3}
+  playerReloadSound: {fileID: 8300000, guid: 6ec37e3c94d3af844a6475e5916407ba, type: 3}
+  playerMeleeSound: {fileID: 8300000, guid: 3a07518a33936f74fb8145b36f52cab1, type: 3}
+  enemyWalkSound: {fileID: 0}
   bossAppearSound: {fileID: 0}
   bossHitSound: {fileID: 0}
   bossDeathSound: {fileID: 0}
@@ -6095,9 +6089,9 @@ MonoBehaviour:
   missileLaunchSound: {fileID: 0}
   targetMarkSound: {fileID: 0}
   boxBreakSound: {fileID: 0}
+  doorOpenSound: {fileID: 0}
   itemPickupSound: {fileID: 0}
-  stageClearSound: {fileID: 0}
-  gameOverSound: {fileID: 0}
+  uiButtonSound: {fileID: 0}
   bgm: {fileID: 8300000, guid: c4113f675354ebc4b837b5ce0a13ec48, type: 3}
 --- !u!1 &1845163133
 GameObject:

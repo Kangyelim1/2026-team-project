@@ -41,6 +41,7 @@ public class PlayerSystem : MonoBehaviour
     private bool isDash;
     private bool isDashMoving;
     private int groundContactCount = 0;
+    private bool isPlayingWalkSound = false;
 
     public bool isGround;
     public bool isPattern;
@@ -115,9 +116,27 @@ public class PlayerSystem : MonoBehaviour
         transform.position += targetVelocityX;
 
         if (direction != Vector3.zero)
+        {
             playerAnimator.SetBool("isRun", true);
+
+            if (!isPlayingWalkSound && isGround)
+                StartCoroutine(PlayWalkSound());
+        }
         else
+        {
             playerAnimator.SetBool("isRun", false);
+        }
+    }
+
+    private IEnumerator PlayWalkSound()
+    {
+        isPlayingWalkSound = true;
+        while (moveX != 0 && isGround && !isDashMoving)
+        {
+            GameSoundManager.Instance?.OnFindPlayerSound("플레이어 걷기");
+            yield return new WaitForSeconds(0.4f);
+        }
+        isPlayingWalkSound = false;
     }
 
     private IEnumerator Dash()
@@ -125,8 +144,6 @@ public class PlayerSystem : MonoBehaviour
         isDash = true;
         isDashMoving = true;
         isDashAttack = true;
-
-        GameSoundManager.Instance?.PlaySFX(GameSoundManager.Instance.playerDashSound);
 
         float direction = transform.localScale.x < 0 ? -1f : 1f;
         float dashSpeed = PlayerDashDistance / PlayerDashDuration;
@@ -172,8 +189,6 @@ public class PlayerSystem : MonoBehaviour
 
     private void DoubleJump()
     {
-        GameSoundManager.Instance?.PlaySFX(GameSoundManager.Instance.playerDoubleJumpSound);
-
         hasDoubleJumped = true;
         canDoubleJump = false;
 
@@ -216,8 +231,6 @@ public class PlayerSystem : MonoBehaviour
             {
                 if (contact.normal.y > 0.5f)
                 {
-                    GameSoundManager.Instance?.PlaySFX(GameSoundManager.Instance.playerLandSound);
-
                     groundContactCount++;
                     isGround = true;
                     canDoubleJump = false;

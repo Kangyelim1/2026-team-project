@@ -84,7 +84,6 @@ public class EnemyHelthSystem : MonoBehaviour
         }
         else
         {
-            GameSoundManager.Instance?.PlaySFX(GameSoundManager.Instance.enemyHitSound);
             Debug.Log("일반로봇 사망");
             Die();
         }
@@ -97,8 +96,6 @@ public class EnemyHelthSystem : MonoBehaviour
 
         if (enemySystem != null && enemySystem.enemyType == EnemyType.Boss)
             GameSoundManager.Instance?.PlaySFX(GameSoundManager.Instance.bossDeathSound);
-        else
-            GameSoundManager.Instance?.PlaySFX(GameSoundManager.Instance.enemyDeathSound);
 
         Debug.Log("몬스터 사망");
 
@@ -144,7 +141,7 @@ public class EnemyHelthSystem : MonoBehaviour
         if (enemySystem.BoomEffect != null)
         {
             Instantiate(enemySystem.BoomEffect, enemySystem.transform.position, Quaternion.identity);
-            GameSoundManager.Instance?.PlaySFX(GameSoundManager.Instance.explodeSound);
+            
         }
 
         if (rb != null)

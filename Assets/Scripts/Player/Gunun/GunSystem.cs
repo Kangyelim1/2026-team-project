@@ -61,6 +61,9 @@ public class GunSystem : MonoBehaviour
         currentAmmo--;
         NotifyUI();
 
+        // 공격 사운드 직접 호출
+        GameSoundManager.Instance?.PlaySFX(GameSoundManager.Instance.playerShootSound);
+
         if (currentGun == GunType.Special && currentAmmo <= 0)
         {
             Invoke(nameof(EquipDefault), 0.1f);
@@ -77,7 +80,7 @@ public class GunSystem : MonoBehaviour
 
     public void ManualReload()
     {
-        if (currentGun == GunType.Special) return; 
+        if (currentGun == GunType.Special) return;
         if (isReloading) return;
         if (currentAmmo == maxAmmo) return;
         StartCoroutine(Reload());
@@ -86,7 +89,11 @@ public class GunSystem : MonoBehaviour
     IEnumerator Reload()
     {
         isReloading = true;
-        OnAmmoChanged?.Invoke(currentAmmo, maxAmmo, true); 
+
+        // 재장전 사운드 직접 호출
+        GameSoundManager.Instance?.PlaySFX(GameSoundManager.Instance.playerReloadSound);
+
+        OnAmmoChanged?.Invoke(currentAmmo, maxAmmo, true);
 
         yield return new WaitForSeconds(defaultReloadTime);
 

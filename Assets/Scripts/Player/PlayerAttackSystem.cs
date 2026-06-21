@@ -179,7 +179,8 @@ public class PlayerAttackSystem : MonoBehaviour
         playerSystem.playerAnimator.SetBool("isGun", true);
         yield return new WaitForSeconds(0.2f);
 
-        gameSoundManager.OnFindPlayerSound("플레이어 기본공격");
+        // 공격 사운드 직접 호출
+        GameSoundManager.Instance?.PlaySFX(GameSoundManager.Instance.playerShootSound);
         ShootProjectile(bulletPrefab, firePoint, bulletSpeed);
 
         yield return new WaitForSeconds(0.1f);
@@ -190,6 +191,9 @@ public class PlayerAttackSystem : MonoBehaviour
     {
         isReloading = true;
         Debug.Log($"재장전 중... ({reloadTime}초)");
+
+        // 재장전 사운드 직접 호출
+        GameSoundManager.Instance?.PlaySFX(GameSoundManager.Instance.playerReloadSound);
 
         AmmoEvents.Notify(currentAmmo, maxAmmo, true);
 
@@ -231,7 +235,8 @@ public class PlayerAttackSystem : MonoBehaviour
         playerSystem.playerAnimator.SetBool("isGun", true);
 
         yield return new WaitForSeconds(0.2f);
-        gameSoundManager.OnFindPlayerSound("플레이어 기본공격");
+
+        GameSoundManager.Instance?.PlaySFX(GameSoundManager.Instance.playerShootSound);
         ShootProjectile(bulletPrefab, firePoint, bulletSpeed);
 
         yield return new WaitForSeconds(0.1f);
@@ -240,6 +245,7 @@ public class PlayerAttackSystem : MonoBehaviour
 
         isComboShotRunning = false;
     }
+
     private void ShootProjectile(GameObject prefab, Transform spawnPoint, float speed)
     {
         if (prefab == null || spawnPoint == null || mainCamera == null) return;
@@ -275,6 +281,8 @@ public class PlayerAttackSystem : MonoBehaviour
 
         lastMeleeTime = Time.time;
 
+        GameSoundManager.Instance?.PlaySFX(GameSoundManager.Instance.playerMeleeSound);
+
         if (playerSystem != null && playerSystem.playerAnimator != null)
             StartCoroutine(MeleeAnimationRoutine());
 
@@ -309,7 +317,8 @@ public class PlayerAttackSystem : MonoBehaviour
         lastParryTime = Time.time;
         isParryWindow = true;
         Debug.Log("패리 시작");
-        gameSoundManager.OnFindPlayerSound("패리");
+
+        GameSoundManager.Instance?.PlaySFX(GameSoundManager.Instance.playerParrySound);
 
         SkillHUDManager.Instance?.TriggerCooldown(SkillType.Parry, parryCooldown);
 
